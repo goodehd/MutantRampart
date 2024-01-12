@@ -19,7 +19,7 @@ public class Main : SingletonBehavior<Main>
     {
         CreateManager<DataManager>();
         CreateManager<ResourceManager>();
-        CreateManager<ScenesManager>();
+        CreateManager<SceneManager>();
         CreateManager<SoundManager>();
         CreateManager<UIManager>();
         CreateManager<PoolManager>();
