@@ -1,14 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Main : SingletonBehavior<Main>
 {
-    private readonly Dictionary<string, IManagers> _managers = new Dictionary<string, IManagers>();
+    private readonly Dictionary<Type, IManagers> _managers = new Dictionary<Type, IManagers>();
 
     public static T Get<T>() where T : IManagers
     {
-        if(Instance._managers.TryGetValue(typeof(T).Name, out IManagers manager))
+        if(Instance._managers.TryGetValue(typeof(T), out IManagers manager))
         {
             return (T)manager;
         }
@@ -32,7 +33,7 @@ public class Main : SingletonBehavior<Main>
         if (!manager.Init())
             Debug.LogError($"Initialize Fail : {typeof(T).Name}");
 
-        _managers.Add(typeof(T).Name, manager);
+        _managers.Add(typeof(T), manager);
     }
 
     /*
