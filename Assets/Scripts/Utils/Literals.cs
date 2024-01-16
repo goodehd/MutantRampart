@@ -3,7 +3,7 @@
 /// </summary>
 public static class Literals 
 {
-    public const string UI_SCENE_PATH = "UI/Scene/";
-    public const string UI_POPUP_PATH = "UI/Popup/";
-    public const string UI_SUBITEM_PATH = "UI/Subitem/"; 
+    public const string UI_SCENE_PATH = "Prefabs/UI/Scene/";
+    public const string UI_POPUP_PATH = "Prefabs/UI/Popup/";
+    public const string UI_SUBITEM_PATH = "Prefabs/UI/Subitem/"; 
 }

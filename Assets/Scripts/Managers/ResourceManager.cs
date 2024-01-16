@@ -7,6 +7,9 @@ public class ResourceManager : IManagers
     private Dictionary<string, Sprite> _sprites = new Dictionary<string, Sprite>();
     private Dictionary<string, GameObject> _prefabs = new Dictionary<string, GameObject>();
 
+    private Dictionary<string, Object> _resource = new Dictionary<string, Object>();
+
+
     // 초기화 과정에서 LoadAll
     public bool Init()
     {
@@ -49,6 +52,33 @@ public class ResourceManager : IManagers
         return prefab;
     }
 
+    public T LoadResource<T>(string key) where T : Object
+    {
+        if (!_resource.TryGetValue(key, out Object resource))
+        {
+            Debug.LogError($"[ResourceManager] LoadPrefab({key}) : Failed to load prefab.");
+            return null;
+        }
+        return resource as T;
+    }
+
+    public T[] LoadAll<T>(string path) where T : Object
+    {
+        T[] resources = Resources.LoadAll<T>(path);
+        foreach(Object obj in resources)
+        {
+            _resource.Add(obj.name, obj);
+        }
+        return resources;
+    }
+
+    public T Load<T>(string path) where T : Object
+    {
+        T resource = Resources.Load<T>(path);
+        _resource.Add(resource.name, resource);
+        return resource;
+    }
+
     /// <summary>
     /// Instantiate 함수에 Pooling Option 추가한 힘수입니다.
     /// </summary>
@@ -58,7 +88,7 @@ public class ResourceManager : IManagers
     /// <returns></returns>
     public GameObject InstantiateWithPoolingOption(string key, Transform parent = null, bool pooling = false) // 선택적 매개변수 -- 위치 항상 뒤에 있도록 주의 !
     {
-        GameObject prefab = LoadPrefab(key);
+        GameObject prefab = LoadResource<GameObject>(key);
         if (prefab == null)
         {
             Debug.LogError($"[ResourceManager] InstantiateWithPoolingOption({key}) : Failed to load prefab.");
