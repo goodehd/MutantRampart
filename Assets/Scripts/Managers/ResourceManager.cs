@@ -7,25 +7,10 @@ public class ResourceManager : IManagers
 {
     // 각 Assets 들을 Dictionary 로 관리
     private Dictionary<string, Object> _resources = new Dictionary<string, Object>();
-    //private Dictionary<string, Sprite> _sprites = new Dictionary<string, Sprite>();
-    //private Dictionary<string, GameObject> _prefabs = new Dictionary<string, GameObject>();
-
 
     // 초기화 과정에서 Load 또는 LoadAll
     public bool Init()
     {
-        //Sprite[] sprites = Resources.LoadAll<Sprite>(""); // todo : 경로에서 sprites 다 델꼬와
-        //foreach (Sprite sprite in sprites)
-        //{
-        //    _sprites.Add(sprite.name, sprite);
-        //}
-
-        //GameObject[] objs = Resources.LoadAll<GameObject>(""); // todo : 경로에서 prefab 대상 델꼬와
-        //foreach (GameObject obj in objs)
-        //{
-        //    _prefabs.Add(obj.name, obj);
-        //}
-
         // 이런 식으로 Init 에서 필요한 것들 Load 관련 함수 사용해서 불러오면 되는건가
         Load<SpriteRenderer>("");
         LoadAll<GameObject>("");
@@ -49,32 +34,9 @@ public class ResourceManager : IManagers
         {
             _resources.Add(resource.name, resource);
         }
+
         return resources;
     }
-
-    //public Sprite LoadSprite(string key)
-    //{
-    //    // TryGetValue - Dictionary 안에 해당 key 가 있는지 확인하고, 있으면 sprite 리턴, 없으면 false 리턴.
-    //    // TryGetValue 는 key 가 없는 경우에 false 를 리턴해주면서 최대한 에러 뜨는 걸 최소화(?)시켜준다고 보면 된다.
-    //    if (!_sprites.TryGetValue(key, out Sprite sprite))
-    //    {
-    //        Debug.LogError($"[ResourceManager] LoadSprite({key}) : Failed to load sprite.");
-    //        return null;
-    //    }
-
-    //    return sprite;
-    //}
-
-    //public GameObject LoadPrefab(string key)
-    //{
-    //    if (!_prefabs.TryGetValue(key, out GameObject prefab))
-    //    {
-    //        Debug.LogError($"[ResourceManager] LoadPrefab({key}) : Failed to load prefab.");
-    //        return null;
-    //    }
-
-    //    return prefab;
-    //}
 
     public T LoadResource<T>(string key) where T : Object
     {
@@ -85,6 +47,7 @@ public class ResourceManager : IManagers
             Debug.LogError($"[ResourceManager] LoadResource({key}) : Failed to load resource.");
             return null;
         }
+
         return resource as T;
     }
 
