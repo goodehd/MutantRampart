@@ -5,3 +5,10 @@ public enum EUIEventState
     Exit,
     Max
 }
+
+public enum SoundType
+{
+    BGM,
+    Effect,
+    UI
+}

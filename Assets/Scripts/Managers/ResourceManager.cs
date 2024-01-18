@@ -12,8 +12,8 @@ public class ResourceManager : IManagers
     public bool Init()
     {
         // 이런 식으로 Init 에서 필요한 것들 Load 관련 함수 사용해서 불러오면 되는건가
-        Load<SpriteRenderer>("");
-        LoadAll<GameObject>("");
+        //Load<SpriteRenderer>("");
+        LoadAll<GameObject>("asd");
 
         return true;
     }
@@ -22,7 +22,10 @@ public class ResourceManager : IManagers
     public T Load<T>(string path) where T : Object
     {
         T resource = Resources.Load<T>(path);
-        _resources.Add(resource.name, resource);
+
+        if (resource != null)
+            _resources.Add(resource.name, resource);
+
         return resource;
     }
 
@@ -30,9 +33,13 @@ public class ResourceManager : IManagers
     public T[] LoadAll<T>(string path) where T : Object
     {
         T[] resources = Resources.LoadAll<T>(path);
-        foreach (T resource in resources) // T 대신 Object 도 가능.
+
+        if(resources != null)
         {
-            _resources.Add(resource.name, resource);
+            foreach (T resource in resources) // T 대신 Object 도 가능.
+            {
+                _resources.Add(resource.name, resource);
+            }
         }
 
         return resources;
@@ -44,10 +51,13 @@ public class ResourceManager : IManagers
         // TryGetValue 는 key 가 없는 경우에 false 를 리턴해주면서 최대한 에러 뜨는 걸 최소화(?)시켜준다고 보면 된다.
         if (!_resources.TryGetValue(key, out Object resource))
         {
-            Debug.LogError($"[ResourceManager] LoadResource({key}) : Failed to load resource.");
-            return null;
+            resource = Load<T>(key);
+            if(resource == null)
+            {
+                Debug.LogError($"[ResourceManager] LoadResource({key}) : Failed to load resource.");
+                return null;
+            }
         }
-
         return resource as T;
     }
 
