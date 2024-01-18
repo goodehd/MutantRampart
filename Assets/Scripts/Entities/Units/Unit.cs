@@ -30,14 +30,14 @@ public class Unit : MonoBehaviour
 
     private void UpdateUnitState()
     {
-        if (currentEnemiesInRange.Count > 0) // 범위 안에 적이 있을 때 공격 상태로 전환.
-        {
-            SetUnitState(EUnitState.Attacking);
-        }
-        else // 범위 안에 적이 없을 때 Idle 상태로 전환.
-        {
-            SetUnitState(EUnitState.Idle);
-        }
+        //if (currentEnemiesInRange.Count > 0) // 범위 안에 적이 있을 때 공격 상태로 전환.
+        //{
+        //    SetUnitState(EUnitState.Attacking);
+        //}
+        //else // 범위 안에 적이 없을 때 Idle 상태로 전환.
+        //{
+        //    SetUnitState(EUnitState.Idle);
+        //}
     }
 
     private void SetUnitState(EUnitState newState)
@@ -67,11 +67,11 @@ public class Unit : MonoBehaviour
             lastAttackTime = Time.time;
 
             // todo : Attacking 상태에서의 공격 동작
-            foreach (Enemy enemy in currentEnemiesInRange)
-            {
-                // e.g. 적에게 데미지를 입히는 등의 동작 수행
-                // enemy.GetComponent<Enemy>().TakeDamage(damageAmount);
-            }
+            //foreach (Enemy enemy in currentEnemiesInRange)
+            //{
+            //    // e.g. 적에게 데미지를 입히는 등의 동작 수행
+            //    // enemy.GetComponent<Enemy>().TakeDamage(damageAmount);
+            //}
 
             // todo : Attack Animation 추가
             //_animator.SetTrigger("Attack");
@@ -80,18 +80,18 @@ public class Unit : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) // Enemy 가 해당 범위 안에 들어올 경우 List.Add
     {
-        if (other.CompareTag("Enemy"))
-        {
-            currentEnemiesInRange.Add(other);
-        }
+        //if (other.CompareTag("Enemy"))
+        //{
+        //    currentEnemiesInRange.Add(other);
+        //}
     }
 
     private void OnTriggerExit(Collider other) // 적이 collider 범위 밖으로 나가면(근데 나갈 일이 있으려나?) List 에서 제거
     {
-        if (other.CompareTag("Enemy"))
-        {
-            currentEnemiesInRange.Remove(other);
-        }
+        //if (other.CompareTag("Enemy"))
+        //{
+        //    currentEnemiesInRange.Remove(other);
+        //}
     }
 
     private void GetDamage(int damage) // todo : GetDamage() 구현
