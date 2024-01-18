@@ -24,6 +24,7 @@ public class Main : SingletonBehavior<Main>
         CreateManager<SoundManager>();
         CreateManager<UIManager>();
         CreateManager<PoolManager>();
+        CreateManager<TileManager>();
     }
 
     private void CreateManager<T>() where T : IManagers, new()

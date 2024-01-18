@@ -2,10 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+public class TileManager : MonoBehaviour, IManagers
 {
     public GameObject tilePrefab;
-
+    private int _canBuildRoomCount;
+    private int _currentBuildroomCount;
+    private bool _canBuildRoom = false;
+    public bool CanBuildRoom // 방을 설치할 수 있는 타일이 몇개인지에 대한 정보 
+    {
+        get
+        {
+            if (_currentBuildroomCount <= _canBuildRoomCount)
+            {
+                _canBuildRoom = true;
+            }
+            return _canBuildRoom;
+        }
+    } 
     private void Start()
     {
         GenerateMap();
@@ -34,7 +47,7 @@ public class Tile : MonoBehaviour
     private void GenerateMap()
     {
         // 그리드를 생성하고 Grid 컴포넌트를 추가
-        GameObject gridObject = new GameObject("Grid");
+        GameObject gridObject = new GameObject("Tile");
         Grid gridComponent = gridObject.AddComponent<Grid>();
 
         // Cell Size 및 Cell Gap 설정
@@ -64,8 +77,9 @@ public class Tile : MonoBehaviour
 
         foreach (Vector3 coordinate in tileMapCoordinates)
         {
-            Instantiate(tilePrefab, coordinate, Quaternion.identity, gridObject.transform);
+            //Instantiate(tilePrefab, coordinate, Quaternion.identity, gridObject.transform);
             GameObject tile = Main.Get<PoolManager>().Pop(tilePrefab);
+            tile.transform.SetParent(gridComponent.transform);
             tile.transform.position = coordinate;
         }
 
@@ -77,5 +91,10 @@ public class Tile : MonoBehaviour
            }
        }*/
 
+    }
+
+    public bool Init()
+    {
+        return true;
     }
 }
