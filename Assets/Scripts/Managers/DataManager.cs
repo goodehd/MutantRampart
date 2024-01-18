@@ -7,23 +7,21 @@ using System.Linq;
 public class DataManager : IManagers
 { 
     //public Dictionary<string, Data를 상속받는 Data클래스> --Data = new();
-    public Dictionary<string, EnemyData> enemy = new Dictionary<string, EnemyData>();
+    public Dictionary<string, CharacterData> enemy = new Dictionary<string, CharacterData>();
 
     public CSVReader reader = new();
     
     public bool Init()
     {
-        
+        enemy = reader.LoadToCSVData<CharacterData>();
         return true;
-        
     }
+
     public void Initialize() {
         //--Data = LoadJson<Data를 상속받는 Data클래스>();
-        enemy = reader.LoadToCSVData<EnemyData>();
-
+        //enemy = reader.LoadToCSVData<CharacterData>();
     }
-    
-    
+
     private Dictionary<string, T> LoadJson<T>() where T : Data
     {
         
