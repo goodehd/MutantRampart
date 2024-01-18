@@ -4,6 +4,5 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    private CharacterStatus _status;
-
+    public CharacterStatus Status { get; private set; }
 }

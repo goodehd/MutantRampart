@@ -8,7 +8,6 @@ public class Stat
     protected EstatType _statType;
     protected float _value;
     protected float _baseValue;
-    protected bool _isUpdate;
     protected List<StatModifier> _Modifiers = new List<StatModifier>();
 
     public event Action<float> OnValueChanged;
@@ -19,7 +18,6 @@ public class Stat
         _statType = statType;
         _value = value;
         _baseValue = value;
-        _isUpdate = false;
     }
 
     public void AddModifier(StatModifier modifier)
