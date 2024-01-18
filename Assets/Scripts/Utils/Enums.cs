@@ -6,9 +6,18 @@ public enum EUIEventState
     Max
 }
 
-public enum SoundType
+public enum ESoundType
 {
     BGM,
     Effect,
     UI
+}
+
+public enum EstatType
+{
+    Damage,
+    Defense,
+    AttackSpeed,
+    MoveSpeed,
+    Max
 }

@@ -1,20 +1,33 @@
+using UnityEngine.PlayerLoop;
+
 public class CharacterStatus
 {
-    public Status Hp { get; private set; }
-    public SingleStatus Atk { get; private set; }
-    public SingleStatus Def { get; private set; }
+    private Stat[] _stats;
+    private HealthPoint _healthPoints;
 
-    public CharacterStatus(float hp, float maxHp, float atk, float def)
+    public CharacterStatus(CharacterData data)
     {
-        Hp = new Status(hp, maxHp);
-        Atk = new SingleStatus(atk);
-        Def = new SingleStatus(def);
+        Init(data);
     }
 
-    public CharacterStatus(CharacterStatus status)
+    public void Init(CharacterData data)
     {
-        Hp = new Status(status.Hp.CurValue, status.Hp.MaxValue);
-        Atk = new SingleStatus(status.Atk.Value);
-        Def = new SingleStatus(status.Def.Value);
+        _stats = new Stat[(int)EstatType.Max]
+       {
+            new Stat(EstatType.Damage, data.Damage),
+            new Stat(EstatType.Defense, data.Defense),
+            new Stat(EstatType.AttackSpeed, data.AttackSpeed),
+            new Stat(EstatType.MoveSpeed, data.MoveSpeed)
+       };
     }
+
+    public Stat this[EstatType type]
+    {
+        get
+        {
+            return _stats[(int)type];
+        }
+    }
+
+
 }

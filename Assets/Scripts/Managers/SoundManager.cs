@@ -16,19 +16,19 @@ public class SoundManager : IManagers
             root = new GameObject { name = "Sound" };
             UnityEngine.Object.DontDestroyOnLoad(root);
 
-            foreach (SoundType soundType in Enum.GetValues(typeof(SoundType)))
+            foreach (ESoundType soundType in Enum.GetValues(typeof(ESoundType)))
             {
                 GameObject obj = new GameObject { name = soundType.ToString() };
                 _audioSourcesChannel.Add(obj.AddComponent<AudioSource>());
                 obj.transform.parent = root.transform;
             }
 
-            _audioSourcesChannel[(int)SoundType.BGM].loop = true;
+            _audioSourcesChannel[(int)ESoundType.BGM].loop = true;
         }
         return true;
     }
 
-    public void SoundPlay(string path, SoundType type)
+    public void SoundPlay(string path, ESoundType type)
     {
         // Resources/Sounds폴더 안 path를 넣어준다
         // ex) Resources/Sounds/UI/sound.egg일 경우 UI/sound으로 path를 전달.
@@ -43,12 +43,12 @@ public class SoundManager : IManagers
 
         switch (type)
         {
-            case SoundType.BGM:
+            case ESoundType.BGM:
                 source.clip = audioClip;
                 source.Play();
                 break;
-            case SoundType.Effect:
-            case SoundType.UI:
+            case ESoundType.Effect:
+            case ESoundType.UI:
                 source.PlayOneShot(audioClip);
                 break;
             default:
@@ -57,23 +57,23 @@ public class SoundManager : IManagers
         }
     }
 
-    public void SoundStop(SoundType type)
+    public void SoundStop(ESoundType type)
     {
         _audioSourcesChannel[(int)type].Stop();
     }
 
-    public void SoundPause(SoundType type)
+    public void SoundPause(ESoundType type)
     {
         _audioSourcesChannel[(int)type].Pause();
     }
 
-    public void SoundResume(SoundType type)
+    public void SoundResume(ESoundType type)
     {
         _audioSourcesChannel[(int)type].Play();
     }
 
     // volume은 0.0 ~ 1.0 사이의 값
-    public void SetVolume(SoundType type, float volume)
+    public void SetVolume(ESoundType type, float volume)
     {
         _audioSourcesChannel[(int)type].volume = volume;
     }
@@ -87,7 +87,7 @@ public class SoundManager : IManagers
         }
     }
 
-    public float GetVolume(SoundType type)
+    public float GetVolume(ESoundType type)
     {
         return _audioSourcesChannel[(int)type].volume;
     }
@@ -115,7 +115,7 @@ public class SoundManager : IManagers
 
     public void Clear()
     {
-        _audioSourcesChannel[(int)SoundType.BGM].clip = null;
-        _audioSourcesChannel[(int)SoundType.BGM].Stop();
+        _audioSourcesChannel[(int)ESoundType.BGM].clip = null;
+        _audioSourcesChannel[(int)ESoundType.BGM].Stop();
     }
 }
