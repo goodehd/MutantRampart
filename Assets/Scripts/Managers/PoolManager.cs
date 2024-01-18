@@ -93,6 +93,11 @@ public class PoolManager : IManagers
         _pools.Clear();
     }
 
+    public bool IsPooling(string name)
+    {
+        return _pools.ContainsKey(name);
+    }
+
     private void CreatePool(GameObject prefab)
     {
         Pool pool = new Pool(prefab);
