@@ -15,6 +15,7 @@ public enum ESoundType
 
 public enum EstatType
 {
+    Hp,
     Damage,
     Defense,
     AttackSpeed,

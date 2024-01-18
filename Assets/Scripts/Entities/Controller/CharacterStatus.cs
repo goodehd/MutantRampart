@@ -1,9 +1,6 @@
-using UnityEngine.PlayerLoop;
-
 public class CharacterStatus
 {
     private Stat[] _stats;
-    private HealthPoint _healthPoints;
 
     public CharacterStatus(CharacterData data)
     {
@@ -14,6 +11,7 @@ public class CharacterStatus
     {
         _stats = new Stat[(int)EstatType.Max]
        {
+            new Vital(EstatType.Hp, data.Hp),
             new Stat(EstatType.Damage, data.Damage),
             new Stat(EstatType.Defense, data.Defense),
             new Stat(EstatType.AttackSpeed, data.AttackSpeed),
@@ -29,5 +27,8 @@ public class CharacterStatus
         }
     }
 
-
+    public T GetStat<T>(EstatType type) where T : Stat
+    {
+        return _stats[(int)type] as T;
+    }
 }
