@@ -29,7 +29,6 @@ public class Scene : MonoBehaviour
             return null;
 
         Character character = obj.GetComponent<Character>();
-        character.SetStatus(_data.enemy[obj.name]);
 
         return obj;
     }

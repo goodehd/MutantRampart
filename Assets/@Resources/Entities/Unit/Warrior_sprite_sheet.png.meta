@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_0
+      name: Warrior_sprite_Idle00
       rect:
         serializedVersion: 2
         x: 0
@@ -144,7 +144,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_1
+      name: Warrior_sprite_Idle01
       rect:
         serializedVersion: 2
         x: 180
@@ -165,7 +165,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_2
+      name: Warrior_sprite_Idle02
       rect:
         serializedVersion: 2
         x: 360
@@ -186,7 +186,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_3
+      name: Warrior_sprite_Idle03
       rect:
         serializedVersion: 2
         x: 540
@@ -207,7 +207,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_4
+      name: Warrior_sprite_Idle04
       rect:
         serializedVersion: 2
         x: 720
@@ -228,7 +228,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_5
+      name: Warrior_sprite_Idle05
       rect:
         serializedVersion: 2
         x: 900
@@ -795,7 +795,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_32
+      name: Warrior_sprite_Hit00
       rect:
         serializedVersion: 2
         x: 5760
@@ -816,7 +816,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_33
+      name: Warrior_sprite_Hit01
       rect:
         serializedVersion: 2
         x: 5940
@@ -837,7 +837,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_34
+      name: Warrior_sprite_Hit02
       rect:
         serializedVersion: 2
         x: 6120
@@ -858,7 +858,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_35
+      name: Warrior_sprite_Hit03
       rect:
         serializedVersion: 2
         x: 6300
@@ -879,7 +879,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_36
+      name: Warrior_sprite_Die00
       rect:
         serializedVersion: 2
         x: 6480
@@ -900,7 +900,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_37
+      name: Warrior_sprite_Die01
       rect:
         serializedVersion: 2
         x: 6660
@@ -921,7 +921,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_38
+      name: Warrior_sprite_Die02
       rect:
         serializedVersion: 2
         x: 6840
@@ -942,7 +942,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_39
+      name: Warrior_sprite_Die03
       rect:
         serializedVersion: 2
         x: 7020
@@ -963,7 +963,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_40
+      name: Warrior_sprite_Die04
       rect:
         serializedVersion: 2
         x: 7200
@@ -984,7 +984,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_41
+      name: Warrior_sprite_Die05
       rect:
         serializedVersion: 2
         x: 7380
@@ -1005,7 +1005,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_42
+      name: Warrior_sprite_Die06
       rect:
         serializedVersion: 2
         x: 7560
@@ -1026,7 +1026,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_43
+      name: Warrior_sprite_Die07
       rect:
         serializedVersion: 2
         x: 7740
@@ -1047,7 +1047,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_44
+      name: Warrior_sprite_Die08
       rect:
         serializedVersion: 2
         x: 7920
@@ -1068,7 +1068,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_45
+      name: Warrior_sprite_Die09
       rect:
         serializedVersion: 2
         x: 8100
@@ -1089,7 +1089,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_46
+      name: Warrior_sprite_Die10
       rect:
         serializedVersion: 2
         x: 8280
@@ -1110,7 +1110,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_47
+      name: Warrior_sprite_Die11
       rect:
         serializedVersion: 2
         x: 8460
@@ -1131,7 +1131,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_48
+      name: Warrior_sprite_Attack00
       rect:
         serializedVersion: 2
         x: 8640
@@ -1152,7 +1152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_49
+      name: Warrior_sprite_Attack01
       rect:
         serializedVersion: 2
         x: 8820
@@ -1173,7 +1173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_50
+      name: Warrior_sprite_Attack02
       rect:
         serializedVersion: 2
         x: 9000
@@ -1194,7 +1194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_51
+      name: Warrior_sprite_Attack03
       rect:
         serializedVersion: 2
         x: 9180
@@ -1215,7 +1215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_52
+      name: Warrior_sprite_Attack04
       rect:
         serializedVersion: 2
         x: 9360
@@ -1236,7 +1236,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_53
+      name: Warrior_sprite_Attack05
       rect:
         serializedVersion: 2
         x: 9540
@@ -1257,7 +1257,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Warrior_sprite_sheet_54
+      name: Warrior_sprite_Attack06
       rect:
         serializedVersion: 2
         x: 9720
@@ -1288,8 +1288,35 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Warrior_sprite_sheet_0: -942409068
-      Warrior_sprite_sheet_1: 1910808974
+      Warrior_sprite_Attack00: -1716534859
+      Warrior_sprite_Attack01: 1709234027
+      Warrior_sprite_Attack02: 2024812388
+      Warrior_sprite_Attack03: 2130655949
+      Warrior_sprite_Attack04: 958180819
+      Warrior_sprite_Attack05: 1489948651
+      Warrior_sprite_Attack06: 1168130943
+      Warrior_sprite_Die00: -1971326329
+      Warrior_sprite_Die01: -575378539
+      Warrior_sprite_Die02: -1007280537
+      Warrior_sprite_Die03: 1887952890
+      Warrior_sprite_Die04: 26814133
+      Warrior_sprite_Die05: -114903785
+      Warrior_sprite_Die06: 332438271
+      Warrior_sprite_Die07: 1966274877
+      Warrior_sprite_Die08: 1821820769
+      Warrior_sprite_Die09: -1446822358
+      Warrior_sprite_Die10: 1204739371
+      Warrior_sprite_Die11: 2033375571
+      Warrior_sprite_Hit00: -1465871178
+      Warrior_sprite_Hit01: -603389991
+      Warrior_sprite_Hit02: -83622417
+      Warrior_sprite_Hit03: 783248613
+      Warrior_sprite_Idle00: -942409068
+      Warrior_sprite_Idle01: 1910808974
+      Warrior_sprite_Idle02: -1828782641
+      Warrior_sprite_Idle03: 1811926273
+      Warrior_sprite_Idle04: 1176208495
+      Warrior_sprite_Idle05: -1424021764
       Warrior_sprite_sheet_10: -1093103544
       Warrior_sprite_sheet_11: 959480124
       Warrior_sprite_sheet_12: 1145857404
@@ -1300,7 +1327,6 @@ TextureImporter:
       Warrior_sprite_sheet_17: -763063823
       Warrior_sprite_sheet_18: -1662103243
       Warrior_sprite_sheet_19: -636827295
-      Warrior_sprite_sheet_2: -1828782641
       Warrior_sprite_sheet_20: 50595185
       Warrior_sprite_sheet_21: -28649071
       Warrior_sprite_sheet_22: -208566943
@@ -1311,34 +1337,8 @@ TextureImporter:
       Warrior_sprite_sheet_27: 1825486695
       Warrior_sprite_sheet_28: -1235018497
       Warrior_sprite_sheet_29: -262971354
-      Warrior_sprite_sheet_3: 1811926273
       Warrior_sprite_sheet_30: -1631102682
       Warrior_sprite_sheet_31: -488110018
-      Warrior_sprite_sheet_32: -1465871178
-      Warrior_sprite_sheet_33: -603389991
-      Warrior_sprite_sheet_34: -83622417
-      Warrior_sprite_sheet_35: 783248613
-      Warrior_sprite_sheet_36: -1971326329
-      Warrior_sprite_sheet_37: -575378539
-      Warrior_sprite_sheet_38: -1007280537
-      Warrior_sprite_sheet_39: 1887952890
-      Warrior_sprite_sheet_4: 1176208495
-      Warrior_sprite_sheet_40: 26814133
-      Warrior_sprite_sheet_41: -114903785
-      Warrior_sprite_sheet_42: 332438271
-      Warrior_sprite_sheet_43: 1966274877
-      Warrior_sprite_sheet_44: 1821820769
-      Warrior_sprite_sheet_45: -1446822358
-      Warrior_sprite_sheet_46: 1204739371
-      Warrior_sprite_sheet_47: 2033375571
-      Warrior_sprite_sheet_48: -1716534859
-      Warrior_sprite_sheet_49: 1709234027
-      Warrior_sprite_sheet_5: -1424021764
-      Warrior_sprite_sheet_50: 2024812388
-      Warrior_sprite_sheet_51: 2130655949
-      Warrior_sprite_sheet_52: 958180819
-      Warrior_sprite_sheet_53: 1489948651
-      Warrior_sprite_sheet_54: 1168130943
       Warrior_sprite_sheet_6: -392494196
       Warrior_sprite_sheet_7: 901278709
       Warrior_sprite_sheet_8: 1114374583

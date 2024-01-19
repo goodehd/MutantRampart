@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shoot_player_0
+      name: Shoot_player_Shoot00
       rect:
         serializedVersion: 2
         x: 0
@@ -131,7 +131,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -144,7 +144,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_1
+      name: Shoot_player_Shoot01
       rect:
         serializedVersion: 2
         x: 90
@@ -152,7 +152,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -165,7 +165,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_2
+      name: Shoot_player_Shoot02
       rect:
         serializedVersion: 2
         x: 180
@@ -173,7 +173,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -186,7 +186,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_3
+      name: Shoot_player_Shoot03
       rect:
         serializedVersion: 2
         x: 270
@@ -194,7 +194,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -207,7 +207,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_4
+      name: Shoot_player_Idle00
       rect:
         serializedVersion: 2
         x: 360
@@ -215,7 +215,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -228,7 +228,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_5
+      name: Shoot_player_Idle01
       rect:
         serializedVersion: 2
         x: 450
@@ -236,7 +236,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -249,7 +249,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_6
+      name: Shoot_player_Idle02
       rect:
         serializedVersion: 2
         x: 540
@@ -257,7 +257,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -270,7 +270,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_7
+      name: Shoot_player_Run00
       rect:
         serializedVersion: 2
         x: 630
@@ -278,7 +278,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -291,7 +291,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_8
+      name: Shoot_player_Run01
       rect:
         serializedVersion: 2
         x: 720
@@ -299,7 +299,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -312,7 +312,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_9
+      name: Shoot_player_Run02
       rect:
         serializedVersion: 2
         x: 810
@@ -320,7 +320,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -333,7 +333,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_10
+      name: Shoot_player_Run03
       rect:
         serializedVersion: 2
         x: 900
@@ -341,7 +341,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -354,7 +354,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_11
+      name: Shoot_player_Run04
       rect:
         serializedVersion: 2
         x: 990
@@ -362,7 +362,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -375,7 +375,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_12
+      name: Shoot_player_Run05
       rect:
         serializedVersion: 2
         x: 1080
@@ -383,7 +383,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -396,7 +396,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_13
+      name: Shoot_player_Run06
       rect:
         serializedVersion: 2
         x: 1170
@@ -404,7 +404,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -417,7 +417,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_14
+      name: Shoot_player_Run07
       rect:
         serializedVersion: 2
         x: 1260
@@ -425,7 +425,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -438,7 +438,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_15
+      name: Shoot_player_Run08
       rect:
         serializedVersion: 2
         x: 1350
@@ -446,7 +446,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -459,7 +459,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_16
+      name: Shoot_player_Run09
       rect:
         serializedVersion: 2
         x: 1440
@@ -467,7 +467,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -480,7 +480,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_17
+      name: Shoot_player_Hit00
       rect:
         serializedVersion: 2
         x: 1530
@@ -488,7 +488,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -501,7 +501,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_18
+      name: Shoot_player_Hit01
       rect:
         serializedVersion: 2
         x: 1620
@@ -509,7 +509,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -522,7 +522,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_19
+      name: Shoot_player_Hit02
       rect:
         serializedVersion: 2
         x: 1710
@@ -530,7 +530,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -543,7 +543,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_20
+      name: Shoot_player_Hit03
       rect:
         serializedVersion: 2
         x: 1800
@@ -551,7 +551,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -564,7 +564,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_21
+      name: Shoot_player_Dead00
       rect:
         serializedVersion: 2
         x: 1890
@@ -572,7 +572,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -585,7 +585,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_22
+      name: Shoot_player_Dead01
       rect:
         serializedVersion: 2
         x: 1980
@@ -593,7 +593,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -606,7 +606,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shoot_player_23
+      name: Shoot_player_Dead02
       rect:
         serializedVersion: 2
         x: 2070
@@ -614,7 +614,7 @@ TextureImporter:
         width: 90
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -637,30 +637,30 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Shoot_player_0: -791941175
-      Shoot_player_1: -1805072138
-      Shoot_player_10: -1753424168
-      Shoot_player_11: 1438948402
-      Shoot_player_12: 1168667754
-      Shoot_player_13: -1731965256
-      Shoot_player_14: -1447568280
-      Shoot_player_15: 1279793322
-      Shoot_player_16: 1239944236
-      Shoot_player_17: -2134423317
-      Shoot_player_18: -346370722
-      Shoot_player_19: -972305850
-      Shoot_player_2: -1012182924
-      Shoot_player_20: 371193570
-      Shoot_player_21: -1130335266
-      Shoot_player_22: -374134625
-      Shoot_player_23: -1908455833
-      Shoot_player_3: 307458750
-      Shoot_player_4: 1206587345
-      Shoot_player_5: -1434002375
-      Shoot_player_6: 1122663352
-      Shoot_player_7: -881165662
-      Shoot_player_8: 1537582561
-      Shoot_player_9: -640133000
+      Shoot_player_Dead00: -1130335266
+      Shoot_player_Dead01: -374134625
+      Shoot_player_Dead02: -1908455833
+      Shoot_player_Hit00: -2134423317
+      Shoot_player_Hit01: -346370722
+      Shoot_player_Hit02: -972305850
+      Shoot_player_Hit03: 371193570
+      Shoot_player_Idle00: 1206587345
+      Shoot_player_Idle01: -1434002375
+      Shoot_player_Idle02: 1122663352
+      Shoot_player_Run00: -881165662
+      Shoot_player_Run01: 1537582561
+      Shoot_player_Run02: -640133000
+      Shoot_player_Run03: -1753424168
+      Shoot_player_Run04: 1438948402
+      Shoot_player_Run05: 1168667754
+      Shoot_player_Run06: -1731965256
+      Shoot_player_Run07: -1447568280
+      Shoot_player_Run08: 1279793322
+      Shoot_player_Run09: 1239944236
+      Shoot_player_Shoot00: -791941175
+      Shoot_player_Shoot01: -1805072138
+      Shoot_player_Shoot02: -1012182924
+      Shoot_player_Shoot03: 307458750
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

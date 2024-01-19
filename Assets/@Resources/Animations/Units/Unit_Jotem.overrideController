@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unit_Jotem
+  m_Controller: {fileID: 9100000, guid: 4684bb77db7073e4cbb142a1d0d80fa8, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: b432ffcc0431c244a8e1c9fe5b320f0c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0663c69e1bfe49040ba79ca4363382db, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6e6eb6351331d7146a257a128a0768ef, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0f901f8776b20414fbbfadef6f0315c4, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ad04d972c6a99444a81029b9f8ba2e51, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 500dc4fd08c79674f94991396df88f11, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d4e151270760997459204134e42c5ad0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: dfcaaed131201dc4d8c434c2ff9f94af, type: 2}
