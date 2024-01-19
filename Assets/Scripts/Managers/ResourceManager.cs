@@ -25,7 +25,7 @@ public class ResourceManager : IManagers
         {
             resource = Resources.Load<T>(path);
             if (resource != null)
-                _resources.Add(resource.name, resource);
+                _resources.Add(path, resource);
         }
 
         return resource as T;

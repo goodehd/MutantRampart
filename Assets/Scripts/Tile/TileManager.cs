@@ -30,7 +30,6 @@ public class TileManager : MonoBehaviour, IManagers
 
     private void Start()
     {
-        gridObject = new GameObject("Tile");
         GenerateMap();
     }
 
@@ -54,8 +53,10 @@ public class TileManager : MonoBehaviour, IManagers
 
     
 
-    private void GenerateMap()
+    public void GenerateMap()
     {
+        gridObject = new GameObject("Tile");
+
         // 그리드를 생성하고 Grid 컴포넌트를 추가
         Grid gridComponent = gridObject.AddComponent<Grid>();
 
@@ -110,6 +111,7 @@ public class TileManager : MonoBehaviour, IManagers
 
     public bool Init()
     {
+        tilePrefab = Main.Get<ResourceManager>().Load<GameObject>("Prefabs/Room/Lava");
         return true;
     }
 }

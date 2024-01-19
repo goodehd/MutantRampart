@@ -28,6 +28,7 @@ public class ChangeRoomUI : BaseUI
     private TextMeshProUGUI Instruction;
     private Image roomimage;
     private Button equipButton;
+    private Button exitButton;
     private Transform _content;
     
     /*
@@ -56,7 +57,10 @@ public class ChangeRoomUI : BaseUI
         roomimage = GetUI<Image>("RoomImagesprite");
         _content = GetUI<Transform>("Content");
         equipButton = GetUI<Button>("EquipButton");
+        exitButton = GetUI<Button>("Delete");
+
         SetUICallback(equipButton.gameObject, EUIEventState.Click, ClickEquipButton);
+        SetUICallback(exitButton.gameObject, EUIEventState.Click, ExitBtnClick);
 
         List<RoomData> playerrooms = Main.Get<GameManager>().playerRooms;
         
@@ -83,9 +87,15 @@ public class ChangeRoomUI : BaseUI
     {
         Vector3 pos = selectRoom.transform.position;
         Main.Get<ResourceManager>().Destroy(selectRoom.gameObject);
-        GameObject obj = Main.Get<ResourceManager>().InstantiateWithPoolingOption($"Prefabs/Room/{selectRoomData.Key}");
+        GameObject obj = Main.Get<ResourceManager>().InstantiateWithPoolingOption($"Prefabs/Room/{selectRoomData.Key}"
+            , Main.Get<TileManager>().gridObject.transform);
         obj.transform.position = pos;
+        selectRoom = obj.GetComponent<Room>();
+    }
 
+    private void ExitBtnClick(PointerEventData eventData)
+    {
+        Main.Get<UIManager>().ClosePopup();
     }
 
     /*
