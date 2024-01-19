@@ -288,8 +288,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7825496438932082338}
-  - component: {fileID: 2927268732816297588}
   - component: {fileID: 3251220561481367853}
+  - component: {fileID: 6520273682967329184}
   m_Layer: 0
   m_Name: Default
   m_TagString: Untagged
@@ -315,20 +315,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2927268732816297588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5259837828655639359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d368fdd675630743b18e92b6476fea5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _buildAvailable: {fileID: 2100000, guid: 6312956a193c58b4a8a2c43bb7596cba, type: 2}
-  _buildNotAvailable: {fileID: 2100000, guid: 5d0d5465d6d70c748adb74eb7f6e5f2f, type: 2}
 --- !u!60 &3251220561481367853
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -380,6 +366,28 @@ PolygonCollider2D:
       - {x: 3, y: 2.5}
       - {x: 3, y: 1}
   m_UseDelaunayMesh: 0
+--- !u!114 &6520273682967329184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5259837828655639359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16139474b4cc4f54080d1c962fbc7052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rooms:
+  - {fileID: 7763108014055448253, guid: e47e322a5048dea4789d15051b618e35, type: 3}
+  - {fileID: 6977780777456988448, guid: 268cc49d94517584e859ae3216a50331, type: 3}
+  - {fileID: 4341453621224414527, guid: 6bf0b5d089addc1439c028d54b799a87, type: 3}
+  - {fileID: 2222950948108729470, guid: 4446fc108c9a2894bb9f8257b5233704, type: 3}
+  - {fileID: 3305390768412902904, guid: faed7587e8cc162469808be810785575, type: 3}
+  - {fileID: 8038559744989863526, guid: be63f0cffd6ba5943bfe5b1366180477, type: 3}
+  - {fileID: 8845843778810473655, guid: f72affac93320ab4eb4726244f9aa08c, type: 3}
+  _buildAvailable: {fileID: 2100000, guid: 6312956a193c58b4a8a2c43bb7596cba, type: 2}
+  _buildNotAvailable: {fileID: 2100000, guid: 5d0d5465d6d70c748adb74eb7f6e5f2f, type: 2}
 --- !u!1 &7861410531966105909
 GameObject:
   m_ObjectHideFlags: 0

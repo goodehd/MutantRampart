@@ -10,6 +10,7 @@ public class DefaultTile : MonoBehaviour
     public bool _canBuildRoom => Main.Get<TileManager>().CanBuildRoom;
     private TilemapRenderer[] _renderer = new TilemapRenderer[2];
     private Material[] _origin = new Material[2];
+    private Vector3 _tilePosition;
     [SerializeField] private Material _buildAvailable;
     [SerializeField] private Material _buildNotAvailable;
 
@@ -61,5 +62,14 @@ public class DefaultTile : MonoBehaviour
         {
             _renderer[i].material = _origin[i];
         }
+    }
+
+    private void OnMouseDown()
+    {
+        _tilePosition = this.gameObject.transform.position;
+        this.gameObject.SetActive(false);
+        GameObject tile = Main.Get<PoolManager>().Pop(TileManager.instance.rooms[1]);
+        tile.transform.SetParent(TileManager.instance.gridObject.transform);
+        tile.transform.position = _tilePosition;
     }
 }
