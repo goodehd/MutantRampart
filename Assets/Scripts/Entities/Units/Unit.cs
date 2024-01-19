@@ -101,6 +101,6 @@ public class Unit : MonoBehaviour
 
     private void Die() // todo : Die() 구현
     {
-
+        // 애니메이션
     }
 }
