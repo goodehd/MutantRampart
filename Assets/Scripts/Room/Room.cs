@@ -18,13 +18,14 @@ public class Room : MonoBehaviour
     protected int[] thisRoomNum = new int[2]; //tile에서 2중배열의 위치를 각각 룸이 가지고 있음 ex) tile[0,1] == tishRoomNum{0,1}
     protected EStatusformat roomStatus = EStatusformat.DefaultTile;
     public bool _canBuildRoom => Main.Get<TileManager>().CanBuildRoom;
+    private GameObject[] _childobj = new GameObject[2];
     private TilemapRenderer[] _renderer = new TilemapRenderer[2];
     private Material[] _origin = new Material[2];
     [SerializeField] protected Material _buildAvailable;
     [SerializeField] protected Material _buildNotAvailable;
     
     public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
-     
+    
     private bool _initialized;
     public virtual void Awake()
     {
@@ -39,6 +40,7 @@ public class Room : MonoBehaviour
         {
             _renderer[i] = this.transform.GetChild(i).GetComponent<TilemapRenderer>();
             _origin[i] = this.transform.GetChild(i).GetComponent<TilemapRenderer>().material;
+            _childobj[i] = this.transform.GetChild(i).gameObject;
         }
         _initialized = true;
         return true;
@@ -79,6 +81,14 @@ public class Room : MonoBehaviour
 
     private void OnMouseDown()
     {
+        
         Debug.Log(this.gameObject.name);
+        /*
+        this.gameObject.layer = 6;
+        foreach (var obj in _childobj)
+        {
+            obj.layer = 6;
+        }
+        */
     }
 }
