@@ -1,0 +1,8 @@
+Key,Type,Instruction,SpritePath
+Forest,Bat,싱그러운 숲~ (으략캬~),Sprites/Room/Forest
+Igloo,Bat,읏추읏추 이글루,Sprites/Room/Igloo
+Lava,Trap,앗뜨앗뜨 용암,Sprites/Room/Lava
+LivingRoom,Bat,평범한 거실,Sprites/Room/LivingRoom
+Molar,Trap,몰?루 어금니,Sprites/Room/Molar
+Snow,Trap,손이 꽁꽁꽁,Sprites/Room/Snow
+Temple,Bat,신비한 사원,Sprites/Room/Temple

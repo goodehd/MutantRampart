@@ -21,12 +21,14 @@ public class ResourceManager : IManagers
     // Load - 배열아닌 ver.
     public T Load<T>(string path) where T : Object
     {
-        T resource = Resources.Load<T>(path);
+        if (!_resources.TryGetValue(path, out Object resource))
+        {
+            resource = Resources.Load<T>(path);
+            if (resource != null)
+                _resources.Add(path, resource);
+        }
 
-        if (resource != null)
-            _resources.Add(resource.name, resource);
-
-        return resource;
+        return resource as T;
     }
 
     // Load - 배열 ver.
