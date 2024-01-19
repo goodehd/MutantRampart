@@ -6,8 +6,8 @@ public class GameManager : IManagers
 {
 
     private int playerMoney; // 플레이어 보유 돈
-    private List<Unit> playerUnits = new List<Unit>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
-    private List<Tile> playerTiles = new List<Tile>(); // todo : 플레이어가 보유한 타일 리스트 -- 리스트 자료형 체크
+    //private List<Unit> playerUnits = new List<Unit>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
+    //private List<Tile> playerTiles = new List<Tile>(); // todo : 플레이어가 보유한 타일 리스트 -- 리스트 자료형 체크
 
     public static bool isGamePaused { get; private set; } // 다른 스크립트에서 쉽게 접근이 가능하도록 메모리에 할당 - static, 읽기전용
 
@@ -72,33 +72,33 @@ public class GameManager : IManagers
     }
 
     // 유닛 관리
-    public void AddPlayerUnit(Unit unit)
-    {
-        playerUnits.Add(unit);
-    }
+    //public void AddPlayerUnit(Unit unit)
+    //{
+    //    playerUnits.Add(unit);
+    //}
 
-    public void RemovePlayerUnit(Unit unit)
-    {
-        playerUnits.Remove(unit);
-    }
+    //public void RemovePlayerUnit(Unit unit)
+    //{
+    //    playerUnits.Remove(unit);
+    //}
 
     // 타일 관리
-    public void AddPlayerTile(Tile tile)
-    {
-        playerTiles.Add(tile);
-    }
+    //public void AddPlayerTile(Tile tile)
+    //{
+    //    playerTiles.Add(tile);
+    //}
 
-    public void RemovePlayerTile(Tile tile)
-    {
-        playerTiles.Remove(tile);
-    }
+    //public void RemovePlayerTile(Tile tile)
+    //{
+    //    playerTiles.Remove(tile);
+    //}
 
-    public void ResetPlayerResources() // 플레이어의 자원(돈, 유닛, 타일 등)을 초기화하는 함수
-    {
-        playerMoney = 0;
-        playerUnits.Clear();
-        playerTiles.Clear();
-    }
+    //public void ResetPlayerResources() // 플레이어의 자원(돈, 유닛, 타일 등)을 초기화하는 함수
+    //{
+    //    playerMoney = 0;
+    //    playerUnits.Clear();
+    //    playerTiles.Clear();
+    //}
 
     public void InitGame() // 게임을 초기화하는 함수
     {
