@@ -7,13 +7,13 @@ public class Main : SingletonBehavior<Main>
 {
     private readonly Dictionary<Type, IManagers> _managers = new Dictionary<Type, IManagers>();
 
-    public static T Get<T>() where T : IManagers
+    public static T Get<T>() where T : class, IManagers
     {
         if(Instance._managers.TryGetValue(typeof(T), out IManagers manager))
         {
-            return (T)manager;
+            return manager as T;
         }
-        return default;
+        return null;
     }
 
     protected override void Init()
