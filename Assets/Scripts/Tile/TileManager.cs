@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class TileManager : MonoBehaviour, IManagers
 {
+    public int x = 3;
+    public int y = 3;
+
+    private List<List<GameObject>> _roomObjList = new List<List<GameObject>>();
+
     public GameObject tilePrefab;
     private int _canBuildRoomCount;
     private int _currentBuildroomCount;
@@ -60,37 +65,43 @@ public class TileManager : MonoBehaviour, IManagers
         // Cell Swizzle 설정
         gridComponent.cellSwizzle = GridLayout.CellSwizzle.XYZ; // XYZ
 
-        List<Vector3> tileMapCoordinates = new List<Vector3>()
-        {
-            new Vector3(-6, 0, 0),
-            new Vector3(-3, 1.5f, 0),
-            new Vector3(0, 3, 0),
-            new Vector3(-3, -1.5f, 0),
-            new Vector3(0, 0, 0),
-            new Vector3(3, 1.5f, 0),
-            new Vector3(0, -3, 0),
-            new Vector3(3, -1.5f, 0),
-            new Vector3(6, 0, 0)
+        //List<Vector3> tileMapCoordinates = new List<Vector3>()
+        //{
+        //    new Vector3(-6, 0, 0),
+        //    new Vector3(-3, 1.5f, 0),
+        //    new Vector3(0, 3, 0),
+        //    new Vector3(-3, -1.5f, 0),
+        //    new Vector3(0, 0, 0),
+        //    new Vector3(3, 1.5f, 0),
+        //    new Vector3(0, -3, 0),
+        //    new Vector3(3, -1.5f, 0),
+        //    new Vector3(6, 0, 0)
 
 
-        };
+        //};
 
-        foreach (Vector3 coordinate in tileMapCoordinates)
-        {
-            //Instantiate(tilePrefab, coordinate, Quaternion.identity, gridObject.transform);
-            GameObject tile = Main.Get<PoolManager>().Pop(tilePrefab);
-            tile.transform.SetParent(gridComponent.transform);
-            tile.transform.position = coordinate;
-        }
+        //foreach (Vector3 coordinate in tileMapCoordinates)
+        //{
+        //    //Instantiate(tilePrefab, coordinate, Quaternion.identity, gridObject.transform);
+        //    GameObject tile = Main.Get<PoolManager>().Pop(tilePrefab);
+        //    tile.transform.SetParent(gridComponent.transform);
+        //    tile.transform.position = coordinate;
+        //}
 
-        /*for (int i = 0; i < 3; i++)
+        Vector2 pos = Vector2.zero;
+        Vector2 offset = Vector2.zero;
+
+       for (int i = 0; i < x; i++)
        {
-           for (int j = 0; j < 3; j++)
-           {
-               Instantiate(tilePrefab, new Vector3(i * 3, j * 1.5f, 0), Quaternion.identity, gridObject.transform);
-           }
-       }*/
-
+            _roomObjList.Add(new List<GameObject>());
+            pos.Set(-3f * i, 1.5f * i);
+            for (int j = 0; j < y; j++)
+            {
+                offset.Set(3f * j, 1.5f * j);
+                GameObject obj = Instantiate(tilePrefab, pos + offset, Quaternion.identity, gridObject.transform);
+                _roomObjList[i].Add(obj);
+            }
+        }
     }
 
     public bool Init()

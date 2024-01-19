@@ -22,3 +22,11 @@ public enum EstatType
     MoveSpeed,
     Max
 }
+
+public enum EState
+{
+    Idle,
+    Move,
+    Attack,
+    Dead
+}
