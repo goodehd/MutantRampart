@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,9 @@ public class DefaultTile : MonoBehaviour
 {
     public Room RoomBuilt { get; set; }
     public bool _canBuildRoom => Main.Get<TileManager>().CanBuildRoom;
-    private TilemapRenderer _renderer;
-    private Material _origin;
+    private TilemapRenderer[] _renderer = new TilemapRenderer[2];
+    private Material[] _origin = new Material[2];
+    private Vector3 _tilePosition;
     [SerializeField] private Material _buildAvailable;
     [SerializeField] private Material _buildNotAvailable;
 
@@ -26,24 +28,48 @@ public class DefaultTile : MonoBehaviour
 
     private void Awake()
     {
-        _renderer = GetComponent<TilemapRenderer>();
-        _origin = GetComponent<TilemapRenderer>().material;
+        for (int i = 0; i < 2; i++)
+        {
+            _renderer[i] = this.transform.GetChild(i).GetComponent<TilemapRenderer>();
+            _origin[i] = this.transform.GetChild(i).GetComponent<TilemapRenderer>().material;
+        }
     }
-
+    
     private void OnMouseEnter()
     {
         if (_canBuildRoom)
         {
-            _renderer.material = _buildAvailable;
+            foreach (var _Ren in _renderer)
+            {
+                _Ren.material = _buildAvailable;
+            }
+            
+            
         }
         else
         {
-            _renderer.material = _buildNotAvailable;
+            foreach (var _Ren in _renderer)
+            {
+                _Ren.material = _buildNotAvailable;
+            }
+
         }
     }
 
     private void OnMouseExit()
     {
-        _renderer.material = _origin;
+        for (int i = 0; i < 2; i++)
+        {
+            _renderer[i].material = _origin[i];
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        _tilePosition = this.gameObject.transform.position;
+        this.gameObject.SetActive(false);
+        GameObject tile = Main.Get<PoolManager>().Pop(TileManager.instance.rooms[1]);
+        tile.transform.SetParent(TileManager.instance.gridObject.transform);
+        tile.transform.position = _tilePosition;
     }
 }

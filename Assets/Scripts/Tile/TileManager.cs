@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class TileManager : MonoBehaviour, IManagers
 {
+
     public int x = 3;
     public int y = 3;
 
     private List<List<GameObject>> _roomObjList = new List<List<GameObject>>();
 
     public GameObject tilePrefab;
+    public GameObject gridObject;
+    public GameObject[] rooms;
     private int _canBuildRoomCount;
     private int _currentBuildroomCount;
     private bool _canBuildRoom = false;
@@ -23,9 +26,11 @@ public class TileManager : MonoBehaviour, IManagers
             }
             return _canBuildRoom;
         }
-    } 
+    }
+
     private void Start()
     {
+        gridObject = new GameObject("Tile");
         GenerateMap();
     }
 
@@ -52,7 +57,6 @@ public class TileManager : MonoBehaviour, IManagers
     private void GenerateMap()
     {
         // 그리드를 생성하고 Grid 컴포넌트를 추가
-        GameObject gridObject = new GameObject("Tile");
         Grid gridComponent = gridObject.AddComponent<Grid>();
 
         // Cell Size 및 Cell Gap 설정
