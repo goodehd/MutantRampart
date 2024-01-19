@@ -1061,13 +1061,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2775112070071157534}
+  - component: {fileID: 3913709605977591277}
+  - component: {fileID: 6230396562886999507}
   m_Layer: 0
   m_Name: Forest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2775112070071157534
 Transform:
   m_ObjectHideFlags: 0
@@ -1087,3 +1089,69 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &3913709605977591277
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763108014055448253}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: -0.5}
+      - {x: -3, y: 1}
+      - {x: -3, y: 2.5}
+      - {x: 0, y: 4}
+      - {x: 3, y: 2.5}
+      - {x: 3, y: 1}
+  m_UseDelaunayMesh: 0
+--- !u!114 &6230396562886999507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763108014055448253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ed071069ff7def459bf950f2833baf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buildAvailable: {fileID: 2100000, guid: 6312956a193c58b4a8a2c43bb7596cba, type: 2}
+  _buildNotAvailable: {fileID: 2100000, guid: 5d0d5465d6d70c748adb74eb7f6e5f2f, type: 2}
+  unitPos: {fileID: 6824715824397830647}
