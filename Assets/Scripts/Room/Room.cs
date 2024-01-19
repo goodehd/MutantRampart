@@ -15,7 +15,7 @@ public enum EStatusformat
 
 public class Room : MonoBehaviour
 {
-    protected int[] thisRoomNum = new int[2]; //tile에서 2중배열의 위치를 각각 룸이 가지고 있음 ex) tile[0,1] == tishRoomNum{0,1}
+    public int[] thisRoomNum = new int[2]; //tile에서 2중배열의 위치를 각각 룸이 가지고 있음 ex) tile[0,1] == tishRoomNum{0,1}
     protected EStatusformat roomStatus = EStatusformat.DefaultTile;
     public bool _canBuildRoom => Main.Get<TileManager>().CanBuildRoom;
     private GameObject[] _childobj = new GameObject[2];
@@ -23,6 +23,8 @@ public class Room : MonoBehaviour
     private Material[] _origin = new Material[2];
     [SerializeField] protected Material _buildAvailable;
     [SerializeField] protected Material _buildNotAvailable;
+    
+    private Vector3 _tilePosition;
     
     public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
     
@@ -81,14 +83,21 @@ public class Room : MonoBehaviour
 
     private void OnMouseDown()
     {
-        
         Debug.Log(this.gameObject.name);
+        // UI띄우고
+        // 내가 누군지 보내주고
+        ChangeRoomUI _changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoomUI>("ChangeRoom_PopUpUI");
+        _changeRoomUI.selectRoom = this;
         /*
-        this.gameObject.layer = 6;
-        foreach (var obj in _childobj)
-        {
-            obj.layer = 6;
-        }
+
+        Debug.Log(this.gameObject.name);
+        _tilePosition = this.gameObject.transform.position;
+        this.gameObject.SetActive(false);
+        GameObject tile = Main.Get<PoolManager>().Pop(Main.Get<TileManager>().rooms[1]);
+
+        tile.transform.SetParent(Main.Get<TileManager>().gridObject.transform);
+        tile.transform.position = _tilePosition;
         */
     }
+    
 }

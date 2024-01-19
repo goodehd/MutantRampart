@@ -68,8 +68,8 @@ public class DefaultTile : MonoBehaviour
     {
         _tilePosition = this.gameObject.transform.position;
         this.gameObject.SetActive(false);
-        GameObject tile = Main.Get<PoolManager>().Pop(TileManager.instance.rooms[1]);
-        tile.transform.SetParent(TileManager.instance.gridObject.transform);
-        tile.transform.position = _tilePosition;
+        //GameObject tile = Main.Get<PoolManager>().Pop(TileManager.instance.rooms[1]);
+        //tile.transform.SetParent(TileManager.instance.gridObject.transform);
+        //tile.transform.position = _tilePosition;
     }
 }
