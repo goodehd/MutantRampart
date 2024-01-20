@@ -5,17 +5,17 @@ using UnityEngine;
 public class GameManager : IManagers
 {
 
-    private int playerMoney; // 플레이어 보유 돈
+    private int _playerMoney; // 플레이어 보유 돈
     //private List<Unit> playerUnits = new List<Unit>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
-    public List<RoomData> playerRooms { get; private set; } = new List<RoomData>(); // todo : 플레이어가 보유한 타일 리스트 -- 리스트 자료형 체크
+    public List<RoomData> PlayerRooms { get; private set; } = new List<RoomData>(); // todo : 플레이어가 보유한 타일 리스트 -- 리스트 자료형 체크
 
     public static bool isGamePaused { get; private set; } // 다른 스크립트에서 쉽게 접근이 가능하도록 메모리에 할당 - static, 읽기전용
 
     public bool Init()
     {
-        playerRooms.Add(Main.Get<DataManager>().roomDatas["Forest"]);
-        playerRooms.Add(Main.Get<DataManager>().roomDatas["Lava"]);
-        playerRooms.Add(Main.Get<DataManager>().roomDatas["Snow"]);
+        PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Forest"]);
+        PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Lava"]);
+        PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Snow"]);
         
         return true;
     }
@@ -58,19 +58,19 @@ public class GameManager : IManagers
 
     public void AddMoney(int money)
     {
-        playerMoney += money;
+        _playerMoney += money;
         Refresh();
     }
 
     public void Spendmoney(int money)
     {
-        if (playerMoney < money) // 돈 부족 시
+        if (_playerMoney < money) // 돈 부족 시
         {
             ShowWarning();
             Debug.Log("돈이 부족해 !!");
         }
 
-        playerMoney -= money;
+        _playerMoney -= money;
         Refresh();
 
     }

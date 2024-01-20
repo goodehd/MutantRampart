@@ -15,20 +15,16 @@ public enum EStatusformat
 
 public class Room : MonoBehaviour
 {
-    public int[] thisRoomNum = new int[2]; //tile에서 2중배열의 위치를 각각 룸이 가지고 있음 ex) tile[0,1] == tishRoomNum{0,1}
-    protected EStatusformat roomStatus = EStatusformat.DefaultTile;
-    public bool _canBuildRoom => Main.Get<TileManager>().CanBuildRoom;
-    private GameObject[] _childobj = new GameObject[2];
+    private bool _isInitialized;
+    private GameObject[] _childObj = new GameObject[2];
     private TilemapRenderer[] _renderer = new TilemapRenderer[2];
     private Material[] _origin = new Material[2];
+    protected EStatusformat _roomStatus = EStatusformat.DefaultTile;
     [SerializeField] protected Material _buildAvailable;
     [SerializeField] protected Material _buildNotAvailable;
-    
-    private Vector3 _tilePosition;
-    
+    public bool isCanBuildRoom => Main.Get<TileManager>().isCanBuildRoom;
     public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
     
-    private bool _initialized;
     public virtual void Awake()
     {
         Initialize();
@@ -37,14 +33,14 @@ public class Room : MonoBehaviour
 
     public virtual bool Initialize()
     {
-        if (_initialized) return false;
+        if (_isInitialized) return false;
         for (int i = 0; i < 2; i++)
         {
             _renderer[i] = this.transform.GetChild(i).GetComponent<TilemapRenderer>();
             _origin[i] = this.transform.GetChild(i).GetComponent<TilemapRenderer>().material;
-            _childobj[i] = this.transform.GetChild(i).gameObject;
+            _childObj[i] = this.transform.GetChild(i).gameObject;
         }
-        _initialized = true;
+        _isInitialized = true;
         return true;
     }
 
@@ -55,7 +51,7 @@ public class Room : MonoBehaviour
     }
     private void OnMouseEnter()
     {
-        if (_canBuildRoom)
+        if (isCanBuildRoom)
         {
             foreach (var _Ren in _renderer)
             {
@@ -86,8 +82,8 @@ public class Room : MonoBehaviour
         Debug.Log(this.gameObject.name);
         // UI띄우고
         // 내가 누군지 보내주고
-        ChangeRoomUI _changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoomUI>("ChangeRoom_PopUpUI");
-        _changeRoomUI.selectRoom = this;
+        ChangeRoomUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoomUI>("ChangeRoom_PopUpUI");
+        changeRoomUI.SelectRoom = this;
         /*
 
         Debug.Log(this.gameObject.name);
