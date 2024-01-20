@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class RoomSelectImage : BaseUI
 {
-    public RoomData roomData { get; set; }
-    private Image roomImage;
-    private Button roomselectButton;
-    private Sprite roomSprite;
-    public ChangeRoomUI owner { get; set; }
+    private Image _roomImage;
+    private Button _roomSelectButton;
+    private Sprite _roomSprite;
+    public RoomData RoomData { get; set; }
+    public ChangeRoomUI Owner { get; set; }
     
     
     protected override void Init()
@@ -18,18 +18,18 @@ public class RoomSelectImage : BaseUI
         SetUI<Image>();
         SetUI<Button>();
 
-        roomImage = GetUI<Image>("RoomSelectImage(Clone)");
-        roomselectButton = GetUI<Button>("RoomSelectImage(Clone)");
+        _roomImage = GetUI<Image>("RoomSelectImage(Clone)");
+        _roomSelectButton = GetUI<Button>("RoomSelectImage(Clone)");
 
-        roomImage.sprite = Main.Get<ResourceManager>().Load<Sprite>(roomData.SpritePath);
-        roomSprite = roomImage.sprite;
-        SetUICallback(roomselectButton.gameObject, EUIEventState.Click, SetInfo);
+        _roomImage.sprite = Main.Get<ResourceManager>().Load<Sprite>(RoomData.SpritePath);
+        _roomSprite = _roomImage.sprite;
+        SetUICallback(_roomSelectButton.gameObject, EUIEventState.Click, SetInfo);
 
     }
 
     private void SetInfo(PointerEventData EventData)
     {
-        owner.SetSelectRoomInfo(roomData, roomSprite);
+        Owner.SetSelectRoomInfo(RoomData, _roomSprite);
 
     }
     

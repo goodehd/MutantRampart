@@ -4,61 +4,34 @@ using UnityEngine;
 
 public class TileManager : MonoBehaviour, IManagers
 {
-
-    public int x = 3;
-    public int y = 3;
-
+    private int _canBuildRoomCount;
+    private int _currentBuildRoomCount;
+    private bool _isCanBuildRoom = false;
     private List<List<GameObject>> _roomObjList = new List<List<GameObject>>();
 
-    public GameObject tilePrefab;
-    public GameObject gridObject;
-    public GameObject[] rooms;
-    private int _canBuildRoomCount;
-    private int _currentBuildroomCount;
-    private bool _canBuildRoom = false;
-    public bool CanBuildRoom // 방을 설치할 수 있는 타일이 몇개인지에 대한 정보 
+    public GameObject TilePrefab;
+    public GameObject GridObject;
+    public GameObject[] Rooms;
+    public int x = 3;
+    public int y = 3;
+    public bool isCanBuildRoom // 방을 설치할 수 있는 타일이 몇개인지에 대한 정보 
     {
         get
         {
-            if (_currentBuildroomCount <= _canBuildRoomCount)
+            if (_currentBuildRoomCount <= _canBuildRoomCount)
             {
-                _canBuildRoom = true;
+                _isCanBuildRoom = true;
             }
-            return _canBuildRoom;
+            return _isCanBuildRoom;
         }
     }
 
-    private void Start()
-    {
-        GenerateMap();
-    }
-
-    private void OnMouseDown()
-    {
-        // 마우스 클릭 시 실행되는 코드
-        ChangeTile(); // 타일을 다른 타일로 변경하거나 삭제하는 함수 호출
-    }
-
-    private void ChangeTile()
-    {
-        // 이 함수에서 원하는 동작을 구현합니다.
-        // 다른 타일로 변경하거나 삭제하는 코드를 작성할 수 있습니다.
-
-        // 새로운 타일 프리팹을 생성하여 현재 타일 위치에 놓음
-        //Instantiate(newTilePrefab, transform.position, Quaternion.identity);
-
-        // 현재 타일을 삭제
-        //Destroy(gameObject);
-    }
-
-    
-
     public void GenerateMap()
     {
-        gridObject = new GameObject("Tile");
+        GridObject = new GameObject("Tile");
 
         // 그리드를 생성하고 Grid 컴포넌트를 추가
-        Grid gridComponent = gridObject.AddComponent<Grid>();
+        Grid gridComponent = GridObject.AddComponent<Grid>();
 
         // Cell Size 및 Cell Gap 설정
         gridComponent.cellSize = new Vector3(1, 0.5f, 1); // x = 1, y = 0.5, z = 1
@@ -103,7 +76,7 @@ public class TileManager : MonoBehaviour, IManagers
             for (int j = 0; j < y; j++)
             {
                 offset.Set(3f * j, 1.5f * j);
-                GameObject obj = Instantiate(tilePrefab, pos + offset, Quaternion.identity, gridObject.transform);
+                GameObject obj = Instantiate(TilePrefab, pos + offset, Quaternion.identity, GridObject.transform);
                 _roomObjList[i].Add(obj);
             }
         }
@@ -111,7 +84,7 @@ public class TileManager : MonoBehaviour, IManagers
 
     public bool Init()
     {
-        tilePrefab = Main.Get<ResourceManager>().Load<GameObject>("Prefabs/Room/Lava");
+        TilePrefab = Main.Get<ResourceManager>().Load<GameObject>("Prefabs/Room/Lava");
         return true;
     }
 }

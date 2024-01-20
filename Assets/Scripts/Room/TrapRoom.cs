@@ -21,7 +21,7 @@ public class TrapRoom : Room
     {
         if (!base.Initialize()) return false;
 
-        roomStatus = EStatusformat.Trap;
+        _roomStatus = EStatusformat.Trap;
         //_trapType = Enum.Parse<ETrapType>(this.gameObject.name) ;
         OnEnemyEnterRoom += EnemyEnterRoom;
         
@@ -49,10 +49,10 @@ public class TrapRoom : Room
     private void LavaTrap(GameObject g)
     {
         //도트뎀
-        StartCoroutine(Lavadamege(4));
+        StartCoroutine(LavaDamage(4));
     }
 
-    IEnumerator Lavadamege(int a)
+    IEnumerator LavaDamage(int a)
     {
         for (int i = 0; i < a; i++)
         {

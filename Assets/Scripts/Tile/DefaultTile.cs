@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class DefaultTile : MonoBehaviour
 {
     public Room RoomBuilt { get; set; }
-    public bool _canBuildRoom => Main.Get<TileManager>().CanBuildRoom;
+    public bool _canBuildRoom => Main.Get<TileManager>().isCanBuildRoom;
     private TilemapRenderer[] _renderer = new TilemapRenderer[2];
     private Material[] _origin = new Material[2];
     private Vector3 _tilePosition;
