@@ -26,8 +26,8 @@ public class ShopUI : BaseUI
         _groundButton = GetUI<Button>("GroundBtn");
         _closeButton = GetUI<Button>("ShopCloseBtn");
 
-        _unitScrollView = GetUI<ScrollRect>("unit_scroll view");
-        _tiletScrollView = GetUI<ScrollRect>("tile_scroll view");
+        _unitScrollView = GetUI<ScrollRect>("Unit_Scroll View");
+        _tiletScrollView = GetUI<ScrollRect>("Tile_Scroll View");
         _groundScrollView = GetUI<ScrollRect>("Ground_Scroll View");
 
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
@@ -35,9 +35,6 @@ public class ShopUI : BaseUI
         SetUICallback(_groundButton.gameObject, EUIEventState.Click, ClickGroundBtn);
         SetUICallback(_closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
 
-        //SetUICallback(_unitScrollView.gameObject, EUIEventState.Click, ClickUnitBtn);
-        //SetUICallback(_tiletScrollView.gameObject, EUIEventState.Click, ClickTileBtn);
-        //SetUICallback(_groundScrollView.gameObject, EUIEventState.Click, ClickGroundBtn);
 
     }
 
@@ -45,17 +42,23 @@ public class ShopUI : BaseUI
     {
         // Unit_Scroll View 활성화
         _unitScrollView.gameObject.SetActive(true);
+        _tiletScrollView.gameObject.SetActive(false);
+        _groundScrollView.gameObject.SetActive(false);
     }
 
     private void ClickTileBtn(PointerEventData eventData)
     {
         // Tile_Scroll View 활성화
+        _unitScrollView.gameObject.SetActive(false);
         _tiletScrollView.gameObject.SetActive(true);
+        _groundScrollView.gameObject.SetActive(false);
     }
 
     private void ClickGroundBtn(PointerEventData eventData)
     {
         // Ground_Scroll View 활성화
+        _unitScrollView.gameObject.SetActive(false);
+        _tiletScrollView.gameObject.SetActive(false);
         _groundScrollView.gameObject.SetActive(true);
     }
 

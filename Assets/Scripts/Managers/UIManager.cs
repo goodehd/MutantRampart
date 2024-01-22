@@ -36,7 +36,7 @@ public class UIManager : IManagers
     public T OpenSceneUI<T>(string prefabName, string path = Literals.UI_SCENE_PATH) where T : BaseUI
     {
         GameObject uiObj = InstantiateUI(prefabName, path);
-        SetCanvasInfo(uiObj, true);
+        SetCanvasInfo(uiObj, false);
         return Utility.GetAddComponent<T>(uiObj);
     }
 
@@ -45,7 +45,7 @@ public class UIManager : IManagers
         GameObject uiObj = InstantiateUI(prefabName, path);
         T popup = Utility.GetAddComponent<T>(uiObj);
         _popupStack.Push(popup);
-        SetCanvasInfo(uiObj, false);
+        SetCanvasInfo(uiObj, true);
         return popup;
     }
 
