@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Shop : BaseUI
+public class ShopUI : BaseUI
 {
 
     private Button _unitButton;
@@ -34,6 +34,10 @@ public class Shop : BaseUI
         SetUICallback(_tileButton.gameObject, EUIEventState.Click, ClickTileBtn);
         SetUICallback(_groundButton.gameObject, EUIEventState.Click, ClickGroundBtn);
         SetUICallback(_closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
+
+        //SetUICallback(_unitScrollView.gameObject, EUIEventState.Click, ClickUnitBtn);
+        //SetUICallback(_tiletScrollView.gameObject, EUIEventState.Click, ClickTileBtn);
+        //SetUICallback(_groundScrollView.gameObject, EUIEventState.Click, ClickGroundBtn);
 
     }
 
