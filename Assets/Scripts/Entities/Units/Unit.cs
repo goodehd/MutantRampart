@@ -46,7 +46,7 @@ public class Unit : Character
 
         Status.GetStat<Vital>(EstatType.Hp).OnValueZero += Die; // 죽는 함수 발동 예시.
 
-        Status[EstatType.Damage].Value; // 캐릭터의 공격력 값.
+        //Status[EstatType.Damage].Value; // 캐릭터의 공격력 값.
 
     }
 
