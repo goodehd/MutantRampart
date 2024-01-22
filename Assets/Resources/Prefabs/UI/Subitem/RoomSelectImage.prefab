@@ -134,6 +134,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6e042e3bd8291440bf1dfc49eb2c21a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomImage: {fileID: 0}
-  roomselectButton: {fileID: 0}
-  owner: {fileID: 0}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Xml;
 
 public class DataManager : IManagers
 { 
@@ -10,6 +11,8 @@ public class DataManager : IManagers
     public Dictionary<string, CharacterData> enemy = new Dictionary<string, CharacterData>();
     public Dictionary<string, RoomData> roomDatas = new Dictionary<string, RoomData>();
     public Dictionary<string, CharacterData> unit = new Dictionary<string, CharacterData>();
+    public Dictionary<string, Shop_RoomData> shop_RoomData = new Dictionary<string, Shop_RoomData>();
+
 
     public CSVReader reader = new();
     
@@ -18,6 +21,7 @@ public class DataManager : IManagers
         enemy = reader.LoadToCSVData<CharacterData>();
         roomDatas = reader.LoadToCSVData<RoomData>();
         unit = reader.LoadToCSVData<CharacterData>();
+        shop_RoomData = reader.LoadToCSVData<Shop_RoomData>();
         return true;
     }
 

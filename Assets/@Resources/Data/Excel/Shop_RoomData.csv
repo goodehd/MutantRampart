@@ -1,0 +1,8 @@
+Key,SpritePath,Price
+Forest,Sprites/Room/Forest,100
+Igloo,Sprites/Room/Igloo,101
+Lava,Sprites/Room/Lava,102
+LivingRoom,Sprites/Room/LivingRoom,103
+Molar,Sprites/Room/Molar,104
+Snow,Sprites/Room/Snow,105
+Temple,Sprites/Room/Temple,106

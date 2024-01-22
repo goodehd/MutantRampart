@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1288432037441436278}
   - component: {fileID: 2458771156970754251}
   m_Layer: 5
-  m_Name: Tile_ItemPrice
+  m_Name: Room_ItemPrice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 3763533211403944462}
   - component: {fileID: 6785884016388867634}
   m_Layer: 5
-  m_Name: Tile_List
+  m_Name: Room_List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 7034195768343085195}
   - component: {fileID: 4372878625177333348}
   m_Layer: 5
-  m_Name: Tile_BuyBtnText
+  m_Name: Room_BuyBtnText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 576717193715130635}
   - component: {fileID: 3946739612037992366}
   m_Layer: 5
-  m_Name: Tile_ItemImg
+  m_Name: Room_ItemImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5471698, g: 0.26067996, b: 0.26067996, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -452,7 +452,7 @@ GameObject:
   - component: {fileID: 475382083873422274}
   - component: {fileID: 3619974061688243943}
   m_Layer: 5
-  m_Name: Tile_BuyBtn
+  m_Name: Room_BuyBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -573,7 +573,7 @@ GameObject:
   - component: {fileID: 5264526790611873900}
   - component: {fileID: 8294382911624392184}
   m_Layer: 5
-  m_Name: Tile_ItemName
+  m_Name: Room_ItemName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
