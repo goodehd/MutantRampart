@@ -7,7 +7,7 @@ public class TestScene : Scene
 
     protected override void Init()
     {
-        Main.Get<UIManager>().OpenPopup<Shop>("Shop");
+        Main.Get<UIManager>().OpenPopup<Shop>("Shop_PopupUI");
     }
 
     
