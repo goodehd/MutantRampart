@@ -17,9 +17,19 @@ public class ChangeRoomUI : BaseUI
     private Button _equipButton;
     private Button _exitButton;
     private Transform _content;
+
+    private bool _isOpenUi = false;
+    
     public Room SelectRoom;
     
-   
+    
+
+    private void Awake()
+    {
+        _isOpenUi = true;
+        //Camera.main.GetComponent<Camera>().cullingMask = 6;
+    }
+
     protected override void Init()
     {
         SetUI<TextMeshProUGUI>();
@@ -73,6 +83,11 @@ public class ChangeRoomUI : BaseUI
         Main.Get<UIManager>().ClosePopup();
     }
 
+    private void OnDestroy()
+    {
+        _isOpenUi = false;
+        //Camera.main.GetComponent<Camera>().cullingMask = 1;
+    }
     /*
     public void OnclickImage(string a)
     {

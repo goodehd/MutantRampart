@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.EventSystems;
 
 public enum EStatusformat
 {
@@ -79,6 +80,8 @@ public class Room : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if(EventSystem.current.IsPointerOverGameObject())return;
+        
         Debug.Log(this.gameObject.name);
         // UI띄우고
         // 내가 누군지 보내주고
