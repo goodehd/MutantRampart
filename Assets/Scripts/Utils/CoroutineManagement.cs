@@ -43,12 +43,12 @@ public class CoroutineManagement : SingletonBehavior<CoroutineManagement>
         }
     }
 
-    public Coroutine StartCo(IEnumerator coroutine)
+    public Coroutine StartManagedCoroutine(IEnumerator coroutine)
     {
         return StartCoroutine(coroutine);
     }
 
-    public void StopCo(Coroutine coroutine)
+    public void StopManagedCoroutine(Coroutine coroutine)
     {
         StopCoroutine(coroutine);
     }

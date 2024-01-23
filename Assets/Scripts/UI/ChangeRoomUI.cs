@@ -75,13 +75,13 @@ public class ChangeRoomUI : BaseUI
     {
         if (_selectRoomData.isEquiped == false)
         {
-            InstantiateRoom(_selectRoomData.Key);
+            ChangeRoom(_selectRoomData.Key);
             _selectRoomData.isEquiped = true;
             Main.Get<GameManager>().PlayerRooms.Remove(_selectRoomData);
         }
         else
         {
-            InstantiateRoom("Default");
+            ChangeRoom("Default");
             _selectRoomData.isEquiped = false;
             Main.Get<GameManager>().PlayerRooms.Add(_selectRoomData);
         }
@@ -99,14 +99,9 @@ public class ChangeRoomUI : BaseUI
         //Camera.main.GetComponent<Camera>().cullingMask = 1;
     }
 
-    private void InstantiateRoom(string roomDataName)
+    private void ChangeRoom(string roomDataName)
     {
-        Vector3 pos = SelectRoom.transform.position;
-        Main.Get<ResourceManager>().Destroy(SelectRoom.gameObject);
-        GameObject obj = Main.Get<ResourceManager>().InstantiateWithPoolingOption($"Prefabs/Room/{roomDataName}"
-            , Main.Get<TileManager>().GridObject.transform);
-        obj.transform.position = pos;
-        SelectRoom = obj.GetComponent<Room>();
+        SelectRoom = Main.Get<TileManager>().ChangeRoom(SelectRoom.IndexX, SelectRoom.IndexY, roomDataName);
     }
 
     private void SetMapInventory()
