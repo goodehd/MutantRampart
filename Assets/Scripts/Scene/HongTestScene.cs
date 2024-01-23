@@ -8,4 +8,9 @@ public class HongTestScene : Scene
     {
         Main.Get<TileManager>().GenerateMap();
     }
+
+    public void CreateEnemy()
+    {
+        Main.Get<ResourceManager>().InstantiateWithPoolingOption("Prefabs/Enemy/SlimeBlue");
+    }
 }

@@ -29,7 +29,7 @@ public class Unit : Character
 
     }
 
-    public void Init(CharacterData data) // TODO : 함수에 override 추가하기(Character script 에서 Init 함수를 virtual 로 만들 예정.)
+    public override void Init(CharacterData data) // TODO : 함수에 override 추가하기(Character script 에서 Init 함수를 virtual 로 만들 예정.)
     {
         //if (_isInitialize)
         //{

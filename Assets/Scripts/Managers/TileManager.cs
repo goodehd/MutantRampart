@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TileManager : MonoBehaviour, IManagers
+public class TileManager : IManagers
 {
     private ResourceManager resource;
     private int _canBuildRoomCount;
