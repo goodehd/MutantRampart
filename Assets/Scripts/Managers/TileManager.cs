@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class TileManager : IManagers
 {
@@ -61,13 +59,6 @@ public class TileManager : IManagers
                 Room room = obj.GetComponent<Room>();
                 room.IndexX = i;
                 room.IndexY = j;
-
-                // 생성되는 타일의 이름 뒤에 (Clone)을 없애준다.
-                int index = obj.name.IndexOf("(Clone)");
-                if (index > 0)
-                {
-                    obj.name = obj.name.Substring(0, index);
-                }
             }
        }
     }
@@ -76,6 +67,18 @@ public class TileManager : IManagers
     {
         resource = Main.Get<ResourceManager>();
         return true;
+    }
+
+    public Room ChangeRoom(int indexX, int indexY, string srcName)
+    {
+        Vector3 pos = _roomObjList[indexX][indexY].transform.position;
+        resource.Destroy(_roomObjList[indexX][indexY].gameObject);
+
+        GameObject obj = resource.InstantiateWithPoolingOption($"Prefabs/Room/{srcName}", GridObject.transform);
+        obj.transform.position = pos;
+        _roomObjList[indexX][indexY] = obj;
+
+        return obj.GetComponent<Room>();
     }
 
     public List<GameObject> GetNeighbors(int curPosX, int curPosY)

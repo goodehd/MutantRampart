@@ -6,8 +6,7 @@ public class MoveState : BaseState
 {
     private TileManager _tileMap;
     private Vector3 _targetPos = Vector3.zero;
-    private IEnumerator _coroutine;
-    private Coroutine _coroutine2;
+    private Coroutine _coroutine;
     private bool _isMove;
     //private List<List<bool>> _isVisit;
 
@@ -19,6 +18,7 @@ public class MoveState : BaseState
 
     public override void EnterState()
     {
+        MoveStart();
         Owner.Animator.SetBool(Literals.Move, true);
     }
 
@@ -30,6 +30,11 @@ public class MoveState : BaseState
     }
 
     public override void UpdateState()
+    {
+
+    }
+
+    private void MoveStart()
     {
         if (!_isMove)
         {
@@ -84,5 +89,6 @@ public class MoveState : BaseState
         Owner.CurPosY = y;
 
         _isMove = false;
+        MoveStart();
     }
 }

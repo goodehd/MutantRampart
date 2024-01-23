@@ -14,7 +14,7 @@ public class ResourceManager : IManagers
         // 이런 식으로 Init 에서 필요한 것들 Load 관련 함수 사용해서 불러오면 되는건가
         //Load<SpriteRenderer>("");
         LoadAll<GameObject>("asd");
-
+         
         return true;
     }
 
