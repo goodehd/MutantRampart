@@ -78,13 +78,19 @@ public class TileManager : MonoBehaviour, IManagers
                 offset.Set(3f * j, 1.5f * j);
                 GameObject obj = Instantiate(TilePrefab, pos + offset, Quaternion.identity, GridObject.transform);
                 _roomObjList[i].Add(obj);
+                // 생성되는 타일의 이름 뒤에 (Clone)을 없애준다.
+                int index = obj.name.IndexOf("(Clone)");
+                if (index > 0)
+                {
+                    obj.name = obj.name.Substring(0, index);
+                }
             }
-        }
+       }
     }
 
     public bool Init()
     {
-        TilePrefab = Main.Get<ResourceManager>().Load<GameObject>("Prefabs/Room/Lava");
+        TilePrefab = Main.Get<ResourceManager>().Load<GameObject>("Prefabs/Room/Default");
         return true;
     }
 }
