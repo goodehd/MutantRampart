@@ -1,2 +1,5 @@
-﻿Key,Hp,Damage,Defense,AttackSpeed,MoveSpeed
+Key,Hp,Damage,Defense,AttackSpeed,MoveSpeed
 Slime,100,10,5,1,5
+Gun,100,10,5,2,1
+Jotem,200,20,10,4,1
+Warrior,300,30,15,6,1

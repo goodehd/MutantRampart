@@ -6,22 +6,52 @@ public enum EUnitState
     Attacking
 }
 
-public class Unit : MonoBehaviour
+public class Unit : Character
 {
+    //public CharacterStatus UnitStatus { get; private set; } // hp, damage, defense, attackspeed, movespeed(유닛은 안움직이긴하는데)
 
-    private Animator _animator;
+    //private Animator _animator;
 
     private EUnitState unitState;
 
     //private List<Enemy> currentEnemiesInRange = new List<Enemy>(); // 플레이어의 공격 범위 안에 들어온 적들을 List 로 관리.
 
-    private int damage; // 얘네 나중에 DataManager 에서 델꼬오는걸로.
-    private float attackRate; // 얘네 나중에 DataManager 에서 델꼬오는걸로.
-    private float lastAttackTime; // 얘네 나중에 DataManager 에서 델꼬오는걸로.
+    //private int damage; // 얘네 나중에 DataManager 에서 델꼬오는걸로.
+    //private float attackRate; // 얘네 나중에 DataManager 에서 델꼬오는걸로.
+    //private float lastAttackTime; // 얘네 나중에 DataManager 에서 델꼬오는걸로.
 
+    //private bool _isInitialize = false;
+
+    private void Start()
+    {
+        // DataManager 에서 public Dictionary<string, CharacterData> unit = new Dictionary<string, CharacterData>(); 해주기
+        Init(Main.Get<DataManager>().unit["Gun"]);
+
+    }
+
+    public void Init(CharacterData data) // TODO : 함수에 override 추가하기(Character script 에서 Init 함수를 virtual 로 만들 예정.)
+    {
+        //if (_isInitialize)
+        //{
+        //    return;
+        //}
+
+        //Status = new CharacterStatus(data);
+        //_isInitialize = true;
+
+        base.Init(data); // 여기서 Status 를 만들어준다.
+
+        // 굿동님의 설명
+        Status.GetStat<Vital>(EstatType.Hp).CurValue += 100; // hp 값 !
+
+        Status.GetStat<Vital>(EstatType.Hp).OnValueZero += Die; // 죽는 함수 발동 예시.
+
+        //Status[EstatType.Damage].Value; // 캐릭터의 공격력 값.
+
+    }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // Enemy List 가 비어있는지 확인하여 상태 업데이트.
         UpdateUnitState();
@@ -62,9 +92,9 @@ public class Unit : MonoBehaviour
 
     private void Attack()
     {
-        if (Time.time - lastAttackTime > attackRate) // Time.time - lastAttackTime 은 최근 공격 시간 간격을 의미함. 이 값이 attackRate 보다 크다면 공격 go !
-        {
-            lastAttackTime = Time.time;
+        //if (Time.time - lastAttackTime > attackRate) // Time.time - lastAttackTime 은 최근 공격 시간 간격을 의미함. 이 값이 attackRate 보다 크다면 공격 go !
+        //{
+        //    lastAttackTime = Time.time;
 
             // todo : Attacking 상태에서의 공격 동작
             //foreach (Enemy enemy in currentEnemiesInRange)
@@ -75,7 +105,7 @@ public class Unit : MonoBehaviour
 
             // todo : Attack Animation 추가
             //_animator.SetTrigger("Attack");
-        }
+        //}
     }
 
     private void OnTriggerEnter(Collider other) // Enemy 가 해당 범위 안에 들어올 경우 List.Add
@@ -101,6 +131,7 @@ public class Unit : MonoBehaviour
 
     private void Die() // todo : Die() 구현
     {
-        // 애니메이션
+        // 애니메이션 ?
+        Main.Get<ResourceManager>().Destroy(gameObject);
     }
 }

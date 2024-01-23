@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 public class TileManager : MonoBehaviour, IManagers
 {
+    private ResourceManager resource;
     private int _canBuildRoomCount;
     private int _currentBuildRoomCount;
     private bool _isCanBuildRoom = false;
@@ -45,29 +46,6 @@ public class TileManager : MonoBehaviour, IManagers
         // Cell Swizzle 설정
         gridComponent.cellSwizzle = GridLayout.CellSwizzle.XYZ; // XYZ
 
-        //List<Vector3> tileMapCoordinates = new List<Vector3>()
-        //{
-        //    new Vector3(-6, 0, 0),
-        //    new Vector3(-3, 1.5f, 0),
-        //    new Vector3(0, 3, 0),
-        //    new Vector3(-3, -1.5f, 0),
-        //    new Vector3(0, 0, 0),
-        //    new Vector3(3, 1.5f, 0),
-        //    new Vector3(0, -3, 0),
-        //    new Vector3(3, -1.5f, 0),
-        //    new Vector3(6, 0, 0)
-
-
-        //};
-
-        //foreach (Vector3 coordinate in tileMapCoordinates)
-        //{
-        //    //Instantiate(tilePrefab, coordinate, Quaternion.identity, gridObject.transform);
-        //    GameObject tile = Main.Get<PoolManager>().Pop(tilePrefab);
-        //    tile.transform.SetParent(gridComponent.transform);
-        //    tile.transform.position = coordinate;
-        //}
-
         Vector2 pos = Vector2.zero;
         Vector2 offset = Vector2.zero;
 
@@ -78,19 +56,26 @@ public class TileManager : MonoBehaviour, IManagers
             for (int j = 0; j < y; j++)
             {
                 offset.Set(3f * j, 1.5f * j);
-                GameObject obj = Instantiate(TilePrefab, pos + offset, Quaternion.identity, GridObject.transform);
+                GameObject obj = resource.InstantiateWithPoolingOption(TilePrefab, pos + offset, Quaternion.identity, GridObject.transform);
                 _roomObjList[i].Add(obj);
 
                 Room room = obj.GetComponent<Room>();
                 room.IndexX = i;
                 room.IndexY = j;
+
+                // 생성되는 타일의 이름 뒤에 (Clone)을 없애준다.
+                int index = obj.name.IndexOf("(Clone)");
+                if (index > 0)
+                {
+                    obj.name = obj.name.Substring(0, index);
+                }
             }
-        }
+       }
     }
 
     public bool Init()
     {
-        TilePrefab = Main.Get<ResourceManager>().Load<GameObject>("Prefabs/Room/Lava");
+        TilePrefab = Main.Get<ResourceManager>().Load<GameObject>("Prefabs/Room/Default");
         return true;
     }
 

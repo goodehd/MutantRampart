@@ -13,13 +13,25 @@ public class ChangeRoomUI : BaseUI
     private TextMeshProUGUI _roomName;
     private TextMeshProUGUI _roomType;
     private TextMeshProUGUI _roomInstruction;
+    private TextMeshProUGUI _equipButtonText;
     private Image _roomImage;
     private Button _equipButton;
     private Button _exitButton;
     private Transform _content;
-    public Room SelectRoom;
+
+    private bool _isOpenUi = false;
     
-   
+    public Room SelectRoom;
+    public string RoomName;
+    
+    
+
+    private void Awake()
+    {
+        _isOpenUi = true;
+        //Camera.main.GetComponent<Camera>().cullingMask = 6;
+    }
+
     protected override void Init()
     {
         SetUI<TextMeshProUGUI>();
@@ -30,6 +42,7 @@ public class ChangeRoomUI : BaseUI
         _roomName = GetUI<TextMeshProUGUI>("NameText");
         _roomType = GetUI<TextMeshProUGUI>("TypeText");
         _roomInstruction = GetUI<TextMeshProUGUI>("InstructionText");
+        _equipButtonText = GetUI<TextMeshProUGUI>("Equip");
         _roomImage = GetUI<Image>("RoomImagesprite");
         _content = GetUI<Transform>("Content");
         _equipButton = GetUI<Button>("EquipButton");
@@ -38,15 +51,9 @@ public class ChangeRoomUI : BaseUI
         SetUICallback(_equipButton.gameObject, EUIEventState.Click, ClickEquipButton);
         SetUICallback(_exitButton.gameObject, EUIEventState.Click, ExitBtnClick);
 
-        List<RoomData> playerRooms = Main.Get<GameManager>().PlayerRooms;
-        
-        for (int i = 0; i < playerRooms.Count; i++)
-        {
-            RoomSelectImage roomSelectImage = Main.Get<UIManager>().CreateSubitem<RoomSelectImage>("RoomSelectImage",_content);
-            roomSelectImage.RoomData = playerRooms[i];
-            roomSelectImage.Owner = this;
-        }
-        
+        SetMapInventory();
+        SetClickRoomData();
+        SetSelectRoomInfo(_selectRoomData, _roomImage.sprite);
     }
     public void SetSelectRoomInfo(RoomData roomData, Sprite sprite)
     {
@@ -56,16 +63,29 @@ public class ChangeRoomUI : BaseUI
         _roomImage.sprite = sprite;
         _selectRoomData = roomData;
 
-    }           
+    }
     
+    public void SetClickRoomData()
+    {
+        _selectRoomData = Main.Get<DataManager>().roomDatas[RoomName];
+        _roomImage.sprite = Main.Get<ResourceManager>().Load<Sprite>(_selectRoomData.SpritePath);
+    }
+
     private void ClickEquipButton(PointerEventData eventData)
     {
-        Vector3 pos = SelectRoom.transform.position;
-        Main.Get<ResourceManager>().Destroy(SelectRoom.gameObject);
-        GameObject obj = Main.Get<ResourceManager>().InstantiateWithPoolingOption($"Prefabs/Room/{_selectRoomData.Key}"
-            , Main.Get<TileManager>().GridObject.transform);
-        obj.transform.position = pos;
-        SelectRoom = obj.GetComponent<Room>();
+        if (_selectRoomData.isEquiped == false)
+        {
+            InstantiateRoom(_selectRoomData.Key);
+            _selectRoomData.isEquiped = true;
+            Main.Get<GameManager>().PlayerRooms.Remove(_selectRoomData);
+        }
+        else
+        {
+            InstantiateRoom("Default");
+            _selectRoomData.isEquiped = false;
+            Main.Get<GameManager>().PlayerRooms.Add(_selectRoomData);
+        }
+        SetMapInventory();
     }
 
     private void ExitBtnClick(PointerEventData eventData)
@@ -73,6 +93,41 @@ public class ChangeRoomUI : BaseUI
         Main.Get<UIManager>().ClosePopup();
     }
 
+    private void OnDestroy()
+    {
+        _isOpenUi = false;
+        //Camera.main.GetComponent<Camera>().cullingMask = 1;
+    }
+
+    private void InstantiateRoom(string roomDataName)
+    {
+        Vector3 pos = SelectRoom.transform.position;
+        Main.Get<ResourceManager>().Destroy(SelectRoom.gameObject);
+        GameObject obj = Main.Get<ResourceManager>().InstantiateWithPoolingOption($"Prefabs/Room/{roomDataName}"
+            , Main.Get<TileManager>().GridObject.transform);
+        obj.transform.position = pos;
+        SelectRoom = obj.GetComponent<Room>();
+    }
+
+    private void SetMapInventory()
+    {
+        List<RoomData> playerRooms = Main.Get<GameManager>().PlayerRooms;
+        foreach (Transform item in _content.transform)
+        {
+            Destroy(item.gameObject);
+        }
+
+        for (int i = 0; i < playerRooms.Count; i++)
+        {
+            if (playerRooms[i].isEquiped)
+            {
+                continue;
+            }
+            RoomSelectImage roomSelectImage = Main.Get<UIManager>().CreateSubitem<RoomSelectImage>("RoomSelectImage", _content);
+            roomSelectImage.RoomData = playerRooms[i];
+            roomSelectImage.Owner = this;
+        }
+    }
     /*
     public void OnclickImage(string a)
     {
