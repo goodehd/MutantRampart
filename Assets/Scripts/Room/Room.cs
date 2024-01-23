@@ -23,6 +23,7 @@ public class Room : MonoBehaviour
     protected EStatusformat _roomStatus = EStatusformat.DefaultTile;
     [SerializeField] protected Material _buildAvailable;
     [SerializeField] protected Material _buildNotAvailable;
+    public bool isEquipedRoom = false;
     public bool isCanBuildRoom => Main.Get<TileManager>().isCanBuildRoom;
     public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
     
@@ -87,6 +88,7 @@ public class Room : MonoBehaviour
         // 내가 누군지 보내주고
         ChangeRoomUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoomUI>("ChangeRoom_PopUpUI");
         changeRoomUI.SelectRoom = this;
+        changeRoomUI.RoomName = this.gameObject.name;
         /*
 
         Debug.Log(this.gameObject.name);
