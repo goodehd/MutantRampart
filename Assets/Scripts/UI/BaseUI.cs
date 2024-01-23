@@ -30,12 +30,12 @@ public class BaseUI : MonoBehaviour
     {
         if(!_uiObjects.TryGetValue(typeof(T), out Dictionary<string, UnityEngine.Object> dict))
         {
-            return null;
+            throw new NullReferenceException($"BaseUI NotFoundObject : {objName}");
         }
 
         if (!dict.TryGetValue(objName, out UnityEngine.Object component))
         {
-            return null;
+            throw new NullReferenceException($"BaseUI NotFoundObject : {objName}");
         }
 
         return component as T;

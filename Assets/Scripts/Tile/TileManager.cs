@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TileManager : MonoBehaviour, IManagers
 {
@@ -12,8 +14,8 @@ public class TileManager : MonoBehaviour, IManagers
     public GameObject TilePrefab;
     public GameObject GridObject;
     public GameObject[] Rooms;
-    public int x = 3;
-    public int y = 3;
+    public int x = 5;
+    public int y = 5;
     public bool isCanBuildRoom // 방을 설치할 수 있는 타일이 몇개인지에 대한 정보 
     {
         get
@@ -78,6 +80,10 @@ public class TileManager : MonoBehaviour, IManagers
                 offset.Set(3f * j, 1.5f * j);
                 GameObject obj = Instantiate(TilePrefab, pos + offset, Quaternion.identity, GridObject.transform);
                 _roomObjList[i].Add(obj);
+
+                Room room = obj.GetComponent<Room>();
+                room.IndexX = i;
+                room.IndexY = j;
             }
         }
     }
@@ -85,6 +91,48 @@ public class TileManager : MonoBehaviour, IManagers
     public bool Init()
     {
         TilePrefab = Main.Get<ResourceManager>().Load<GameObject>("Prefabs/Room/Lava");
+        return true;
+    }
+
+    public List<GameObject> GetNeighbors(int curPosX, int curPosY)
+    {
+        List<GameObject> outPut = new List<GameObject>();
+
+        // 오른쪽, 왼쪽, 위, 아래
+        int[] dx = { 1, -1, 0, 0 };
+        int[] dy = { 0, 0, 1, -1 };
+
+        for (int i = 0; i < 4; ++i)
+        { 
+            if(!IsRoomPositionValid(curPosX + dx[i], curPosY + dy[i]))
+            {
+                continue;
+            }
+
+            outPut.Add(_roomObjList[curPosX + dx[i]][curPosY + dy[i]]);
+        }
+
+        return outPut;
+    }
+
+    public void GetMapSize(out int mapSizeX, out int mapSizeY)
+    {
+        mapSizeX = _roomObjList.Count;
+        mapSizeY = _roomObjList[0].Count;
+    }
+
+    private bool IsRoomPositionValid(int posX, int posY)
+    {
+        if (posX < 0 || posX >= _roomObjList.Count)
+        {
+            return false;
+        }
+
+        if (posY < 0 || posY >= _roomObjList[posX].Count)
+        {
+            return false;
+        }
+
         return true;
     }
 }

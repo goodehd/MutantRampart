@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(Character))]
+[CustomEditor(typeof(Enemy))]
 public class TestButton : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        Character generator = (Character)target;
+        Enemy generator = (Enemy)target;
         if (GUILayout.Button("Idle"))
         {
             generator.StateMachine.ChangeState(EState.Idle);

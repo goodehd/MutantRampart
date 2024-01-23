@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 1778225678, guid: 1de5743d7c3feac459f467ae92add10b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -115,7 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 151565062583748159}
-  - component: {fileID: 7635231237141134887}
+  - component: {fileID: 7312805962760815710}
   m_Layer: 0
   m_Name: SlimeBlue
   m_TagString: Untagged
@@ -131,15 +131,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6625957672864565690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.312, y: 2.303, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9099589559579692692}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7635231237141134887
+--- !u!114 &7312805962760815710
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,6 +148,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6625957672864565690}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d4e02013b8024c4d8242481e9fe79ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 875b7e1bfc86e544382b15cd4fb9cb37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

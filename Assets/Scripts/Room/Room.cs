@@ -25,6 +25,9 @@ public class Room : MonoBehaviour
     public bool isCanBuildRoom => Main.Get<TileManager>().isCanBuildRoom;
     public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
     
+    public int IndexX { get; set; }
+    public int IndexY { get; set; }
+
     public virtual void Awake()
     {
         Initialize();
