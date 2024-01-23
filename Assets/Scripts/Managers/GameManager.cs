@@ -7,12 +7,17 @@ public class GameManager : IManagers
 
     private int _playerMoney; // 플레이어 보유 돈
     //private List<Unit> playerUnits = new List<Unit>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
+    public List<CharacterData> playerUnits = new List<CharacterData>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
     public List<RoomData> PlayerRooms { get; private set; } = new List<RoomData>(); // todo : 플레이어가 보유한 타일 리스트 -- 리스트 자료형 체크
     public List<Shop_RoomData> ShopRoomItems { get; private set; } = new List<Shop_RoomData>(); // 상점 - RoomItems
     public static bool isGamePaused { get; private set; } // 다른 스크립트에서 쉽게 접근이 가능하도록 메모리에 할당 - static, 읽기전용
 
     public bool Init()
     {
+        playerUnits.Add(Main.Get<DataManager>().unit["Gun"]);
+        playerUnits.Add(Main.Get<DataManager>().unit["Jotem"]);
+        playerUnits.Add(Main.Get<DataManager>().unit["Warrior"]);
+        
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Forest"]);
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Lava"]);
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Snow"]);

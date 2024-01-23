@@ -6,16 +6,25 @@
   <component name="ChangeListManager">
     <list default="true" id="64c89d60-885a-4ce1-aad4-c0a2f98a32c9" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MutantRampart/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MutantRampart/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/RoomData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/RoomData.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/RoomData.csv.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/RoomData.csv.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/UI/Popup/ChangeRoom_PopUpUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/UI/Popup/ChangeRoom_PopUpUI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/UI/Popup/ChangeUnit.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/UI/Popup/ChangeUnit.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Warrior_sprite_sheet_0.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Warrior_sprite_sheet_0.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/CharacterData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/CharacterData.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/CharacterData.csv.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/CharacterData.csv.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sprites/Unit/Unit1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sprites/Unit/Unit1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sprites/Unit/Unit2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sprites/Unit/Unit2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sprites/Unit/Unit3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sprites/Unit/Unit3.png.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/YunjinTestScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/YunjinTestScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Data/CharacterData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Data/CharacterData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Units/Unit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Units/Unit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/DataManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Room/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Room/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Scene/HongTestScene.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Scene/HongTestScene.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ChangeRoomUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/ChangeRoomUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ChangeUnitUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/ChangeUnitUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/InfoCameraLookAt.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/InfoCameraLookAt.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,8 +49,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Room/BatRoom.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Room/Room.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/ChangeUnitUI.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/InfoCameraLookAt.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/RoomSelectImage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/UnitSelectImage.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/Raycasters/PhysicsRaycaster.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -142,6 +151,7 @@
       <workItem from="1705641472639" duration="20688000" />
       <workItem from="1705898783916" duration="93000" />
       <workItem from="1705898903606" duration="5647000" />
+      <workItem from="1705996535162" duration="6275000" />
     </task>
     <servers />
   </component>

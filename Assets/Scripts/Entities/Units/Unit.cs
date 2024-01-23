@@ -26,6 +26,8 @@ public class Unit : Character
     {
         // DataManager 에서 public Dictionary<string, CharacterData> unit = new Dictionary<string, CharacterData>(); 해주기
         Init(Main.Get<DataManager>().unit["Gun"]);
+        Init(Main.Get<DataManager>().unit["Jotem"]);
+        Init(Main.Get<DataManager>().unit["Warrior"]);
 
     }
 

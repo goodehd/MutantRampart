@@ -86,22 +86,12 @@ public class Room : MonoBehaviour
     {
         if(EventSystem.current.IsPointerOverGameObject())return;
         
-        Debug.Log(this.gameObject.name);
-        // UI띄우고
-        // 내가 누군지 보내주고
         ChangeRoomUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoomUI>("ChangeRoom_PopUpUI");
         changeRoomUI.SelectRoom = this;
         changeRoomUI.RoomName = this.gameObject.name;
-        /*
-
-        Debug.Log(this.gameObject.name);
-        _tilePosition = this.gameObject.transform.position;
-        this.gameObject.SetActive(false);
-        GameObject tile = Main.Get<PoolManager>().Pop(Main.Get<TileManager>().rooms[1]);
-
-        tile.transform.SetParent(Main.Get<TileManager>().gridObject.transform);
-        tile.transform.position = _tilePosition;
-        */
+        
+        
+        
     }
     
 }

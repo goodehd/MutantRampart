@@ -6,4 +6,8 @@ public class CharacterData : Data
     public float Defense { get; set; }
     public float AttackSpeed { get; set; }
     public float MoveSpeed { get; set; }
+    
+    public string SpritePath { get; set; }
+    
+    
 }

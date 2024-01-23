@@ -123,15 +123,4 @@ public class ChangeRoomUI : BaseUI
             roomSelectImage.Owner = this;
         }
     }
-    /*
-    public void OnclickImage(string a)
-    {
-        selectRoomName = a;
-        roomimage.sprite = images[a];
-        name.text = $"이름 : {roomDatas[a].Key}";
-        type.text = $"타입 : {roomDatas[a].Type.ToString()}";
-        Instruction.text = $"설명 : {roomDatas[a].Instruction}";
-    }
-
-    */
 }

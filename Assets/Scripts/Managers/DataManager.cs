@@ -12,8 +12,7 @@ public class DataManager : IManagers
     public Dictionary<string, RoomData> roomDatas = new Dictionary<string, RoomData>();
     public Dictionary<string, CharacterData> unit = new Dictionary<string, CharacterData>();
     public Dictionary<string, Shop_RoomData> shop_RoomData = new Dictionary<string, Shop_RoomData>();
-
-
+    
     public CSVReader reader = new();
     
     public bool Init()
@@ -25,6 +24,7 @@ public class DataManager : IManagers
         return true;
     }
 
+    /*
     public void Initialize() {
         //--Data = LoadJson<Data를 상속받는 Data클래스>();
         //enemy = reader.LoadToCSVData<CharacterData>();
@@ -42,7 +42,7 @@ public class DataManager : IManagers
         Dictionary<string, T> dic = JsonConvert.DeserializeObject<List<T>>(textAsset.text).ToDictionary(data => data.Key);
 
         return dic;
-        */
+        *//*
     }
-    
+    */
 }
