@@ -14,8 +14,8 @@ public class Room_List : BaseUI
     //private Transform _content;
     private Button _buyButton;
 
-    // Data ?
-    public Shop_RoomData ShopRoomData { get; set; }
+    // Data
+    public ShopItemData ShopRoomData { get; set; }
 
     protected override void Init()
     {

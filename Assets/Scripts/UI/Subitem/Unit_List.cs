@@ -9,11 +9,12 @@ public class Unit_List : BaseUI
 {
     private Image _listBG;
     private TMP_Text _listItemName;
-    private Sprite _listItemImg;
+    private Image _listItemImg;
     private TMP_Text _listItemPrice;
     private Button _buyButton;
 
-    // Data ?
+    // Data
+    public ShopItemData ShopUnitData { get; set; }
 
     protected override void Init()
     {
@@ -22,10 +23,12 @@ public class Unit_List : BaseUI
         SetUI<Button>();
 
         _listBG = GetUI<Image>("Unit_List(Clone)");
-        _listItemName = GetUI<TMP_Text>("Unit_ItemName(Clone)");
-        //_listItemImg = 
-        _listItemPrice = GetUI<TMP_Text>("Unit_ItemPrice(Clone)");
-        _buyButton = GetUI<Button>("Unit_BuyBtn(Clone)");
+        _listItemName = GetUI<TMP_Text>("Unit_ItemName");
+        _listItemImg = GetUI<Image>("Unit_ItemImg");
+        _listItemPrice = GetUI<TMP_Text>("Unit_ItemPrice");
+        _buyButton = GetUI<Button>("Unit_BuyBtn");
+
+        SetInfo();
 
         SetUICallback(_buyButton.gameObject, EUIEventState.Click, ClickBuyBtn);
 
@@ -33,7 +36,9 @@ public class Unit_List : BaseUI
 
     private void SetInfo()
     {
-        //_listItemName.text = 
+        _listItemName.text = ShopUnitData.Key;
+        _listItemImg.sprite = Main.Get<ResourceManager>().Load<Sprite>(ShopUnitData.SpritePath);
+        _listItemPrice.text = ShopUnitData.Price.ToString();
     }
 
     private void ClickBuyBtn(PointerEventData EventData)
