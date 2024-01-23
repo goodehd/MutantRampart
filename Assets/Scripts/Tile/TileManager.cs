@@ -12,11 +12,9 @@ public class TileManager : MonoBehaviour, IManagers
     private bool _isCanBuildRoom = false;
     private List<List<GameObject>> _roomObjList = new List<List<GameObject>>();
 
-    public GameObject TilePrefab;
     public GameObject GridObject;
-    public GameObject[] Rooms;
-    public int x = 5;
-    public int y = 5;
+    public int x = 3;
+    public int y = 3;
     public bool isCanBuildRoom // 방을 설치할 수 있는 타일이 몇개인지에 대한 정보 
     {
         get
@@ -56,7 +54,8 @@ public class TileManager : MonoBehaviour, IManagers
             for (int j = 0; j < y; j++)
             {
                 offset.Set(3f * j, 1.5f * j);
-                GameObject obj = resource.InstantiateWithPoolingOption(TilePrefab, pos + offset, Quaternion.identity, GridObject.transform);
+                GameObject obj = resource.InstantiateWithPoolingOption("Prefabs/Room/Default", GridObject.transform);
+                obj.transform.position = pos + offset;
                 _roomObjList[i].Add(obj);
 
                 Room room = obj.GetComponent<Room>();
@@ -75,7 +74,7 @@ public class TileManager : MonoBehaviour, IManagers
 
     public bool Init()
     {
-        TilePrefab = Main.Get<ResourceManager>().Load<GameObject>("Prefabs/Room/Default");
+        resource = Main.Get<ResourceManager>();
         return true;
     }
 
