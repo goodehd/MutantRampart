@@ -18,13 +18,15 @@ public class ChangeRoomUI : BaseUI
     private Button _equipButton;
     private Button _exitButton;
     private Transform _content;
-
     private bool _isOpenUi = false;
-    
+   
+
+    public bool isSelectChangeRoom;
     public Room SelectRoom;
+    public RoomData ChangeRoomData;
     public string RoomName;
-    
-    
+
+
 
     private void Awake()
     {
@@ -61,8 +63,6 @@ public class ChangeRoomUI : BaseUI
         _roomType.text = $"타입 : {roomData.Type.ToString()}";
         _roomInstruction.text = $"설명 : {roomData.Instruction}";
         _roomImage.sprite = sprite;
-        _selectRoomData = roomData;
-
     }
     
     public void SetClickRoomData()
@@ -73,17 +73,37 @@ public class ChangeRoomUI : BaseUI
 
     private void ClickEquipButton(PointerEventData eventData)
     {
-        if (_selectRoomData.isEquiped == false)
+        if (RoomName == "Default")
         {
-            ChangeRoom(_selectRoomData.Key);
-            _selectRoomData.isEquiped = true;
-            Main.Get<GameManager>().PlayerRooms.Remove(_selectRoomData);
+            if(isSelectChangeRoom)  // 보유하고있는 방을 클릭했을떄
+            {
+                ChangeRoom(ChangeRoomData.Key);
+                Main.Get<GameManager>().PlayerRooms.Remove(ChangeRoomData);
+                Main.Get<UIManager>().ClosePopup();
+                Debug.Log("룸 장착");
+            }
+            else
+            {
+                Main.Get<UIManager>().ClosePopup();
+            }
         }
         else
         {
-            ChangeRoom("Default");
-            _selectRoomData.isEquiped = false;
-            Main.Get<GameManager>().PlayerRooms.Add(_selectRoomData);
+            if (isSelectChangeRoom) // 보유하고있는 방을 클릭했을떄
+            {
+                ChangeRoom(ChangeRoomData.Key);
+                Main.Get<GameManager>().PlayerRooms.Remove(ChangeRoomData);
+                Main.Get<GameManager>().PlayerRooms.Add(Main.Get<DataManager>().roomDatas[RoomName]);
+                Main.Get<UIManager>().ClosePopup();
+                Debug.Log("룸 변경");
+            }
+            else
+            {
+                ChangeRoom("Default");
+                Main.Get<GameManager>().PlayerRooms.Add(Main.Get<DataManager>().roomDatas[RoomName]);
+                Main.Get<UIManager>().ClosePopup();
+                Debug.Log("룸 장착 해제");
+            }
         }
         SetMapInventory();
     }
@@ -93,12 +113,6 @@ public class ChangeRoomUI : BaseUI
         Main.Get<UIManager>().ClosePopup();
     }
 
-    private void OnDestroy()
-    {
-        _isOpenUi = false;
-        //Camera.main.GetComponent<Camera>().cullingMask = 1;
-    }
-
     private void ChangeRoom(string roomDataName)
     {
         SelectRoom = Main.Get<TileManager>().ChangeRoom(SelectRoom.IndexX, SelectRoom.IndexY, roomDataName);
@@ -106,32 +120,21 @@ public class ChangeRoomUI : BaseUI
 
     private void SetMapInventory()
     {
-        List<RoomData> playerRooms = Main.Get<GameManager>().PlayerRooms;
         foreach (Transform item in _content.transform)
         {
             Destroy(item.gameObject);
         }
 
-        for (int i = 0; i < playerRooms.Count; i++)
+        for (int i = 0; i < Main.Get<GameManager>().PlayerRooms.Count; i++)
         {
-            if (playerRooms[i].isEquiped)
+            /*if (Main.Get<GameManager>().PlayerRooms[i].isEquiped)
             {
                 continue;
-            }
+            }*/
             RoomSelectImage roomSelectImage = Main.Get<UIManager>().CreateSubitem<RoomSelectImage>("RoomSelectImage", _content);
-            roomSelectImage.RoomData = playerRooms[i];
+            roomSelectImage.RoomData = Main.Get<GameManager>().PlayerRooms[i];
             roomSelectImage.Owner = this;
         }
     }
-    /*
-    public void OnclickImage(string a)
-    {
-        selectRoomName = a;
-        roomimage.sprite = images[a];
-        name.text = $"이름 : {roomDatas[a].Key}";
-        type.text = $"타입 : {roomDatas[a].Type.ToString()}";
-        Instruction.text = $"설명 : {roomDatas[a].Instruction}";
-    }
 
-    */
 }

@@ -18,14 +18,16 @@ public class Room : MonoBehaviour
 {
     private bool _isInitialized;
     private GameObject[] _childObj = new GameObject[2];
-    private TilemapRenderer[] _renderer = new TilemapRenderer[2];
-    private Material[] _origin = new Material[2];
+    protected TilemapRenderer[] _renderer = new TilemapRenderer[2];
+    protected Material[] _origin = new Material[2];
     protected EStatusformat _roomStatus = EStatusformat.DefaultTile;
     [SerializeField] protected Material _buildAvailable;
     [SerializeField] protected Material _buildNotAvailable;
     public bool isEquipedRoom = false;
-    public bool isCanBuildRoom => Main.Get<TileManager>().isCanBuildRoom;
+    public RoomData RoomData { get; set; }
     public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
+    
+    
     
     public int IndexX { get; set; }
     public int IndexY { get; set; }
@@ -57,54 +59,33 @@ public class Room : MonoBehaviour
         enemy.CurPosX = this.IndexX;
         enemy.CurPosY = this.IndexY;
     }
-    private void OnMouseEnter()
+    protected virtual void OnMouseEnter()
     {
-        if (isCanBuildRoom)
+        foreach (var _Ren in _renderer)
         {
-            foreach (var _Ren in _renderer)
-            {
-                _Ren.material = _buildAvailable;
-            }
-            
+            _Ren.material = _buildAvailable;
         }
-        else
-        {
-            foreach (var _Ren in _renderer)
-            {
-                _Ren.material = _buildNotAvailable;
-            }
-
-        }
+        
+        
     }
 
-    private void OnMouseExit()
+    protected virtual void OnMouseExit()
     {
         for (int i = 0; i < 2; i++)
         {
             _renderer[i].material = _origin[i];
         }
+        
+        
     }
 
-    private void OnMouseDown()
+    protected virtual void OnMouseDown()
     {
         if(EventSystem.current.IsPointerOverGameObject())return;
-        
-        Debug.Log(this.gameObject.name);
-        // UI띄우고
-        // 내가 누군지 보내주고
+        if(Main.Get<TileManager>().ChangeSetButtons.isUnitSet) return;
         ChangeRoomUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoomUI>("ChangeRoom_PopUpUI");
         changeRoomUI.SelectRoom = this;
-        changeRoomUI.RoomName = this.gameObject.name;
-        /*
-
-        Debug.Log(this.gameObject.name);
-        _tilePosition = this.gameObject.transform.position;
-        this.gameObject.SetActive(false);
-        GameObject tile = Main.Get<PoolManager>().Pop(Main.Get<TileManager>().rooms[1]);
-
-        tile.transform.SetParent(Main.Get<TileManager>().gridObject.transform);
-        tile.transform.position = _tilePosition;
-        */
+        changeRoomUI.RoomName = gameObject.name;
     }
     
 }
