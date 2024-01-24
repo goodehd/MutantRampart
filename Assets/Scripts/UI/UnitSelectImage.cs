@@ -31,6 +31,7 @@ public class UnitSelectImage : BaseUI
     private void SetInfo(PointerEventData EventData)
     {
         Owner.SelectUnitData = CharacterData;
+        Debug.Log(Owner.SelectUnitData.Key);
     }
     
 }

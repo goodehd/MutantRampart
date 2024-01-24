@@ -93,12 +93,6 @@ public class ChangeRoomUI : BaseUI
         Main.Get<UIManager>().ClosePopup();
     }
 
-    private void OnDestroy()
-    {
-        _isOpenUi = false;
-        //Camera.main.GetComponent<Camera>().cullingMask = 1;
-    }
-
     private void ChangeRoom(string roomDataName)
     {
         SelectRoom = Main.Get<TileManager>().ChangeRoom(SelectRoom.IndexX, SelectRoom.IndexY, roomDataName);
@@ -122,5 +116,11 @@ public class ChangeRoomUI : BaseUI
             roomSelectImage.RoomData = playerRooms[i];
             roomSelectImage.Owner = this;
         }
+    }
+    
+    private void OnDestroy()
+    {
+        _isOpenUi = false;
+        //Camera.main.GetComponent<Camera>().cullingMask = 1;
     }
 }

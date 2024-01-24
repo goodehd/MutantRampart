@@ -9,10 +9,13 @@ public class TileManager : IManagers
     private int _currentBuildRoomCount;
     private bool _isCanBuildRoom = false;
     private List<List<GameObject>> _roomObjList = new List<List<GameObject>>();
+    private List<List<GameObject>> _unitObjList = new List<List<GameObject>>();
+    public ChangeSetButtons ChangeSetButtons;
 
     public GameObject GridObject;
     public int x = 3;
     public int y = 3;
+
     public bool isCanBuildRoom // 방을 설치할 수 있는 타일이 몇개인지에 대한 정보 
     {
         get
@@ -21,6 +24,7 @@ public class TileManager : IManagers
             {
                 _isCanBuildRoom = true;
             }
+
             return _isCanBuildRoom;
         }
     }
@@ -45,9 +49,11 @@ public class TileManager : IManagers
         Vector2 pos = Vector2.zero;
         Vector2 offset = Vector2.zero;
 
-       for (int i = 0; i < x; i++)
-       {
+        for (int i = 0; i < x; i++)
+        {
             _roomObjList.Add(new List<GameObject>());
+            _unitObjList.Add(new List<GameObject>());
+
             pos.Set(-3f * i, 1.5f * i);
             for (int j = 0; j < y; j++)
             {
@@ -55,12 +61,14 @@ public class TileManager : IManagers
                 GameObject obj = resource.InstantiateWithPoolingOption("Prefabs/Room/Default", GridObject.transform);
                 obj.transform.position = pos + offset;
                 _roomObjList[i].Add(obj);
-
+                _unitObjList[i].Add(null);
                 Room room = obj.GetComponent<Room>();
                 room.IndexX = i;
                 room.IndexY = j;
             }
-       }
+        }
+
+        ChangeSetButtons = Main.Get<UIManager>().OpenPopup<ChangeSetButtons>("ChangeSetButtons");
     }
 
     public bool Init()
@@ -81,6 +89,20 @@ public class TileManager : IManagers
         return obj.GetComponent<Room>();
     }
 
+    public void ChangeUnit(int indexX, int indexY, Transform _unitPos)
+    {
+        if (ChangeSetButtons.changeUnitUI.SelectUnitData == null) return;
+        if (_unitObjList[indexX][indexY] != null)
+        {
+            resource.Destroy(_unitObjList[indexX][indexY].gameObject);
+        }
+        GameObject obj = resource
+            .InstantiateWithPoolingOption(Literals.UNIT_PREFABS_PATH + "Unit_" +
+                                          ChangeSetButtons.changeUnitUI.SelectUnitData.Key);
+        obj.transform.position = _unitPos.position;
+        _unitObjList[indexX][indexY] = obj;
+    }
+
     public List<GameObject> GetNeighbors(int curPosX, int curPosY)
     {
         List<GameObject> outPut = new List<GameObject>();
@@ -90,8 +112,8 @@ public class TileManager : IManagers
         int[] dy = { 0, 0, 1, -1 };
 
         for (int i = 0; i < 4; ++i)
-        { 
-            if(!IsRoomPositionValid(curPosX + dx[i], curPosY + dy[i]))
+        {
+            if (!IsRoomPositionValid(curPosX + dx[i], curPosY + dy[i]))
             {
                 continue;
             }

@@ -6,15 +6,13 @@ using UnityEngine.EventSystems;
 
 public class ChangeSetButtons : BaseUI
 {
-    
-    public Room SelectRoom;
-    
     private Button _changeRoomSetButton;
     private Button _changeUnitSetButton;
 
     public bool isRoomSet = false;
     public bool isUnitSet = false;
     
+    public ChangeUnitUI changeUnitUI;
     
     protected override void Init()
     {
@@ -30,19 +28,26 @@ public class ChangeSetButtons : BaseUI
 
     private void ChangeRoomSet(PointerEventData eventData)
     {
+        if(isUnitSet)return;
+        
         isRoomSet = true;
-        isUnitSet = false;
-        Debug.Log(isRoomSet);
-        Debug.Log(isUnitSet);
     }
     private void ChangeUnitSet(PointerEventData eventData)
     {
-        isRoomSet = false;
-        isUnitSet = true;
-        ChangeUnitUI changeUnitUI = Main.Get<UIManager>().OpenPopup<ChangeUnitUI>("ChangeUnit_PopUpUI");
-        Debug.Log(isRoomSet);
-        Debug.Log(isUnitSet);
+        if(isRoomSet) return;
+        
+        
+        if (isUnitSet)
+        {
+            isUnitSet = false;
+            Main.Get<UIManager>().ClosePopup();
+        }
+        else
+        {
+            changeUnitUI = Main.Get<UIManager>().OpenPopup<ChangeUnitUI>("ChangeUnit_PopUpUI");
+            isUnitSet = true;
+        }
+        
     }
-    
     
 }

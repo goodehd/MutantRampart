@@ -18,14 +18,16 @@ public class Room : MonoBehaviour
 {
     private bool _isInitialized;
     private GameObject[] _childObj = new GameObject[2];
-    private TilemapRenderer[] _renderer = new TilemapRenderer[2];
-    private Material[] _origin = new Material[2];
+    protected TilemapRenderer[] _renderer = new TilemapRenderer[2];
+    protected Material[] _origin = new Material[2];
     protected EStatusformat _roomStatus = EStatusformat.DefaultTile;
     [SerializeField] protected Material _buildAvailable;
     [SerializeField] protected Material _buildNotAvailable;
     public bool isEquipedRoom = false;
     public bool isCanBuildRoom => Main.Get<TileManager>().isCanBuildRoom;
     public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
+    
+    
     
     public int IndexX { get; set; }
     public int IndexY { get; set; }
@@ -54,7 +56,7 @@ public class Room : MonoBehaviour
         // thisRoomNum을 리턴시켜줌(어떤 형식으로 보내줄지는 미정)
         // Enemy가 방을 기억하고 다시 올 확률을 낮추기 위해서.
     }
-    private void OnMouseEnter()
+    protected virtual void OnMouseEnter()
     {
         if (isCanBuildRoom)
         {
@@ -72,26 +74,27 @@ public class Room : MonoBehaviour
             }
 
         }
+        
+        
     }
 
-    private void OnMouseExit()
+    protected virtual void OnMouseExit()
     {
         for (int i = 0; i < 2; i++)
         {
             _renderer[i].material = _origin[i];
         }
+        
+        
     }
 
-    private void OnMouseDown()
+    protected virtual void OnMouseDown()
     {
         if(EventSystem.current.IsPointerOverGameObject())return;
-        
+        if(Main.Get<TileManager>().ChangeSetButtons.isUnitSet) return;
         ChangeRoomUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoomUI>("ChangeRoom_PopUpUI");
         changeRoomUI.SelectRoom = this;
         changeRoomUI.RoomName = this.gameObject.name;
-        
-        
-        
     }
     
 }

@@ -27,7 +27,32 @@ public class TrapRoom : Room
         
         return true;
     }
-    
+
+    protected override void OnMouseEnter()
+    {
+        if (!Main.Get<TileManager>().ChangeSetButtons.isUnitSet)
+        {
+            base.OnMouseEnter();
+        }
+        else
+        {
+            foreach (var _Ren in _renderer)
+            {
+                _Ren.material = _buildNotAvailable;
+            }
+        }
+    }
+
+    protected override void OnMouseExit()
+    {
+        base.OnMouseExit();
+    }
+
+    protected override void OnMouseDown()
+    {
+        base.OnMouseDown();
+    }
+
     public override void EnemyEnterRoom(GameObject g)
     {
         base.EnemyEnterRoom(g);
