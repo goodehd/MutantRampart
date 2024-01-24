@@ -22,9 +22,8 @@ public class Room : MonoBehaviour
     private Material[] _origin = new Material[2];
     protected EStatusformat _roomStatus = EStatusformat.DefaultTile;
     [SerializeField] protected Material _buildAvailable;
-    [SerializeField] protected Material _buildNotAvailable;
     public bool isEquipedRoom = false;
-    public bool isCanBuildRoom => Main.Get<TileManager>().isCanBuildRoom;
+    public RoomData RoomData { get; set; }
     public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
     
     public int IndexX { get; set; }
@@ -56,21 +55,9 @@ public class Room : MonoBehaviour
     }
     private void OnMouseEnter()
     {
-        if (isCanBuildRoom)
+        foreach (var _Ren in _renderer)
         {
-            foreach (var _Ren in _renderer)
-            {
-                _Ren.material = _buildAvailable;
-            }
-            
-        }
-        else
-        {
-            foreach (var _Ren in _renderer)
-            {
-                _Ren.material = _buildNotAvailable;
-            }
-
+            _Ren.material = _buildAvailable;
         }
     }
 
@@ -91,17 +78,7 @@ public class Room : MonoBehaviour
         // 내가 누군지 보내주고
         ChangeRoomUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoomUI>("ChangeRoom_PopUpUI");
         changeRoomUI.SelectRoom = this;
-        changeRoomUI.RoomName = this.gameObject.name;
-        /*
-
-        Debug.Log(this.gameObject.name);
-        _tilePosition = this.gameObject.transform.position;
-        this.gameObject.SetActive(false);
-        GameObject tile = Main.Get<PoolManager>().Pop(Main.Get<TileManager>().rooms[1]);
-
-        tile.transform.SetParent(Main.Get<TileManager>().gridObject.transform);
-        tile.transform.position = _tilePosition;
-        */
+        changeRoomUI.RoomName = gameObject.name;
     }
     
 }
