@@ -85,6 +85,7 @@ public class UIManager : IManagers
 
         GameObject uiObj = Object.Instantiate(obj);
         uiObj.transform.SetParent(RootUI);
+        uiObj.name = obj.name;
         return uiObj;
     }
 

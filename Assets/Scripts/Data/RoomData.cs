@@ -6,5 +6,5 @@ public class RoomData : Data
 {
     public EStatusformat Type { get; set; }
     public string Instruction { get; set; }
-    public string SpritePath { get; set; }
+    public int MaxUnitCount { get; set; }
 }

@@ -68,7 +68,7 @@ public class ChangeRoomUI : BaseUI
     public void SetClickRoomData()
     {
         _selectRoomData = Main.Get<DataManager>().roomDatas[RoomName];
-        _roomImage.sprite = Main.Get<ResourceManager>().Load<Sprite>(_selectRoomData.SpritePath);
+        _roomImage.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{_selectRoomData.Key}");
     }
 
     private void ClickEquipButton(PointerEventData eventData)

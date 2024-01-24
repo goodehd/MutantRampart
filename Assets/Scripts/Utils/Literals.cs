@@ -8,7 +8,10 @@ public static class Literals
     public const string UI_SCENE_PATH = "Prefabs/UI/Scene/";
     public const string UI_POPUP_PATH = "Prefabs/UI/Popup/";
     public const string UI_SUBITEM_PATH = "Prefabs/UI/Subitem/";
+
     public const string UNIT_PREFABS_PATH = "Prefabs/Character/";
+
+    public const string ROOM_SPRITES_PATH = "Sprites/Room/";
 
     public static readonly int Idle = Animator.StringToHash("IsIdle");
     public static readonly int Move = Animator.StringToHash("IsMove");

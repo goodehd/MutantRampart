@@ -5,8 +5,7 @@ using UnityEngine.TextCore.Text;
 
 public class BatRoom : Room
 {
-    [SerializeField] private Transform _unitPos; //테스트용 유닛을 배치 할 위치
-    
+    private Transform _unitPos; //테스트용 유닛을 배치 할 위치
     private bool _isUnitOn = false; //유닛을 배치 했는지 안했는지. 
     private bool _isUnitAlive = true; //유닛이 살았는지 죽었는지. 나중에 유닛의 이벤트를 받던가 함수를 받아서 이걸 꺼줘야하는데 흠.. 어떻게하지 ㅋㅋ
 
@@ -19,7 +18,8 @@ public class BatRoom : Room
 
         _roomStatus = EStatusformat.Bat;
         OnEnemyEnterRoom += EnemyEnterRoom;
-        
+        _unitPos = this.transform.GetChild(2);
+
         return true;
     }
 
@@ -42,18 +42,60 @@ public class BatRoom : Room
         }
     }
 
-    public void UnitPlacement(GameObject unit) //현재 버튼에 임시로 연결해둠
-    {
-        if(_isUnitOn) return; //배치할 수 없습니다! UI띄우기
-        GameObject obj = Instantiate(unit);
-        obj.transform.position = _unitPos.position;
-        _isUnitOn = true;
-    }
-
     public void CreateUnitTest()
     {
         GameObject go = Main.Get<ResourceManager>().InstantiateWithPoolingOption("Prefabs/Character/Unit_GunTest");
         go.transform.position = new Vector3(transform.position.x + 1f, transform.position.y + 2f, go.transform.position.z);
         Units.Add(go.GetComponent<Character>());
+    }
+
+    protected override void OnMouseEnter()
+    {
+        if (!Main.Get<TileManager>().ChangeSetButtons.isUnitSet)
+        {
+            base.OnMouseEnter();
+        }
+        else
+        {
+            foreach (var _Ren in _renderer)
+            {
+                _Ren.material = _buildAvailable;
+            }
+        }
+    }
+
+    protected override void OnMouseExit()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            _renderer[i].material = _origin[i];
+        }
+        /*
+        if (!Main.Get<TileManager>()._changeSetButtons.isUnitSet)
+        {
+            base.OnMouseExit();
+        }
+        else
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                _renderer[i].material = _origin[i];
+            }
+        }
+        */
+    }
+
+    protected override void OnMouseDown()
+    {
+        if (Main.Get<TileManager>().ChangeSetButtons.isRoomSet)
+        {
+            base.OnMouseDown();
+        }
+        else
+        {
+            Main.Get<TileManager>().ChangeUnit(IndexX, IndexY, _unitPos);
+            _isUnitOn = true;
+        }
+
     }
 }

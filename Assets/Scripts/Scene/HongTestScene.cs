@@ -7,7 +7,9 @@ public class HongTestScene : Scene
     protected override void Init()
     {
         Main.Get<TileManager>().GenerateMap();
-        
+        //Main.Get<UIManager>().OpenSceneUI<DayMainUI>("DayMain_SceneUI");
+
+
     }
 
     public void CreateEnemy()

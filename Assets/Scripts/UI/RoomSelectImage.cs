@@ -18,13 +18,12 @@ public class RoomSelectImage : BaseUI
         SetUI<Image>();
         SetUI<Button>();
 
-        _roomImage = GetUI<Image>("RoomSelectImage(Clone)");
-        _roomSelectButton = GetUI<Button>("RoomSelectImage(Clone)");
+        _roomImage = GetUI<Image>("RoomSelectImage");
+        _roomSelectButton = GetUI<Button>("RoomSelectImage");
 
-        _roomImage.sprite = Main.Get<ResourceManager>().Load<Sprite>(RoomData.SpritePath);
+        _roomImage.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{RoomData.Key}");
         _roomSprite = _roomImage.sprite;
         SetUICallback(_roomSelectButton.gameObject, EUIEventState.Click, SetInfo);
-
     }
 
     private void SetInfo(PointerEventData EventData)

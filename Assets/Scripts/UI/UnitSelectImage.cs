@@ -19,8 +19,8 @@ public class UnitSelectImage : BaseUI
         SetUI<Image>();
         SetUI<Button>();
 
-        _unitImage = GetUI<Image>("UnitSelectImage(Clone)");
-        _unitSelectButton = GetUI<Button>("UnitSelectImage(Clone)");
+        _unitImage = GetUI<Image>("UnitSelectImage");
+        _unitSelectButton = GetUI<Button>("UnitSelectImage");
 
         _unitImage.sprite = Main.Get<ResourceManager>().Load<Sprite>(CharacterData.SpritePath);
         _unitSprite = _unitImage.sprite;
