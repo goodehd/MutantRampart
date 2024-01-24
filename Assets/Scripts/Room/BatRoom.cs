@@ -6,11 +6,8 @@ public class BatRoom : Room
 {
     private Transform _unitPos; //테스트용 유닛을 배치 할 위치
     
-    private bool _isUnitOn = false; //유닛을 배치 했는지 안했는지. 
-    private bool _isUnitAlive = true; //유닛이 살았는지 죽었는지. 나중에 유닛의 이벤트를 받던가 함수를 받아서 이걸 꺼줘야하는데 흠.. 어떻게하지 ㅋㅋ
-   
-    
-    
+    protected bool _isUnitOn = false; //유닛을 배치 했는지 안했는지. 
+    protected bool _isUnitAlive = true; //유닛이 살았는지 죽었는지. 나중에 유닛의 이벤트를 받던가 함수를 받아서 이걸 꺼줘야하는데 흠.. 어떻게하지 ㅋㅋ
     public override bool Initialize()
     {
         if (!base.Initialize()) return false;
