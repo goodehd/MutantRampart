@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1640020525673139853}
   - component: {fileID: 7543619680246499429}
   m_Layer: 5
-  m_Name: Unit_ItemImg
+  m_Name: Item_ItemImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 8846066927048415113}
   - component: {fileID: 4916819150394168671}
   m_Layer: 5
-  m_Name: Unit_ItemPrice
+  m_Name: Item_ItemPrice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 8074451143501868426}
   - component: {fileID: 5183124848803721731}
   m_Layer: 5
-  m_Name: Unit_ItemName
+  m_Name: Item_ItemName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 4507184540345454963}
   - component: {fileID: -9032153842336745293}
   m_Layer: 5
-  m_Name: Unit_List
+  m_Name: Item_List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -451,7 +451,7 @@ GameObject:
   - component: {fileID: 8837646916237450410}
   - component: {fileID: 200164743299774346}
   m_Layer: 5
-  m_Name: Unit_BuyBtnText
+  m_Name: Item_BuyBtnText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 7603245461554198386}
   - component: {fileID: 8515512845305154856}
   m_Layer: 5
-  m_Name: Unit_BuyBtn
+  m_Name: Item_BuyBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

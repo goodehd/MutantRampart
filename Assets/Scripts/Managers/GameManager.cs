@@ -25,7 +25,8 @@ public class GameManager : IManagers
     //private List<Unit> playerUnits = new List<Unit>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
     public List<CharacterData> playerUnits = new List<CharacterData>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
     public List<RoomData> PlayerRooms { get; private set; } = new List<RoomData>(); // todo : 플레이어가 보유한 타일 리스트 -- 리스트 자료형 체크
-    public List<Shop_RoomData> ShopRoomItems { get; private set; } = new List<Shop_RoomData>(); // 상점 - RoomItems
+    public List<ShopItemData> ShopUnitItems { get; private set; } = new List<ShopItemData>(); // 상점 - UnitItems
+    public List<ShopItemData> ShopRoomItems { get; private set; } = new List<ShopItemData>(); // 상점 - RoomItems
     public static bool isGamePaused { get; private set; } // 다른 스크립트에서 쉽게 접근이 가능하도록 메모리에 할당 - static, 읽기전용
 
     public bool Init()
@@ -39,13 +40,17 @@ public class GameManager : IManagers
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Snow"]);
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Home_2"]);
 
-        ShopRoomItems.Add(Main.Get<DataManager>().shop_RoomData["Forest"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().shop_RoomData["Igloo"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().shop_RoomData["Lava"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().shop_RoomData["LivingRoom"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().shop_RoomData["Molar"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().shop_RoomData["Snow"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().shop_RoomData["Temple"]);
+        ShopUnitItems.Add(Main.Get<DataManager>().shopItemData["Gun"]);
+        ShopUnitItems.Add(Main.Get<DataManager>().shopItemData["Jotem"]);
+        ShopUnitItems.Add(Main.Get<DataManager>().shopItemData["Warrior"]);
+
+        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["Forest"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["Igloo"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["Lava"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["LivingRoom"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["Molar"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["Snow"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["Temple"]);
 
 
         return true;

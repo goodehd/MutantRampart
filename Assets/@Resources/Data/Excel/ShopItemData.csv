@@ -6,3 +6,6 @@ LivingRoom,Sprites/Room/LivingRoom,103
 Molar,Sprites/Room/Molar,104
 Snow,Sprites/Room/Snow,105
 Temple,Sprites/Room/Temple,106
+Gun,Sprites/Unit/Unit1,1000
+Jotem,Sprites/Unit/Unit2,1010
+Warrior,Sprites/Unit/Unit3,1050
