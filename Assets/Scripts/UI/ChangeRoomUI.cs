@@ -44,7 +44,7 @@ public class ChangeRoomUI : BaseUI
         _roomName = GetUI<TextMeshProUGUI>("NameText");
         _roomType = GetUI<TextMeshProUGUI>("TypeText");
         _roomInstruction = GetUI<TextMeshProUGUI>("InstructionText");
-        _equipButtonText = GetUI<TextMeshProUGUI>("Equip");
+        _equipButtonText = GetUI<TextMeshProUGUI>("EquipText");
         _roomImage = GetUI<Image>("RoomImagesprite");
         _content = GetUI<Transform>("Content");
         _equipButton = GetUI<Button>("EquipButton");
