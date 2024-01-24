@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    private void Start()
-    {
-        Init(Main.Get<DataManager>().enemy["Slime"]);
-    }
-
     public override void Init(CharacterData data)
     {
         base.Init(data);

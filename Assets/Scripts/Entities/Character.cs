@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
     public int CurPosX { get; set; }
     public int CurPosY { get; set; }
 
+    public CharacterData Data { get; private set; }
     public CharacterStatus Status { get; private set; }
     public StateMachine StateMachine { get; private set; }
     public Animator Animator { get; private set; }
@@ -19,6 +20,7 @@ public class Character : MonoBehaviour
         if (_initialize)
             return;
 
+        Data = data;
         Status = new CharacterStatus(data);
         StateMachine = new StateMachine();
 

@@ -23,7 +23,7 @@ public class GameManager : IManagers
         }
     }
     //private List<Unit> playerUnits = new List<Unit>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
-    public List<CharacterData> playerUnits = new List<CharacterData>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
+    public List<CharacterData> playerUnits { get; private set; } = new List<CharacterData>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
     public List<RoomData> PlayerRooms { get; private set; } = new List<RoomData>(); // todo : 플레이어가 보유한 타일 리스트 -- 리스트 자료형 체크
     public List<ShopItemData> ShopUnitItems { get; private set; } = new List<ShopItemData>(); // 상점 - UnitItems
     public List<ShopItemData> ShopRoomItems { get; private set; } = new List<ShopItemData>(); // 상점 - RoomItems
@@ -31,9 +31,9 @@ public class GameManager : IManagers
 
     public bool Init()
     {
-        playerUnits.Add(Main.Get<DataManager>().unit["Gun"]);
-        playerUnits.Add(Main.Get<DataManager>().unit["Jotem"]);
-        playerUnits.Add(Main.Get<DataManager>().unit["Warrior"]);
+        playerUnits.Add(Main.Get<DataManager>().Character["Gun"]);
+        playerUnits.Add(Main.Get<DataManager>().Character["Jotem"]);
+        playerUnits.Add(Main.Get<DataManager>().Character["Warrior"]);
         
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Forest"]);
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Lava"]);

@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 1301570043040507631}
   - component: {fileID: 5422808556909680717}
   - component: {fileID: 7150065447246307499}
+  - component: {fileID: 6778695627307048619}
   m_Layer: 0
-  m_Name: Unit_Gun
+  m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_Sprite: {fileID: 1206587345, guid: 74e9bd5890e345644b74064eadf13596, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1.8, y: 1.8}
@@ -170,3 +171,15 @@ CapsuleCollider2D:
   m_Offset: {x: -0.09, y: -0.26}
   m_Size: {x: 0.48, y: 0.28}
   m_Direction: 1
+--- !u!114 &6778695627307048619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3195891179831488728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616a57e9c6b0eb3438283695dcafdf7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

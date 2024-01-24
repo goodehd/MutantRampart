@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Scene : MonoBehaviour
 {
-    private ResourceManager _resource;
-    private PoolManager _pool;
-    private DataManager _data;
+    protected ResourceManager _resource;
+    protected PoolManager _pool;
+    protected DataManager _data;
 
     private LinkedList<GameObject> _listObj = new LinkedList<GameObject>();
 
@@ -17,19 +17,23 @@ public class Scene : MonoBehaviour
 
     protected virtual void Init()
     {
+        Main.Get<SceneManager>().Scene = this;
         _resource = Main.Get<ResourceManager>();
         _data = Main.Get<DataManager>();
     }
 
-    public GameObject CreateCharcter(string name)
+    public Character CreateCharacter(string key)
     {
-        GameObject obj = _resource.InstantiateWithPoolingOption(name);
-
-        if (obj == null)
-            return null;
-
+        GameObject obj = _resource.InstantiateWithPoolingOption($"{Literals.UNIT_PREFABS_PATH}{key}");
         Character character = obj.GetComponent<Character>();
 
-        return obj;
+        if (character == null)
+        {
+            Debug.LogError($"[Scene] CreateCharacter({key}) : This Prefab Not Character.");
+        }
+
+        character.Init(_data.Character[key]);
+
+        return character;
     }
 }

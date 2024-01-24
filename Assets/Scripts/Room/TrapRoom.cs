@@ -30,17 +30,7 @@ public class TrapRoom : Room
 
     protected override void OnMouseEnter()
     {
-        if (!Main.Get<TileManager>().ChangeSetButtons.isUnitSet)
-        {
-            base.OnMouseEnter();
-        }
-        else
-        {
-            foreach (var _Ren in _renderer)
-            {
-                _Ren.material = _buildNotAvailable;
-            }
-        }
+        base.OnMouseEnter();
     }
 
     protected override void OnMouseExit()

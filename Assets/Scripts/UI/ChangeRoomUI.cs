@@ -17,16 +17,14 @@ public class ChangeRoomUI : BaseUI
     private Image _roomImage;
     private Button _equipButton;
     private Button _exitButton;
+    private Button _setUnitButton;
     private Transform _content;
     private bool _isOpenUi = false;
-   
-
+  
     public bool isSelectChangeRoom;
     public Room SelectRoom;
     public RoomData ChangeRoomData;
     public string RoomName;
-
-
 
     private void Awake()
     {
@@ -49,13 +47,20 @@ public class ChangeRoomUI : BaseUI
         _content = GetUI<Transform>("Content");
         _equipButton = GetUI<Button>("EquipButton");
         _exitButton = GetUI<Button>("Delete");
+        _setUnitButton = GetUI<Button>("SetUnitButton");
 
         SetUICallback(_equipButton.gameObject, EUIEventState.Click, ClickEquipButton);
         SetUICallback(_exitButton.gameObject, EUIEventState.Click, ExitBtnClick);
+        SetUICallback(_setUnitButton.gameObject, EUIEventState.Click, SetUnitClick);
 
         SetMapInventory();
         SetClickRoomData();
         SetSelectRoomInfo(_selectRoomData, _roomImage.sprite);
+
+        if(_selectRoomData.Type != EStatusformat.Bat)
+        {
+            _setUnitButton.gameObject.SetActive(false);
+        }
     }
     public void SetSelectRoomInfo(RoomData roomData, Sprite sprite)
     {
@@ -137,4 +142,8 @@ public class ChangeRoomUI : BaseUI
         }
     }
 
+    private void SetUnitClick(PointerEventData eventData)
+    {
+        Main.Get<UIManager>().OpenPopup<ChangeUnitUI>("ChangeUnit_PopUpUI").SelectRoom = SelectRoom;
+    }
 }

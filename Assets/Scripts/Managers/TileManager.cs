@@ -9,7 +9,6 @@ public class TileManager : IManagers
     private int _currentBuildRoomCount;
     private List<List<GameObject>> _roomObjList = new List<List<GameObject>>();
     private List<List<GameObject>> _unitObjList = new List<List<GameObject>>();
-    public ChangeSetButtons ChangeSetButtons;
 
     public GameObject GridObject;
     public int x = 3;
@@ -68,8 +67,6 @@ public class TileManager : IManagers
                 room.IndexY = j;
             }
         }
-
-        ChangeSetButtons = Main.Get<UIManager>().OpenPopup<ChangeSetButtons>("ChangeSetButtons");
     }
 
     public bool Init()
@@ -92,20 +89,6 @@ public class TileManager : IManagers
         room.IndexY = indexY;
 
         return room;
-    }
-
-    public void ChangeUnit(int indexX, int indexY, Transform _unitPos)
-    {
-        if (ChangeSetButtons.changeUnitUI.SelectUnitData == null) return;
-        if (_unitObjList[indexX][indexY] != null)
-        {
-            resource.Destroy(_unitObjList[indexX][indexY].gameObject);
-        }
-        GameObject obj = resource
-            .InstantiateWithPoolingOption(Literals.UNIT_PREFABS_PATH + "Unit_" +
-                                          ChangeSetButtons.changeUnitUI.SelectUnitData.Key);
-        obj.transform.position = _unitPos.position;
-        _unitObjList[indexX][indexY] = obj;
     }
 
     public List<GameObject> GetNeighbors(int curPosX, int curPosY)

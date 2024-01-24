@@ -6,11 +6,10 @@ using System.Linq;
 using System.Xml;
 
 public class DataManager : IManagers
-{ 
+{
     //public Dictionary<string, Data를 상속받는 Data클래스> --Data = new();
-    public Dictionary<string, CharacterData> enemy = new Dictionary<string, CharacterData>();
+    public Dictionary<string, CharacterData> Character = new Dictionary<string, CharacterData>();
     public Dictionary<string, RoomData> roomDatas = new Dictionary<string, RoomData>();
-    public Dictionary<string, CharacterData> unit = new Dictionary<string, CharacterData>();
     public Dictionary<string, ShopItemData> shopItemData = new Dictionary<string, ShopItemData>();
 
 
@@ -18,9 +17,8 @@ public class DataManager : IManagers
     
     public bool Init()
     {
-        enemy = reader.LoadToCSVData<CharacterData>();
+        Character = reader.LoadToCSVData<CharacterData>();
         roomDatas = reader.LoadToCSVData<RoomData>();
-        unit = reader.LoadToCSVData<CharacterData>();
         shopItemData = reader.LoadToCSVData<ShopItemData>();
         return true;
     }
