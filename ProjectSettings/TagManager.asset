@@ -6,6 +6,7 @@ TagManager:
   tags:
   - InfoCamera
   - Content
+  - Enemy
   layers:
   - Default
   - TransparentFX

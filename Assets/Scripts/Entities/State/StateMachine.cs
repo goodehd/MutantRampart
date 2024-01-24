@@ -24,9 +24,13 @@ public class StateMachine
 
     public void ChangeState(EState stateName)
     {
-        _curState?.ExitState();
         if (_states.TryGetValue(stateName, out BaseState nextState))
         {
+            if(_curState == nextState)
+            {
+                return;
+            }
+            _curState?.ExitState();
             _curState = nextState;
             CurrentStateName = stateName;
         }

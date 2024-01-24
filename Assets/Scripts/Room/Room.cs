@@ -53,6 +53,9 @@ public class Room : MonoBehaviour
     {
         // thisRoomNum을 리턴시켜줌(어떤 형식으로 보내줄지는 미정)
         // Enemy가 방을 기억하고 다시 올 확률을 낮추기 위해서.
+        Character enemy = g.GetComponent<Character>();
+        enemy.CurPosX = this.IndexX;
+        enemy.CurPosY = this.IndexY;
     }
     private void OnMouseEnter()
     {

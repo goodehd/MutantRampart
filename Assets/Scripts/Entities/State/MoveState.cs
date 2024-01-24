@@ -89,6 +89,6 @@ public class MoveState : BaseState
         Owner.CurPosY = y;
 
         _isMove = false;
-        MoveStart();
+        //MoveStart();
     }
 }

@@ -14,11 +14,6 @@ public class Character : MonoBehaviour
 
     private bool _initialize = false;
 
-    private void Start()
-    {
-        Init(Main.Get<DataManager>().enemy["Slime"]);
-    }
-
     public virtual void Init(CharacterData data)
     {
         if (_initialize)
@@ -29,7 +24,6 @@ public class Character : MonoBehaviour
 
         StateMachine.AddState(EState.Idle, new IdleState(this));
         StateMachine.AddState(EState.Move, new MoveState(this));
-        StateMachine.AddState(EState.Attack, new AttackState(this));
         StateMachine.AddState(EState.Dead, new DeadState(this));
         StateMachine.ChangeState(EState.Idle);
 
@@ -39,11 +33,18 @@ public class Character : MonoBehaviour
         CurPosX = 0;
         CurPosY = 0;
 
+        Status.GetStat<Vital>(EstatType.Hp).OnValueZero += Die;
+
         _initialize = true;
     }
 
     private void Update()
     {
         StateMachine?.UpdateState();
+    }
+
+    protected void Die() 
+    {
+        StateMachine.ChangeState(EState.Dead);
     }
 }

@@ -26,4 +26,9 @@ public class DefaultTile : Room
 
      }*/
 
+    public override void EnemyEnterRoom(GameObject g)
+    {
+        Debug.Log($"X : {this.IndexX}, Y : {this.IndexY}");
+    }
+
 }

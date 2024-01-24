@@ -10,6 +10,7 @@ public class DeadState : BaseState
 
     public override void EnterState()
     {
+        CoroutineManagement.Instance.StartCoroutine(DieObject());
         Owner.Animator.SetTrigger(Literals.Dead);
     }
 
@@ -20,10 +21,17 @@ public class DeadState : BaseState
 
     public override void UpdateState()
     {
-        if (Owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Right_Die") &&
-            Owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            Main.Get<ResourceManager>().Destroy(Owner.gameObject);
-        }
+        ////Owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Right_Die") &&
+        //if (
+        //    Owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        //{
+        //    Main.Get<ResourceManager>().Destroy(Owner.gameObject);
+        //}
+    }
+
+    private IEnumerator DieObject()
+    {
+        yield return new WaitForSeconds(1);
+        Main.Get<ResourceManager>().Destroy(Owner.gameObject);
     }
 }

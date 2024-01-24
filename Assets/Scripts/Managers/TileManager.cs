@@ -78,7 +78,11 @@ public class TileManager : IManagers
         obj.transform.position = pos;
         _roomObjList[indexX][indexY] = obj;
 
-        return obj.GetComponent<Room>();
+        Room room = obj.GetComponent<Room>();
+        room.IndexX = indexX;
+        room.IndexY = indexY;
+
+        return room;
     }
 
     public List<GameObject> GetNeighbors(int curPosX, int curPosY)
