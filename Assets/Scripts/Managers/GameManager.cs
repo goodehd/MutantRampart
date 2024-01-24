@@ -6,6 +6,22 @@ public class GameManager : IManagers
 {
 
     private int _playerMoney; // 플레이어 보유 돈
+    private int _playerHp = 100; // 플레이어 체력
+    public int PlayerHp
+    {
+        get 
+        { 
+            return _playerHp; 
+        }
+        set
+        {
+            _playerHp = value;
+            if (_playerHp <= 0)
+            {
+                GameOver();
+            }
+        }
+    }
     //private List<Unit> playerUnits = new List<Unit>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
     public List<CharacterData> playerUnits = new List<CharacterData>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
     public List<RoomData> PlayerRooms { get; private set; } = new List<RoomData>(); // todo : 플레이어가 보유한 타일 리스트 -- 리스트 자료형 체크
@@ -22,6 +38,7 @@ public class GameManager : IManagers
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Forest"]);
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Lava"]);
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Snow"]);
+        PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Home_2"]);
 
         ShopUnitItems.Add(Main.Get<DataManager>().shopItemData["Gun"]);
         ShopUnitItems.Add(Main.Get<DataManager>().shopItemData["Jotem"]);
@@ -136,6 +153,5 @@ public class GameManager : IManagers
     {
         //popupMsgUI.SetActive(true);
     }
-
 
 }
