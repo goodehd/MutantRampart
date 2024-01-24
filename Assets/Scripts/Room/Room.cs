@@ -24,7 +24,7 @@ public class Room : MonoBehaviour
     [SerializeField] protected Material _buildAvailable;
     [SerializeField] protected Material _buildNotAvailable;
     public bool isEquipedRoom = false;
-    public bool isCanBuildRoom => Main.Get<TileManager>().isCanBuildRoom;
+    public RoomData RoomData { get; set; }
     public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
     
     
@@ -58,21 +58,9 @@ public class Room : MonoBehaviour
     }
     protected virtual void OnMouseEnter()
     {
-        if (isCanBuildRoom)
+        foreach (var _Ren in _renderer)
         {
-            foreach (var _Ren in _renderer)
-            {
-                _Ren.material = _buildAvailable;
-            }
-            
-        }
-        else
-        {
-            foreach (var _Ren in _renderer)
-            {
-                _Ren.material = _buildNotAvailable;
-            }
-
+            _Ren.material = _buildAvailable;
         }
         
         
@@ -94,7 +82,7 @@ public class Room : MonoBehaviour
         if(Main.Get<TileManager>().ChangeSetButtons.isUnitSet) return;
         ChangeRoomUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoomUI>("ChangeRoom_PopUpUI");
         changeRoomUI.SelectRoom = this;
-        changeRoomUI.RoomName = this.gameObject.name;
+        changeRoomUI.RoomName = gameObject.name;
     }
     
 }
