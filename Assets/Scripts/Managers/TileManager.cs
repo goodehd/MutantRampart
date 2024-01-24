@@ -7,23 +7,12 @@ public class TileManager : IManagers
     private ResourceManager resource;
     private int _canBuildRoomCount;
     private int _currentBuildRoomCount;
-    private bool _isCanBuildRoom = false;
     private List<List<GameObject>> _roomObjList = new List<List<GameObject>>();
 
     public GameObject GridObject;
     public int x = 3;
     public int y = 3;
-    public bool isCanBuildRoom // 방을 설치할 수 있는 타일이 몇개인지에 대한 정보 
-    {
-        get
-        {
-            if (_currentBuildRoomCount <= _canBuildRoomCount)
-            {
-                _isCanBuildRoom = true;
-            }
-            return _isCanBuildRoom;
-        }
-    }
+    
 
     public void GenerateMap()
     {
@@ -78,7 +67,11 @@ public class TileManager : IManagers
         obj.transform.position = pos;
         _roomObjList[indexX][indexY] = obj;
 
-        return obj.GetComponent<Room>();
+        Room room = obj.GetComponent<Room>();
+        room.IndexX = indexX;
+        room.IndexY = indexY;
+
+        return room;
     }
 
     public List<GameObject> GetNeighbors(int curPosX, int curPosY)
