@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class DefaultTile : Room
 {
@@ -12,7 +10,6 @@ public class DefaultTile : Room
 
         _roomStatus = EStatusformat.DefaultTile;
         ThisRoomData = Main.Get<DataManager>().roomDatas["Default"];
-        ThisRoomData.isEquiped = false;
         return true;
     }
 }

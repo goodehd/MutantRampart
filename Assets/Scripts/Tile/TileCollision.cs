@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TileCollision : MonoBehaviour
 {
     private Room _owner;
 
-    // Start is called before the first frame update
     void Start()
     {
         _owner = transform.parent.GetComponent<Room>();

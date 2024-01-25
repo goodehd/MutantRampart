@@ -33,15 +33,23 @@ public class UIManager : IManagers
         return true;
     }
 
-    public T OpenSceneUI<T>(string prefabName, string path = Literals.UI_SCENE_PATH) where T : BaseUI
+    public T OpenSceneUI<T>(string prefabName = null, string path = Literals.UI_SCENE_PATH) where T : BaseUI
     {
+        if(prefabName == null)
+        {
+            prefabName = typeof(T).Name;
+        }
         GameObject uiObj = InstantiateUI(prefabName, path);
         SetCanvasInfo(uiObj, false);
         return Utility.GetAddComponent<T>(uiObj);
     }
 
-    public T OpenPopup<T>(string prefabName, string path = Literals.UI_POPUP_PATH) where T : BaseUI
+    public T OpenPopup<T>(string prefabName = null, string path = Literals.UI_POPUP_PATH) where T : BaseUI
     {
+        if (prefabName == null)
+        {
+            prefabName = typeof(T).Name;
+        }
         GameObject uiObj = InstantiateUI(prefabName, path);
         T popup = Utility.GetAddComponent<T>(uiObj);
         _popupStack.Push(popup);
@@ -49,8 +57,12 @@ public class UIManager : IManagers
         return popup;
     }
 
-    public T CreateSubitem<T>(string prefabName, Transform parent = null, string path = Literals.UI_SUBITEM_PATH) where T : BaseUI
+    public T CreateSubitem<T>(string prefabName = null, Transform parent = null, string path = Literals.UI_SUBITEM_PATH) where T : BaseUI
     {
+        if (prefabName == null)
+        {
+            prefabName = typeof(T).Name;
+        }
         GameObject uiObj = InstantiateUI(prefabName, path);
         if(parent != null)
         {

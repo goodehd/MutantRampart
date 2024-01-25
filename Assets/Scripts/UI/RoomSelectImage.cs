@@ -23,10 +23,10 @@ public class RoomSelectImage : BaseUI
         _isEquipedImage = GetUI<Image>("IsEquipedImage");
         _roomSelectButton = GetUI<Button>("RoomSelectImage");
 
-        if(RoomData.isEquiped)
-        {
-            _isEquipedImage.gameObject.SetActive(true);
-        }
+        //if(RoomData.isEquiped)
+        //{
+        //    _isEquipedImage.gameObject.SetActive(true);
+        //}
         _roomImage.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{RoomData.Key}");
         _roomSprite = _roomImage.sprite;
         SetUICallback(_roomSelectButton.gameObject, EUIEventState.Click, SetInfo);
