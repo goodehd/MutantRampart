@@ -25,7 +25,7 @@ public class SpawnTile : MonoBehaviour
     {
         while (count != 0)
         {
-            Character enemy = _curScene.CreateCharacter(enemyName);
+            CharacterBehaviour enemy = _curScene.CreateCharacter(enemyName);
             enemy.transform.position = _spawnPos;
             enemy.StateMachine.ChangeState(EState.Move);
             yield return new WaitForSeconds(_spawnRatio);

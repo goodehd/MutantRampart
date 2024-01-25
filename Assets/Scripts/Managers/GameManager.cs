@@ -23,13 +23,14 @@ public class GameManager : IManagers
         }
     }
 
-    public List<CharacterData> playerUnits { get; private set; } = new List<CharacterData>();   // 플레이어가 보유한 유닛 리스트
+    public List<Character> playerUnits { get; private set; } = new List<Character>();   // 플레이어가 보유한 유닛 리스트
     public List<RoomData> PlayerRooms { get; private set; } = new List<RoomData>();             // 플레이어가 보유한 Room 리스트
 
     public event Action<int> OnChangeMoney;
 
     public bool Init()
     {
+        PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Home_2"]);
         return true;
     }
 

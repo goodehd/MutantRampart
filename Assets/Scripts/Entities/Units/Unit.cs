@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Unit : Character
+public class Unit : CharacterBehaviour
 {
     public override void Init(CharacterData data) 
     {
@@ -10,7 +10,7 @@ public class Unit : Character
 
     public override void Die()
     {
-        ((BatRoom)CurRoom).UnitCount--;
+        ((BatRoom)CharacterInfo.CurRoom).UnitCount--;
         base.Die();
     }
 }

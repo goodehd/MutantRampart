@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IdleState : BaseState
 {
-    public IdleState(Character owner) : base(owner)
+    public IdleState(CharacterBehaviour owner) : base(owner)
     {
     }
 

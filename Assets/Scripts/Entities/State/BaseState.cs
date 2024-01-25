@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class BaseState
 {
-    protected Character Owner { get; private set; }
+    protected CharacterBehaviour Owner { get; private set; }
 
-    public BaseState(Character owner)
+    public BaseState(CharacterBehaviour owner)
     {
         Owner = owner;
     }

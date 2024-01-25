@@ -7,16 +7,16 @@ public class EnemyAttackState : BaseState
 {
     private TileManager tileManager;
     private Coroutine _coroutine;
-    private Character[] _targets;
+    private CharacterBehaviour[] _targets;
 
-    public EnemyAttackState(Character owner) : base(owner)
+    public EnemyAttackState(CharacterBehaviour owner) : base(owner)
     {
         tileManager = Main.Get<TileManager>();
     }
 
     public override void EnterState()
     {
-        _targets = ((BatRoom)Owner.CurRoom).Units;
+        _targets = ((BatRoom)Owner.CharacterInfo.CurRoom).Units;
         AttackStart();
     }
 
@@ -37,7 +37,7 @@ public class EnemyAttackState : BaseState
 
     private IEnumerator Attack()
     {
-        Character target = SetAttackTartget();
+        CharacterBehaviour target = SetAttackTartget();
 
         if( target == null)
         {
@@ -60,7 +60,7 @@ public class EnemyAttackState : BaseState
         AttackStart();
     }
 
-    private Character SetAttackTartget()
+    private CharacterBehaviour SetAttackTartget()
     {
         for(int i = 0; i < _targets.Length; i++)
         {

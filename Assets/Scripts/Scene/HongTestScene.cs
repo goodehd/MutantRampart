@@ -13,7 +13,7 @@ public class HongTestScene : Scene
 
     public void CreateEnemy()
     {
-        Character cha = CreateCharacter("Slime");
+        CharacterBehaviour cha = CreateCharacter("Slime");
         cha.StateMachine.ChangeState(EState.Move);
     }
 }
