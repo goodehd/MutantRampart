@@ -8,6 +8,8 @@ public class CharacterData : Data
     public float MoveSpeed { get; set; }
     
     public string SpritePath { get; set; }
+
+    public int Price { get; set; }
     
     
 }

@@ -14,8 +14,13 @@ public class Room_List : BaseUI
     //private Transform _content;
     private Button _buyButton;
 
+    //public string roomName;
+
+    //public bool isRoomItem { get; private set; } = true;
+
+
     // Data
-    public ShopItemData ShopRoomData { get; set; }
+    public RoomData ShopRoomData { get; set; }
 
     protected override void Init()
     {
@@ -24,7 +29,7 @@ public class Room_List : BaseUI
         //SetUI<Transform>();
         SetUI<Button>();
 
-        _listBG = GetUI<Image>("Room_List(Clone)");
+        _listBG = GetUI<Image>("Room_List");
         _listItemName = GetUI<TMP_Text>("Room_ItemName");
         _listItemImg = GetUI<Image>("Room_ItemImg");
         _listItemPrice = GetUI<TMP_Text>("Room_ItemPrice");
@@ -47,13 +52,17 @@ public class Room_List : BaseUI
     private void SetInfo()
     {
         _listItemName.text = ShopRoomData.Key;
-        _listItemImg.sprite = Main.Get<ResourceManager>().Load<Sprite>(ShopRoomData.SpritePath);
+        _listItemImg.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{ShopRoomData.Key}");
         _listItemPrice.text = ShopRoomData.Price.ToString();
+
     }
 
     private void ClickBuyBtn(PointerEventData EventData)
     {
-        Main.Get<UIManager>().OpenPopup<BuyConfirmUI>("BuyConfirm_PopupUI");
+        Main.Get<UIManager>().OpenPopup<BuyConfirm_PopupUI>("BuyConfirm_PopupUI").ShopRoomData = ShopRoomData;
+        //Main.Get<UIManager>().OpenPopup<BuyConfirmUI>("BuyConfirm_PopupUI").isUnitItem = false;
+        //Main.Get<UIManager>().OpenPopup<BuyConfirmUI>("BuyConfirm_PopupUI").isRoomItem = true;
+
     }
 }
 

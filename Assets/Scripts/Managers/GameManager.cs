@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
 public class GameManager : IManagers
 {
 
-    private int _playerMoney; // 플레이어 보유 돈
+    public int _playerMoney { get; private set; } = 100000; // 플레이어 보유 돈
     private int _playerHp = 100; // 플레이어 체력
     public int PlayerHp
     {
@@ -23,11 +25,17 @@ public class GameManager : IManagers
         }
     }
     //private List<Unit> playerUnits = new List<Unit>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
-    public List<CharacterData> playerUnits { get; private set; } = new List<CharacterData>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
-    public List<RoomData> PlayerRooms { get; private set; } = new List<RoomData>(); // todo : 플레이어가 보유한 타일 리스트 -- 리스트 자료형 체크
-    public List<ShopItemData> ShopUnitItems { get; private set; } = new List<ShopItemData>(); // 상점 - UnitItems
-    public List<ShopItemData> ShopRoomItems { get; private set; } = new List<ShopItemData>(); // 상점 - RoomItems
+    public List<CharacterData> playerUnits { get; private set; } = new List<CharacterData>();
+    public List<RoomData> PlayerRooms { get; private set; } = new List<RoomData>();
     public static bool isGamePaused { get; private set; } // 다른 스크립트에서 쉽게 접근이 가능하도록 메모리에 할당 - static, 읽기전용
+
+    // UI Text를 연결할 변수
+    //private TMP_Text moneyText;
+    //private ShopUI ShopUI;
+
+    //public string itemName;
+
+    public event Action<int> OnChangeMoney;
 
     public bool Init()
     {
@@ -40,29 +48,59 @@ public class GameManager : IManagers
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Snow"]);
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Home_2"]);
 
-        ShopUnitItems.Add(Main.Get<DataManager>().shopItemData["Gun"]);
-        ShopUnitItems.Add(Main.Get<DataManager>().shopItemData["Jotem"]);
-        ShopUnitItems.Add(Main.Get<DataManager>().shopItemData["Warrior"]);
-
-        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["Forest"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["Igloo"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["Lava"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["LivingRoom"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["Molar"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["Snow"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().shopItemData["Temple"]);
-
-
         return true;
     }
 
-    // Start is called before the first frame update
-    private void Start()
+    public void ChangeMoney(int amount)
     {
-        // 돈 관련 UI 업데이트
-        Refresh();
-
+        _playerMoney += amount;
+        OnChangeMoney?.Invoke(_playerMoney);
     }
+
+    // Start is called before the first frame update
+    //private void Start()
+    //{
+        
+    //    // 돈 관련 UI 업데이트
+    //    RefreshMoneyUI();
+
+    //}
+
+    //private string FormatNumber(int num) // 천의자리마다 ,(콤마) 찍어주는 함수
+    //{
+    //    return string.Format("{0:#,###}", num);
+    //}
+
+    // 돈 관리
+    private void RefreshMoneyUI() // UI 에 업데이트해줄 함수 구현 --> event 를 사용한다!!!
+    {
+        // ShopUI 에 있는 _playerMoneyText 어떻게 델꼬와 ?? --> event 를 사용한다.
+        //moneyText.text = FormatNumber(_playerMoney);
+        //ShopUI._playerMoneyText.text = FormatNumber(_playerMoney);
+    }
+
+    //BuyItem 을 UI 로 옮기고
+    //GameManager 에는 산 거를 추가시키는 함수가 있어야 한다. - 산거를 받아서 리스트에 넣는 친구.
+
+
+    //public void BuyItem(ShopItemData data)
+    //{
+    //    if (_playerMoney >= data.Price)
+    //    {
+    //        _playerMoney -= data.Price;
+    //        playerUnitInventory.Add(data);
+    //        RefreshMoneyUI(); // 돈이 변경될 때마다 UI 업데이트
+    //        Debug.Log("구매완료했습니다.");
+    //        Debug.Log($"잔액 : {_playerMoney}");
+    //    }
+    //    else // 보유 금액 부족 시
+    //    {
+    //        Main.Get<UIManager>().OpenPopup<MoneyErrorUI>("MoneyError_PopupUI"); // 돈이 아이템 금액보다 적으면 돈부족 경고창 띄우기
+    //        Debug.Log("돈이 부족해서 구매할 수 없습니다.");
+    //    }
+    //}
+
+
 
     // Update is called once per frame
     private void Update()
@@ -86,30 +124,26 @@ public class GameManager : IManagers
         isGamePaused = false;
     }
 
-    // 돈 관리
-    private void Refresh() // UI 에 Update 해줄 함수 구현
-    {
-        //moneyText.text = playerMoney.ToString();
-    }
 
-    public void AddMoney(int money)
-    {
-        _playerMoney += money;
-        Refresh();
-    }
 
-    public void Spendmoney(int money)
-    {
-        if (_playerMoney < money) // 돈 부족 시
-        {
-            ShowWarning();
-            Debug.Log("돈이 부족해 !!");
-        }
+    //public void AddMoney(int money)
+    //{
+    //    _playerMoney += money;
+    //    RefreshMoneyUI();
+    //}
 
-        _playerMoney -= money;
-        Refresh();
+    //public void Spendmoney(int money)
+    //{
+    //    if (_playerMoney < money) // 돈 부족 시
+    //    {
+    //        ShowWarning();
+    //        Debug.Log("돈이 부족해 !!");
+    //    }
 
-    }
+    //    _playerMoney -= money;
+    //    RefreshMoneyUI();
+
+    //}
 
     // 유닛 관리
     //public void AddPlayerUnit(Unit unit)
@@ -149,9 +183,9 @@ public class GameManager : IManagers
     {
 
     }
-    private void ShowWarning() // "잔액이 부족합니다" 팝업
-    {
-        //popupMsgUI.SetActive(true);
-    }
+    //private void ShowWarning() // "잔액이 부족합니다" 팝업
+    //{
+    //    //popupMsgUI.SetActive(true);
+    //}
 
 }
