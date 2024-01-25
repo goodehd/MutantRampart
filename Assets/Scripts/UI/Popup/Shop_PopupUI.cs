@@ -47,6 +47,7 @@ public class Shop_PopupUI : BaseUI
         _roomContent = GetUI<Transform>("Room_Content");
 
         _playerMoneyText = GetUI<TMP_Text>("MoneyText");
+        _playerMoneyText.text = Main.Get<GameManager>()._playerMoney.ToString();
 
         Main.Get<GameManager>().OnChangeMoney += UpdateMoneyText;
 
