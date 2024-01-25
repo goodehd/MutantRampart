@@ -8,6 +8,7 @@ public class HongTestScene : Scene
     {
         base.Init();
         Main.Get<TileManager>().GenerateMap();
+        Main.Get<UIManager>().OpenSceneUI<DayMain_SceneUI>("DayMain_SceneUI");
         //Main.Get<UIManager>().OpenSceneUI<DayMainUI>("DayMain_SceneUI");
     }
 

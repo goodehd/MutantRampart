@@ -88,12 +88,14 @@ public class ChangeRoomUI : BaseUI
                     Main.Get<TileManager>().ChangeRoom(ChangeRoomData.indexX, ChangeRoomData.indexY, "Default");
                     ChangeRoom(ChangeRoomData.Key);
                     SetSelectRoomInfo(ChangeRoomData, Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{ChangeRoomData.Key}"));
+                    SetActiveSetUnitButton();
                 }
                 else
                 {
                     ChangeRoom(ChangeRoomData.Key);
                     ChangeRoomData.isEquiped = true;
                     SetSelectRoomInfo(ChangeRoomData, Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{ChangeRoomData.Key}"));
+                    SetActiveSetUnitButton();
                     Debug.Log("룸 장착");
                 }
             }
@@ -112,6 +114,7 @@ public class ChangeRoomUI : BaseUI
                     ChangeRoom(ChangeRoomData.Key);
                     ChangeRoomData.isEquiped = true;
                     SetSelectRoomInfo(ChangeRoomData, Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{ChangeRoomData.Key}"));
+                    SetActiveSetUnitButton();
                     Debug.Log("룸 변경");
                 }
             }
@@ -135,6 +138,7 @@ public class ChangeRoomUI : BaseUI
                     SetSelectRoomInfo(Main.Get<DataManager>().roomDatas["Default"],
                               Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}Default"));
                     ChangeRoomData.isEquiped = false;
+                    _setUnitButton.gameObject.SetActive(false);
                 }
             }
             Debug.Log("장착 해제할 룸이 없습니다");
@@ -146,6 +150,7 @@ public class ChangeRoomUI : BaseUI
             SetSelectRoomInfo(Main.Get<DataManager>().roomDatas["Default"],
                               Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}Default"));
             ChangeRoomData.isEquiped = false;
+            _setUnitButton.gameObject.SetActive(false);
         }
         SetMapInventory();
     }
@@ -180,10 +185,23 @@ public class ChangeRoomUI : BaseUI
                 roomSelectImage.isEquipedImage.gameObject.SetActive(true);
             }*/
         }
+        
     }
 
     private void SetUnitClick(PointerEventData eventData)
     {
         Main.Get<UIManager>().OpenPopup<ChangeUnitUI>("ChangeUnit_PopUpUI").SelectRoom = SelectRoom;
+    }
+
+    private void SetActiveSetUnitButton()
+    {
+        if (ChangeRoomData.Type != EStatusformat.Bat)
+        {
+            _setUnitButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            _setUnitButton.gameObject.SetActive(true);
+        }
     }
 }
