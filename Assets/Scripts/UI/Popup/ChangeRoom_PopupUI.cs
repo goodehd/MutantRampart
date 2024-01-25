@@ -107,6 +107,8 @@ public class ChangeRoom_PopupUI : BaseUI
             {
                 if(ChangeRoomData.isEquiped)
                 {
+                    Error_PopupUI errorPopupUI = Main.Get<UIManager>().OpenPopup<Error_PopupUI>();
+                    errorPopupUI.curErrorText = "이미 장착중인 룸입니다 !";
                     Debug.Log("이미 장착중인 룸입니다.");
                 }
                 else
@@ -141,6 +143,8 @@ public class ChangeRoom_PopupUI : BaseUI
                     _setUnitButton.gameObject.SetActive(false);
                 }
             }
+            Error_PopupUI errorPopupUI = Main.Get<UIManager>().OpenPopup<Error_PopupUI>();
+            errorPopupUI.curErrorText = "장착 해제할\n룸이 없습니다 !";
             Debug.Log("장착 해제할 룸이 없습니다");
         }
         else
