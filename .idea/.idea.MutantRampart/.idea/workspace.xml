@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="64c89d60-885a-4ce1-aad4-c0a2f98a32c9" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MutantRampart/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MutantRampart/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/YunjinTestScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/YunjinTestScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Scene/CameraMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Scene/CameraMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/UI/Scene/DayMain_SceneUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/UI/Scene/DayMain_SceneUI.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Room/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Room/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Scene/DayMain_SceneUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Scene/DayMain_SceneUI.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
