@@ -11,7 +11,8 @@ public class DefaultTile : Room
         if (!base.Initialize()) return false;
 
         _roomStatus = EStatusformat.DefaultTile;
-
+        ThisRoomData = Main.Get<DataManager>().roomDatas["Default"];
+        ThisRoomData.isEquiped = false;
         return true;
     }
 }

@@ -65,6 +65,7 @@ public class Room : MonoBehaviour
     }
     protected virtual void OnMouseEnter()
     {
+        if(EventSystem.current.IsPointerOverGameObject())return;
         foreach (var _Ren in _renderer)
         {
             _Ren.material = _buildAvailable;
