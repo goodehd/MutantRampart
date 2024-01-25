@@ -20,11 +20,11 @@ public class UnitSelectImageUI : BaseUI
         SetUI<Image>();
         SetUI<Button>();
 
-        _unitImage = GetUI<Image>("UnitSelectImage");
+        _unitImage = GetUI<Image>("UnitSelectImageUI");
         _collocateImage = GetUI<Image>("ButtonPanel");
         _cancelImage = GetUI<Image>("CancelPanel");
 
-        _unitSelectButton = GetUI<Button>("UnitSelectImage");
+        _unitSelectButton = GetUI<Button>("UnitSelectImageUI");
         _collocateBtn = GetUI<Button>("SetButton");
         _cancelBtn = GetUI<Button>("CancelButton");
 

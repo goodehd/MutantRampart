@@ -69,7 +69,7 @@ public class ChangeUnit_PopupUI : BaseUI
 
         for (int i = 0; i < playerUnits.Count; i++)
         {
-            UnitSelectImageUI unitSelectImage = Main.Get<UIManager>().CreateSubitem<UnitSelectImageUI>("UnitSelectImage", _content);
+            UnitSelectImageUI unitSelectImage = Main.Get<UIManager>().CreateSubitem<UnitSelectImageUI>("UnitSelectImageUI", _content);
             unitSelectImage.CharacterData = playerUnits[i];
             unitSelectImage.Owner = this;
         }

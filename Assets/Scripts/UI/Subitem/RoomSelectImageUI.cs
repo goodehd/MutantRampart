@@ -19,9 +19,9 @@ public class RoomSelectImageUI : BaseUI
         SetUI<Image>();
         SetUI<Button>();
 
-        _roomImage = GetUI<Image>("RoomSelectImage");
+        _roomImage = GetUI<Image>("RoomSelectImageUI");
         _isEquipedImage = GetUI<Image>("IsEquipedImage");
-        _roomSelectButton = GetUI<Button>("RoomSelectImage");
+        _roomSelectButton = GetUI<Button>("RoomSelectImageUI");
 
         //if(RoomData.isEquiped)
         //{

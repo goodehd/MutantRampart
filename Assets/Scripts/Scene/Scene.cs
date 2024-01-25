@@ -34,7 +34,7 @@ public class Scene : MonoBehaviour
 
         character.Init(_data.Character[key]);
 
-        _ui.CreateSubitem<CharacterHpBarUI>("HPProgressBar", obj.transform).transform.localPosition = new Vector3(0, 0.5f, 3f);
+        _ui.CreateSubitem<CharacterHpBarUI>("CharacterHpBarUI", obj.transform).transform.localPosition = new Vector3(0, 0.5f, 3f);
 
         return character;
     }
