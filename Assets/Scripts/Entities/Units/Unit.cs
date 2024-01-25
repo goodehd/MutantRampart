@@ -8,7 +8,7 @@ public class Unit : Character
         StateMachine.AddState(EState.Attack, new UnitAttackState(this));
     }
 
-    protected override void Die()
+    public override void Die()
     {
         ((BatRoom)CurRoom).UnitCount--;
         base.Die();

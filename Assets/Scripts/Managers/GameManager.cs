@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameManager : IManagers
 {
 
-    public int _playerMoney { get; private set; } = 100000; // 플레이어 보유 돈
+    public int _playerMoney { get; private set; } = 5000; // 플레이어 보유 돈
     private int _playerHp = 5; // 플레이어 체력
     public int PlayerHp
     {
@@ -34,13 +34,13 @@ public class GameManager : IManagers
 
     public bool Init()
     {
-        playerUnits.Add(Main.Get<DataManager>().Character["Gun"]);
-        playerUnits.Add(Main.Get<DataManager>().Character["Jotem"]);
-        playerUnits.Add(Main.Get<DataManager>().Character["Warrior"]);
+        //playerUnits.Add(Main.Get<DataManager>().Character["Gun"]);
+        //playerUnits.Add(Main.Get<DataManager>().Character["Jotem"]);
+        //playerUnits.Add(Main.Get<DataManager>().Character["Warrior"]);
         
-        PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Forest"]);
-        PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Lava"]);
-        PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Snow"]);
+        //PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Forest"]);
+        //PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Lava"]);
+        //PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Snow"]);
         PlayerRooms.Add(Main.Get<DataManager>().roomDatas["Home_2"]);
 
         return true;

@@ -46,7 +46,7 @@ public class Character : MonoBehaviour
         StateMachine?.UpdateState();
     }
 
-    protected virtual void Die() 
+    public virtual void Die() 
     {
         StateMachine.ChangeState(EState.Dead);
     }

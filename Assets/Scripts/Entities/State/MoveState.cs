@@ -109,7 +109,7 @@ public class MoveState : BaseState
 
         if (_tileMap.GetRoom(x, y).GetComponent<Room>().isEndPoint)
         {
-            Owner.StateMachine.ChangeState(EState.Dead);
+            Owner.Die();
             Main.Get<GameManager>().PlayerHp--;
         }
         else

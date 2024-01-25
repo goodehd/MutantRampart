@@ -10,7 +10,7 @@ public class Enemy : Character
         StateMachine.AddState(EState.Attack, new EnemyAttackState(this));
     }
 
-    protected override void Die()
+    public override void Die()
     {
         CurRoom.RemoveEnemy(this);
         Main.Get<StageManager>().CheckClear();

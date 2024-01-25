@@ -44,8 +44,9 @@ public class StageManager : IManagers
     {
         StageClear_PopupUI ui = Main.Get<UIManager>().OpenPopup<StageClear_PopupUI>("StageClear_PopupUI");
         ui._curStage = _curStage + 1;
-        ui._rewardsGold = 10000;
+        ui._rewardsGold = _stages[_curStage].SpwanCount * 1000;
 
+        Main.Get<GameManager>().ChangeMoney(_stages[_curStage].SpwanCount * 1000);
         _curStage++;
         _isStageStart = false;
     }

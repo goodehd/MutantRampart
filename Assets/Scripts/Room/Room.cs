@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.EventSystems;
@@ -50,6 +49,7 @@ public class Room : MonoBehaviour
             _childObj[i] = this.transform.GetChild(i).gameObject;
         }
         ThisRoomData = Main.Get<DataManager>().roomDatas[gameObject.name];
+
         _isInitialized = true;
         return true;
     }
