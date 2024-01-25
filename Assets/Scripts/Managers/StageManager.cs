@@ -42,9 +42,12 @@ public class StageManager : IManagers
 
     public void StageClear()
     {
+        StageClear_PopupUI ui = Main.Get<UIManager>().OpenPopup<StageClear_PopupUI>("StageClear_PopupUI");
+        ui._curStage = _curStage + 1;
+        ui._rewardsGold = 10000;
+
         _curStage++;
         _isStageStart = false;
-        Debug.Log($"{_curStage}스테이지 클리어");
     }
 
     public void CheckClear()

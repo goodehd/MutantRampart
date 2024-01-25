@@ -177,7 +177,7 @@ public class GameManager : IManagers
     public void GameOver()
     {
         Time.timeScale = 0.0f;
-        Debug.Log("게임 오버");
+        Main.Get<UIManager>().OpenPopup<StageFail_PopupUI>("StageFail_PopupUI");
     }
     //private void ShowWarning() // "잔액이 부족합니다" 팝업
     //{
