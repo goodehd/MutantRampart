@@ -20,7 +20,7 @@ public class Room_ListUI : BaseUI
         SetUI<TMP_Text>();
         SetUI<Button>();
 
-        _listBG = GetUI<Image>("Room_List");
+        _listBG = GetUI<Image>("Room_ListUI");
         _listItemName = GetUI<TMP_Text>("Room_ItemName");
         _listItemImg = GetUI<Image>("Room_ItemImg");
         _listItemPrice = GetUI<TMP_Text>("Room_ItemPrice");

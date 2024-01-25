@@ -73,14 +73,14 @@ public class Shop_PopupUI : BaseUI
         // Shop - Unit Items
         for (int i = 0; i < ShopUnitItems.Count; i++)
         {
-            Unit_ListUI unitItemsList = Main.Get<UIManager>().CreateSubitem<Unit_ListUI>("Unit_List", _unitContent);
+            Unit_ListUI unitItemsList = Main.Get<UIManager>().CreateSubitem<Unit_ListUI>("Unit_ListUI", _unitContent);
             unitItemsList.ShopUnitData = ShopUnitItems[i];
         }
 
         // Shop - Room Items
         for (int i = 0; i < ShopRoomItems.Count; i++)
         {
-            Room_ListUI roomItemsList = Main.Get<UIManager>().CreateSubitem<Room_ListUI>("Room_List", _roomContent);
+            Room_ListUI roomItemsList = Main.Get<UIManager>().CreateSubitem<Room_ListUI>("Room_ListUI", _roomContent);
             roomItemsList.ShopRoomData = ShopRoomItems[i];
         }
 
