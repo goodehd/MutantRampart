@@ -28,7 +28,6 @@ public class RoomSelectImage : BaseUI
 
     private void SetInfo(PointerEventData EventData)
     {
-        Owner.SetSelectRoomInfo(RoomData, _roomSprite);
         Owner.ChangeRoomData = RoomData;
         Owner.isSelectChangeRoom = true;
     }

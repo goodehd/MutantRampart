@@ -13,9 +13,9 @@ public class ChangeRoomUI : BaseUI
     private TextMeshProUGUI _roomName;
     private TextMeshProUGUI _roomType;
     private TextMeshProUGUI _roomInstruction;
-    private TextMeshProUGUI _equipButtonText;
     private Image _roomImage;
     private Button _equipButton;
+    private Button _unequipButton;
     private Button _exitButton;
     private Button _setUnitButton;
     private Transform _content;
@@ -42,10 +42,10 @@ public class ChangeRoomUI : BaseUI
         _roomName = GetUI<TextMeshProUGUI>("NameText");
         _roomType = GetUI<TextMeshProUGUI>("TypeText");
         _roomInstruction = GetUI<TextMeshProUGUI>("InstructionText");
-        _equipButtonText = GetUI<TextMeshProUGUI>("EquipText");
         _roomImage = GetUI<Image>("RoomImagesprite");
         _content = GetUI<Transform>("Content");
         _equipButton = GetUI<Button>("EquipButton");
+        _unequipButton = GetUI<Button>("UnEquipButton");
         _exitButton = GetUI<Button>("Delete");
         _setUnitButton = GetUI<Button>("SetUnitButton");
 
@@ -72,7 +72,7 @@ public class ChangeRoomUI : BaseUI
     
     public void SetClickRoomData()
     {
-        _selectRoomData = Main.Get<DataManager>().roomDatas[RoomName];
+        _selectRoomData = SelectRoom.ThisRoomData;
         _roomImage.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{_selectRoomData.Key}");
     }
 

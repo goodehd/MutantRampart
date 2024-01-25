@@ -24,7 +24,7 @@ public class Room : MonoBehaviour
     [SerializeField] protected Material _buildAvailable;
     [SerializeField] protected Material _buildNotAvailable;
     public bool isEquipedRoom = false;
-    public RoomData RoomData { get; set; }
+    public RoomData ThisRoomData { get; set; }
     public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
     
     
@@ -47,6 +47,7 @@ public class Room : MonoBehaviour
             _origin[i] = this.transform.GetChild(i).GetComponent<TilemapRenderer>().material;
             _childObj[i] = this.transform.GetChild(i).gameObject;
         }
+        ThisRoomData = Main.Get<DataManager>().roomDatas[gameObject.name];
         _isInitialized = true;
         return true;
     }
