@@ -18,4 +18,9 @@ public class HomeRoom : BatRoom
         //    // 여기에서 필요한 다른 작업 수행 가능
         //}
     }
+
+    public override void EnemyEnterRoom(GameObject g)
+    {
+        base.EnemyEnterRoom(g);
+    }
 }

@@ -5,10 +5,9 @@ using UnityEngine;
 public class Scene : MonoBehaviour
 {
     protected ResourceManager _resource;
+    protected UIManager _ui;
     protected PoolManager _pool;
     protected DataManager _data;
-
-    private LinkedList<GameObject> _listObj = new LinkedList<GameObject>();
 
     private void Start()
     {
@@ -20,6 +19,7 @@ public class Scene : MonoBehaviour
         Main.Get<SceneManager>().Scene = this;
         _resource = Main.Get<ResourceManager>();
         _data = Main.Get<DataManager>();
+        _ui = Main.Get<UIManager>();
     }
 
     public Character CreateCharacter(string key)
@@ -33,6 +33,8 @@ public class Scene : MonoBehaviour
         }
 
         character.Init(_data.Character[key]);
+
+        _ui.CreateSubitem<CharacterHpBarUI>("HPProgressBar", obj.transform).transform.localPosition = new Vector3(0, 0.5f, 3f);
 
         return character;
     }

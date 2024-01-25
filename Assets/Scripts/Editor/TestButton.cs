@@ -25,6 +25,10 @@ public class TestButton : Editor
         {
             generator.StateMachine.ChangeState(EState.Dead);
         }
+        if (GUILayout.Button("hp -10"))
+        {
+            generator.Status.GetStat<Vital>(EstatType.Hp).CurValue -= 10;
+        }
     }
 }
 
@@ -51,21 +55,6 @@ public class TestButton2 : Editor
         if (GUILayout.Button("Dead"))
         {
             generator.StateMachine.ChangeState(EState.Dead);
-        }
-    }
-}
-
-[CustomEditor(typeof(BatRoom))]
-public class TestButton3 : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-
-        BatRoom generator = (BatRoom)target;
-        if (GUILayout.Button("Spwn"))
-        {
-            generator.CreateUnitTest();
         }
     }
 }

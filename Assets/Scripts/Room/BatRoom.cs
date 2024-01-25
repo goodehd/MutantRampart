@@ -6,7 +6,7 @@ using UnityEngine.TextCore.Text;
 public class BatRoom : Room
 {
     public Character[] Units { get; private set; } = new Character[3];
-    public LinkedList<Character> Enemys { get; private set; } = new LinkedList<Character>();
+    public int UnitCount {  get; set; } 
 
     public override bool Initialize()
     {
@@ -14,6 +14,7 @@ public class BatRoom : Room
 
         _roomStatus = EStatusformat.Bat;
         OnEnemyEnterRoom += EnemyEnterRoom;
+        UnitCount = 0;
 
         return true;
     }
@@ -22,7 +23,7 @@ public class BatRoom : Room
     {
         base.EnemyEnterRoom(g);
 
-        if (Units.Length > 0)
+        if (UnitCount > 0)
         {
             Character enemy = g.GetComponent<Character>();
             enemy.Renderer.flipX = false;
@@ -50,18 +51,14 @@ public class BatRoom : Room
 
         Units[slotIndex] = Main.Get<SceneManager>().Scene.CreateCharacter(data.Key);
         Units[slotIndex].transform.position = new Vector3(transform.position.x + 1f, transform.position.y + 2f, 3.0f);
+        Units[slotIndex].CurRoom = this;
+        UnitCount++;
     }
 
     public void DeleteUnit(int slotIndex)
     {
         Main.Get<ResourceManager>().Destroy(Units[slotIndex].gameObject);
         Units[slotIndex] = null;
-    }
-
-    public void CreateUnitTest()
-    {
-        GameObject go = Main.Get<ResourceManager>().InstantiateWithPoolingOption("Prefabs/Character/Unit_GunTest");
-        go.transform.position = new Vector3(transform.position.x + 1f, transform.position.y + 2f, go.transform.position.z);
-        Units[0] = go.GetComponent<Character>();
+        UnitCount--;
     }
 }

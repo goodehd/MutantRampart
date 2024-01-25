@@ -6,6 +6,7 @@ public class Character : MonoBehaviour
 {
     public int CurPosX { get; set; }
     public int CurPosY { get; set; }
+    public Room CurRoom { get; set; }
 
     public CharacterData Data { get; private set; }
     public CharacterStatus Status { get; private set; }
@@ -45,7 +46,7 @@ public class Character : MonoBehaviour
         StateMachine?.UpdateState();
     }
 
-    protected void Die() 
+    protected virtual void Die() 
     {
         StateMachine.ChangeState(EState.Dead);
     }

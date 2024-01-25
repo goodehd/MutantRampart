@@ -27,12 +27,12 @@ public class Room : MonoBehaviour
     public RoomData ThisRoomData { get; set; }
     public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
     
-    
-    
+    public LinkedList<Character> Enemys { get; private set; } = new LinkedList<Character>();
+
     public int IndexX { get; set; }
     public int IndexY { get; set; }
 
-    public virtual void Awake()
+    public virtual void Start()
     {
         Initialize();
     }
@@ -59,6 +59,7 @@ public class Room : MonoBehaviour
         Character enemy = g.GetComponent<Character>();
         enemy.CurPosX = this.IndexX;
         enemy.CurPosY = this.IndexY;
+        enemy.CurRoom = this;
     }
     protected virtual void OnMouseEnter()
     {
@@ -87,5 +88,9 @@ public class Room : MonoBehaviour
         changeRoomUI.SelectRoom = this;
         changeRoomUI.RoomName = gameObject.name;
     }
-    
+
+    public void RemoveEnemy(Character src)
+    {
+        Enemys.Remove(src);
+    }
 }

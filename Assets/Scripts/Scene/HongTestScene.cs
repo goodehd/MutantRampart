@@ -8,11 +8,12 @@ public class HongTestScene : Scene
     {
         base.Init();
         Main.Get<TileManager>().GenerateMap();
-        //Main.Get<UIManager>().OpenSceneUI<DayMainUI>("DayMain_SceneUI");
+        Main.Get<UIManager>().OpenSceneUI<DayMainUI>("DayMain_SceneUI");
     }
 
     public void CreateEnemy()
     {
-        CreateCharacter("Slime");
+        Character cha = CreateCharacter("Slime");
+        cha.StateMachine.ChangeState(EState.Move);
     }
 }

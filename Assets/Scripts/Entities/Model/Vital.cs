@@ -37,8 +37,8 @@ public class Vital : Stat
             else
             {
                 _curValue = value;
-                OnCurValueChanged?.Invoke(_curValue);
             }
+            OnCurValueChanged?.Invoke(_curValue);
         }
     }
 

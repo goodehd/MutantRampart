@@ -9,4 +9,10 @@ public class Enemy : Character
         base.Init(data);
         StateMachine.AddState(EState.Attack, new EnemyAttackState(this));
     }
+
+    protected override void Die()
+    {
+        CurRoom.RemoveEnemy(this);
+        base.Die();
+    }
 }
