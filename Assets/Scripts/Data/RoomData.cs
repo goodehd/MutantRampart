@@ -9,4 +9,7 @@ public class RoomData : Data
     public int MaxUnitCount { get; set; }
 
     public int Price { get; set; }
+    public bool isEquiped { get; set; } = false;
+    public int indexX { get; set; }
+    public int indexY { get; set; }
 }

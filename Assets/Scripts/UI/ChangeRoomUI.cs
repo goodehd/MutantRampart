@@ -52,6 +52,7 @@ public class ChangeRoomUI : BaseUI
         SetUICallback(_equipButton.gameObject, EUIEventState.Click, ClickEquipButton);
         SetUICallback(_exitButton.gameObject, EUIEventState.Click, ExitBtnClick);
         SetUICallback(_setUnitButton.gameObject, EUIEventState.Click, SetUnitClick);
+        SetUICallback(_unequipButton.gameObject, EUIEventState.Click, ClickUnEquipButton);
 
         SetMapInventory();
         SetClickRoomData();
@@ -82,33 +83,69 @@ public class ChangeRoomUI : BaseUI
         {
             if(isSelectChangeRoom)  // 보유하고있는 방을 클릭했을떄
             {
-                ChangeRoom(ChangeRoomData.Key);
-                Main.Get<GameManager>().PlayerRooms.Remove(ChangeRoomData);
-                Main.Get<UIManager>().ClosePopup();
-                Debug.Log("룸 장착");
+                if (ChangeRoomData.isEquiped)
+                {
+                    Main.Get<TileManager>().ChangeRoom(ChangeRoomData.indexX, ChangeRoomData.indexY, "Default");
+                    ChangeRoom(ChangeRoomData.Key);
+                    SetSelectRoomInfo(ChangeRoomData, Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{ChangeRoomData.Key}"));
+                }
+                else
+                {
+                    ChangeRoom(ChangeRoomData.Key);
+                    ChangeRoomData.isEquiped = true;
+                    SetSelectRoomInfo(ChangeRoomData, Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{ChangeRoomData.Key}"));
+                    Debug.Log("룸 장착");
+                }
             }
-            else
-            {
-                Main.Get<UIManager>().ClosePopup();
-            }
+            
         }
         else
         {
             if (isSelectChangeRoom) // 보유하고있는 방을 클릭했을떄
             {
-                ChangeRoom(ChangeRoomData.Key);
-                Main.Get<GameManager>().PlayerRooms.Remove(ChangeRoomData);
-                Main.Get<GameManager>().PlayerRooms.Add(Main.Get<DataManager>().roomDatas[RoomName]);
-                Main.Get<UIManager>().ClosePopup();
-                Debug.Log("룸 변경");
+                if(ChangeRoomData.isEquiped)
+                {
+                    Debug.Log("이미 장착중인 룸입니다.");
+                }
+                else
+                {
+                    ChangeRoom(ChangeRoomData.Key);
+                    ChangeRoomData.isEquiped = true;
+                    SetSelectRoomInfo(ChangeRoomData, Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{ChangeRoomData.Key}"));
+                    Debug.Log("룸 변경");
+                }
             }
             else
             {
-                ChangeRoom("Default");
-                Main.Get<GameManager>().PlayerRooms.Add(Main.Get<DataManager>().roomDatas[RoomName]);
-                Main.Get<UIManager>().ClosePopup();
-                Debug.Log("룸 장착 해제");
+                Debug.Log("룸을 선택해주세요");
             }
+        }
+        SetMapInventory();
+    }
+
+    private void ClickUnEquipButton(PointerEventData eventData)
+    {
+        if (RoomName == "Default")
+        {
+            if(isSelectChangeRoom)
+            {
+                if(ChangeRoomData.isEquiped)
+                {
+                    Main.Get<TileManager>().ChangeRoom(ChangeRoomData.indexX, ChangeRoomData.indexY, "Default");
+                    SetSelectRoomInfo(Main.Get<DataManager>().roomDatas["Default"],
+                              Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}Default"));
+                    ChangeRoomData.isEquiped = false;
+                }
+            }
+            Debug.Log("장착 해제할 룸이 없습니다");
+        }
+        else
+        {
+            ChangeRoomData = SelectRoom.ThisRoomData;
+            ChangeRoom("Default");
+            SetSelectRoomInfo(Main.Get<DataManager>().roomDatas["Default"],
+                              Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}Default"));
+            ChangeRoomData.isEquiped = false;
         }
         SetMapInventory();
     }
@@ -120,7 +157,10 @@ public class ChangeRoomUI : BaseUI
 
     private void ChangeRoom(string roomDataName)
     {
-        SelectRoom = Main.Get<TileManager>().ChangeRoom(SelectRoom.IndexX, SelectRoom.IndexY, roomDataName);
+        SelectRoom.ThisRoomData.isEquiped = false;
+        ChangeRoomData.indexX = SelectRoom.IndexX;
+        ChangeRoomData.indexY = SelectRoom.IndexY;
+        SelectRoom = Main.Get<TileManager>().ChangeRoom(ChangeRoomData.indexX, ChangeRoomData.indexY, roomDataName);
     }
 
     private void SetMapInventory()
@@ -132,13 +172,13 @@ public class ChangeRoomUI : BaseUI
 
         for (int i = 0; i < Main.Get<GameManager>().PlayerRooms.Count; i++)
         {
-            /*if (Main.Get<GameManager>().PlayerRooms[i].isEquiped)
-            {
-                continue;
-            }*/
             RoomSelectImage roomSelectImage = Main.Get<UIManager>().CreateSubitem<RoomSelectImage>("RoomSelectImage", _content);
             roomSelectImage.RoomData = Main.Get<GameManager>().PlayerRooms[i];
             roomSelectImage.Owner = this;
+            /*if (roomSelectImage.RoomData.isEquiped)
+            {
+                roomSelectImage.isEquipedImage.gameObject.SetActive(true);
+            }*/
         }
     }
 
