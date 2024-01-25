@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MoneyErrorUI : BaseUI
+public class MoneyError_PopupUI : BaseUI
 {
     private Button _closeButton;
 

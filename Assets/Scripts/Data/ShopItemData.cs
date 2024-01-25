@@ -6,5 +6,5 @@ public class ShopItemData : Data
 {
     public string SpritePath { get; set; }
 
-    public float Price { get; set; }
+    public int Price { get; set; }
 }

@@ -1,10 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ShopUI : BaseUI
+public class Shop_PopupUI : BaseUI
 {
 
     private Button _unitButton;
@@ -19,12 +19,18 @@ public class ShopUI : BaseUI
     private Transform _unitContent;
     private Transform _roomContent;
 
+    private TMP_Text _playerMoneyText;
+
+    public List<CharacterData> ShopUnitItems { get; private set; } = new List<CharacterData>(); // 상점 - UnitItems
+    public List<RoomData> ShopRoomItems { get; private set; } = new List<RoomData>(); // 상점 - RoomItems
+
 
     protected override void Init()
     {
         SetUI<Button>();
         SetUI<ScrollRect>();
         SetUI<Transform>();
+        SetUI<TMP_Text>();
 
         _unitButton = GetUI<Button>("UnitBtn");
         _roomButton = GetUI<Button>("RoomBtn");
@@ -40,33 +46,53 @@ public class ShopUI : BaseUI
         _unitContent = GetUI<Transform>("Unit_Content");
         _roomContent = GetUI<Transform>("Room_Content");
 
+        _playerMoneyText = GetUI<TMP_Text>("MoneyText");
+        _playerMoneyText.text = Main.Get<GameManager>()._playerMoney.ToString();
+
+        Main.Get<GameManager>().OnChangeMoney += UpdateMoneyText;
+
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
         SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
         SetUICallback(_groundButton.gameObject, EUIEventState.Click, ClickGroundBtn);
         SetUICallback(_itemButton.gameObject, EUIEventState.Click, ClickItemBtn);
         SetUICallback(_closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
+        
+        // 상점 판매 아이템 추가
+        ShopUnitItems.Add(Main.Get<DataManager>().Character["Gun"]);
+        ShopUnitItems.Add(Main.Get<DataManager>().Character["Jotem"]);
+        ShopUnitItems.Add(Main.Get<DataManager>().Character["Warrior"]);
+
+        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["Forest"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["Igloo"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["Lava"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["LivingRoom"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["Molar"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["Snow"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["Temple"]);
 
         // Shop - Unit Items
-        List<ShopItemData> shopUnitItems = Main.Get<GameManager>().ShopUnitItems;
-        for (int i = 0; i < shopUnitItems.Count; i++)
+        for (int i = 0; i < ShopUnitItems.Count; i++)
         {
             Unit_List unitItemsList = Main.Get<UIManager>().CreateSubitem<Unit_List>("Unit_List", _unitContent);
-            unitItemsList.ShopUnitData = shopUnitItems[i];
+            unitItemsList.ShopUnitData = ShopUnitItems[i];
         }
 
         // Shop - Room Items
-        List<ShopItemData> shopRoomItems = Main.Get<GameManager>().ShopRoomItems;
-        for (int i = 0; i < shopRoomItems.Count; i++)
+        for (int i = 0; i < ShopRoomItems.Count; i++)
         {
             Room_List roomItemsList = Main.Get<UIManager>().CreateSubitem<Room_List>("Room_List", _roomContent);
-            roomItemsList.ShopRoomData = shopRoomItems[i];
+            roomItemsList.ShopRoomData = ShopRoomItems[i];
         }
 
         // todo : Shop - Ground Item
 
         // todo : Shop - Item
 
+    }
 
+    private void UpdateMoneyText(int amount)
+    {
+        _playerMoneyText.text = amount.ToString();
     }
 
     private void ClickUnitBtn(PointerEventData eventData)
@@ -76,6 +102,10 @@ public class ShopUI : BaseUI
         _roomScrollView.gameObject.SetActive(false);
         _groundScrollView.gameObject.SetActive(false);
         _itemScrollView.gameObject.SetActive(false);
+
+        // event testing
+        Main.Get<GameManager>().ChangeMoney(100);
+
     }
 
     private void ClickRoomBtn(PointerEventData eventData)

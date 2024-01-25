@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,7 +12,7 @@ public class Unit_List : BaseUI
     private Button _buyButton;
 
     // Data
-    public ShopItemData ShopUnitData { get; set; }
+    public CharacterData ShopUnitData { get; set; }
 
     protected override void Init()
     {
@@ -22,7 +20,7 @@ public class Unit_List : BaseUI
         SetUI<TMP_Text>();
         SetUI<Button>();
 
-        _listBG = GetUI<Image>("Unit_List(Clone)");
+        _listBG = GetUI<Image>("Unit_List");
         _listItemName = GetUI<TMP_Text>("Unit_ItemName");
         _listItemImg = GetUI<Image>("Unit_ItemImg");
         _listItemPrice = GetUI<TMP_Text>("Unit_ItemPrice");
@@ -37,13 +35,13 @@ public class Unit_List : BaseUI
     private void SetInfo()
     {
         _listItemName.text = ShopUnitData.Key;
-        _listItemImg.sprite = Main.Get<ResourceManager>().Load<Sprite>(ShopUnitData.SpritePath);
+        _listItemImg.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{ShopUnitData.Key}");
         _listItemPrice.text = ShopUnitData.Price.ToString();
     }
 
     private void ClickBuyBtn(PointerEventData EventData)
     {
-        Main.Get<UIManager>().OpenPopup<BuyConfirmUI>("BuyConfirm_PopupUI");
+        Main.Get<UIManager>().OpenPopup<BuyConfirm_PopupUI>("BuyConfirm_PopupUI").ShopUnitData = ShopUnitData;
     }
 }
 
