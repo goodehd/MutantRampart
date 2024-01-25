@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ChangeUnitUI : BaseUI
+public class ChangeUnit_PopupUI : BaseUI
 {
     private Transform _content;
     private Image[] _slots = new Image[3];
@@ -15,7 +15,7 @@ public class ChangeUnitUI : BaseUI
     private Button[] _deleteBtn = new Button[3];
     private Button _closeBtn;
     public Room SelectRoom { get; set; }
-    public UnitSelectImage SelectUintImage { get; set; }
+    public UnitSelectImageUI SelectUintImage { get; set; }
 
     protected override void Init()
     {
@@ -69,13 +69,13 @@ public class ChangeUnitUI : BaseUI
 
         for (int i = 0; i < playerUnits.Count; i++)
         {
-            UnitSelectImage unitSelectImage = Main.Get<UIManager>().CreateSubitem<UnitSelectImage>("UnitSelectImage", _content);
+            UnitSelectImageUI unitSelectImage = Main.Get<UIManager>().CreateSubitem<UnitSelectImageUI>("UnitSelectImage", _content);
             unitSelectImage.CharacterData = playerUnits[i];
             unitSelectImage.Owner = this;
         }
     }
 
-    public void SetCharacterData(UnitSelectImage image)
+    public void SetCharacterData(UnitSelectImageUI image)
     {
         ResetSelect();
         SelectUintImage = image;

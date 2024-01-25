@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 6564356080894492621}
   - component: {fileID: 48017949936432297}
   m_Layer: 5
-  m_Name: RoomSelectImage
+  m_Name: RoomSelectImageUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

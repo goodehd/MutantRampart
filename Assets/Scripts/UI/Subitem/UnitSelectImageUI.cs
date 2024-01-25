@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UnitSelectImage : BaseUI
+public class UnitSelectImageUI : BaseUI
 {
     private Image _unitImage;
     private Image _collocateImage;
@@ -13,7 +13,7 @@ public class UnitSelectImage : BaseUI
     private Button _cancelBtn;
 
     public CharacterData CharacterData { get; set; }
-    public ChangeUnitUI Owner { get; set; }
+    public ChangeUnit_PopupUI Owner { get; set; }
     
     protected override void Init()
     {

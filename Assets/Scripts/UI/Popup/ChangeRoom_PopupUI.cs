@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class ChangeRoomUI : BaseUI
+public class ChangeRoom_PopupUI : BaseUI
 {
     private RoomData _selectRoomData;
     private TextMeshProUGUI _roomName;
@@ -177,7 +177,7 @@ public class ChangeRoomUI : BaseUI
 
         for (int i = 0; i < Main.Get<GameManager>().PlayerRooms.Count; i++)
         {
-            RoomSelectImage roomSelectImage = Main.Get<UIManager>().CreateSubitem<RoomSelectImage>("RoomSelectImage", _content);
+            RoomSelectImageUI roomSelectImage = Main.Get<UIManager>().CreateSubitem<RoomSelectImageUI>("RoomSelectImage", _content);
             roomSelectImage.RoomData = Main.Get<GameManager>().PlayerRooms[i];
             roomSelectImage.Owner = this;
             /*if (roomSelectImage.RoomData.isEquiped)
@@ -190,7 +190,7 @@ public class ChangeRoomUI : BaseUI
 
     private void SetUnitClick(PointerEventData eventData)
     {
-        Main.Get<UIManager>().OpenPopup<ChangeUnitUI>("ChangeUnit_PopUpUI").SelectRoom = SelectRoom;
+        Main.Get<UIManager>().OpenPopup<ChangeUnit_PopupUI>("ChangeUnit_PopUpUI").SelectRoom = SelectRoom;
     }
 
     private void SetActiveSetUnitButton()

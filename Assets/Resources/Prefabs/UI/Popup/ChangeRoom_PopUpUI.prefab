@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 44302497556261104}
   - component: {fileID: 7897779684952776565}
   m_Layer: 5
-  m_Name: ChangeRoom_PopUpUI
+  m_Name: ChangeRoom_PopupUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

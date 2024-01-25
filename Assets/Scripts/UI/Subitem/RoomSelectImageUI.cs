@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RoomSelectImage : BaseUI
+public class RoomSelectImageUI : BaseUI
 {
     private Image _roomImage;
     private Image _isEquipedImage;
     private Button _roomSelectButton;
     private Sprite _roomSprite;
     public RoomData RoomData { get; set; }
-    public ChangeRoomUI Owner { get; set; }
+    public ChangeRoom_PopupUI Owner { get; set; }
     
     
     protected override void Init()

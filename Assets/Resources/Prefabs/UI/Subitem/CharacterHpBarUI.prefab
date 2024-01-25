@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 7795194587302844594}
   - component: {fileID: 8131676557908040281}
   m_Layer: 5
-  m_Name: HPProgressBar
+  m_Name: CharacterHpBarUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -823,7 +823,7 @@ GameObject:
   - component: {fileID: 5695901608067829280}
   - component: {fileID: 5310094803975971762}
   m_Layer: 5
-  m_Name: ChangeSetButtons
+  m_Name: ChangeSetButtons_PopupUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

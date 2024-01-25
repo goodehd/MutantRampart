@@ -616,7 +616,7 @@ GameObject:
   - component: {fileID: 7725050089698317217}
   - component: {fileID: 1426146263657460606}
   m_Layer: 5
-  m_Name: Ground_List
+  m_Name: Ground_ListUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

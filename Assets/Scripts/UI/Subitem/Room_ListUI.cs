@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Room_List : BaseUI
+public class Room_ListUI : BaseUI
 {
     private Image _listBG;
     private TMP_Text _listItemName;

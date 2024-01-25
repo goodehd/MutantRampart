@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ChangeSetButtons : BaseUI
+public class ChangeSetButtons_PopupUI : BaseUI
 {
     private Button _changeRoomSetButton;
     private Button _changeUnitSetButton;
@@ -12,7 +12,7 @@ public class ChangeSetButtons : BaseUI
     public bool isRoomSet = false;
     public bool isUnitSet = false;
     
-    public ChangeUnitUI changeUnitUI;
+    public ChangeUnit_PopupUI changeUnitUI;
     
     protected override void Init()
     {
@@ -44,7 +44,7 @@ public class ChangeSetButtons : BaseUI
         }
         else
         {
-            changeUnitUI = Main.Get<UIManager>().OpenPopup<ChangeUnitUI>("ChangeUnit_PopUpUI");
+            changeUnitUI = Main.Get<UIManager>().OpenPopup<ChangeUnit_PopupUI>("ChangeUnit_PopUpUI");
             isUnitSet = true;
         }
         

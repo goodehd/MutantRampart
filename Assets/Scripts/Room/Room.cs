@@ -87,7 +87,7 @@ public class Room : MonoBehaviour
     protected virtual void OnMouseDown()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
-        ChangeRoomUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoomUI>("ChangeRoom_PopUpUI");
+        ChangeRoom_PopupUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoom_PopupUI>("ChangeRoom_PopUpUI");
         changeRoomUI.SelectRoom = this;
         changeRoomUI.RoomName = gameObject.name;
     }
