@@ -14,11 +14,4 @@ public class DefaultTile : Room
 
         return true;
     }
-    
-
-    public override void EnemyEnterRoom(GameObject g)
-    {
-        Debug.Log($"X : {this.IndexX}, Y : {this.IndexY}");
-    }
-
 }

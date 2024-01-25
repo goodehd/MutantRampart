@@ -21,13 +21,18 @@ public class DayMain_SceneUI : BaseUI
         _stageStartButton = GetUI<Button>("StageStartButton");
 
         SetUICallback(_shopButton.gameObject, EUIEventState.Click, ClickShopBtn);
+        SetUICallback(_stageStartButton.gameObject, EUIEventState.Click, ClickStageStartBtn);
 
     }
 
-    
     private void ClickShopBtn(PointerEventData eventData)
     {
         Main.Get<UIManager>().OpenPopup<Shop_PopupUI>("Shop_PopupUI");
+    }
+
+    private void ClickStageStartBtn(PointerEventData eventData)
+    {
+        Main.Get<StageManager>().StartStage();
     }
 
     // 이어서 placing, inventory, setting, stagestart Btn 함수 추가하기

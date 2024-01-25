@@ -5,12 +5,13 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyAttackState : BaseState
 {
+    private TileManager tileManager;
     private Coroutine _coroutine;
     private Character[] _targets;
 
     public EnemyAttackState(Character owner) : base(owner)
     {
-        
+        tileManager = Main.Get<TileManager>();
     }
 
     public override void EnterState()
@@ -40,7 +41,15 @@ public class EnemyAttackState : BaseState
 
         if( target == null)
         {
-            Owner.StateMachine.ChangeState(EState.Move);
+            if(tileManager.GetRoom(Owner.CurPosX, Owner.CurPosY).GetComponent<Room>().isEndPoint)
+            {
+                Owner.StateMachine.ChangeState(EState.Dead);
+                Main.Get<GameManager>().PlayerHp--;
+            }
+            else
+            {
+                Owner.StateMachine.ChangeState(EState.Move);
+            }
             yield break;
         }
 

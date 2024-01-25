@@ -8,9 +8,9 @@ public class TileManager : IManagers
     private int _canBuildRoomCount;
     private int _currentBuildRoomCount;
     private List<List<GameObject>> _roomObjList = new List<List<GameObject>>();
-    private List<List<GameObject>> _unitObjList = new List<List<GameObject>>();
+    private GameObject _gridObject;
 
-    public GameObject GridObject;
+    public SpawnTile SpawnTile { get; private set; }
     public int x = 3;
     public int y = 3;
 
@@ -31,10 +31,10 @@ public class TileManager : IManagers
 */
     public void GenerateMap()
     {
-        GridObject = new GameObject("Tile");
+        _gridObject = new GameObject("Tile");
 
         // 그리드를 생성하고 Grid 컴포넌트를 추가
-        Grid gridComponent = GridObject.AddComponent<Grid>();
+        Grid gridComponent = _gridObject.AddComponent<Grid>();
 
         // Cell Size 및 Cell Gap 설정
         gridComponent.cellSize = new Vector3(1, 0.5f, 1); // x = 1, y = 0.5, z = 1
@@ -52,21 +52,23 @@ public class TileManager : IManagers
         for (int i = 0; i < x; i++)
         {
             _roomObjList.Add(new List<GameObject>());
-            _unitObjList.Add(new List<GameObject>());
 
             pos.Set(-3f * i, 1.5f * i);
             for (int j = 0; j < y; j++)
             {
                 offset.Set(3f * j, 1.5f * j);
-                GameObject obj = resource.InstantiateWithPoolingOption("Prefabs/Room/Default", GridObject.transform);
+                GameObject obj = resource.InstantiateWithPoolingOption("Prefabs/Room/Default", _gridObject.transform);
                 obj.transform.position = pos + offset;
                 _roomObjList[i].Add(obj);
-                _unitObjList[i].Add(null);
                 Room room = obj.GetComponent<Room>();
                 room.IndexX = i;
                 room.IndexY = j;
             }
         }
+
+        GameObject spwan = resource.InstantiateWithPoolingOption("Prefabs/Room/SpawnTile", _gridObject.transform);
+        spwan.transform.position = new Vector3(-6f, 0, 0);
+        SpawnTile = spwan.GetComponent<SpawnTile>();
     }
 
     public bool Init()
@@ -80,7 +82,7 @@ public class TileManager : IManagers
         Vector3 pos = _roomObjList[indexX][indexY].transform.position;
         resource.Destroy(_roomObjList[indexX][indexY].gameObject);
 
-        GameObject obj = resource.InstantiateWithPoolingOption($"Prefabs/Room/{srcName}", GridObject.transform);
+        GameObject obj = resource.InstantiateWithPoolingOption($"Prefabs/Room/{srcName}", _gridObject.transform);
         obj.transform.position = pos;
         _roomObjList[indexX][indexY] = obj;
 
@@ -110,6 +112,14 @@ public class TileManager : IManagers
         }
 
         return outPut;
+    }
+
+    public GameObject GetRoom(int x, int y)
+    {
+        if (!IsRoomPositionValid(x, y))
+            return null;
+
+        return _roomObjList[x][y];
     }
 
     public void GetMapSize(out int mapSizeX, out int mapSizeY)

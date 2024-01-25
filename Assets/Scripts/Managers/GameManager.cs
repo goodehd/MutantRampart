@@ -8,7 +8,7 @@ public class GameManager : IManagers
 {
 
     public int _playerMoney { get; private set; } = 100000; // 플레이어 보유 돈
-    private int _playerHp = 100; // 플레이어 체력
+    private int _playerHp = 5; // 플레이어 체력
     public int PlayerHp
     {
         get 
@@ -22,6 +22,7 @@ public class GameManager : IManagers
             {
                 GameOver();
             }
+            Debug.Log($"플레이어 체력 : {_playerHp}");
         }
     }
     //private List<Unit> playerUnits = new List<Unit>(); 
@@ -175,7 +176,8 @@ public class GameManager : IManagers
 
     public void GameOver()
     {
-
+        Time.timeScale = 0.0f;
+        Debug.Log("게임 오버");
     }
     //private void ShowWarning() // "잔액이 부족합니다" 팝업
     //{

@@ -33,8 +33,8 @@ public class Character : MonoBehaviour
         this.Animator = GetComponentInChildren<Animator>();
         this.Renderer = GetComponentInChildren<SpriteRenderer>();
 
-        CurPosX = 0;
-        CurPosY = 0;
+        CurPosX = -1;
+        CurPosY = -1;
 
         Status.GetStat<Vital>(EstatType.Hp).OnValueZero += Die;
 

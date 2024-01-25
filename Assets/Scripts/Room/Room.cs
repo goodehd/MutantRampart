@@ -10,6 +10,7 @@ public enum EStatusformat
 {
     Bat,
     Trap,
+    Home,
     DefaultTile,
     Count
 }
@@ -31,6 +32,7 @@ public class Room : MonoBehaviour
 
     public int IndexX { get; set; }
     public int IndexY { get; set; }
+    public bool isEndPoint { get; protected set; }
 
     public virtual void Start()
     {

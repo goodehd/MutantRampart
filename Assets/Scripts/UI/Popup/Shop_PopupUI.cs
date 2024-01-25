@@ -102,10 +102,6 @@ public class Shop_PopupUI : BaseUI
         _roomScrollView.gameObject.SetActive(false);
         _groundScrollView.gameObject.SetActive(false);
         _itemScrollView.gameObject.SetActive(false);
-
-        // event testing
-        Main.Get<GameManager>().ChangeMoney(100);
-
     }
 
     private void ClickRoomBtn(PointerEventData eventData)

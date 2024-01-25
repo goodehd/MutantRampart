@@ -13,6 +13,7 @@ public class Enemy : Character
     protected override void Die()
     {
         CurRoom.RemoveEnemy(this);
+        Main.Get<StageManager>().CheckClear();
         base.Die();
     }
 }

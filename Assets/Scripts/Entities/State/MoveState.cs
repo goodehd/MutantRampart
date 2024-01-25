@@ -8,7 +8,6 @@ public class MoveState : BaseState
     private Vector3 _targetPos = Vector3.zero;
     private Coroutine _coroutine;
     private bool _isMove;
-    //private List<List<bool>> _isVisit;
 
     public MoveState(Character owner) : base(owner)
     {
@@ -45,6 +44,13 @@ public class MoveState : BaseState
     private void SetTargetPos(out int targetX, out int targetY)
     {
         List<GameObject> rooms = _tileMap.GetNeighbors(Owner.CurPosX, Owner.CurPosY);
+
+        if(rooms.Count == 0)
+        {
+            SetStageStartMovePos(out targetX, out targetY);
+            return;
+        }
+
         int randomIndex = Random.Range(0, rooms.Count);
 
         Room room = rooms[randomIndex].GetComponent<Room>();
@@ -53,6 +59,17 @@ public class MoveState : BaseState
         _targetPos.z = 3f;
 
         targetX = room.IndexX; 
+        targetY = room.IndexY;
+    }
+
+    private void SetStageStartMovePos(out int targetX, out int targetY)
+    {
+        Room room = _tileMap.GetRoom(1, 0).GetComponent<Room>();
+        _targetPos = room.transform.position;
+        _targetPos.y += 1.5f;
+        _targetPos.z = 3f;
+
+        targetX = room.IndexX;
         targetY = room.IndexY;
     }
 
@@ -89,6 +106,15 @@ public class MoveState : BaseState
         Owner.CurPosY = y;
 
         _isMove = false;
-        MoveStart();
+
+        if (_tileMap.GetRoom(x, y).GetComponent<Room>().isEndPoint)
+        {
+            Owner.StateMachine.ChangeState(EState.Dead);
+            Main.Get<GameManager>().PlayerHp--;
+        }
+        else
+        {
+            MoveStart();
+        }
     }
 }
