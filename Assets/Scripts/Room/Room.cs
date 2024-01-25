@@ -32,7 +32,7 @@ public class Room : MonoBehaviour
     public int IndexX { get; set; }
     public int IndexY { get; set; }
 
-    public virtual void Awake()
+    public virtual void Start()
     {
         Initialize();
     }
