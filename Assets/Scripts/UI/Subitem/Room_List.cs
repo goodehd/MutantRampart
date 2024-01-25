@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,13 +9,7 @@ public class Room_List : BaseUI
     private TMP_Text _listItemName;
     private Image _listItemImg;
     private TMP_Text _listItemPrice;
-    //private Transform _content;
     private Button _buyButton;
-
-    //public string roomName;
-
-    //public bool isRoomItem { get; private set; } = true;
-
 
     // Data
     public RoomData ShopRoomData { get; set; }
@@ -26,24 +18,15 @@ public class Room_List : BaseUI
     {
         SetUI<Image>();
         SetUI<TMP_Text>();
-        //SetUI<Transform>();
         SetUI<Button>();
 
         _listBG = GetUI<Image>("Room_List");
         _listItemName = GetUI<TMP_Text>("Room_ItemName");
         _listItemImg = GetUI<Image>("Room_ItemImg");
         _listItemPrice = GetUI<TMP_Text>("Room_ItemPrice");
-        //_content = GetUI<Transform>("Room_Content");
         _buyButton = GetUI<Button>("Room_BuyBtn");
 
         SetInfo();
-
-        //List<Shop_RoomData> shopRoomItems = Main.Get<GameManager>().ShopRoomItems;
-        //for (int i = 0; i < shopRoomItems.Count; i++)
-        //{
-        //    Room_List roomItemsList = Main.Get<UIManager>().CreateSubitem<Room_List>("Room_List", _content);
-        //    roomItemsList.ShopRoomData = shopRoomItems[i];
-        //}
 
         SetUICallback(_buyButton.gameObject, EUIEventState.Click, ClickBuyBtn);
 
@@ -60,9 +43,6 @@ public class Room_List : BaseUI
     private void ClickBuyBtn(PointerEventData EventData)
     {
         Main.Get<UIManager>().OpenPopup<BuyConfirm_PopupUI>("BuyConfirm_PopupUI").ShopRoomData = ShopRoomData;
-        //Main.Get<UIManager>().OpenPopup<BuyConfirmUI>("BuyConfirm_PopupUI").isUnitItem = false;
-        //Main.Get<UIManager>().OpenPopup<BuyConfirmUI>("BuyConfirm_PopupUI").isRoomItem = true;
-
     }
 }
 

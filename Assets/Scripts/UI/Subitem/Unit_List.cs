@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,7 +10,6 @@ public class Unit_List : BaseUI
     private Image _listItemImg;
     private TMP_Text _listItemPrice;
     private Button _buyButton;
-    //public bool isUnitItem { get; private set; } = true;
 
     // Data
     public CharacterData ShopUnitData { get; set; }
@@ -40,19 +37,11 @@ public class Unit_List : BaseUI
         _listItemName.text = ShopUnitData.Key;
         _listItemImg.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{ShopUnitData.Key}");
         _listItemPrice.text = ShopUnitData.Price.ToString();
-        //Main.Get<UIManager>().OpenPopup<BuyConfirmUI>("BuyConfirm_PopupUI").isUnitItem = true;
-
     }
 
     private void ClickBuyBtn(PointerEventData EventData)
     {
-
         Main.Get<UIManager>().OpenPopup<BuyConfirm_PopupUI>("BuyConfirm_PopupUI").ShopUnitData = ShopUnitData;
-        //Main.Get<UIManager>().OpenPopup<BuyConfirmUI>("BuyConfirm_PopupUI").isUnitItem = true;
-        //Main.Get<UIManager>().OpenPopup<BuyConfirmUI>("BuyConfirm_PopupUI").isRoomItem = false;
-
-        //BuyConfirmUI buyConfirmUI = Main.Get<UIManager>().OpenPopup<BuyConfirmUI>("BuyConfirm_PopupUI");
-        //buyConfirmUI.itemName = this.gameObject.name; // 이러면 Unit_List 의 이름을 들고와버리네..
     }
 }
 

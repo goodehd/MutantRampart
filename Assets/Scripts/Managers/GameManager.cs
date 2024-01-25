@@ -24,16 +24,10 @@ public class GameManager : IManagers
             }
         }
     }
-    //private List<Unit> playerUnits = new List<Unit>(); // todo : 플레이어가 보유한 유닛 리스트 -- 리스트 자료형 체크
-    public List<CharacterData> playerUnits { get; private set; } = new List<CharacterData>();
-    public List<RoomData> PlayerRooms { get; private set; } = new List<RoomData>();
+    //private List<Unit> playerUnits = new List<Unit>(); 
+    public List<CharacterData> playerUnits { get; private set; } = new List<CharacterData>(); // 플레이어가 보유한 유닛 리스트
+    public List<RoomData> PlayerRooms { get; private set; } = new List<RoomData>(); // 플레이어가 보유한 Room 리스트
     public static bool isGamePaused { get; private set; } // 다른 스크립트에서 쉽게 접근이 가능하도록 메모리에 할당 - static, 읽기전용
-
-    // UI Text를 연결할 변수
-    //private TMP_Text moneyText;
-    //private ShopUI ShopUI;
-
-    //public string itemName;
 
     public event Action<int> OnChangeMoney;
 

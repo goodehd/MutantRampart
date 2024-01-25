@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,11 +11,6 @@ public class BuyConfirm_PopupUI : BaseUI
     // Data
     public CharacterData ShopUnitData { get; set; }
     public RoomData ShopRoomData { get; set; }
-
-    //public bool isUnitItem;
-    //public bool isRoomItem;
-    //private Room_List Room_List;
-    //private Unit_List Unit_List;
 
 
     protected override void Init()
@@ -34,15 +27,14 @@ public class BuyConfirm_PopupUI : BaseUI
 
     private void ClickYesBtn(PointerEventData eventData)
     {
-        // todo: 구분 - 구매하는 데이터가 유닛 일 때
-        //if ()
-        //{
-        //    BuyUnitItem(ShopUnitData);
-        //}
-        //else if () // todo : 구분 - 구매하는 데이터가 Room 일 때
-        //{
-        //    BuyRoomItem(ShopRoomData);
-        //}
+        if (ShopUnitData != null) // 구분 - 구매하려는 데이터가 유닛 일 때
+        {
+            BuyUnitItem(ShopUnitData);
+        }
+        else // 구분 - 구매하려는 데이터가 Room 일 때
+        {
+            BuyRoomItem(ShopRoomData);
+        }
 
         Main.Get<UIManager>().ClosePopup();
 
@@ -54,7 +46,6 @@ public class BuyConfirm_PopupUI : BaseUI
     }
 
 
-    // 플레이어 골드를 활용해서, ChangeMoney 함수 ...
     //유닛구매
     private void BuyUnitItem(CharacterData data)
     {
@@ -64,6 +55,7 @@ public class BuyConfirm_PopupUI : BaseUI
             Main.Get<GameManager>().playerUnits.Add(data); // 얕은복사이슈발생할수도
             Debug.Log("구매완료했습니다.");
             Debug.Log($"잔액 : {Main.Get<GameManager>()._playerMoney}");
+            //Debug.Log($"playerUnit인벤 : {Main.Get<GameManager>().playerUnits}{data.Key}");
         }
         else // 보유 금액 부족 시
         {
