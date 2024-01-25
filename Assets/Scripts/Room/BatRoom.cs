@@ -28,8 +28,8 @@ public class BatRoom : Room
             CharacterBehaviour enemy = g.GetComponent<CharacterBehaviour>();
             enemy.Renderer.flipX = false;
             enemy.StateMachine.ChangeState(EState.Attack);
-            enemy.transform.position = new Vector3(transform.position.x - 0.5f - Enemys.Count * 0.1f, 
-                transform.position.y + 1.25f + Enemys.Count * 0.1f, g.transform.position.z);
+            enemy.transform.position = new Vector3(transform.position.x - Enemys.Count * 0.2f, 
+                transform.position.y + 1.5f + Enemys.Count * 0.2f, g.transform.position.z);
             Enemys.AddLast(enemy);
 
             foreach (CharacterBehaviour unit in Units)

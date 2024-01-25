@@ -42,6 +42,7 @@ public class CharacterBehaviour : MonoBehaviour
     public void SetData(Character data)
     {
         CharacterInfo = data;
+        CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += Die;
     }
 
     private void Update()

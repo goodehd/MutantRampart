@@ -20,6 +20,7 @@ public class CharacterHpBarUI : BaseUI
         if (_owner != null)
         {
             _owner.Status.GetStat<Vital>(EstatType.Hp).OnCurValueChanged += SetInfo;
+            SetInfo(_owner.Status.GetStat<Vital>(EstatType.Hp).CurValue);
         }
     }
 
