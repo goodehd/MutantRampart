@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-public class DayMainUI : BaseUI
+public class DayMain_SceneUI : BaseUI
 {
     private Button _shopButton;
     private Button _placingButton;
@@ -30,7 +27,7 @@ public class DayMainUI : BaseUI
     
     private void ClickShopBtn(PointerEventData eventData)
     {
-        Main.Get<UIManager>().OpenPopup<ShopUI>("Shop_PopupUI");
+        Main.Get<UIManager>().OpenPopup<Shop_PopupUI>("Shop_PopupUI");
     }
 
     // 이어서 placing, inventory, setting, stagestart Btn 함수 추가하기
