@@ -27,7 +27,7 @@ public class Room : MonoBehaviour
     public RoomData ThisRoomData { get; set; }
     public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
     
-    public LinkedList<Character> Enemys { get; private set; } = new LinkedList<Character>();
+    public LinkedList<CharacterBehaviour> Enemys { get; private set; } = new LinkedList<CharacterBehaviour>();
 
     public int IndexX { get; set; }
     public int IndexY { get; set; }
@@ -58,7 +58,7 @@ public class Room : MonoBehaviour
     {
         // thisRoomNum을 리턴시켜줌(어떤 형식으로 보내줄지는 미정)
         // Enemy가 방을 기억하고 다시 올 확률을 낮추기 위해서.
-        Character enemy = g.GetComponent<Character>();
+        CharacterBehaviour enemy = g.GetComponent<CharacterBehaviour>();
         enemy.CurPosX = this.IndexX;
         enemy.CurPosY = this.IndexY;
         enemy.CurRoom = this;
@@ -92,7 +92,7 @@ public class Room : MonoBehaviour
         changeRoomUI.RoomName = gameObject.name;
     }
 
-    public void RemoveEnemy(Character src)
+    public void RemoveEnemy(CharacterBehaviour src)
     {
         Enemys.Remove(src);
     }

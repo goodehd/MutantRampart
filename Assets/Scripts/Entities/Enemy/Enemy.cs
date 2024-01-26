@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Character
+public class Enemy : CharacterBehaviour
 {
     public override void Init(CharacterData data)
     {
@@ -12,7 +12,7 @@ public class Enemy : Character
 
     public override void Die()
     {
-        CurRoom.RemoveEnemy(this);
+        CharacterInfo.CurRoom.RemoveEnemy(this);
         Main.Get<StageManager>().CheckClear();
         base.Die();
     }

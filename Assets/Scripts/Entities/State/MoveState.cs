@@ -9,7 +9,7 @@ public class MoveState : BaseState
     private Coroutine _coroutine;
     private bool _isMove;
 
-    public MoveState(Character owner) : base(owner)
+    public MoveState(CharacterBehaviour owner) : base(owner)
     {
         _tileMap = Main.Get<TileManager>();
         _isMove = false;

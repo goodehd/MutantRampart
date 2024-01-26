@@ -52,7 +52,9 @@ public class BuyConfirm_PopupUI : BaseUI
         if (Main.Get<GameManager>()._playerMoney >= data.Price)
         {
             Main.Get<GameManager>().ChangeMoney(-data.Price);
-            Main.Get<GameManager>().playerUnits.Add(data); // 얕은복사이슈발생할수도
+            Character newChar = new Character();
+            newChar.Init(data);
+            Main.Get<GameManager>().playerUnits.Add(newChar);
             Debug.Log("구매완료했습니다.");
             Debug.Log($"잔액 : {Main.Get<GameManager>()._playerMoney}");
             //Debug.Log($"playerUnit인벤 : {Main.Get<GameManager>().playerUnits}{data.Key}");

@@ -5,7 +5,7 @@ using UnityEngine.TextCore.Text;
 
 public class BatRoom : Room
 {
-    public Character[] Units { get; private set; } = new Character[3];
+    public CharacterBehaviour[] Units { get; private set; } = new CharacterBehaviour[3];
     public int UnitCount {  get; set; } 
 
     public override bool Initialize()
@@ -25,14 +25,14 @@ public class BatRoom : Room
 
         if (UnitCount > 0)
         {
-            Character enemy = g.GetComponent<Character>();
+            CharacterBehaviour enemy = g.GetComponent<CharacterBehaviour>();
             enemy.Renderer.flipX = false;
             enemy.StateMachine.ChangeState(EState.Attack);
-            enemy.transform.position = new Vector3(transform.position.x - 0.5f - Enemys.Count * 0.1f, 
-                transform.position.y + 1.25f + Enemys.Count * 0.1f, g.transform.position.z);
+            enemy.transform.position = new Vector3(transform.position.x - Enemys.Count * 0.2f, 
+                transform.position.y + 1.5f + Enemys.Count * 0.2f, g.transform.position.z);
             Enemys.AddLast(enemy);
 
-            foreach (Character unit in Units)
+            foreach (CharacterBehaviour unit in Units)
             {
                 if(unit == null)
                 {
@@ -43,14 +43,15 @@ public class BatRoom : Room
         }
     }
 
-    public void CreateUnit(int slotIndex, CharacterData data)
+    public void CreateUnit(int slotIndex, Character data)
     {
         if (Units[slotIndex] != null)
         {
             DeleteUnit(slotIndex);
         }
 
-        Units[slotIndex] = Main.Get<SceneManager>().Scene.CreateCharacter(data.Key);
+        Units[slotIndex] = Main.Get<SceneManager>().Scene.CreateCharacter(data.Data.Key);
+        Units[slotIndex].SetData(data);
         Units[slotIndex].transform.position = new Vector3(transform.position.x + 1f, transform.position.y + 2f, 3.0f);
         Units[slotIndex].CurRoom = this;
         UnitCount++;
@@ -58,6 +59,8 @@ public class BatRoom : Room
 
     public void DeleteUnit(int slotIndex)
     {
+        Units[slotIndex].CurRoom = null;
+
         Main.Get<ResourceManager>().Destroy(Units[slotIndex].gameObject);
         Units[slotIndex] = null;
         UnitCount--;

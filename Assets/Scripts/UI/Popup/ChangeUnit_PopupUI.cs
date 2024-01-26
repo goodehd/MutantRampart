@@ -39,10 +39,10 @@ public class ChangeUnit_PopupUI : BaseUI
 
         for(int i = 0; i < 3; ++i)
         {
-            Character unit = ((BatRoom)SelectRoom).Units[i];
+            CharacterBehaviour unit = ((BatRoom)SelectRoom).Units[i];
             if(unit != null)
             {
-                _slots[i].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{unit.Data.Key}");
+                _slots[i].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{unit.CharacterInfo.Data.Key}");
             }
         }
 
@@ -61,7 +61,7 @@ public class ChangeUnit_PopupUI : BaseUI
     
     private void SetUnitInventory()
     {
-        List<CharacterData> playerUnits = Main.Get<GameManager>().playerUnits;
+        List<Character> playerUnits = Main.Get<GameManager>().playerUnits;
         foreach (Transform item in _content.transform)
         {
             Destroy(item.gameObject);
@@ -127,7 +127,7 @@ public class ChangeUnit_PopupUI : BaseUI
 
     private void DeleteBtnClick1(PointerEventData EventData)
     {
-        Delete(0);
+        Delete(0, (BatRoom)SelectRoom);
     }
 
     private void SlotImageClick(PointerEventData EventData)
@@ -142,16 +142,17 @@ public class ChangeUnit_PopupUI : BaseUI
     private void Collocate(int index)
     {
         ((BatRoom)SelectRoom).CreateUnit(index, SelectUintImage.CharacterData);
-        _slots[index].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{SelectUintImage.CharacterData.Key}");
+        _slots[index].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{SelectUintImage.CharacterData.Data.Key}");
         SelectUintImage.CancelCollocate();
         ResetSelect();
         SetUnitInventory();
     }
 
-    private void Delete(int index)
+    public void Delete(int index, BatRoom room)
     {
-        ((BatRoom)SelectRoom).DeleteUnit(index);
+        room.DeleteUnit(index);
         _deleteBtn[0].gameObject.SetActive(false);
         _slots[index].sprite = null;
+        SetUnitInventory();
     }
 }

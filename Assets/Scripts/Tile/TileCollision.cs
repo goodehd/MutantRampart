@@ -21,7 +21,7 @@ public class TileCollision : MonoBehaviour
 
     private bool EnterNewRoom(GameObject go)
     {
-        Character enemy = go.GetComponent<Character>();
+        CharacterBehaviour enemy = go.GetComponent<CharacterBehaviour>();
         if (enemy == null)
         {
             return false;

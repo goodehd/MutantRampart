@@ -7,16 +7,16 @@ using static UnityEngine.GraphicsBuffer;
 public class UnitAttackState : BaseState
 {
     private Coroutine _coroutine;
-    private LinkedList<Character> _targets;
+    private LinkedList<CharacterBehaviour> _targets;
 
-    public UnitAttackState(Character owner) : base(owner)
+    public UnitAttackState(CharacterBehaviour owner) : base(owner)
     {
 
     }
 
     public override void EnterState()
     {
-        _targets = ((BatRoom)Owner.CurRoom).Enemys;
+        _targets = ((BatRoom)Owner.CharacterInfo.CurRoom).Enemys;
         AttackStart();
     }
 

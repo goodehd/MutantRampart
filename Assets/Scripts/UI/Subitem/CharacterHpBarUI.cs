@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CharacterHpBarUI : BaseUI
 {
     private Image _barImage;
-    private Character _owner;
+    private CharacterBehaviour _owner;
 
     protected override void Init()
     {
@@ -15,11 +15,12 @@ public class CharacterHpBarUI : BaseUI
 
         _barImage = GetUI<Image>("HpBar");
 
-        _owner = transform.parent.GetComponent<Character>();
+        _owner = transform.parent.GetComponent<CharacterBehaviour>();
 
         if (_owner != null)
         {
             _owner.Status.GetStat<Vital>(EstatType.Hp).OnCurValueChanged += SetInfo;
+            SetInfo(_owner.Status.GetStat<Vital>(EstatType.Hp).CurValue);
         }
     }
 

@@ -22,18 +22,12 @@ public class Scene : MonoBehaviour
         _ui = Main.Get<UIManager>();
     }
 
-    public Character CreateCharacter(string key)
+    public CharacterBehaviour CreateCharacter(string key)
     {
         GameObject obj = _resource.InstantiateWithPoolingOption($"{Literals.UNIT_PREFABS_PATH}{key}");
-        Character character = obj.GetComponent<Character>();
-
-        if (character == null)
-        {
-            Debug.LogError($"[Scene] CreateCharacter({key}) : This Prefab Not Character.");
-        }
+        CharacterBehaviour character = Utility.GetAddComponent<CharacterBehaviour>(obj);
 
         character.Init(_data.Character[key]);
-
         _ui.CreateSubitem<CharacterHpBarUI>("CharacterHpBarUI", obj.transform).transform.localPosition = new Vector3(0, 0.5f, 3f);
 
         return character;
