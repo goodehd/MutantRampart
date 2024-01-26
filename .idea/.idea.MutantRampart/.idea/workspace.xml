@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="64c89d60-885a-4ce1-aad4-c0a2f98a32c9" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MutantRampart/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MutantRampart/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/UI/Scene/DayMain_SceneUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/UI/Scene/DayMain_SceneUI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Room/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Room/Room.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Scene/DayMain_SceneUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Scene/DayMain_SceneUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/YunjinTestScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/YunjinTestScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Room/BatRoom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Room/BatRoom.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Room/TrapRoom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Room/TrapRoom.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,6 +138,8 @@
       <workItem from="1705898783916" duration="93000" />
       <workItem from="1705898903606" duration="5647000" />
       <workItem from="1705996535162" duration="11879000" />
+      <workItem from="1706200745346" duration="4739000" />
+      <workItem from="1706256927042" duration="6182000" />
     </task>
     <servers />
   </component>
