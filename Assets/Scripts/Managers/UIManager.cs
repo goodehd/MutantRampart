@@ -7,6 +7,7 @@ public class UIManager : IManagers
 {
     private Stack<BaseUI> _popupStack = new Stack<BaseUI>();
     private Transform _rootUI;
+    public BaseUI SceneUI { get; private set; }
 
     public Transform RootUI
     {
@@ -41,7 +42,8 @@ public class UIManager : IManagers
         }
         GameObject uiObj = InstantiateUI(prefabName, path);
         SetCanvasInfo(uiObj, false);
-        return Utility.GetAddComponent<T>(uiObj);
+        SceneUI = Utility.GetAddComponent<T>(uiObj);
+        return SceneUI as T;
     }
 
     public T OpenPopup<T>(string prefabName = null, string path = Literals.UI_POPUP_PATH) where T : BaseUI
