@@ -138,7 +138,6 @@ GameObject:
   m_Component:
   - component: {fileID: 534529505}
   - component: {fileID: 534529506}
-  - component: {fileID: 534529507}
   m_Layer: 0
   m_Name: TileManager
   m_TagString: Untagged
@@ -171,18 +170,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc8579363bbea3e4c8ea57519c4144ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &534529507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534529503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f6ffa84a4b239240a5fc63090dcdc1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &705507993
@@ -454,8 +441,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64bdeb1f5aa93ae4ca5a36b1813e9d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchPoint: {x: 0, y: 0, z: 0}
-  MousePoint: {x: 0, y: 0, z: 0}
+  Origin: {x: 0, y: 0, z: 0}
+  Diference: {x: 0, y: 0, z: 0}
+  Drag: 0
 --- !u!1 &1028137579
 GameObject:
   m_ObjectHideFlags: 0

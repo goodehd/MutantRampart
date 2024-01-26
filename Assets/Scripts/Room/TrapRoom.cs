@@ -22,7 +22,7 @@ public class TrapRoom : Room
         if (!base.Initialize()) return false;
 
         _roomStatus = EStatusformat.Trap;
-        //_trapType = Enum.Parse<ETrapType>(this.gameObject.name) ;
+        _trapType = Enum.Parse<ETrapType>(this.gameObject.name);
         OnEnemyEnterRoom += EnemyEnterRoom;
         
         return true;
@@ -46,6 +46,8 @@ public class TrapRoom : Room
     public override void EnemyEnterRoom(GameObject g)
     {
         base.EnemyEnterRoom(g);
+
+        Character enemy = g.GetComponent<Character>();
         OnFallinTrap = null;
         switch (_trapType)
         {
@@ -59,41 +61,46 @@ public class TrapRoom : Room
                 break;
         }
         OnFallinTrap?.Invoke(g);
+        
     }
 
     private void LavaTrap(GameObject g)
     {
-        //도트뎀
-        StartCoroutine(LavaDamage(4));
+        StartCoroutine(LavaDamage(g));//0.5초마다 1의 데미지를 10번
     }
 
-    IEnumerator LavaDamage(int a)
+    IEnumerator LavaDamage(GameObject g)
     {
-        for (int i = 0; i < a; i++)
+        Character enemy = g.GetComponent<Character>();
+        for (int i = 0; i < 10; i++) //0.5초마다 1의 데미지를 10번
         {
-            TestDamage(10);
-            yield return new WaitForSeconds(0.1f);
+            enemy.Status.GetStat<Vital>(EstatType.Hp).CurValue -= 1;
+            
+            yield return new WaitForSeconds(0.5f);
         }
-    }
-    public void TestDamage(int a) //테스트용. 데미지를 주는 함수(가상)
-    {
-        //enemy가 들고있으려나??
     }
 
     private void SnowTrap(GameObject g)
     {
-        //슬로우
-        StartCoroutine(SnowSlow(4));
+        StartCoroutine(SnowSlow(g));
     }
-    IEnumerator SnowSlow(float a)
+    IEnumerator SnowSlow(GameObject g)
     { 
         //느려지게 하는 함수
-        yield return new WaitForSeconds(a);
+        Character enemy = g.GetComponent<Character>();
+        StatModifier mod = new StatModifier(0.5f, EStatModType.Multip, 1);
+        enemy.Status.GetStat<Stat>(EstatType.MoveSpeed).AddModifier(mod);
+        yield return new WaitForSeconds(2);
+        enemy.Status.GetStat<Stat>(EstatType.MoveSpeed).RemoveModifier(mod);
     }
 
     private void MolarTrap(GameObject g)
     {
-        //어떤 함정을 만들까나 어금니 꽉
+        //몰?루 아이디어
+        //깨물어서 데미주고 잠시 멈추게하기
+        
+        //아이디어2
+        //내편이 되어라! 
     }
 
 }
