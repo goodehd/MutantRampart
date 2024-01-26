@@ -1,0 +1,528 @@
+fileFormatVersion: 2
+guid: 9a76c0a241b9fe74a903b0373431899c
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: Silver Spritesheet_Frame_0
+    originalName: 
+    pivot: {x: 0.5045161, y: -0.056047197}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 9300
+      height: 2712
+    spriteID: 14f5c2b7d69e39b49a7b5e7986ec2e8a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: Silver Spritesheet_Frame_1
+    originalName: 
+    pivot: {x: 0.53348494, y: -0.056047197}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 2724
+      width: 8795
+      height: 2712
+    spriteID: 4748939cc873d5843bca0d5a0e45e57f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 2724}
+  - name: Silver Spritesheet_Frame_2
+    originalName: 
+    pivot: {x: 0.5724798, y: -0.33100235}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 5444
+      width: 8154
+      height: 2145
+    spriteID: 1f11cc9728c575c41b1b340c7979a904
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 5444}
+  - name: Silver Spritesheet_Frame_3
+    originalName: 
+    pivot: {x: 0.13513513, y: -0.107171}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 9312
+      y: 4
+      width: 5328
+      height: 2538
+    spriteID: 6e7cd1d079bfac14caf807a9505ff748
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 9312, y: 4}
+  - name: Silver Spritesheet_Frame_4
+    originalName: 
+    pivot: {x: 0.3357211, y: -0.1542665}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 8807
+      y: 2724
+      width: 2094
+      height: 2379
+    spriteID: 217aad7143f4a654b87c9b00d6588180
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 8807, y: 2724}
+  - name: Silver Spritesheet_Frame_5
+    originalName: 
+    pivot: {x: 0.32831603, y: -1.1641066}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 10909
+      y: 4029
+      width: 2126
+      height: 1237
+    spriteID: 2b52193a601a26c4183f88a52639c134
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 10909, y: 4029}
+  - name: Silver Spritesheet_Frame_6
+    originalName: 
+    pivot: {x: 0.32861853, y: -1.1179645}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 10909
+      y: 2724
+      width: 2121
+      height: 1297
+    spriteID: 444fd1347b0609d4194300c868ff3898
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 10909, y: 2724}
+  - name: Silver Spritesheet_Frame_7
+    originalName: 
+    pivot: {x: 0.33204824, y: -1.140856}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 13038
+      y: 2724
+      width: 2075
+      height: 1285
+    spriteID: 94eb3f5ad53102644a142aca995397ad
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 13038, y: 2724}
+  - name: Silver Spritesheet_Frame_8
+    originalName: 
+    pivot: {x: 0.3374761, y: -1.4454303}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 13043
+      y: 4029
+      width: 2092
+      height: 1127
+    spriteID: 238bc19d22f7a6c48ae73840d2e72426
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 13043, y: 4029}
+  - name: Silver Spritesheet_Frame_9
+    originalName: 
+    pivot: {x: 0.43892345, y: -13.94382}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 15143
+      y: 4029
+      width: 483
+      height: 178
+    spriteID: 5237842301d2d694682bf04710b2f6fe
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 15143, y: 4029}
+  - name: Silver Spritesheet_Frame_10
+    originalName: 
+    pivot: {x: 2.366667, y: -21.637932}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 15855
+      y: 4029
+      width: 90
+      height: 116
+    spriteID: f3b5187b3621afd48a048bd1555aa435
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 15855, y: 4029}
+  - name: Silver Spritesheet_Frame_11
+    originalName: 
+    pivot: {x: 1.5871555, y: -12.947645}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 15143
+      y: 4215
+      width: 218
+      height: 191
+    spriteID: ae1c12e6897ef5f48b248e510bc50e6c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 15143, y: 4215}
+  - name: Silver Spritesheet_Frame_12
+    originalName: 
+    pivot: {x: 1.4319254, y: -29.941177}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 15634
+      y: 4029
+      width: 213
+      height: 85
+    spriteID: 25cf1fc385a545b4ea6036b3f661dfa5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 15634, y: 4029}
+  - name: Silver Spritesheet_Frame_13
+    originalName: 
+    pivot: {x: 10.000002, y: -80}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 15634
+      y: 4122
+      width: 32
+      height: 32
+    spriteID: 448188c4dea8c874ba18ed353b295577
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 15634, y: 4122}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: 1463799061
+    name: Silver Spritesheet
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Silver Spritesheet_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 92
+        y: 152
+        width: 9300
+        height: 2712
+      spriteId: 14f5c2b7d69e39b49a7b5e7986ec2e8a
+    - name: Silver Spritesheet_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 92
+        y: 152
+        width: 8795
+        height: 2712
+      spriteId: 4748939cc873d5843bca0d5a0e45e57f
+    - name: Silver Spritesheet_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 116
+        y: 710
+        width: 8154
+        height: 2145
+      spriteId: 1f11cc9728c575c41b1b340c7979a904
+    - name: Silver Spritesheet_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 4064
+        y: 272
+        width: 5328
+        height: 2538
+      spriteId: 6e7cd1d079bfac14caf807a9505ff748
+    - name: Silver Spritesheet_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 4081
+        y: 367
+        width: 2094
+        height: 2379
+      spriteId: 217aad7143f4a654b87c9b00d6588180
+    - name: Silver Spritesheet_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 4086
+        y: 1440
+        width: 2126
+        height: 1237
+      spriteId: 2b52193a601a26c4183f88a52639c134
+    - name: Silver Spritesheet_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 4087
+        y: 1450
+        width: 2121
+        height: 1297
+      spriteId: 444fd1347b0609d4194300c868ff3898
+    - name: Silver Spritesheet_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 4095
+        y: 1466
+        width: 2075
+        height: 1285
+      spriteId: 94eb3f5ad53102644a142aca995397ad
+    - name: Silver Spritesheet_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 4078
+        y: 1629
+        width: 2092
+        height: 1127
+      spriteId: 238bc19d22f7a6c48ae73840d2e72426
+    - name: Silver Spritesheet_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 4572
+        y: 2482
+        width: 483
+        height: 178
+      spriteId: 5237842301d2d694682bf04710b2f6fe
+    - name: Silver Spritesheet_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 4571
+        y: 2510
+        width: 90
+        height: 116
+      spriteId: f3b5187b3621afd48a048bd1555aa435
+    - name: Silver Spritesheet_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 4438
+        y: 2473
+        width: 218
+        height: 191
+      spriteId: ae1c12e6897ef5f48b248e510bc50e6c
+    - name: Silver Spritesheet_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: 4479
+        y: 2545
+        width: 213
+        height: 85
+      spriteId: 25cf1fc385a545b4ea6036b3f661dfa5
+    - name: Silver Spritesheet_Frame_13
+      frameIndex: 13
+      cellRect:
+        x: 4464
+        y: 2560
+        width: 32
+        height: 32
+      spriteId: 448188c4dea8c874ba18ed353b295577
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 9568, y: 2912}
