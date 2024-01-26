@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public enum EStatusformat
 {
@@ -87,9 +88,21 @@ public class Room : MonoBehaviour
     protected virtual void OnMouseDown()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
-        ChangeRoom_PopupUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoom_PopupUI>("ChangeRoom_PopUpUI");
-        changeRoomUI.SelectRoom = this;
-        changeRoomUI.RoomName = gameObject.name;
+        FocusCamera();
+
+        ((DayMain_SceneUI)Main.Get<UIManager>().SceneUI).ActiveCategory();
+
+
+        //ChangeRoom_PopupUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoom_PopupUI>("ChangeRoom_PopUpUI");
+        //changeRoomUI.SelectRoom = this;
+        //changeRoomUI.RoomName = gameObject.name;
+    }
+
+    private void FocusCamera()
+    {
+        Vector3 pos = new Vector3(transform.position.x + 1.5f, transform.position.y + 1.8f, Camera.main.transform.position.z);
+        Camera.main.transform.DOMove(pos, 0.5f);
+        Camera.main.DOOrthoSize(2.5f, 0.5f);
     }
 
     public void RemoveEnemy(CharacterBehaviour src)
