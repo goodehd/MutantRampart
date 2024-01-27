@@ -50,6 +50,7 @@ public class DayMain_SceneUI : BaseUI
         _backButton = GetUI<Button>("BackButton");
 
         SetUICallback(_shopButton.gameObject, EUIEventState.Click, ClickShopBtn);
+        SetUICallback(_inventoryButton.gameObject, EUIEventState.Click, ClickInventoryBtn);
         SetUICallback(_stageStartButton.gameObject, EUIEventState.Click, ClickStageStartBtn);
         SetUICallback(_placingButton.gameObject, EUIEventState.Click, ClickPlacingBtn);
         SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickBackBtn);
@@ -95,6 +96,11 @@ public class DayMain_SceneUI : BaseUI
     private void ClickShopBtn(PointerEventData eventData)
     {
         Main.Get<UIManager>().OpenPopup<Shop_PopupUI>("Shop_PopupUI");
+    }
+
+    private void ClickInventoryBtn(PointerEventData eventData)
+    {
+        Main.Get<UIManager>().OpenPopup<Inventory_PopupUI>("Inventory_PopupUI");
     }
 
     private void ClickStageStartBtn(PointerEventData eventData)
