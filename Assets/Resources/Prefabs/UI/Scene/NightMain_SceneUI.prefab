@@ -187,7 +187,7 @@ RectTransform:
   m_Children:
   - {fileID: 1891663563141094259}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 6222952775185979205}
   - component: {fileID: 4274580561349799763}
   m_Layer: 5
-  m_Name: CurStageTimeImg
+  m_Name: NightCurStageTimeImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -957,7 +957,7 @@ GameObject:
   - component: {fileID: 762643309634346272}
   - component: {fileID: 3027077282390174991}
   m_Layer: 5
-  m_Name: CurStage
+  m_Name: NightCurStage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1322,7 +1322,7 @@ GameObject:
   - component: {fileID: 1166310150473089966}
   - component: {fileID: 580404883621746133}
   m_Layer: 5
-  m_Name: CurStageTxt
+  m_Name: NightCurStageTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

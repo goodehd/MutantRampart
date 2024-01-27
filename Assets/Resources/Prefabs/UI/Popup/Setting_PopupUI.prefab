@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5986918477393622424}
   - component: {fileID: 8473136567305557955}
   m_Layer: 5
-  m_Name: Effect_Handle
+  m_Name: BGM_Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6296528081431777286}
   m_Layer: 5
-  m_Name: Effect_Handle Slide Area
+  m_Name: UI_Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 5049098841539781965}
   - component: {fileID: 7450947398189938133}
   m_Layer: 5
-  m_Name: Effect_Background
+  m_Name: UI_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -572,7 +572,7 @@ GameObject:
   - component: {fileID: 6730849989736225535}
   - component: {fileID: 6726871676080243556}
   m_Layer: 5
-  m_Name: Effect_Fill
+  m_Name: BGM_Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -993,7 +993,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9219659245272246864}
   m_Layer: 5
-  m_Name: Effect_Handle Slide Area
+  m_Name: BGM_Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1109,7 +1109,7 @@ GameObject:
   - component: {fileID: 9100861195401089422}
   - component: {fileID: 5644226554588523466}
   m_Layer: 5
-  m_Name: Effect_Handle
+  m_Name: UI_Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1278,7 +1278,7 @@ GameObject:
   - component: {fileID: 6231895643672579374}
   - component: {fileID: 5583477725290388246}
   m_Layer: 5
-  m_Name: CloseBtn
+  m_Name: SettingCloseBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1866,7 +1866,7 @@ GameObject:
   - component: {fileID: 1671580773122224626}
   - component: {fileID: 1980508969468299385}
   m_Layer: 5
-  m_Name: Effect_Background
+  m_Name: BGM_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1942,7 +1942,7 @@ GameObject:
   - component: {fileID: 3984039625136039379}
   - component: {fileID: 2234690196746511398}
   m_Layer: 5
-  m_Name: Effect_Fill
+  m_Name: UI_Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2016,7 +2016,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7953674993584024620}
   m_Layer: 5
-  m_Name: Effect_Fill Area
+  m_Name: UI_Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2980,7 +2980,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3887013779778457374}
   m_Layer: 5
-  m_Name: Effect_Fill Area
+  m_Name: BGM_Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3040,7 +3040,7 @@ RectTransform:
   m_Children:
   - {fileID: 4996526589540793292}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
