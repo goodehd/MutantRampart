@@ -68,7 +68,8 @@ public class YesNo_PopupUI : BaseUI
         }
         else // 보유 금액 부족 시
         {
-            Main.Get<UIManager>().OpenPopup<MoneyError_PopupUI>("MoneyError_PopupUI"); // 돈이 아이템 금액보다 적으면 돈부족 경고창 띄우기
+            Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI"); // 돈이 아이템 금액보다 적으면 돈부족 경고창 띄우기
+            ui.curErrorText = "돈이 부족해서 구매할 수 없습니다.";
             Debug.Log("돈이 부족해서 구매할 수 없습니다.");
         }
     }
@@ -85,7 +86,8 @@ public class YesNo_PopupUI : BaseUI
         }
         else
         {
-            Main.Get<UIManager>().OpenPopup<MoneyError_PopupUI>("MoneyError_PopupUI"); // 돈이 아이템 금액보다 적으면 돈부족 경고창 띄우기
+            Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI"); // 돈이 아이템 금액보다 적으면 돈부족 경고창 띄우기
+            ui.curErrorText = "돈이 부족해서 구매할 수 없습니다.";
             Debug.Log("돈이 부족해서 구매할 수 없습니다.");
         }
     }
