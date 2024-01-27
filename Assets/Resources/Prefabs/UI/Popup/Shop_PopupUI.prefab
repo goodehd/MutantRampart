@@ -1294,7 +1294,7 @@ GameObject:
   - component: {fileID: 1738475733414497699}
   - component: {fileID: 3327697304040067093}
   m_Layer: 5
-  m_Name: MainPlayerMoneyText
+  m_Name: ShopPlayerMoneyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1875,7 +1875,7 @@ RectTransform:
   m_Children:
   - {fileID: 773325238028026658}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

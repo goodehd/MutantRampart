@@ -1,10 +1,12 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-public class BuyConfirm_PopupUI : BaseUI
+public class YesNo_PopupUI : BaseUI
 {
+    private TMP_Text _askingText;
     private Button _yesButton;
     private Button _noButton;
 
@@ -12,13 +14,18 @@ public class BuyConfirm_PopupUI : BaseUI
     public CharacterData ShopUnitData { get; set; }
     public RoomData ShopRoomData { get; set; }
 
+    public string curAskingText { get; set; }
 
     protected override void Init()
     {
+        SetUI<TMP_Text>();
         SetUI<Button>();
 
+        _askingText = GetUI<TMP_Text>("ErrorText");
         _yesButton = GetUI<Button>("YesBtn");
         _noButton = GetUI<Button>("NoBtn");
+
+        _askingText.text = curAskingText;
 
         SetUICallback(_yesButton.gameObject, EUIEventState.Click, ClickYesBtn);
         SetUICallback(_noButton.gameObject, EUIEventState.Click, ClickNoBtn);

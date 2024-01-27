@@ -41,7 +41,7 @@ public class Unit_ListUI : BaseUI
 
     private void ClickBuyBtn(PointerEventData EventData)
     {
-        Main.Get<UIManager>().OpenPopup<BuyConfirm_PopupUI>("BuyConfirm_PopupUI").ShopUnitData = ShopUnitData;
+        Main.Get<UIManager>().OpenPopup<YesNo_PopupUI>("BuyConfirm_PopupUI").ShopUnitData = ShopUnitData;
     }
 }
 

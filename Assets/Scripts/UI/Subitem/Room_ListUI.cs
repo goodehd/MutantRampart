@@ -42,7 +42,7 @@ public class Room_ListUI : BaseUI
 
     private void ClickBuyBtn(PointerEventData EventData)
     {
-        Main.Get<UIManager>().OpenPopup<BuyConfirm_PopupUI>("BuyConfirm_PopupUI").ShopRoomData = ShopRoomData;
+        Main.Get<UIManager>().OpenPopup<YesNo_PopupUI>("BuyConfirm_PopupUI").ShopRoomData = ShopRoomData;
     }
 }
 
