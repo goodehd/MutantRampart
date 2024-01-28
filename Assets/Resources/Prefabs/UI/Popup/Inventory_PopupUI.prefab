@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6354040041722730719}
   - component: {fileID: 1672681022744825898}
   m_Layer: 5
-  m_Name: ThirdSlot
+  m_Name: EquipSlot3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -769,7 +769,7 @@ RectTransform:
   m_Children:
   - {fileID: 4035995254116964938}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1528,7 +1528,7 @@ GameObject:
   - component: {fileID: 6081557573840569485}
   - component: {fileID: 4092397679120420626}
   m_Layer: 5
-  m_Name: ThirdEquipCancelImg
+  m_Name: EquipCancelImg3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3691,7 +3691,7 @@ GameObject:
   - component: {fileID: 2560630426319601390}
   - component: {fileID: 1051004253814496421}
   m_Layer: 5
-  m_Name: FirstSlot
+  m_Name: EquipSlot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4119,7 +4119,7 @@ GameObject:
   - component: {fileID: 5234617325853992046}
   - component: {fileID: 3535352901683928407}
   m_Layer: 5
-  m_Name: SecondEquipCancelImg
+  m_Name: EquipCancelImg2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5929,7 +5929,7 @@ GameObject:
   - component: {fileID: 5812598053852671902}
   - component: {fileID: 4703018709159051659}
   m_Layer: 5
-  m_Name: SecondSlot
+  m_Name: EquipSlot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6760,7 +6760,7 @@ GameObject:
   - component: {fileID: 5373163347684613090}
   - component: {fileID: 2620103762797391828}
   m_Layer: 5
-  m_Name: FirstEquipCancelImg
+  m_Name: EquipCancelImg1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -23,35 +23,43 @@ public class Inventory_PopupUI : BaseUI
 
     // InventRoomDescriBox
     private Button _inventRoomCloseBtn;
+    private Button _inventRoomUpgradeBtn;
+    private Button _inventRoomDeleteBtn;
+    private Button _upgradeConfirmButton;
+    private Button _upgradeCancelBtn;
+
     private TMP_Text _inventRoomNameTxt;
     private TMP_Text _inventRoomTypeTxt;
     private TMP_Text _inventRoomDescriTxt;
-    private Image _inventRoomImg;
-    private Button _inventRoomUpgradeBtn;
-    private Button _inventRoomDeleteBtn;
-    private Image _upgradePopup;
-    private TMP_Text _curTxt;
-    private TMP_Text _nextTxt;
-    private Button _upgradeConfirmButton;
-    private Button _upgradeCancelBtn;
+    private TMP_Text _curUpgradeTxt;
+    private TMP_Text _nextUpgradeTxt;
     private TMP_Text _priceTxt;
+
+    private Image _inventRoomImg;
+    private Image _upgradePopup;
 
     // InventUnitDescriBox
     private Button _inventUnitCloseBtn;
-    private TMP_Text _inventUnitNameTxt;
-    private Image _inventUnitImg;
-    private TMP_Text _inventUnitDescriTxt;
     private Button _inventUnitDeleteBtn;
-    private Button _firstSlot;
-    private Image _firstEquipCancelImg;
-    private Button _secondSlot;
-    private Image _secondEquipCancelImg;
-    private Button _thirdSlot;
-    private Image _thirdEquipCancelImg;
-    private Transform _myItemsContent;
-    private Image _inventItemDetailBox;
+    private Button[] _equipSlots = new Button[3];
+    //private Button _firstSlot;
+    //private Button _secondSlot;
+    //private Button _thirdSlot;
+
+    private TMP_Text _inventUnitNameTxt;
+    private TMP_Text _inventUnitDescriTxt;
     private TMP_Text _inventItemNameTxt;
     private TMP_Text _inventItemDescriTxt;
+
+    private Image _inventUnitImg;
+    private Image[] _equipSlotsImgs = new Image[3];
+    private Image[] _equipCancelImgs = new Image[3];
+    //private Image _firstEquipCancelImg;
+    //private Image _secondEquipCancelImg;
+    //private Image _thirdEquipCancelImg;
+    private Image _inventItemDetailBox;
+
+    private Transform _myItemsContent;
 
 
     public string _selectRoomNameTxt { get; set; }
@@ -100,74 +108,93 @@ public class Inventory_PopupUI : BaseUI
 
         // todo : 인벤토리 room & unit content 안에 내용 넣어줘야 함 !
 
-        SetInventRoomDescriBox();
-        SetInventUnitDescriBox();
+        SetUIInventRoomDescriBox();
+        SetUIInventUnitDescriBox();
 
     }
 
-    private void SetInventRoomDescriBox()
+    private void SetUIInventRoomDescriBox() // Set _inventRoomDescriBox
     {
-        // Set _inventRoomDescriBox
         _inventRoomCloseBtn = GetUI<Button>("InventRoomCloseBtn");
+        _inventRoomUpgradeBtn = GetUI<Button>("InventRoomUpgradeBtn");
+        _inventRoomDeleteBtn = GetUI<Button>("InventRoomDeleteBtn");
+        _upgradeConfirmButton = GetUI<Button>("UpgradeConfirmBtn");
+        _upgradeCancelBtn = GetUI<Button>("UpgradeCancelBtn");
+
         SetUICallback(_inventRoomCloseBtn.gameObject, EUIEventState.Click, ClickInventRoomCloseBtn);
+        SetUICallback(_inventRoomUpgradeBtn.gameObject, EUIEventState.Click, ClickInventRoomUpgradeBtn);
+        SetUICallback(_inventRoomDeleteBtn.gameObject, EUIEventState.Click, ClickInventRoomDeleteBtn);
+        SetUICallback(_upgradeConfirmButton.gameObject, EUIEventState.Click, ClickUpgradeConfirmButton);
+        SetUICallback(_upgradeCancelBtn.gameObject, EUIEventState.Click, ClickUpgradeCancelButton);
+
         _inventRoomNameTxt = GetUI<TMP_Text>("InventRoomNameTxt");
-        _inventRoomNameTxt.text = _selectRoomNameTxt;
         _inventRoomTypeTxt = GetUI<TMP_Text>("InventRoomTypeTxt");
-        _inventRoomTypeTxt.text = _selectRoomTypeTxt;
         _inventRoomDescriTxt = GetUI<TMP_Text>("InventRoomDescriTxt");
+        _curUpgradeTxt = GetUI<TMP_Text>("CurTxt");
+        _nextUpgradeTxt = GetUI<TMP_Text>("NextTxt");
+        _priceTxt = GetUI<TMP_Text>("PriceTxt");
+
+        _inventRoomNameTxt.text = _selectRoomNameTxt;
+        _inventRoomTypeTxt.text = _selectRoomTypeTxt;
         _inventRoomDescriTxt.text = _selectRoomDescriTxt;
+        _curUpgradeTxt.text = _upgradeCurTxt;
+        _nextUpgradeTxt.text = _upgradeNextTxt;
+        _priceTxt.text = _upgradePriceTxt;
+
         _inventRoomImg = GetUI<Image>("InventRoomImg");
         // todo : _inventRoomImg.sprite = 
-        _inventRoomUpgradeBtn = GetUI<Button>("InventRoomUpgradeBtn");
-        SetUICallback(_inventRoomUpgradeBtn.gameObject, EUIEventState.Click, ClickInventRoomUpgradeBtn);
-        _inventRoomDeleteBtn = GetUI<Button>("InventRoomDeleteBtn");
-        SetUICallback(_inventRoomDeleteBtn.gameObject, EUIEventState.Click, ClickInventRoomDeleteBtn);
         _upgradePopup = GetUI<Image>("UpgradePopup");
-        _curTxt = GetUI<TMP_Text>("CurTxt");
-        _curTxt.text = _upgradeCurTxt;
-        _nextTxt = GetUI<TMP_Text>("NextTxt");
-        _nextTxt.text = _upgradeNextTxt;
-        _upgradeConfirmButton = GetUI<Button>("UpgradeConfirmBtn");
-        SetUICallback(_upgradeConfirmButton.gameObject, EUIEventState.Click, ClickUpgradeConfirmButton);
-        _upgradeCancelBtn = GetUI<Button>("UpgradeCancelBtn");
-        SetUICallback(_upgradeCancelBtn.gameObject, EUIEventState.Click, ClickUpgradeCancelButton);
-        _priceTxt = GetUI<TMP_Text>("PriceTxt");
-        _priceTxt.text = _upgradePriceTxt;
+
     }
 
-    private void SetInventUnitDescriBox()
+    private void SetUIInventUnitDescriBox() // Set InventUnitDescriBox
     {
-        // Set InventUnitDescriBox
         _inventUnitCloseBtn = GetUI<Button>("InventUnitCloseBtn");
+        _inventUnitDeleteBtn = GetUI<Button>("InventUnitDeleteBtn");
+
+        for (int i = 0; i < _equipSlots.Length; i++)
+        { // slot 의 버튼과 이미지와, 장착여부 이미지
+            _equipSlots[i] = GetUI<Button>($"EquipSlot{i + 1}");
+            _equipSlotsImgs[i] = GetUI<Image>($"EquipSlot{i + 1}");
+            _equipCancelImgs[i] = GetUI<Image>($"EquipCancelImg{i + 1}");
+
+            if (i < 1)
+            {
+                _equipSlotsImgs[i].color = Color.white;
+            }
+        }
+
         SetUICallback(_inventUnitCloseBtn.gameObject, EUIEventState.Click, ClickInventUnitCloseBtn);
+        SetUICallback(_inventUnitDeleteBtn.gameObject, EUIEventState.Click, ClickInventUnitDeleteBtn);
+        SetUICallback(_equipSlots[0].gameObject, EUIEventState.Click, ClickFirstSlot);
+        SetUICallback(_equipSlots[1].gameObject, EUIEventState.Click, ClickSecondSlot);
+        SetUICallback(_equipSlots[2].gameObject, EUIEventState.Click, ClickThirdSlot);
+
         _inventUnitNameTxt = GetUI<TMP_Text>("InventUnitNameTxt");
+        _inventUnitDescriTxt = GetUI<TMP_Text>("InventUnitDescriTxt");
+        _inventItemNameTxt = GetUI<TMP_Text>("InventItemNameTxt");
+        _inventItemDescriTxt = GetUI<TMP_Text>("InventItemDescriTxt");
+
         _inventUnitNameTxt.text = _selectUnitNameTxt;
+        _inventUnitDescriTxt.text = _selectUnitDescriTxt;
+        _inventItemNameTxt.text = _selectItemNameTxt;
+        _inventItemDescriTxt.text = _selectItemDescriTxt;
+
         _inventUnitImg = GetUI<Image>("InventUnitImg");
         //_inventUnitImg.sprite = 
-        _inventUnitDescriTxt = GetUI<TMP_Text>("InventUnitDescriTxt");
-        _inventUnitDescriTxt.text = _selectUnitDescriTxt;
-        _inventUnitDeleteBtn = GetUI<Button>("InventUnitDeleteBtn");
-        SetUICallback(_inventUnitDeleteBtn.gameObject, EUIEventState.Click, ClickInventUnitDeleteBtn);
-        _firstSlot = GetUI<Button>("FirstSlot");
-        // todo : _firstSlot.image = 
-        SetUICallback(_firstSlot.gameObject, EUIEventState.Click, ClickFirstSlot);
-        _firstEquipCancelImg = GetUI<Image>("FirstEquipCancelImg");
-        _secondSlot = GetUI<Button>("SecondSlot");
-        // todo : _secondSlot.image = 
-        SetUICallback(_secondSlot.gameObject, EUIEventState.Click, ClickSecondSlot);
-        _secondEquipCancelImg = GetUI<Image>("SecondEquipCancelImg");
-        _thirdSlot = GetUI<Button>("ThirdSlot");
-        // todo : _thirdSlot.image = 
-        SetUICallback(_thirdSlot.gameObject, EUIEventState.Click, ClickThirdSlot);
-        _thirdEquipCancelImg = GetUI<Image>("ThirdEquipCancelImg");
-        _myItemsContent = GetUI<Transform>("MyItems_Content");
-        // todo : 보유중인 아이템(MyItems_Content) 위에 마우스 올렸을 떄 정보가 뜨게끔 !
         _inventItemDetailBox = GetUI<Image>("InventItemDetailBox");
-        _inventItemNameTxt = GetUI<TMP_Text>("InventItemNameTxt");
-        _inventItemNameTxt.text = _selectItemNameTxt;
-        _inventItemDescriTxt = GetUI<TMP_Text>("InventItemDescriTxt");
-        _inventItemDescriTxt.text = _selectItemDescriTxt;
+
+        _myItemsContent = GetUI<Transform>("MyItems_Content");
+
     }
+ 
+    // todo : 보유중인 아이템(MyItems_Content) 위에 마우스 올렸을 떄 정보가 뜨게끔 !
+
+    private void SetInfo()
+    {
+
+    }
+
 
     private void ClickBackBtn(PointerEventData EventData)
     {
@@ -202,16 +229,16 @@ public class Inventory_PopupUI : BaseUI
         _upgradePopup.gameObject.SetActive(true);
     }
 
-    private void ClickInventRoomDeleteBtn(PointerEventData EventData) // todo : ClickInventRoomDeleteBtn()
-    {
-        
-    }
-
-    private void ClickUpgradeConfirmButton(PointerEventData EventData) // todo : ClickUpgradeConfirmButton()
+    private void ClickInventRoomDeleteBtn(PointerEventData EventData) 
     {
 
     }
-    
+
+    private void ClickUpgradeConfirmButton(PointerEventData EventData)
+    {
+
+    }
+
     private void ClickUpgradeCancelButton(PointerEventData EventData)
     {
         _upgradePopup.gameObject.SetActive(false);
@@ -222,22 +249,22 @@ public class Inventory_PopupUI : BaseUI
         _inventUnitDescriBox.gameObject.SetActive(false);
     }
 
-    private void ClickInventUnitDeleteBtn(PointerEventData EventData) // todo : ClickInventUnitDeleteBtn()
+    private void ClickInventUnitDeleteBtn(PointerEventData EventData)
     {
 
     }
 
-    private void ClickFirstSlot(PointerEventData EventData) // todo : ClickFirstSlot()
+    private void ClickFirstSlot(PointerEventData EventData) 
     {
 
     }
 
-    private void ClickSecondSlot(PointerEventData EventData) // todo : ClickSecondSlot()
+    private void ClickSecondSlot(PointerEventData EventData) 
     {
 
     }
 
-    private void ClickThirdSlot(PointerEventData EventData) // todo : ClickThirdSlot()
+    private void ClickThirdSlot(PointerEventData EventData) 
     {
 
     }

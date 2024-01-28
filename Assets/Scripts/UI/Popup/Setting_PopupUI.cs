@@ -57,6 +57,7 @@ public class Setting_PopupUI : BaseUI
     private void SetSlider()
     {
         SetUI<Slider>();
+
         _bgmSlider = GetUI<Slider>("BGM_Slider");
         _effectSlider = GetUI<Slider>("Effect_Slider");
         _uiSlider = GetUI<Slider>("UI_Slider");
@@ -71,30 +72,33 @@ public class Setting_PopupUI : BaseUI
 
     private void ClickBGMMuteBtn(PointerEventData EventData)
     {
-
+        _bgmSlider.value = 0f;
     }
 
     private void ClickBGMMaxBtn(PointerEventData EventData)
     {
-
+        _bgmSlider.value = 1f;
     }
     private void ClickEffectMuteBtn(PointerEventData EventData)
     {
+        _effectSlider.value = 0f;
 
     }
 
     private void ClickEffectMaxBtn(PointerEventData EventData)
     {
+        _effectSlider.value = 1f;
 
     }
     private void ClickUIMuteBtn(PointerEventData EventData)
     {
+        _uiSlider.value = 0f;
 
     }
 
     private void ClickUIMaxBtn(PointerEventData EventData)
     {
-
+        _uiSlider.value = 1f;
     }
 
     private void ClickLanguageBtn(PointerEventData EventData)

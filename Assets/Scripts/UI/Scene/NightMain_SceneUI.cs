@@ -60,6 +60,7 @@ public class NightMain_SceneUI : BaseUI
         _x2SpeedBtn.gameObject.SetActive(false);
         _pausedBtn.gameObject.SetActive(true);
         // todo ; 플레이 속도 2배속 -> 일시정지로 설정
+        Time.timeScale = 0.0f;
 
     }
     private void ClickPausedBtn(PointerEventData eventData)
