@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,8 +12,6 @@ public class RoomBehavior : MonoBehaviour
     public Tilemap[] tilemap = new Tilemap[2];
     public ThisRoom RoomInfo { get; set; }
 
-    public int CurPosX { get { return RoomInfo.CurPosX; } set { RoomInfo.CurPosX = value;} }
-    public int CurPosY { get { return RoomInfo.CurPosY; } set { RoomInfo.CurPosY = value;} }
     public int IndexX { get { return RoomInfo.IndexX; } set { RoomInfo.IndexX = value;} }
     public int IndexY { get { return RoomInfo.IndexY; } set { RoomInfo.IndexY = value;} }
     public LinkedList<CharacterBehaviour> Enemys { get { return RoomInfo.Enemys; } set { RoomInfo.Enemys = value; } }
@@ -83,5 +82,4 @@ public class RoomBehavior : MonoBehaviour
     {
         Enemys.Remove(src);
     }
-
 }

@@ -47,8 +47,6 @@ public class TileManager : IManagers
                 RoomBehavior room = obj.GetComponent<RoomBehavior>();
                 room.IndexX = i;
                 room.IndexY = j;
-                room.CurPosX = (int)obj.transform.position.x;
-                room.CurPosY = (int)obj.transform.position.y;
             }
         }
 
@@ -66,22 +64,23 @@ public class TileManager : IManagers
         return true;
     }
 
-    public RoomBehavior ChangeRoom(int indexX, int indexY, ThisRoom changeRoom)
+    public RoomBehavior ChangRoom(ThisRoom changeRoom)
     {
-        Vector3 pos = _roomObjList[indexX][indexY].transform.position;
-        resource.Destroy(_roomObjList[indexX][indexY].gameObject);
-
         GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"{changeRoom.Data.Key}");
-        obj.transform.position = pos;
+        obj.transform.position = SelectRoom.transform.position;
         obj.transform.parent = _gridObject.transform;
-        _roomObjList[indexX][indexY] = obj;
+        _roomObjList[SelectRoom.IndexX][SelectRoom.IndexY] = obj;
 
         RoomBehavior room = obj.GetComponent<RoomBehavior>();
-        room.IndexX = indexX;
-        room.IndexY = indexY;
-        room.CurPosX = (int)pos.x;
-        room.CurPosY = (int)pos.y;
+        room.IndexX = SelectRoom.IndexX;
+        room.IndexY = SelectRoom.IndexY;
         room.RoomInfo = changeRoom;
+        room.RoomInfo.EquipedRoom();
+
+        SelectRoom.RoomInfo.UnEquipedRoom();
+        resource.Destroy(SelectRoom.gameObject);
+        SelectRoom = room;
+
         return room;
     }
 
@@ -98,8 +97,6 @@ public class TileManager : IManagers
         RoomBehavior room = obj.GetComponent<RoomBehavior>();
         room.IndexX = indexX;
         room.IndexY = indexY;
-        room.CurPosX = (int)pos.x;
-        room.CurPosY = (int)pos.y;
         return room;
     }
 

@@ -63,7 +63,7 @@ public class PocketBlock_PopupUI : BaseUI
         {
             RoomSelectImageUI roomSelectImage = _ui.CreateSubitem<RoomSelectImageUI>("RoomSelectImageUI", _roomContent.transform);
             roomSelectImage.Room = Main.Get<GameManager>().PlayerRooms[i];
-            roomSelectImage.Owner = this;
+            //roomSelectImage.Owner = this;
         }
 
         if (IsUnit)
