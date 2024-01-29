@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +20,9 @@ public class PocketBlock_PopupUI : BaseUI
     public TextMeshProUGUI _unitATK;
     public TextMeshProUGUI _unitDEF;
     public TextMeshProUGUI _unitATKSpeed;
-
+    public TextMeshProUGUI _roomName;
+    public TextMeshProUGUI _roomType;
+    public TextMeshProUGUI _roomDescript;
     private Transform _roomContent;
     private Transform _unitContent;
 
@@ -49,6 +52,10 @@ public class PocketBlock_PopupUI : BaseUI
         _unitDEF = GetUI<TextMeshProUGUI>("UnitDefTxt");
         _unitATKSpeed = GetUI<TextMeshProUGUI>("UnitAtkSpeedTxt");
 
+        _roomName = GetUI<TextMeshProUGUI>("RoomNameTxt");
+        _roomType = GetUI<TextMeshProUGUI>("RoomTypeTxt");
+        _roomDescript = GetUI<TextMeshProUGUI>("RoomDescriptionTxt");
+
         List<Character> playerUnits = player.playerUnits;
         List<ThisRoom> playerRooms = player.PlayerRooms;
 
@@ -63,7 +70,7 @@ public class PocketBlock_PopupUI : BaseUI
         {
             RoomSelectImageUI roomSelectImage = _ui.CreateSubitem<RoomSelectImageUI>("RoomSelectImageUI", _roomContent.transform);
             roomSelectImage.Room = Main.Get<GameManager>().PlayerRooms[i];
-            //roomSelectImage.Owner = this;
+            roomSelectImage.Owner = this;
         }
 
         if (IsUnit)
@@ -83,6 +90,13 @@ public class PocketBlock_PopupUI : BaseUI
         _unitATK.text = $"ATK : {data.Status[EstatType.Damage].Value}";
         _unitDEF.text = $"DEF : {data.Status[EstatType.Defense].Value}";
         _unitATKSpeed.text = $"ATKSpeed : {data.Status[EstatType.AttackSpeed].Value}";
+    }
+
+    public void SetRoomInfo(ThisRoom room)
+    {
+        _roomName.text = $"{room.Data.Key}";
+        _roomType.text = $"{room.Data.Type}";
+        _roomDescript.text = $"{room.Data.Instruction}";
     }
 
     public void ToggleContents(bool isUint)

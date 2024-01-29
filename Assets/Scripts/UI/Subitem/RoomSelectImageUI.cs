@@ -35,6 +35,8 @@ public class RoomSelectImageUI : BaseUI
         }
         _roomImage.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{Room.Data.Key}");
         SetUICallback(_roomSelectButton.gameObject, EUIEventState.Click, ChangeRoom);
+        SetUICallback(_roomSelectButton.gameObject, EUIEventState.Hovered, RoomImageHovered);
+        SetUICallback(_roomSelectButton.gameObject, EUIEventState.Exit, RoomImageExit);
 
         Room.OnEquipedEvenet += Equiped;
         Room.OnUnEquipedEvenet += UnEquiped;
@@ -49,11 +51,11 @@ public class RoomSelectImageUI : BaseUI
 
         if(_tile.SelectRoom.RoomInfo == Room)
         {
-            _tile.ChangRoom(new ThisRoom(_data.Room["Default"]));
+            _tile.ChangeRoom(new ThisRoom(_data.Room["Default"]));
         }
         else
         {
-            _tile.ChangRoom(Room);
+            _tile.ChangeRoom(Room);
         }
     }
 
@@ -65,6 +67,17 @@ public class RoomSelectImageUI : BaseUI
     private void UnEquiped()
     {
         _isEquipedImage.gameObject.SetActive(false);
+    }
+
+    private void RoomImageHovered(PointerEventData eventData)
+    {
+        Owner.SetRoomInfo(Room);
+        Owner._roomDescription.gameObject.SetActive(true);
+    }
+
+    private void RoomImageExit(PointerEventData EventData)
+    {
+        Owner._roomDescription.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
