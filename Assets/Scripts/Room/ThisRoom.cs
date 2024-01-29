@@ -9,7 +9,8 @@ public class ThisRoom
     public int IndexX { get; set; }
     public int IndexY { get; set; }
     public bool IsEquiped { get; set; }
-    public RoomData Data { get; set; }
+    public RoomBehavior Owner { get; set; }
+    public RoomData Data { get; private set; }
     public LinkedList<CharacterBehaviour> Enemys { get; set; } = new LinkedList<CharacterBehaviour>();
 
     public void Init(RoomData data)

@@ -9,7 +9,7 @@ public class RoomBehavior : MonoBehaviour
 {
     public TilemapRenderer Renderer { get; private set; }
     public Tilemap[] tilemap = new Tilemap[2];
-    public ThisRoom RoomInfo { get; private set; }
+    public ThisRoom RoomInfo { get; set; }
 
     public int CurPosX { get { return RoomInfo.CurPosX; } set { RoomInfo.CurPosX = value;} }
     public int CurPosY { get { return RoomInfo.CurPosY; } set { RoomInfo.CurPosY = value;} }
