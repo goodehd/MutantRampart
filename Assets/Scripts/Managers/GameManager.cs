@@ -31,6 +31,11 @@ public class GameManager : IManagers
     public bool Init()
     {
         //PlayerRooms.Add(Main.Get<DataManager>().Room["Home_2"]);
+
+        
+        playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
+        playerUnits.Add(new Character(Main.Get<DataManager>().Character["Jotem"]));
+
         return true;
     }
 

@@ -24,7 +24,7 @@ public class CharacterBehaviour : MonoBehaviour
         this.Animator = GetComponentInChildren<Animator>();
         this.Renderer = GetComponentInChildren<SpriteRenderer>();
 
-        CharacterInfo = new Character();
+        CharacterInfo = new Character(data);
         CharacterInfo.Init(data);
 
         StateMachine = new StateMachine();
