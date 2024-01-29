@@ -29,11 +29,11 @@ public class ItemDescript_PopupUI : BaseUI
         _descriptPopupCloseBtn = GetUI<Button>("DescriptPopupCloseBtn");
         SetUICallback(_descriptPopupCloseBtn.gameObject, EUIEventState.Click, ClickPopupCloseBtn);
 
-        if (ShopUnitData != null) // 구분 - 구매하려는 데이터가 유닛 일 때
+        if (ShopUnitData != null) // 구분 - 설명팝업 데이터가 유닛 일 때
         {
             SetUnitItemPopupInfo(ShopUnitData);
         }
-        else // 구분 - 구매하려는 데이터가 Room 일 때
+        else // 구분 - 설명팝업 데이터가 Room 일 때
         {
             SetRoomItemPopupInfo(ShopRoomData);
         }

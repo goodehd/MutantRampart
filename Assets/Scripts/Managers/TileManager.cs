@@ -9,11 +9,10 @@ public class TileManager : IManagers
     private GameObject _gridObject;
 
     public SpawnTile SpawnTile { get; private set; }
-    public int x = 3;
-    public int y = 3;
+    public RoomBehavior SelectRoom { get; set; }
+    public GameObject BatSlot { get; set; }
 
-   
-    public void GenerateMap()
+    public void GenerateMap(int x, int y)
     {
         _gridObject = new GameObject("Tile");
 
@@ -54,6 +53,9 @@ public class TileManager : IManagers
         GameObject spawn = resource.InstantiateWithPoolingOption("Prefabs/Room/SpawnTile", _gridObject.transform);
         spawn.transform.position = new Vector3(-6f, 0, 0);
         SpawnTile = spawn.GetComponent<SpawnTile>();
+
+        BatSlot = resource.InstantiateWithPoolingOption("Prefabs/Room/BatPoint", _gridObject.transform);
+        BatSlot.SetActive(false);
     }
 
     public bool Init()
@@ -62,19 +64,39 @@ public class TileManager : IManagers
         return true;
     }
 
-    public Room ChangeRoom(int indexX, int indexY, string srcName)
+    public RoomBehavior ChangRoom(ThisRoom changeRoom)
+    {
+        GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"{changeRoom.Data.Key}");
+        obj.transform.position = SelectRoom.transform.position;
+        obj.transform.parent = _gridObject.transform;
+        _roomObjList[SelectRoom.IndexX][SelectRoom.IndexY] = obj;
+
+        RoomBehavior room = obj.GetComponent<RoomBehavior>();
+        room.IndexX = SelectRoom.IndexX;
+        room.IndexY = SelectRoom.IndexY;
+        room.RoomInfo = changeRoom;
+        room.RoomInfo.EquipedRoom();
+
+        SelectRoom.RoomInfo.UnEquipedRoom();
+        resource.Destroy(SelectRoom.gameObject);
+        SelectRoom = room;
+
+        return room;
+    }
+
+    public RoomBehavior ChangeRoomToDefault(int indexX, int indexY)
     {
         Vector3 pos = _roomObjList[indexX][indexY].transform.position;
         resource.Destroy(_roomObjList[indexX][indexY].gameObject);
 
-        GameObject obj = resource.InstantiateWithPoolingOption($"Prefabs/Room/{srcName}", _gridObject.transform);
+        GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"Default");
         obj.transform.position = pos;
+        obj.transform.parent = _gridObject.transform;
         _roomObjList[indexX][indexY] = obj;
 
-        Room room = obj.GetComponent<Room>();
+        RoomBehavior room = obj.GetComponent<RoomBehavior>();
         room.IndexX = indexX;
         room.IndexY = indexY;
-
         return room;
     }
 

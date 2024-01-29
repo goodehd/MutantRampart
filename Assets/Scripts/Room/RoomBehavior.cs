@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +10,8 @@ public class RoomBehavior : MonoBehaviour
 {
     public TilemapRenderer Renderer { get; private set; }
     public Tilemap[] tilemap = new Tilemap[2];
-    public ThisRoom RoomInfo { get; private set; }
+    public ThisRoom RoomInfo { get; set; }
 
-    public int CurPosX { get { return RoomInfo.CurPosX; } set { RoomInfo.CurPosX = value;} }
-    public int CurPosY { get { return RoomInfo.CurPosY; } set { RoomInfo.CurPosY = value;} }
     public int IndexX { get { return RoomInfo.IndexX; } set { RoomInfo.IndexX = value;} }
     public int IndexY { get { return RoomInfo.IndexY; } set { RoomInfo.IndexY = value;} }
     public LinkedList<CharacterBehaviour> Enemys { get { return RoomInfo.Enemys; } set { RoomInfo.Enemys = value; } }
@@ -65,9 +64,11 @@ public class RoomBehavior : MonoBehaviour
 
         ((DayMain_SceneUI)Main.Get<UIManager>().SceneUI).ActiveCategory();
 
-        //ChangeRoom_PopupUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoom_PopupUI>("ChangeRoom_PopUpUI");
-        //changeRoomUI.SelectRoom = this;
-        //changeRoomUI.RoomName = gameObject.name;
+        if(Main.Get<TileManager>().SelectRoom != this)
+        {
+            Main.Get<TileManager>().SelectRoom = this;
+            Main.Get<UIManager>().CloseAllPopup();
+        }
     }
 
     private void FocusCamera()
@@ -81,5 +82,4 @@ public class RoomBehavior : MonoBehaviour
     {
         Enemys.Remove(src);
     }
-
 }

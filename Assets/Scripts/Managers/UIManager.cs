@@ -81,6 +81,12 @@ public class UIManager : IManagers
         Object.Destroy(_popupStack.Pop().gameObject);
     }
 
+    public void CloseAllPopup()
+    {
+        while (_popupStack.Count > 0)
+            ClosePopup();
+    }
+
     public void DestroySubItem(GameObject obj)
     {
         Object.Destroy(obj);

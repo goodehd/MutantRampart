@@ -15,7 +15,7 @@ public class ChangeUnit_PopupUI : BaseUI
     private Button[] _deleteBtn = new Button[3];
     private Button _closeBtn;
     public Room SelectRoom { get; set; }
-    public UnitSelectImageUI SelectUintImage { get; set; }
+    public UnitSelectImageUIPanel SelectUintImage { get; set; }
 
     protected override void Init()
     {
@@ -69,13 +69,13 @@ public class ChangeUnit_PopupUI : BaseUI
 
         for (int i = 0; i < playerUnits.Count; i++)
         {
-            UnitSelectImageUI unitSelectImage = Main.Get<UIManager>().CreateSubitem<UnitSelectImageUI>("UnitSelectImageUI", _content);
+            UnitSelectImageUIPanel unitSelectImage = Main.Get<UIManager>().CreateSubitem<UnitSelectImageUIPanel>("UnitSelectImageUI", _content);
             unitSelectImage.CharacterData = playerUnits[i];
-            unitSelectImage.Owner = this;
+            //unitSelectImage.Owner = this;
         }
     }
 
-    public void SetCharacterData(UnitSelectImageUI image)
+    public void SetCharacterData(UnitSelectImageUIPanel image)
     {
         ResetSelect();
         SelectUintImage = image;
@@ -96,7 +96,7 @@ public class ChangeUnit_PopupUI : BaseUI
             return;
         }
 
-        SelectUintImage.CancelCollocate();
+        //SelectUintImage.CancelCollocate();
         SelectUintImage = null;
 
         for (int i = 0; i < _collocateBtn.Length; ++i)
@@ -143,7 +143,7 @@ public class ChangeUnit_PopupUI : BaseUI
     {
         ((BatRoom)SelectRoom).CreateUnit(index, SelectUintImage.CharacterData);
         _slots[index].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{SelectUintImage.CharacterData.Data.Key}");
-        SelectUintImage.CancelCollocate();
+        //SelectUintImage.CancelCollocate();
         ResetSelect();
         SetUnitInventory();
     }

@@ -59,7 +59,7 @@ public class YesNo_PopupUI : BaseUI
         if (Main.Get<GameManager>()._playerMoney >= data.Price)
         {
             Main.Get<GameManager>().ChangeMoney(-data.Price);
-            Character newChar = new Character();
+            Character newChar = new Character(data);
             newChar.Init(data);
             Main.Get<GameManager>().playerUnits.Add(newChar);
             Debug.Log("구매완료했습니다.");
