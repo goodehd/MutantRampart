@@ -9,10 +9,14 @@ public class Room_ListUI : BaseUI
     private TMP_Text _listItemName;
     private Image _listItemImg;
     private TMP_Text _listItemPrice;
+    private Button _infoButton;
     private Button _buyButton;
 
     // Data
     public RoomData ShopRoomData { get; set; }
+
+    public string itemName { get; set; }
+    public string itemDescript { get; set; }
 
     protected override void Init()
     {
@@ -24,10 +28,12 @@ public class Room_ListUI : BaseUI
         _listItemName = GetUI<TMP_Text>("Room_ItemName");
         _listItemImg = GetUI<Image>("Room_ItemImg");
         _listItemPrice = GetUI<TMP_Text>("Room_ItemPrice");
+        _infoButton = GetUI<Button>("Room_InfoBtn");
         _buyButton = GetUI<Button>("Room_BuyBtn");
 
         SetInfo();
 
+        SetUICallback(_infoButton.gameObject, EUIEventState.Click, ClickInfoBtn);
         SetUICallback(_buyButton.gameObject, EUIEventState.Click, ClickBuyBtn);
 
     }
@@ -40,9 +46,17 @@ public class Room_ListUI : BaseUI
 
     }
 
+    private void ClickInfoBtn(PointerEventData EventData)
+    {
+        ItemDescript_PopupUI ui = Main.Get<UIManager>().OpenPopup<ItemDescript_PopupUI>("ItemDescript_PopupUI");
+        ui.ShopRoomData = ShopRoomData;
+    }
+
     private void ClickBuyBtn(PointerEventData EventData)
     {
-        Main.Get<UIManager>().OpenPopup<YesNo_PopupUI>("BuyConfirm_PopupUI").ShopRoomData = ShopRoomData;
+        YesNo_PopupUI ui = Main.Get<UIManager>().OpenPopup<YesNo_PopupUI>("YesNo_PopupUI");
+        ui.curAskingText = "구매하시겠습니까 ?";
+        ui.ShopRoomData = ShopRoomData;
     }
 }
 

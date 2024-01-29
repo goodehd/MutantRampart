@@ -21,7 +21,7 @@ public class YesNo_PopupUI : BaseUI
         SetUI<TMP_Text>();
         SetUI<Button>();
 
-        _askingText = GetUI<TMP_Text>("ErrorText");
+        _askingText = GetUI<TMP_Text>("YesNoPopupTxt");
         _yesButton = GetUI<Button>("YesBtn");
         _noButton = GetUI<Button>("NoBtn");
 

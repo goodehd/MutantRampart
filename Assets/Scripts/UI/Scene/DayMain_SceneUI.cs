@@ -36,6 +36,8 @@ public class DayMain_SceneUI : BaseUI
         SetImage();
         SetText();
         SetMoveUI();
+
+        Main.Get<GameManager>().OnChangeMoney += UpdateMoneyText;
     }
 
     private void SetButton()
@@ -77,6 +79,8 @@ public class DayMain_SceneUI : BaseUI
 
         _playerMoneyText = GetUI<TextMeshProUGUI>("MainPlayerMoneyText");
         _stageText = GetUI<TextMeshProUGUI>("CurStageTxt");
+
+        _playerMoneyText.text = Main.Get<GameManager>()._playerMoney.ToString();
     }
 
     private void SetMoveUI()
@@ -91,6 +95,11 @@ public class DayMain_SceneUI : BaseUI
 
         _categoryTransform = _categoryPanel.GetComponent<RectTransform>();
         _placingPanelTransform = _placingPanel.GetComponent<RectTransform>();
+    }
+
+    private void UpdateMoneyText(int amount)
+    {
+        _playerMoneyText.text = amount.ToString();
     }
 
     private void ClickShopBtn(PointerEventData eventData)

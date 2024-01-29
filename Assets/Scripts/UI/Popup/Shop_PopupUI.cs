@@ -11,7 +11,7 @@ public class Shop_PopupUI : BaseUI
     private Button _roomButton;
     private Button _groundButton;
     private Button _itemButton;
-    private Button _closeButton;
+    private Button _backButton;
     private ScrollRect _unitScrollView;
     private ScrollRect _roomScrollView;
     private ScrollRect _groundScrollView;
@@ -31,12 +31,13 @@ public class Shop_PopupUI : BaseUI
         SetUI<ScrollRect>();
         SetUI<Transform>();
         SetUI<TMP_Text>();
+        SetUI<Image>();
 
-        _unitButton = GetUI<Button>("UnitBtn");
-        _roomButton = GetUI<Button>("RoomBtn");
-        _groundButton = GetUI<Button>("GroundBtn");
-        _itemButton = GetUI<Button>("ItemBtn");
-        _closeButton = GetUI<Button>("ShopCloseBtn");
+        _unitButton = GetUI<Button>("ShopUnitBtn");
+        _roomButton = GetUI<Button>("ShopRoomBtn");
+        _groundButton = GetUI<Button>("ShopGroundBtn");
+        _itemButton = GetUI<Button>("ShopItemBtn");
+        _backButton = GetUI<Button>("ShopBackButton");
 
         _unitScrollView = GetUI<ScrollRect>("Unit_Scroll View");
         _roomScrollView = GetUI<ScrollRect>("Room_Scroll View");
@@ -46,7 +47,7 @@ public class Shop_PopupUI : BaseUI
         _unitContent = GetUI<Transform>("Unit_Content");
         _roomContent = GetUI<Transform>("Room_Content");
 
-        _playerMoneyText = GetUI<TMP_Text>("MoneyText");
+        _playerMoneyText = GetUI<TMP_Text>("ShopPlayerMoneyText");
         _playerMoneyText.text = Main.Get<GameManager>()._playerMoney.ToString();
 
         Main.Get<GameManager>().OnChangeMoney += UpdateMoneyText;
@@ -55,8 +56,8 @@ public class Shop_PopupUI : BaseUI
         SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
         SetUICallback(_groundButton.gameObject, EUIEventState.Click, ClickGroundBtn);
         SetUICallback(_itemButton.gameObject, EUIEventState.Click, ClickItemBtn);
-        SetUICallback(_closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
-        
+        SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickCloseBtn);
+
         // 상점 판매 아이템 추가
         ShopUnitItems.Add(Main.Get<DataManager>().Character["Gun"]);
         ShopUnitItems.Add(Main.Get<DataManager>().Character["Jotem"]);
