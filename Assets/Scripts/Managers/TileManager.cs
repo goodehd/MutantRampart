@@ -9,11 +9,9 @@ public class TileManager : IManagers
     private GameObject _gridObject;
 
     public SpawnTile SpawnTile { get; private set; }
-    public int x = 3;
-    public int y = 3;
+    public Room SelectRoom { get; set; }
 
-   
-    public void GenerateMap()
+    public void GenerateMap(int x, int y)
     {
         _gridObject = new GameObject("Tile");
 

@@ -21,6 +21,7 @@ public class DayMain_SceneUI : BaseUI
     private Button _stageStartButton;
     private Button _settingButton;
     private Button _backButton;
+    private Button _unitButton;
 
     private TextMeshProUGUI _playerMoneyText;
     private TextMeshProUGUI _stageText;
@@ -30,8 +31,12 @@ public class DayMain_SceneUI : BaseUI
     private RectTransform _categoryTransform;
     private RectTransform _placingPanelTransform;
 
+    private List<GameObject> _popUPUIList = new List<GameObject>();
+
     protected override void Init()
     {
+        base.Init();
+
         SetButton();
         SetImage();
         SetText();
@@ -50,12 +55,14 @@ public class DayMain_SceneUI : BaseUI
         _settingButton = GetUI<Button>("SettingButton");
         _stageStartButton = GetUI<Button>("StageStartButton");
         _backButton = GetUI<Button>("BackButton");
+        _unitButton = GetUI<Button>("UnitBtn");
 
         SetUICallback(_shopButton.gameObject, EUIEventState.Click, ClickShopBtn);
         SetUICallback(_inventoryButton.gameObject, EUIEventState.Click, ClickInventoryBtn);
         SetUICallback(_stageStartButton.gameObject, EUIEventState.Click, ClickStageStartBtn);
         SetUICallback(_placingButton.gameObject, EUIEventState.Click, ClickPlacingBtn);
         SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickBackBtn);
+        SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
     }
 
     private void SetImage()
@@ -104,17 +111,22 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickShopBtn(PointerEventData eventData)
     {
-        Main.Get<UIManager>().OpenPopup<Shop_PopupUI>("Shop_PopupUI");
+        _ui.OpenPopup<Shop_PopupUI>("Shop_PopupUI");
     }
 
     private void ClickInventoryBtn(PointerEventData eventData)
     {
-        Main.Get<UIManager>().OpenPopup<Inventory_PopupUI>("Inventory_PopupUI");
+        _ui.OpenPopup<Inventory_PopupUI>("Inventory_PopupUI");
     }
 
     private void ClickStageStartBtn(PointerEventData eventData)
     {
         Main.Get<StageManager>().StartStage();
+    }
+
+    private void ClickUnitBtn(PointerEventData eventData)
+    {
+        _ui.OpenPopup<PocketBlock_PopupUI>();
     }
 
     private void ClickBackBtn(PointerEventData eventData)

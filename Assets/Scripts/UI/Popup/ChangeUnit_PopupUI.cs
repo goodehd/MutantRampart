@@ -71,7 +71,7 @@ public class ChangeUnit_PopupUI : BaseUI
         {
             UnitSelectImageUI unitSelectImage = Main.Get<UIManager>().CreateSubitem<UnitSelectImageUI>("UnitSelectImageUI", _content);
             unitSelectImage.CharacterData = playerUnits[i];
-            unitSelectImage.Owner = this;
+            //unitSelectImage.Owner = this;
         }
     }
 
@@ -96,7 +96,7 @@ public class ChangeUnit_PopupUI : BaseUI
             return;
         }
 
-        SelectUintImage.CancelCollocate();
+        //SelectUintImage.CancelCollocate();
         SelectUintImage = null;
 
         for (int i = 0; i < _collocateBtn.Length; ++i)
@@ -143,7 +143,7 @@ public class ChangeUnit_PopupUI : BaseUI
     {
         ((BatRoom)SelectRoom).CreateUnit(index, SelectUintImage.CharacterData);
         _slots[index].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{SelectUintImage.CharacterData.Data.Key}");
-        SelectUintImage.CancelCollocate();
+        //SelectUintImage.CancelCollocate();
         ResetSelect();
         SetUnitInventory();
     }

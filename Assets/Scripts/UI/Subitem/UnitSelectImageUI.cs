@@ -18,7 +18,7 @@ public class UnitSelectImageUI : BaseUI
     private TextMeshProUGUI _equipText;
 
     public Character CharacterData { get; set; }
-    public ChangeUnit_PopupUI Owner { get; set; }
+    public PocketBlock_PopupUI Owner { get; set; }
     
     protected override void Init()
     {
@@ -41,11 +41,10 @@ public class UnitSelectImageUI : BaseUI
         _unitImage.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{CharacterData.Data.Key}");
 
         SetUICallback(_unitSelectButton.gameObject, EUIEventState.Click, UnitImageClick);
-        SetUICallback(_collocateBtn.gameObject, EUIEventState.Click, CollocateClick);
-        SetUICallback(_cancelBtn.gameObject, EUIEventState.Click, CancelClick);
-        SetUICallback(_unequippedBtn.gameObject, EUIEventState.Click, UnequippedClick);
+        SetUICallback(_unitSelectButton.gameObject, EUIEventState.Hovered, UnitImageHovered);
+        SetUICallback(_unitSelectButton.gameObject, EUIEventState.Exit, UnitImageExit);
 
-        if(CharacterData.CurRoom != null)
+        if (CharacterData.CurRoom != null)
         {
             _equipText.gameObject.SetActive(true);
             _unequipped.gameObject.SetActive(true);
@@ -54,37 +53,17 @@ public class UnitSelectImageUI : BaseUI
 
     private void UnitImageClick(PointerEventData EventData)
     {
-        if (_unequipped.IsActive())
-            return;
 
-        _collocateImage.gameObject.SetActive(true);
-        Owner.SetCharacterData(this);
     }
 
-    private void CollocateClick(PointerEventData EventData)
+    private void UnitImageHovered(PointerEventData EventData)
     {
-        _collocateImage.gameObject.SetActive(false);
-        _cancelImage.gameObject.SetActive(true);
-        Owner.CollocateBtnActive();
+        Owner.SetUintInfo(CharacterData);
+        Owner._unitDescription.gameObject.SetActive(true);
     }
 
-    private void CancelClick(PointerEventData EventData)
+    private void UnitImageExit(PointerEventData EventData)
     {
-        CancelCollocate();
-        Owner.ResetSelect();
-    }
-
-    private void UnequippedClick(PointerEventData EventData)
-    {
-        _equipText.gameObject.SetActive(false);
-        _unequipped.gameObject.SetActive(false);
-
-        Owner.Delete(0, (BatRoom)CharacterData.CurRoom);
-    }
-
-    public void CancelCollocate()
-    {
-        _collocateImage.gameObject.SetActive(false);
-        _cancelImage.gameObject.SetActive(false);
+        Owner._unitDescription.gameObject.SetActive(false);
     }
 }

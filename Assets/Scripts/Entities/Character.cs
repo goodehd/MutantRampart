@@ -13,6 +13,17 @@ public class Character
     public CharacterData Data { get; private set; }
     public CharacterStatus Status { get; private set; }
 
+    public Character(CharacterData data)
+    {
+        Data = data;
+        Status = new CharacterStatus(data);
+
+        IsDead = false;
+
+        CurPosX = -1;
+        CurPosY = -1;
+    }
+
     public void Init(CharacterData data)
     {
         Data = data;

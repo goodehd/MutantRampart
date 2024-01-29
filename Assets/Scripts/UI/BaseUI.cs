@@ -2,12 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class BaseUI : MonoBehaviour
 {
+    protected UIManager _ui;
     protected Dictionary<Type, Dictionary<string, UnityEngine.Object>> _uiObjects = new Dictionary<Type, Dictionary<string, UnityEngine.Object>>();
 
     private void Start()
@@ -17,7 +17,7 @@ public class BaseUI : MonoBehaviour
 
     protected virtual void Init()
     {
-        
+        _ui = Main.Get<UIManager>();
     }
 
     protected void SetUI<T>() where T : UnityEngine.Object
