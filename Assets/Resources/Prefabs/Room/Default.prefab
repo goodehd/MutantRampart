@@ -466,7 +466,7 @@ Transform:
   - {fileID: 3161742071809559375}
   - {fileID: 6046996784628584644}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &3251220561481367853
 PolygonCollider2D:
@@ -531,9 +531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16139474b4cc4f54080d1c962fbc7052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildAvailable: {fileID: 2100000, guid: 6312956a193c58b4a8a2c43bb7596cba, type: 2}
-  _buildNotAvailable: {fileID: 2100000, guid: 5d0d5465d6d70c748adb74eb7f6e5f2f, type: 2}
-  isEquipedRoom: 0
 --- !u!1 &7861410531966105909
 GameObject:
   m_ObjectHideFlags: 0

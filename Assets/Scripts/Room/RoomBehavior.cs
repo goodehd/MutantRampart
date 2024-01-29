@@ -8,10 +8,13 @@ using UnityEngine.Tilemaps;
 public class RoomBehavior : MonoBehaviour
 {
     public TilemapRenderer Renderer { get; private set; }
+    public Tilemap[] tilemap = new Tilemap[2];
     public ThisRoom RoomInfo { get; private set; }
 
     public int CurPosX { get { return RoomInfo.CurPosX; } set { RoomInfo.CurPosX = value;} }
     public int CurPosY { get { return RoomInfo.CurPosY; } set { RoomInfo.CurPosY = value;} }
+    public int IndexX { get { return RoomInfo.IndexX; } set { RoomInfo.IndexX = value;} }
+    public int IndexY { get { return RoomInfo.IndexY; } set { RoomInfo.IndexY = value;} }
     public LinkedList<CharacterBehaviour> Enemys { get { return RoomInfo.Enemys; } set { RoomInfo.Enemys = value; } }
 
     private bool _initialize = false;
@@ -23,6 +26,10 @@ public class RoomBehavior : MonoBehaviour
 
         RoomInfo = new ThisRoom();
         RoomInfo.Init(data);
+        for (int i = 0; i < 2; i++)
+        {
+            tilemap[i] = transform.GetChild(i).GetComponent<Tilemap>();
+        }
 
         _initialize = true;
     }
@@ -32,6 +39,25 @@ public class RoomBehavior : MonoBehaviour
         RoomInfo = data;
     }
 
+    protected virtual void OnMouseEnter()
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+        for (int i = 0; i < 2; i++)
+        {
+            tilemap[i].color = Color.green;
+        }
+
+    }
+
+    protected virtual void OnMouseExit()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            tilemap[i].color = Color.white;
+        }
+
+
+    }
     protected virtual void OnMouseDown()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
