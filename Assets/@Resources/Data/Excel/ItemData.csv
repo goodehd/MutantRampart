@@ -1,0 +1,10 @@
+Key,Type,HpAdd,DefenseAdd,AttackAdd,SpeedAdd,Instruction
+Feather,Weapon,0,0,1,1,간질간질 깃털
+TrainingEgg,Armor,10,1,0,0,수련용 계란 깨면 혼난다.
+FrozenTuna,Weapon,0,0,5,0,전통의 강호 냉동참치
+RedBook,Weapon,-10,0,3,2,빨간책.... 원래는 빨간색이 아니었다..
+BlueBook,Armor,10,10,0,0,파란책! 배에 차면 방어력을 높게 올려준다
+GoldenCoin,Armor,0,0,0,0,지니고 있으면 획득 골드량이 늘어난다.
+SilverCoin,Weapon,0,0,20,5,공격할 때 마다 골드를 소모하는 저주받은 동전....
+StrangeCandy,Consume,0,0,0,0,레벨을 올려주는 이상한사탕
+Meat,Consume,0,0,0,0,흠 뭐하지

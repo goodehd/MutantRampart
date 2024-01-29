@@ -15,6 +15,8 @@ public static class Literals
     public const string ROOM_PREFABS_PATH = "Prefabs/Room/";
     public const string ROOM_SPRITES_PATH = "Sprites/Room/";
 
+    public const string ITEM_SPRITE_PATH = "Sprites/Item/";
+
     public static readonly int Idle = Animator.StringToHash("IsIdle");
     public static readonly int Move = Animator.StringToHash("IsMove");
     public static readonly int Attack = Animator.StringToHash("IsAttack");

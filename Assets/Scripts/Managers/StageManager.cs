@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,8 @@ public class StageManager : IManagers
 
     private bool _isStageStart = false;
     private int _curStage = 0;
-
+    public event Action OnStageClear; 
+    
     public bool Init()
     {
         _tileManager = Main.Get<TileManager>();
@@ -49,6 +51,7 @@ public class StageManager : IManagers
         Main.Get<GameManager>().ChangeMoney(_stages[_curStage].SpwanCount * 1000);
         _curStage++;
         _isStageStart = false;
+        OnStageClear?.Invoke();
     }
 
     public void CheckClear()
