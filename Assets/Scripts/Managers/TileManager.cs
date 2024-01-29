@@ -64,7 +64,7 @@ public class TileManager : IManagers
         return true;
     }
 
-    public RoomBehavior ChangRoom(ThisRoom changeRoom)
+    public RoomBehavior ChangeRoom(ThisRoom changeRoom)
     {
         GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"{changeRoom.Data.Key}");
         obj.transform.position = SelectRoom.transform.position;
