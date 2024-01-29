@@ -5,14 +5,14 @@ using UnityEngine;
 public class DataManager : IManagers
 {
     public Dictionary<string, CharacterData> Character = new Dictionary<string, CharacterData>();
-    public Dictionary<string, RoomData> roomDatas = new Dictionary<string, RoomData>();
+    public Dictionary<string, RoomData> Room = new Dictionary<string, RoomData>();
 
     public CSVReader reader = new();
     
     public bool Init()
     {
         Character = reader.LoadToCSVData<CharacterData>();
-        roomDatas = reader.LoadToCSVData<RoomData>();
+        Room = reader.LoadToCSVData<RoomData>();
         return true;
     }
 }

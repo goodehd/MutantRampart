@@ -137,7 +137,7 @@ public class ChangeRoom_PopupUI : BaseUI
                 if(ChangeRoomData.isEquiped)
                 {
                     Main.Get<TileManager>().ChangeRoom(ChangeRoomData.indexX, ChangeRoomData.indexY, "Default");
-                    SetSelectRoomInfo(Main.Get<DataManager>().roomDatas["Default"],
+                    SetSelectRoomInfo(Main.Get<DataManager>().Room["Default"],
                               Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}Default"));
                     ChangeRoomData.isEquiped = false;
                     _setUnitButton.gameObject.SetActive(false);
@@ -151,7 +151,7 @@ public class ChangeRoom_PopupUI : BaseUI
         {
             ChangeRoomData = SelectRoom.ThisRoomData;
             ChangeRoom("Default");
-            SetSelectRoomInfo(Main.Get<DataManager>().roomDatas["Default"],
+            SetSelectRoomInfo(Main.Get<DataManager>().Room["Default"],
                               Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}Default"));
             ChangeRoomData.isEquiped = false;
             _setUnitButton.gameObject.SetActive(false);
@@ -182,7 +182,7 @@ public class ChangeRoom_PopupUI : BaseUI
         for (int i = 0; i < Main.Get<GameManager>().PlayerRooms.Count; i++)
         {
             RoomSelectImageUI roomSelectImage = Main.Get<UIManager>().CreateSubitem<RoomSelectImageUI>("RoomSelectImageUI", _content);
-            roomSelectImage.RoomData = Main.Get<GameManager>().PlayerRooms[i];
+            //roomSelectImage.RoomData = Main.Get<GameManager>().PlayerRooms[i];
             roomSelectImage.Owner = this;
             /*if (roomSelectImage.RoomData.isEquiped)
             {

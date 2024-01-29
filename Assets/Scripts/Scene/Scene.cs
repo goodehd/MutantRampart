@@ -32,4 +32,14 @@ public class Scene : MonoBehaviour
 
         return character;
     }
+
+    public RoomBehavior CreateRoom(string key)
+    {
+        GameObject obj = _resource.InstantiateWithPoolingOption($"{Literals.ROOM_PREFABS_PATH}{key}");
+        RoomBehavior room = Utility.GetAddComponent<RoomBehavior>(obj);
+
+        room.Init(_data.Room[key]);
+
+        return room;
+    }
 }

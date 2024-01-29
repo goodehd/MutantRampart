@@ -62,13 +62,13 @@ public class Shop_PopupUI : BaseUI
         ShopUnitItems.Add(Main.Get<DataManager>().Character["Jotem"]);
         ShopUnitItems.Add(Main.Get<DataManager>().Character["Warrior"]);
 
-        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["Forest"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["Igloo"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["Lava"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["LivingRoom"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["Molar"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["Snow"]);
-        ShopRoomItems.Add(Main.Get<DataManager>().roomDatas["Temple"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().Room["Forest"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().Room["Igloo"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().Room["Lava"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().Room["LivingRoom"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().Room["Molar"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().Room["Snow"]);
+        ShopRoomItems.Add(Main.Get<DataManager>().Room["Temple"]);
 
         // Shop - Unit Items
         for (int i = 0; i < ShopUnitItems.Count; i++)

@@ -49,7 +49,7 @@ public class Room : MonoBehaviour
             _origin[i] = this.transform.GetChild(i).GetComponent<TilemapRenderer>().material;
             _childObj[i] = this.transform.GetChild(i).gameObject;
         }
-        ThisRoomData = Main.Get<DataManager>().roomDatas[gameObject.name];
+        ThisRoomData = Main.Get<DataManager>().Room[gameObject.name];
 
         _isInitialized = true;
         return true;

@@ -9,7 +9,7 @@ public class DefaultTile : Room
         if (!base.Initialize()) return false;
 
         _roomStatus = EStatusformat.DefaultTile;
-        ThisRoomData = Main.Get<DataManager>().roomDatas["Default"];
+        ThisRoomData = Main.Get<DataManager>().Room["Default"];
         return true;
     }
 }
