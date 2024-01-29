@@ -22,6 +22,7 @@ public class DayMain_SceneUI : BaseUI
     private Button _settingButton;
     private Button _backButton;
     private Button _unitButton;
+    private Button _roomButton;
 
     private TextMeshProUGUI _playerMoneyText;
     private TextMeshProUGUI _stageText;
@@ -31,7 +32,7 @@ public class DayMain_SceneUI : BaseUI
     private RectTransform _categoryTransform;
     private RectTransform _placingPanelTransform;
 
-    private List<GameObject> _popUPUIList = new List<GameObject>();
+    private PocketBlock_PopupUI _pocketBlock;
 
     protected override void Init()
     {
@@ -56,6 +57,7 @@ public class DayMain_SceneUI : BaseUI
         _stageStartButton = GetUI<Button>("StageStartButton");
         _backButton = GetUI<Button>("BackButton");
         _unitButton = GetUI<Button>("UnitBtn");
+        _roomButton = GetUI<Button>("RoomBtn");
 
         SetUICallback(_shopButton.gameObject, EUIEventState.Click, ClickShopBtn);
         SetUICallback(_inventoryButton.gameObject, EUIEventState.Click, ClickInventoryBtn);
@@ -63,6 +65,7 @@ public class DayMain_SceneUI : BaseUI
         SetUICallback(_placingButton.gameObject, EUIEventState.Click, ClickPlacingBtn);
         SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickBackBtn);
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
+        SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
     }
 
     private void SetImage()
@@ -126,7 +129,31 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickUnitBtn(PointerEventData eventData)
     {
-        _ui.OpenPopup<PocketBlock_PopupUI>();
+        OpenPoketBlock(true);
+    }
+
+    private void ClickRoomBtn(PointerEventData eventData)
+    {
+        OpenPoketBlock(false);
+    }
+
+    private void OpenPoketBlock(bool isUint)
+    {
+        if (_pocketBlock == null)
+        {
+            _pocketBlock = _ui.OpenPopup<PocketBlock_PopupUI>();
+            _pocketBlock.IsUnit = isUint;
+        }
+        else if (_pocketBlock.IsUnit != isUint)
+        {
+            _pocketBlock.ToggleContents(isUint);
+            _pocketBlock.IsUnit = isUint;
+        }
+        else
+        {
+            _ui.ClosePopup();
+            _pocketBlock = null;
+        }
     }
 
     private void ClickBackBtn(PointerEventData eventData)
@@ -156,6 +183,10 @@ public class DayMain_SceneUI : BaseUI
                 _placingPanelTransform.gameObject.SetActive(false);
             });
         }
+
+        _ui.CloseAllPopup();
+        Main.Get<TileManager>().BatSlot.SetActive(false);
+        Main.Get<TileManager>().SelectRoom = null;
 
         Camera.main.DOOrthoSize(5f, 1.0f);
     }

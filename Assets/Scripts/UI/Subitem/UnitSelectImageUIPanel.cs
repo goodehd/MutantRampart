@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UnitSelectImageUI : BaseUI
+public class UnitSelectImageUIPanel : BaseUI
 {
     private Image _unitImage;
     private Image _collocateImage;

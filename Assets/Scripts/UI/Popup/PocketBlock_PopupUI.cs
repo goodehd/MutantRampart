@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PocketBlock_PopupUI : BaseUI
 {
     private GameManager player;
+    private TileManager tile;
 
     public Image _roomScroll;
     public Image _unitScroll; 
@@ -20,12 +21,15 @@ public class PocketBlock_PopupUI : BaseUI
     public TextMeshProUGUI _unitATKSpeed;
 
     private Transform _roomContent;
-    private Transform _unitContent; 
+    private Transform _unitContent;
+
+    public bool IsUnit { get; set; }
 
     protected override void Init()
     {
         base.Init();
         player = Main.Get<GameManager>();
+        tile = Main.Get<TileManager>();
 
         SetUI<Image>();
         SetUI<Transform>();
@@ -48,12 +52,19 @@ public class PocketBlock_PopupUI : BaseUI
         List<Character> playerUnits = player.playerUnits;
         for(int i = 0; i < playerUnits.Count; i++)
         {
-            UnitSelectImageUI charUI = _ui.CreateSubitem<UnitSelectImageUI>("UnitSelectImageUI", _unitContent.transform);
+            UnitSelectImageUIPanel charUI = _ui.CreateSubitem<UnitSelectImageUIPanel>("UnitSelectImageUIPanel", _unitContent.transform);
             charUI.CharacterData = playerUnits[i];
             charUI.Owner = this;
         }
 
-        _unitScroll.gameObject.SetActive(true);
+        if (IsUnit)
+        {
+            ToggleContents(true);
+        }
+        else
+        {
+            ToggleContents(false);
+        }
     }
 
     public void SetUintInfo(Character data)
@@ -63,5 +74,23 @@ public class PocketBlock_PopupUI : BaseUI
         _unitATK.text = $"ATK : {data.Status[EstatType.Damage].Value}";
         _unitDEF.text = $"DEF : {data.Status[EstatType.Defense].Value}";
         _unitATKSpeed.text = $"ATKSpeed : {data.Status[EstatType.AttackSpeed].Value}";
+    }
+
+    public void ToggleContents(bool isUint)
+    {
+        if(isUint)
+        {
+            tile.BatSlot.SetActive(true);
+            tile.BatSlot.transform.localPosition = new Vector3(tile.SelectRoom.transform.localPosition.x, 
+                tile.SelectRoom.transform.position.y + 0.25f, 2.5f);
+            _unitScroll.gameObject.SetActive(true);
+            _roomContent.gameObject.SetActive(false);
+        }
+        else
+        {
+            tile.BatSlot.SetActive(false);
+            _roomContent.gameObject.SetActive(true);
+            _unitScroll.gameObject.SetActive(false);
+        }
     }
 }

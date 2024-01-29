@@ -9,7 +9,8 @@ public class TileManager : IManagers
     private GameObject _gridObject;
 
     public SpawnTile SpawnTile { get; private set; }
-    public Room SelectRoom { get; set; }
+    public RoomBehavior SelectRoom { get; set; }
+    public GameObject BatSlot { get; set; }
 
     public void GenerateMap(int x, int y)
     {
@@ -52,6 +53,9 @@ public class TileManager : IManagers
         GameObject spawn = resource.InstantiateWithPoolingOption("Prefabs/Room/SpawnTile", _gridObject.transform);
         spawn.transform.position = new Vector3(-6f, 0, 0);
         SpawnTile = spawn.GetComponent<SpawnTile>();
+
+        BatSlot = resource.InstantiateWithPoolingOption("Prefabs/Room/BatPoint", _gridObject.transform);
+        BatSlot.SetActive(false);
     }
 
     public bool Init()

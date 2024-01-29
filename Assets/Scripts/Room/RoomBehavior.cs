@@ -65,9 +65,11 @@ public class RoomBehavior : MonoBehaviour
 
         ((DayMain_SceneUI)Main.Get<UIManager>().SceneUI).ActiveCategory();
 
-        //ChangeRoom_PopupUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoom_PopupUI>("ChangeRoom_PopUpUI");
-        //changeRoomUI.SelectRoom = this;
-        //changeRoomUI.RoomName = gameObject.name;
+        if(Main.Get<TileManager>().SelectRoom != this)
+        {
+            Main.Get<TileManager>().SelectRoom = this;
+            Main.Get<UIManager>().CloseAllPopup();
+        }
     }
 
     private void FocusCamera()
