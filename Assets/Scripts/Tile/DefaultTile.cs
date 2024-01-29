@@ -2,14 +2,11 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class DefaultTile : Room
+public class DefaultTile : RoomBehavior
 {
-    public override bool Initialize()
+    public override void Init(RoomData data)
     {
-        if (!base.Initialize()) return false;
-
-        _roomStatus = EStatusformat.DefaultTile;
-        ThisRoomData = Main.Get<DataManager>().Room["Default"];
-        return true;
+        base.Init(data);
     }
 }
+    

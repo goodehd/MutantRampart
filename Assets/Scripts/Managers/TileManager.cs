@@ -5,8 +5,6 @@ using UnityEngine;
 public class TileManager : IManagers
 {
     private ResourceManager resource;
-    private int _canBuildRoomCount;
-    private int _currentBuildRoomCount;
     private List<List<GameObject>> _roomObjList = new List<List<GameObject>>();
     private GameObject _gridObject;
 
@@ -14,21 +12,7 @@ public class TileManager : IManagers
     public int x = 3;
     public int y = 3;
 
-    /*
-    public bool isCanBuildRoom // 방을 설치할 수 있는 타일이 몇개인지에 대한 정보 
-    {
-        get
-        {
-            if (_currentBuildRoomCount <= _canBuildRoomCount)
-            {
-                _isCanBuildRoom = true;
-            }
-
-            return _isCanBuildRoom;
-        }
-    }
-
-*/
+   
     public void GenerateMap()
     {
         _gridObject = new GameObject("Tile");
@@ -57,18 +41,19 @@ public class TileManager : IManagers
             for (int j = 0; j < y; j++)
             {
                 offset.Set(3f * j, 1.5f * j);
-                GameObject obj = resource.InstantiateWithPoolingOption("Prefabs/Room/Default", _gridObject.transform);
+                GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
                 obj.transform.position = pos + offset;
+                obj.transform.parent = _gridObject.transform;
                 _roomObjList[i].Add(obj);
-                Room room = obj.GetComponent<Room>();
+                RoomBehavior room = obj.GetComponent<RoomBehavior>();
                 room.IndexX = i;
                 room.IndexY = j;
             }
         }
 
-        GameObject spwan = resource.InstantiateWithPoolingOption("Prefabs/Room/SpawnTile", _gridObject.transform);
-        spwan.transform.position = new Vector3(-6f, 0, 0);
-        SpawnTile = spwan.GetComponent<SpawnTile>();
+        GameObject spawn = resource.InstantiateWithPoolingOption("Prefabs/Room/SpawnTile", _gridObject.transform);
+        spawn.transform.position = new Vector3(-6f, 0, 0);
+        SpawnTile = spawn.GetComponent<SpawnTile>();
     }
 
     public bool Init()
