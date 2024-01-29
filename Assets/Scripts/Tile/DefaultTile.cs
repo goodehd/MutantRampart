@@ -6,7 +6,7 @@ public class DefaultTile : RoomBehavior
 {
     public override void Init(RoomData data)
     {
-        base.Init(data);
+        base.Init(Main.Get<DataManager>().Room["Default"]);
     }
 }
     

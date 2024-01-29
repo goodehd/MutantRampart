@@ -47,6 +47,8 @@ public class TileManager : IManagers
                 RoomBehavior room = obj.GetComponent<RoomBehavior>();
                 room.IndexX = i;
                 room.IndexY = j;
+                room.CurPosX = (int)obj.transform.position.x;
+                room.CurPosY = (int)obj.transform.position.y;
             }
         }
 
@@ -64,19 +66,40 @@ public class TileManager : IManagers
         return true;
     }
 
-    public Room ChangeRoom(int indexX, int indexY, string srcName)
+    public RoomBehavior ChangeRoom(int indexX, int indexY, ThisRoom changeRoom)
     {
         Vector3 pos = _roomObjList[indexX][indexY].transform.position;
         resource.Destroy(_roomObjList[indexX][indexY].gameObject);
 
-        GameObject obj = resource.InstantiateWithPoolingOption($"Prefabs/Room/{srcName}", _gridObject.transform);
+        GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"{changeRoom.Data.Key}");
         obj.transform.position = pos;
+        obj.transform.parent = _gridObject.transform;
         _roomObjList[indexX][indexY] = obj;
 
-        Room room = obj.GetComponent<Room>();
+        RoomBehavior room = obj.GetComponent<RoomBehavior>();
         room.IndexX = indexX;
         room.IndexY = indexY;
+        room.CurPosX = (int)pos.x;
+        room.CurPosY = (int)pos.y;
+        room.RoomInfo = changeRoom;
+        return room;
+    }
 
+    public RoomBehavior ChangeRoomToDefault(int indexX, int indexY)
+    {
+        Vector3 pos = _roomObjList[indexX][indexY].transform.position;
+        resource.Destroy(_roomObjList[indexX][indexY].gameObject);
+
+        GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"Default");
+        obj.transform.position = pos;
+        obj.transform.parent = _gridObject.transform;
+        _roomObjList[indexX][indexY] = obj;
+
+        RoomBehavior room = obj.GetComponent<RoomBehavior>();
+        room.IndexX = indexX;
+        room.IndexY = indexY;
+        room.CurPosX = (int)pos.x;
+        room.CurPosY = (int)pos.y;
         return room;
     }
 

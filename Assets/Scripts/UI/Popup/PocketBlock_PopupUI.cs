@@ -50,11 +50,20 @@ public class PocketBlock_PopupUI : BaseUI
         _unitATKSpeed = GetUI<TextMeshProUGUI>("UnitAtkSpeedTxt");
 
         List<Character> playerUnits = player.playerUnits;
+        List<ThisRoom> playerRooms = player.PlayerRooms;
+
         for(int i = 0; i < playerUnits.Count; i++)
         {
             UnitSelectImageUIPanel charUI = _ui.CreateSubitem<UnitSelectImageUIPanel>("UnitSelectImageUIPanel", _unitContent.transform);
             charUI.CharacterData = playerUnits[i];
             charUI.Owner = this;
+        }
+        
+        for(int i = 0; i < playerRooms.Count; i++)
+        {
+            RoomSelectImageUI roomSelectImage = _ui.CreateSubitem<RoomSelectImageUI>("RoomSelectImageUI", _roomContent.transform);
+            roomSelectImage.Room = Main.Get<GameManager>().PlayerRooms[i];
+            roomSelectImage.Owner = this;
         }
 
         if (IsUnit)
@@ -84,12 +93,12 @@ public class PocketBlock_PopupUI : BaseUI
             tile.BatSlot.transform.localPosition = new Vector3(tile.SelectRoom.transform.localPosition.x, 
                 tile.SelectRoom.transform.position.y + 0.25f, 2.5f);
             _unitScroll.gameObject.SetActive(true);
-            _roomContent.gameObject.SetActive(false);
+            _roomScroll.gameObject.SetActive(false);
         }
         else
         {
             tile.BatSlot.SetActive(false);
-            _roomContent.gameObject.SetActive(true);
+            _roomScroll.gameObject.SetActive(true);
             _unitScroll.gameObject.SetActive(false);
         }
     }
