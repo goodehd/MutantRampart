@@ -22,12 +22,21 @@ public class EnemyAttackState : BaseState
 
     public override void ExitState()
     {
-        CoroutineManagement.Instance.StopCoroutine(_coroutine);
+        StopCoroutine();
     }
 
     public override void UpdateState()
     {
 
+    }
+
+    public override void StopCoroutine()
+    {
+        if (_coroutine != null)
+        {
+            CoroutineManagement.Instance.StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
     }
 
     private void AttackStart()
@@ -37,27 +46,29 @@ public class EnemyAttackState : BaseState
 
     private IEnumerator Attack()
     {
-        CharacterBehaviour target = SetAttackTartget();
-
-        if( target == null)
+        while (true)
         {
-            if(tileManager.GetRoom(Owner.CurPosX, Owner.CurPosY).GetComponent<Room>().isEndPoint)
+            CharacterBehaviour target = SetAttackTartget();
+
+            if (target == null)
             {
-                Owner.StateMachine.ChangeState(EState.Dead);
-                Main.Get<GameManager>().PlayerHp--;
+                if (tileManager.GetRoom(Owner.CurPosX, Owner.CurPosY).GetComponent<RoomBehavior>().isEndPoint)
+                {
+                    Owner.StateMachine.ChangeState(EState.Dead);
+                    Main.Get<GameManager>().PlayerHp--;
+                }
+                else
+                {
+                    Owner.StateMachine.ChangeState(EState.Move);
+                }
+                yield break;
             }
-            else
-            {
-                Owner.StateMachine.ChangeState(EState.Move);
-            }
-            yield break;
+
+            Owner.Animator.SetTrigger(Literals.Attack);
+            target.Status.GetStat<Vital>(EstatType.Hp).CurValue -= Owner.Status[EstatType.Damage].Value;
+
+            yield return new WaitForSeconds(1 / Owner.Status[EstatType.AttackSpeed].Value);
         }
-
-        Owner.Animator.SetTrigger(Literals.Attack);
-        target.Status.GetStat<Vital>(EstatType.Hp).CurValue -= Owner.Status[EstatType.Damage].Value;
-
-        yield return new WaitForSeconds(1 / Owner.Status[EstatType.AttackSpeed].Value);
-        AttackStart();
     }
 
     private CharacterBehaviour SetAttackTartget()

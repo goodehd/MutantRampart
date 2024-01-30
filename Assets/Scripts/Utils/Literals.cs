@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -19,4 +20,21 @@ public static class Literals
     public static readonly int Move = Animator.StringToHash("IsMove");
     public static readonly int Attack = Animator.StringToHash("IsAttack");
     public static readonly int Dead = Animator.StringToHash("IsDead");
+
+    public static readonly List<Vector3> BatPos = new List<Vector3>
+    {
+        new Vector3(-0.1f, 2.3f, 3.0f),
+        new Vector3(0.4f, 2.05f, 3.0f),
+        new Vector3(0.9f, 1.8f, 3.0f)
+    };
+
+    public static readonly List<Vector3> EnemyPos = new List<Vector3>
+    {
+        new Vector3(-1.1f, 1.8f, 3.0f),
+        new Vector3(-0.85f, 1.65f, 3.0f),
+        new Vector3(-0.6f, 1.6f, 3.0f),
+        new Vector3(-0.4f, 1.4f, 3.0f),
+        new Vector3(-0.15f, 1.25f, 3.0f),
+        new Vector3(0.12f, 1.1f, 3.0f)
+    };
 }
