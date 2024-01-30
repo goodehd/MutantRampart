@@ -57,4 +57,11 @@ public class CharacterBehaviour : MonoBehaviour
             StateMachine.ChangeState(EState.Dead);
         }
     }
+
+    public void ResetCharacter()
+    {
+        CharacterInfo.IsDead = false;
+        Status.GetStat<Vital>(EstatType.Hp).SetCurValueMax();
+        StateMachine.ChangeState(EState.Idle);
+    }
 }

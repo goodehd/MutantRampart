@@ -110,7 +110,7 @@ public class BatRoom : RoomBehavior
             if (Units[i] != null)
             {
                 Units[i].gameObject.SetActive(true);
-                Units[i].Status.GetStat<Vital>(EstatType.Hp).CurValue = Units[i].Status.GetStat<Vital>(EstatType.Hp).Value;
+                Units[i].ResetCharacter();
                 count++;
             }
         }
