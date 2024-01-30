@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class DayMain_SceneUI : BaseUI
     private Image _buttonsPanel;
     private Image _categoryPanel;
     private Image _placingPanel;
+    private Image _hpPanel;
 
     private Button _shopButton;
     private Button _placingButton;
@@ -31,8 +33,11 @@ public class DayMain_SceneUI : BaseUI
     private List<RectTransform> _upMoveUIList = new List<RectTransform>();
     private RectTransform _categoryTransform;
     private RectTransform _placingPanelTransform;
+    private RectTransform _backBtnTransform;
 
     private PocketBlock_PopupUI _pocketBlock;
+
+    private Stack<Action> _btnActions = new Stack<Action>();
 
     protected override void Init()
     {
@@ -79,6 +84,7 @@ public class DayMain_SceneUI : BaseUI
         _buttonsPanel = GetUI<Image>("ButtonPosBlock");
         _categoryPanel = GetUI<Image>("CategoryBlock");
         _placingPanel = GetUI<Image>("PlacingPanel");
+        _hpPanel = GetUI<Image>("HPBlock");
 
         _categoryPanel.gameObject.SetActive(false);
     }
@@ -97,14 +103,15 @@ public class DayMain_SceneUI : BaseUI
     {
         _downMoveUIList.Add(_buttonsPanel.GetComponent<RectTransform>());
         _downMoveUIList.Add(_stageStartButton.GetComponent<RectTransform>());
-        _downMoveUIList.Add(_backButton.GetComponent<RectTransform>());
 
         _upMoveUIList.Add(_stageImagePanel.GetComponent<RectTransform>());
         _upMoveUIList.Add(_playerMoneyImage.GetComponent<RectTransform>());
         _upMoveUIList.Add(_settingButton.GetComponent<RectTransform>());
+        _upMoveUIList.Add(_hpPanel.GetComponent<RectTransform>());
 
         _categoryTransform = _categoryPanel.GetComponent<RectTransform>();
         _placingPanelTransform = _placingPanel.GetComponent<RectTransform>();
+        _backBtnTransform = _backButton.GetComponent<RectTransform>();
     }
 
     private void UpdateMoneyText(int amount)
@@ -159,70 +166,124 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickBackBtn(PointerEventData eventData)
     {
-        _backPanel.gameObject.SetActive(true);
-
-        foreach (var rect in _downMoveUIList)
-        {
-            rect.DOAnchorPosY(rect.anchoredPosition.y + 220f, 0.5f);
-        }
-
-        foreach (var rect in _upMoveUIList)
-        {
-            rect.DOAnchorPosY(rect.anchoredPosition.y - 200f, 0.5f);
-        }
-
-        if (_categoryPanel.gameObject.activeSelf)
-        {
-            _categoryTransform.DOAnchorPosX(_categoryTransform.anchoredPosition.x + 200f, 0.5f).OnComplete(() => {
-                _categoryPanel.gameObject.SetActive(false);
-            });
-        }
-
-        if (_placingPanel.gameObject.activeSelf)
-        {
-            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.5f).OnComplete(() => {
-                _placingPanelTransform.gameObject.SetActive(false);
-            });
-        }
-
-        _ui.CloseAllPopup();
-        Main.Get<TileManager>().BatSlot.SetActive(false);
-        Main.Get<TileManager>().SelectRoom = null;
-
-        Camera.main.DOOrthoSize(5f, 1.0f);
+        if(_btnActions.Count >= 1)
+            _btnActions.Pop().Invoke();
     }
 
     private void ClickPlacingBtn(PointerEventData eventData)
     {
-        _backPanel.gameObject.SetActive(false);
+        ClickPlacing();
+        _btnActions.Push(ClickPlacing);
+    }
 
-        foreach(var rect in _downMoveUIList)
+    public void TileBat()
+    {
+        SetTileBatUI();
+
+        if (_btnActions.Peek() != SetTileBatUI)
+            _btnActions.Push(SetTileBatUI);
+    }
+
+    public void SetTileBatUI()
+    {
+        if (_btnActions.Peek() == SetTileBatUI)
+            return;
+
+        ActiveCategory();
+        PlacingPanel();
+        _ui.CloseAllPopup();
+    }
+
+    private void ClickPlacing()
+    {
+        _backPanel.gameObject.SetActive(!_backPanel.gameObject.activeSelf);
+        UpMoveUI();
+        DownMoveUI();
+        PlacingPanel();
+    }
+
+    #region UIDOTween
+
+    private void UpMoveUI()
+    {
+        if (_upMoveUIList.Count == 0)
+            return;
+
+        if (_upMoveUIList[0].gameObject.activeSelf)
         {
-            rect.DOAnchorPosY(rect.anchoredPosition.y - 220f, 0.5f);
+            foreach (var rect in _upMoveUIList)
+            {
+                rect.DOAnchorPosY(rect.anchoredPosition.y + 240f, 0.3f).OnComplete(() => {
+                    rect.gameObject.SetActive(false);
+                });
+            }
         }
-
-        foreach (var rect in _upMoveUIList)
+        else
         {
-            rect.DOAnchorPosY(rect.anchoredPosition.y + 200f, 0.5f);
-        }
-
-        if(!_placingPanel.gameObject.activeSelf)
-        {
-            _placingPanel.gameObject.SetActive(true);
-            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y + 220f, 0.5f);
+            foreach (var rect in _upMoveUIList)
+            {
+                rect.gameObject.SetActive(true);
+                rect.DOAnchorPosY(rect.anchoredPosition.y - 240f, 0.3f);
+            }
         }
     }
 
-    public void ActiveCategory()
+    private void DownMoveUI()
+    {
+        if (_downMoveUIList.Count == 0)
+            return;
+
+        if(_downMoveUIList[0].gameObject.activeSelf)
+        {
+            foreach (var rect in _downMoveUIList)
+            {
+                rect.DOAnchorPosY(rect.anchoredPosition.y - 220f, 0.3f).OnComplete(() => {
+                    rect.gameObject.SetActive(false);
+                }); ;
+            }
+            _backBtnTransform.DOAnchorPosY(_backBtnTransform.anchoredPosition.y - 220f, 0.3f);
+        }
+        else
+        {
+            foreach (var rect in _downMoveUIList)
+            {
+                rect.gameObject.SetActive(true);
+                rect.DOAnchorPosY(rect.anchoredPosition.y + 220f, 0.3f);
+            }
+            _backBtnTransform.DOAnchorPosY(_backBtnTransform.anchoredPosition.y + 220f, 0.3f);
+        }
+    }
+
+    private void PlacingPanel()
+    {
+        if (!_placingPanel.gameObject.activeSelf)
+        {
+            _placingPanel.gameObject.SetActive(true);
+            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y + 220f, 0.3f);
+        }
+        else
+        {
+            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.3f).OnComplete(() => {
+                _placingPanelTransform.gameObject.SetActive(false);
+            });
+        }
+    }
+
+    private void ActiveCategory()
     {
         if (!_categoryPanel.gameObject.activeSelf)
         {
             _categoryPanel.gameObject.SetActive(true);
-
-            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.5f).OnComplete(() => {
-                _placingPanelTransform.gameObject.SetActive(false);
+            _categoryTransform.DOAnchorPosX(_categoryTransform.anchoredPosition.x - 200f, 0.4f);
+            Camera.main.DOOrthoSize(2.5f, 0.5f);
+        }
+        else
+        {
+            _categoryTransform.DOAnchorPosX(_categoryTransform.anchoredPosition.x + 200f, 0.4f).OnComplete(() => {
+                _categoryPanel.gameObject.SetActive(false);
             });
-            _categoryTransform.DOAnchorPosX(_categoryTransform.anchoredPosition.x - 200f, 0.5f);
+            Camera.main.DOOrthoSize(5f, 1.0f);
         }
     }
+    #endregion
 }

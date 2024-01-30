@@ -90,7 +90,7 @@ public class Room : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject()) return;
         FocusCamera();
 
-        ((DayMain_SceneUI)Main.Get<UIManager>().SceneUI).ActiveCategory();
+        //((DayMain_SceneUI)Main.Get<UIManager>().SceneUI).ActiveCategory();
 
 
         //ChangeRoom_PopupUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoom_PopupUI>("ChangeRoom_PopUpUI");

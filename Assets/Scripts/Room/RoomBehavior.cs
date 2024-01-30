@@ -70,7 +70,7 @@ public class RoomBehavior : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject()) return;
         FocusCamera();
 
-        ((DayMain_SceneUI)Main.Get<UIManager>().SceneUI).ActiveCategory();
+        ((DayMain_SceneUI)Main.Get<UIManager>().SceneUI).TileBat();
 
         if(Main.Get<TileManager>().SelectRoom != this)
         {
@@ -83,7 +83,7 @@ public class RoomBehavior : MonoBehaviour
     {
         Vector3 pos = new Vector3(transform.position.x + 1.5f, transform.position.y + 1.8f, Camera.main.transform.position.z);
         Camera.main.transform.DOMove(pos, 0.5f);
-        Camera.main.DOOrthoSize(2.5f, 0.5f);
+        Main.Get<TileManager>().BatSlot.SetActive(false);
     }
 
     public void RemoveEnemy(CharacterBehaviour src)
