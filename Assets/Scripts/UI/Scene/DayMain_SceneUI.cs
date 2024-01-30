@@ -34,6 +34,8 @@ public class DayMain_SceneUI : BaseUI
 
     private PocketBlock_PopupUI _pocketBlock;
 
+    public CameraMovement maincamera;
+
     protected override void Init()
     {
         base.Init();
@@ -42,6 +44,7 @@ public class DayMain_SceneUI : BaseUI
         SetImage();
         SetText();
         SetMoveUI();
+        maincamera = Camera.main.GetComponent<CameraMovement>();
 
         Main.Get<GameManager>().OnChangeMoney += UpdateMoneyText;
     }
@@ -124,6 +127,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickStageStartBtn(PointerEventData eventData)
     {
+        if(!Main.Get<GameManager>().isHomeSet)return; //아 이걸 어따놓지
         Main.Get<StageManager>().StartStage();
     }
 
@@ -161,6 +165,7 @@ public class DayMain_SceneUI : BaseUI
     {
         _backPanel.gameObject.SetActive(true);
 
+
         foreach (var rect in _downMoveUIList)
         {
             rect.DOAnchorPosY(rect.anchoredPosition.y + 220f, 0.5f);
@@ -173,30 +178,31 @@ public class DayMain_SceneUI : BaseUI
 
         if (_categoryPanel.gameObject.activeSelf)
         {
-            _categoryTransform.DOAnchorPosX(_categoryTransform.anchoredPosition.x + 200f, 0.5f).OnComplete(() => {
+            _categoryTransform.DOAnchorPosX(_categoryTransform.anchoredPosition.x + 200f, 0.5f).OnComplete(() =>
+            {
                 _categoryPanel.gameObject.SetActive(false);
             });
         }
 
         if (_placingPanel.gameObject.activeSelf)
         {
-            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.5f).OnComplete(() => {
-                _placingPanelTransform.gameObject.SetActive(false);
-            });
+            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.5f)
+                .OnComplete(() => { _placingPanelTransform.gameObject.SetActive(false); });
         }
-
+        
         _ui.CloseAllPopup();
         Main.Get<TileManager>().BatSlot.SetActive(false);
         Main.Get<TileManager>().SelectRoom = null;
 
         Camera.main.DOOrthoSize(5f, 1.0f);
+        maincamera.isOnPlacingPanel = false;
     }
 
     private void ClickPlacingBtn(PointerEventData eventData)
     {
         _backPanel.gameObject.SetActive(false);
 
-        foreach(var rect in _downMoveUIList)
+        foreach (var rect in _downMoveUIList)
         {
             rect.DOAnchorPosY(rect.anchoredPosition.y - 220f, 0.5f);
         }
@@ -206,9 +212,22 @@ public class DayMain_SceneUI : BaseUI
             rect.DOAnchorPosY(rect.anchoredPosition.y + 200f, 0.5f);
         }
 
-        if(!_placingPanel.gameObject.activeSelf)
+        if (!_placingPanel.gameObject.activeSelf)
         {
             _placingPanel.gameObject.SetActive(true);
+            maincamera.isOnPlacingPanel = true;
+            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y + 220f, 0.5f);
+        }
+    }
+
+    private void ClickPlacingBtn2(PointerEventData eventData)
+    {
+        _backPanel.gameObject.SetActive(false);
+
+        if (!_placingPanel.gameObject.activeSelf)
+        {
+            _placingPanel.gameObject.SetActive(true);
+            maincamera.isOnPlacingPanel = true;
             _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y + 220f, 0.5f);
         }
     }
@@ -219,7 +238,8 @@ public class DayMain_SceneUI : BaseUI
         {
             _categoryPanel.gameObject.SetActive(true);
 
-            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.5f).OnComplete(() => {
+            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.5f).OnComplete(() =>
+            {
                 _placingPanelTransform.gameObject.SetActive(false);
             });
             _categoryTransform.DOAnchorPosX(_categoryTransform.anchoredPosition.x - 200f, 0.5f);

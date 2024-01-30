@@ -19,7 +19,6 @@ public class StageManager : IManagers
 
     private bool _isStageStart = false;
     private int _curStage = 0;
-    public event Action OnStageClear; 
     
     public bool Init()
     {
@@ -32,6 +31,8 @@ public class StageManager : IManagers
 
     public void StartStage()
     {
+        
+        
         if (_curStage >= _stages.Count)
             return;
 

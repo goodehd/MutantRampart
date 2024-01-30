@@ -1251,7 +1251,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.078125, y: 0.5185938, z: 0}
+  m_ChunkCullingBounds: {x: 0.078125, y: 0.5121875, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 3
@@ -1395,7 +1395,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed071069ff7def459bf950f2833baf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildAvailable: {fileID: 2100000, guid: 6312956a193c58b4a8a2c43bb7596cba, type: 2}
-  _buildNotAvailable: {fileID: 2100000, guid: 5d0d5465d6d70c748adb74eb7f6e5f2f, type: 2}
-  isEquipedRoom: 0
-  _unitPos: {fileID: 0}
+  tilemap:
+  - {fileID: 0}
+  - {fileID: 0}
