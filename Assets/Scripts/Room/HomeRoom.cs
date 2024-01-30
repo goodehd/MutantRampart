@@ -6,17 +6,17 @@ public class HomeRoom : BatRoom
 {
     public int damageAmount = 10;
 
-    public override bool Initialize()
-    {
-        if (!base.Initialize()) return false;
+    //public override bool Initialize()
+    //{
+    //    if (!base.Initialize()) return false;
 
-        isEndPoint = true;
+    //    isEndPoint = true;
 
-        return true;
-    }
+    //    return true;
+    //}
 
-    public override void EnemyEnterRoom(GameObject g)
-    {
-        base.EnemyEnterRoom(g);
-    }
+    //public override void EnemyEnterRoom(GameObject g)
+    //{
+    //    base.EnemyEnterRoom(g);
+    //}
 }

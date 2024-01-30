@@ -62,7 +62,7 @@ public class Room : MonoBehaviour
         CharacterBehaviour enemy = g.GetComponent<CharacterBehaviour>();
         enemy.CurPosX = this.IndexX;
         enemy.CurPosY = this.IndexY;
-        enemy.CurRoom = this;
+        //enemy.CurRoom = this;
     }
     protected virtual void OnMouseEnter()
     {

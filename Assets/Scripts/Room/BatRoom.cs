@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public class BatRoom : Room
+public class BatRoom : RoomBehavior
 {
     private enum EBatType
     {
@@ -18,31 +19,25 @@ public class BatRoom : Room
     
     private EBatType _batType;
     public CharacterBehaviour[] Units { get; private set; } = new CharacterBehaviour[3];
-    public int UnitCount {  get; set; } 
+    public int UnitCount { get; set; } 
 
-    public override bool Initialize()
+    public override void Init(RoomData data)
     {
-        if (!base.Initialize()) return false;
+        base.Init(data);
 
-        _roomStatus = EStatusformat.Bat;
-        OnEnemyEnterRoom += EnemyEnterRoom;
         _batType = Enum.Parse<EBatType>(this.gameObject.name);
         UnitCount = 0;
-
-        return true;
     }
 
-    public override void EnemyEnterRoom(GameObject g)
+    public override void EnterRoom(Enemy enemy)
     {
-        base.EnemyEnterRoom(g);
+        base.EnterRoom(enemy);
 
         if (UnitCount > 0)
         {
-            CharacterBehaviour enemy = g.GetComponent<CharacterBehaviour>();
             enemy.Renderer.flipX = false;
             enemy.StateMachine.ChangeState(EState.Attack);
-            enemy.transform.position = new Vector3(transform.position.x - Enemys.Count * 0.2f, 
-                transform.position.y + 1.5f + Enemys.Count * 0.2f, g.transform.position.z);
+            enemy.transform.position = Literals.EnemyPos[Enemys.Count % 6] + transform.position;
             Enemys.AddLast(enemy);
 
             foreach (CharacterBehaviour unit in Units)
@@ -56,28 +51,54 @@ public class BatRoom : Room
         }
     }
 
-    public void CreateUnit(int slotIndex, Character data)
+    public bool CreateUnit(Character data)
     {
-        if (Units[slotIndex] != null)
+        if (UnitCount >= RoomInfo.Data.MaxUnitCount)
+            return false;
+
+        int index = 0;
+        for( ; index < Units.Length; index++)
         {
-            DeleteUnit(slotIndex);
+            if (Units[index] == null)
+                break;
         }
 
-        Units[slotIndex] = Main.Get<SceneManager>().Scene.CreateCharacter(data.Data.Key);
-        Units[slotIndex].SetData(data);
-        
-        Units[slotIndex].transform.position = new Vector3(transform.position.x + 1f, transform.position.y + 2f, 3.0f);
-        Units[slotIndex].CurRoom = this;
+        Units[index] = Main.Get<SceneManager>().Scene.CreateCharacter(data.Data.Key);
+        Units[index].SetData(data);
+        Units[index].CurRoom = this;
+        Units[index].transform.position = Literals.BatPos[index] + transform.position;
         UnitCount++;
+
+        return true;
     }
 
-    public void DeleteUnit(int slotIndex)
+    public void DeleteUnit(Character data)
     {
-        Units[slotIndex].CurRoom = null;
+        for(int i = 0; i < Units.Length; i++)
+        {
+            if (Units[i] == null)
+                continue;
 
-        Main.Get<ResourceManager>().Destroy(Units[slotIndex].gameObject);
-        Units[slotIndex] = null;
-        UnitCount--;
+            if (Units[i].CharacterInfo == data)
+            {
+                Units[i].CharacterInfo.CurRoom = null;
+                Main.Get<ResourceManager>().Destroy(Units[i].gameObject);
+                UnitCount--;
+            }
+        }
+    }
+
+    public void DeleteAllUnit()
+    {
+        for (int i = 0; i < Units.Length; i++)
+        {
+            if (Units[i] != null)
+            {
+                Units[i].CharacterInfo.CurRoom = null;
+                Main.Get<ResourceManager>().Destroy(Units[i].gameObject);
+                UnitCount = 0;
+            }
+        }
     }
 
     private void BuffUnitRoomEBat(Character data)

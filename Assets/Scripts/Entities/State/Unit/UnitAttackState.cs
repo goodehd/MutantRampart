@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class UnitAttackState : BaseState
 {
@@ -24,7 +22,16 @@ public class UnitAttackState : BaseState
 
     public override void ExitState()
     {
-        CoroutineManagement.Instance.StopCoroutine(_coroutine);
+        StopCoroutine();
+    }
+
+    public override void StopCoroutine()
+    {
+        if(_coroutine != null)
+        {
+            CoroutineManagement.Instance.StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
     }
 
     public override void UpdateState()
@@ -40,21 +47,37 @@ public class UnitAttackState : BaseState
 
     private IEnumerator Attack()
     {
-        if(_targets.Count == 0)
+        while (true)
         {
-            Owner.StateMachine.ChangeState(EState.Idle);
-            yield break;
-        }
+            CharacterBehaviour target = SetTartget();
 
-        if(Owner == null)
+            if (target == null)
+            {
+                Owner.StateMachine.ChangeState(EState.Idle);
+                yield break;
+            }
+
+            if (Owner == null)
+            {
+                yield break;
+            }
+
+            Owner.Animator.SetTrigger(Literals.Attack);
+            target.Status.GetStat<Vital>(EstatType.Hp).CurValue -= Owner.Status[EstatType.Damage].Value;
+
+            yield return new WaitForSeconds(1 / Owner.Status[EstatType.AttackSpeed].Value);
+        }
+    }
+
+    private CharacterBehaviour SetTartget()
+    {
+        foreach (CharacterBehaviour t in _targets)
         {
-            yield break;
+            if(!t.CharacterInfo.IsDead)
+            {
+                return t;
+            }
         }
-
-        Owner.Animator.SetTrigger(Literals.Attack);
-        _targets.First.Value.Status.GetStat<Vital>(EstatType.Hp).CurValue -= Owner.Status[EstatType.Damage].Value;
-
-        yield return new WaitForSeconds(1 / Owner.Status[EstatType.AttackSpeed].Value);
-        AttackStart();
+        return null;
     }
 }

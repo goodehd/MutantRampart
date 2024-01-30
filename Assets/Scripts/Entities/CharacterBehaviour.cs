@@ -12,7 +12,7 @@ public class CharacterBehaviour : MonoBehaviour
     public CharacterStatus Status { get { return CharacterInfo.Status; } }
     public int CurPosX { get { return CharacterInfo.CurPosX ; } set { CharacterInfo.CurPosX = value; } }
     public int CurPosY { get { return CharacterInfo.CurPosY; } set { CharacterInfo.CurPosY = value; } }
-    public Room CurRoom { get { return CharacterInfo.CurRoom; } set { CharacterInfo.CurRoom = value; } }
+    public RoomBehavior CurRoom { get { return CharacterInfo.CurRoom; } set { CharacterInfo.CurRoom = value; } }
 
     private bool _initialize = false;
 

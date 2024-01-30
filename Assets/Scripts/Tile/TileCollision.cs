@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class TileCollision : MonoBehaviour
 {
-    private Room _owner;
+    private RoomBehavior _owner;
 
     void Start()
     {
-        _owner = transform.parent.GetComponent<Room>();
+        _owner = transform.parent.GetComponent<RoomBehavior>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.CompareTag("Enemy") && EnterNewRoom(collision.gameObject))
         {
-            _owner.EnemyEnterRoom(collision.gameObject);
+            _owner.EnterRoom(collision.gameObject.GetComponent<Enemy>());
         }
     }
 
