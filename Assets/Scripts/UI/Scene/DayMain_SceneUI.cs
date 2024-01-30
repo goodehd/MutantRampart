@@ -34,6 +34,8 @@ public class DayMain_SceneUI : BaseUI
 
     private PocketBlock_PopupUI _pocketBlock;
 
+    public bool isInventOpen { get; set; }
+
     protected override void Init()
     {
         base.Init();
@@ -119,7 +121,16 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickInventoryBtn(PointerEventData eventData)
     {
-        _ui.OpenPopup<Inventory_PopupUI>("Inventory_PopupUI");
+        if (isInventOpen) // 인벤토리 열려있으면 버튼 작동 안 하게끔
+        {
+            return;
+        }
+        else if (!isInventOpen)
+        {
+            Inventory_PopupUI ui = _ui.OpenPopup<Inventory_PopupUI>("Inventory_PopupUI");
+            ui.Owner = this;
+            isInventOpen = true;
+        }
     }
 
     private void ClickStageStartBtn(PointerEventData eventData)
@@ -173,14 +184,16 @@ public class DayMain_SceneUI : BaseUI
 
         if (_categoryPanel.gameObject.activeSelf)
         {
-            _categoryTransform.DOAnchorPosX(_categoryTransform.anchoredPosition.x + 200f, 0.5f).OnComplete(() => {
+            _categoryTransform.DOAnchorPosX(_categoryTransform.anchoredPosition.x + 200f, 0.5f).OnComplete(() =>
+            {
                 _categoryPanel.gameObject.SetActive(false);
             });
         }
 
         if (_placingPanel.gameObject.activeSelf)
         {
-            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.5f).OnComplete(() => {
+            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.5f).OnComplete(() =>
+            {
                 _placingPanelTransform.gameObject.SetActive(false);
             });
         }
@@ -196,7 +209,7 @@ public class DayMain_SceneUI : BaseUI
     {
         _backPanel.gameObject.SetActive(false);
 
-        foreach(var rect in _downMoveUIList)
+        foreach (var rect in _downMoveUIList)
         {
             rect.DOAnchorPosY(rect.anchoredPosition.y - 220f, 0.5f);
         }
@@ -206,7 +219,7 @@ public class DayMain_SceneUI : BaseUI
             rect.DOAnchorPosY(rect.anchoredPosition.y + 200f, 0.5f);
         }
 
-        if(!_placingPanel.gameObject.activeSelf)
+        if (!_placingPanel.gameObject.activeSelf)
         {
             _placingPanel.gameObject.SetActive(true);
             _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y + 220f, 0.5f);
@@ -219,7 +232,8 @@ public class DayMain_SceneUI : BaseUI
         {
             _categoryPanel.gameObject.SetActive(true);
 
-            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.5f).OnComplete(() => {
+            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.5f).OnComplete(() =>
+            {
                 _placingPanelTransform.gameObject.SetActive(false);
             });
             _categoryTransform.DOAnchorPosX(_categoryTransform.anchoredPosition.x - 200f, 0.5f);

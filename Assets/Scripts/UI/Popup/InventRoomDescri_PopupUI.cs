@@ -20,6 +20,10 @@ public class InventRoomDescri_PopupUI : BaseUI
 
     public ThisRoom RoomData { get; set; }
 
+    public InventRoom_ContentsBtnUI Owner { get; set; }
+
+    //public bool isOpen { get; set; }
+
     protected override void Init()
     {
         SetUI<Button>();
@@ -55,7 +59,8 @@ public class InventRoomDescri_PopupUI : BaseUI
     private void ClickCloseBtn(PointerEventData EventData)
     {
         Main.Get<UIManager>().ClosePopup();
-        
+        Owner._equipCheckImg.gameObject.SetActive(false);
+        Owner.isRoomContentPressed = false;
     }
 
     private void ClickUpgradeBtn(PointerEventData EventData)

@@ -17,7 +17,7 @@ public class Inventory_PopupUI : BaseUI
 
     private Transform _inventRoomContent;
     private Transform _inventUnitContent;
-   
+
     //private TMP_Text _inventItemNameTxt;
     //private TMP_Text _inventItemDescriTxt;
 
@@ -30,6 +30,7 @@ public class Inventory_PopupUI : BaseUI
     //public string _selectItemNameTxt { get; set; }
     //public string _selectItemDescriTxt { get; set; }
 
+    public DayMain_SceneUI Owner { get; set; }
 
     protected override void Init()
     {
@@ -47,7 +48,7 @@ public class Inventory_PopupUI : BaseUI
         SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickBackBtn);
         SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
-        SetUICallback(_closeBtn.gameObject, EUIEventState.Click, ClickBackBtn);
+        SetUICallback(_closeBtn.gameObject, EUIEventState.Click, ClickCloseBtn);
 
         _inventRoomScrollView = GetUI<ScrollRect>("InventRoom_Scroll View");
         _inventUnitScrollView = GetUI<ScrollRect>("InventUnit_Scroll View");
@@ -75,7 +76,7 @@ public class Inventory_PopupUI : BaseUI
     {
         // unit
         List<Character> playerUnits = Main.Get<GameManager>().playerUnits;
-        foreach (Transform item in _inventUnitContent.transform) // todo : 이건 무슨의미일까 ? 초기화 관련한걸까 ?
+        foreach (Transform item in _inventUnitContent.transform) // todo : 초기화 관련 ?
         {
             Destroy(item.gameObject);
         }
@@ -83,7 +84,7 @@ public class Inventory_PopupUI : BaseUI
         {
             InventUnit_ContentsBtnUI inventUnitItems = Main.Get<UIManager>().CreateSubitem<InventUnit_ContentsBtnUI>("InventUnit_ContentsBtnUI", _inventUnitContent);
             inventUnitItems.UnitData = playerUnits[i];
-            //inventUnitItems.Owner = this;
+            //inventUnitItems.inventoryPopupUIOwner = this;
         }
     }
 
@@ -105,7 +106,9 @@ public class Inventory_PopupUI : BaseUI
 
     private void ClickBackBtn(PointerEventData EventData)
     {
-        Main.Get<UIManager>().ClosePopup();
+        Main.Get<UIManager>().CloseAllPopup();
+        Owner.isInventOpen = false;
+
     }
 
     private void ClickRoomBtn(PointerEventData EventData)
@@ -120,6 +123,12 @@ public class Inventory_PopupUI : BaseUI
         _inventRoomScrollView.gameObject.SetActive(false);
         _inventUnitScrollView.gameObject.SetActive(true);
     }    
+
+    private void ClickCloseBtn(PointerEventData EventData)
+    {
+        Main.Get<UIManager>().CloseAllPopup();
+        Owner.isInventOpen = false;
+    }
     
 }
 
