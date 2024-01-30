@@ -6,7 +6,7 @@ public class Character
 {
     public int CurPosX { get; set; }
     public int CurPosY { get; set; }
-    public Room CurRoom { get; set; }
+    public RoomBehavior CurRoom { get; set; }
     public bool IsDead { get; set; }
 
     public CharacterBehaviour Owner { get; set; }

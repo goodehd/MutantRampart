@@ -5,15 +5,11 @@ using UnityEngine.UI;
 
 public class UnitSelectImageUIPanel : BaseUI
 {
+    private BatRoom _batRoom;
+
     private Image _unitImage;
-    private Image _collocateImage;
-    private Image _cancelImage;
-    private Image _unequipped;
 
     private Button _unitSelectButton;
-    private Button _collocateBtn;
-    private Button _cancelBtn;
-    private Button _unequippedBtn;
 
     private TextMeshProUGUI _equipText;
 
@@ -27,15 +23,7 @@ public class UnitSelectImageUIPanel : BaseUI
         SetUI<TextMeshProUGUI>();
 
         _unitImage = GetUI<Image>("UnitSelectImageUI");
-        _collocateImage = GetUI<Image>("ButtonPanel");
-        _cancelImage = GetUI<Image>("CancelPanel");
-        _unequipped = GetUI<Image>("UnequippedPanel");
-
         _unitSelectButton = GetUI<Button>("UnitSelectImageUI");
-        _collocateBtn = GetUI<Button>("SetButton");
-        _cancelBtn = GetUI<Button>("CancelButton");
-        _unequippedBtn = GetUI<Button>("UnequippedButton");
-
         _equipText = GetUI<TextMeshProUGUI>("EquipText");
 
         _unitImage.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{CharacterData.Data.Key}");
@@ -47,13 +35,26 @@ public class UnitSelectImageUIPanel : BaseUI
         if (CharacterData.CurRoom != null)
         {
             _equipText.gameObject.SetActive(true);
-            _unequipped.gameObject.SetActive(true);
         }
+
     }
 
     private void UnitImageClick(PointerEventData EventData)
     {
+        if(Main.Get<TileManager>().SelectRoom.RoomInfo.Data.Type != EStatusformat.Bat)
+            return;
 
+        _batRoom = (BatRoom)Main.Get<TileManager>().SelectRoom;
+        if (_batRoom == CharacterData.CurRoom)
+        {
+            _batRoom.DeleteUnit(CharacterData);
+            _equipText.gameObject.SetActive(false);
+        }
+        else if (CharacterData.CurRoom == null)
+        {
+            if(_batRoom.CreateUnit(CharacterData))
+                _equipText.gameObject.SetActive(true);
+        }
     }
 
     private void UnitImageHovered(PointerEventData EventData)

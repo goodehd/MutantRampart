@@ -24,13 +24,22 @@ public class MoveState : BaseState
     public override void ExitState()
     {
         Owner.Animator.SetBool(Literals.Move, false);
-        CoroutineManagement.Instance.StopManagedCoroutine(_coroutine);
+        StopCoroutine();
         _isMove = false;
     }
 
     public override void UpdateState()
     {
 
+    }
+
+    public override void StopCoroutine()
+    {
+        if (_coroutine != null)
+        {
+            CoroutineManagement.Instance.StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
     }
 
     private void MoveStart()
@@ -53,7 +62,7 @@ public class MoveState : BaseState
 
         int randomIndex = Random.Range(0, rooms.Count);
 
-        Room room = rooms[randomIndex].GetComponent<Room>();
+        RoomBehavior room = rooms[randomIndex].GetComponent<RoomBehavior>();
         _targetPos = room.transform.position;
         _targetPos.y += 1.5f;
         _targetPos.z = 3f;
@@ -64,7 +73,7 @@ public class MoveState : BaseState
 
     private void SetStageStartMovePos(out int targetX, out int targetY)
     {
-        Room room = _tileMap.GetRoom(1, 0).GetComponent<Room>();
+        RoomBehavior room = _tileMap.GetRoom(1, 0).GetComponent<RoomBehavior>();
         _targetPos = room.transform.position;
         _targetPos.y += 1.5f;
         _targetPos.z = 3f;
@@ -90,31 +99,17 @@ public class MoveState : BaseState
 
     private IEnumerator Movement()
     {
-        _isMove = true;
-
-        SetTargetPos(out int x, out int y);
-        SetDir();
-
-        while (Owner.transform.position != _targetPos)
+        while (true)
         {
-            float step = Owner.Status[EstatType.MoveSpeed].Value * Time.deltaTime;
-            Owner.transform.position = Vector3.MoveTowards(Owner.transform.position, _targetPos, step);
-            yield return null;
-        }
+            SetTargetPos(out int x, out int y);
+            SetDir();
 
-        Owner.CurPosX = x;
-        Owner.CurPosY = y;
-
-        _isMove = false;
-
-        if (_tileMap.GetRoom(x, y).GetComponent<Room>().isEndPoint)
-        {
-            Owner.Die();
-            Main.Get<GameManager>().PlayerHp--;
-        }
-        else
-        {
-            MoveStart();
+            while (Owner.transform.position != _targetPos)
+            {
+                float step = Owner.Status[EstatType.MoveSpeed].Value * Time.deltaTime;
+                Owner.transform.position = Vector3.MoveTowards(Owner.transform.position, _targetPos, step);
+                yield return null;
+            }
         }
     }
 }

@@ -153,6 +153,7 @@ public class DayMain_SceneUI : BaseUI
         {
             _ui.ClosePopup();
             _pocketBlock = null;
+            Main.Get<TileManager>().BatSlot.SetActive(false);
         }
     }
 

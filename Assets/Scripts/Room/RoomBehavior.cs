@@ -11,6 +11,7 @@ public class RoomBehavior : MonoBehaviour
     public TilemapRenderer Renderer { get; private set; }
     public Tilemap[] tilemap = new Tilemap[2];
     public ThisRoom RoomInfo { get; set; }
+    public bool isEndPoint { get; set; }
 
     public int IndexX { get { return RoomInfo.IndexX; } set { RoomInfo.IndexX = value;} }
     public int IndexY { get { return RoomInfo.IndexY; } set { RoomInfo.IndexY = value;} }
@@ -31,6 +32,13 @@ public class RoomBehavior : MonoBehaviour
         }
 
         _initialize = true;
+    }
+
+    public virtual void EnterRoom(Enemy enemy)
+    {
+        enemy.CurPosX = IndexX;
+        enemy.CurPosY = IndexY;
+        enemy.CurRoom = this;
     }
 
     public void SetData(ThisRoom data)

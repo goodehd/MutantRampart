@@ -39,11 +39,11 @@ public class ChangeUnit_PopupUI : BaseUI
 
         for(int i = 0; i < 3; ++i)
         {
-            CharacterBehaviour unit = ((BatRoom)SelectRoom).Units[i];
-            if(unit != null)
-            {
-                _slots[i].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{unit.CharacterInfo.Data.Key}");
-            }
+            //CharacterBehaviour unit = ((BatRoom)SelectRoom).Units[i];
+            //if(unit != null)
+            //{
+            //    _slots[i].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{unit.CharacterInfo.Data.Key}");
+            //}
         }
 
         _deleteBtn[0] = GetUI<Button>("DelButton1");
@@ -127,12 +127,12 @@ public class ChangeUnit_PopupUI : BaseUI
 
     private void DeleteBtnClick1(PointerEventData EventData)
     {
-        Delete(0, (BatRoom)SelectRoom);
+        //Delete(0, (BatRoom)SelectRoom);
     }
 
     private void SlotImageClick(PointerEventData EventData)
     {
-        if (((BatRoom)SelectRoom).Units[0] == null)
+        //if (((BatRoom)SelectRoom).Units[0] == null)
             return;
 
         ResetSelect();
@@ -141,7 +141,7 @@ public class ChangeUnit_PopupUI : BaseUI
 
     private void Collocate(int index)
     {
-        ((BatRoom)SelectRoom).CreateUnit(index, SelectUintImage.CharacterData);
+        //((BatRoom)SelectRoom).CreateUnit(index, SelectUintImage.CharacterData);
         _slots[index].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{SelectUintImage.CharacterData.Data.Key}");
         //SelectUintImage.CancelCollocate();
         ResetSelect();
@@ -150,7 +150,7 @@ public class ChangeUnit_PopupUI : BaseUI
 
     public void Delete(int index, BatRoom room)
     {
-        room.DeleteUnit(index);
+        //room.DeleteUnit(index);
         _deleteBtn[0].gameObject.SetActive(false);
         _slots[index].sprite = null;
         SetUnitInventory();

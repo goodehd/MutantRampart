@@ -72,9 +72,9 @@ public class TileManager : IManagers
         _roomObjList[SelectRoom.IndexX][SelectRoom.IndexY] = obj;
 
         RoomBehavior room = obj.GetComponent<RoomBehavior>();
+        room.RoomInfo = changeRoom;
         room.IndexX = SelectRoom.IndexX;
         room.IndexY = SelectRoom.IndexY;
-        room.RoomInfo = changeRoom;
         room.RoomInfo.EquipedRoom();
 
         SelectRoom.RoomInfo.UnEquipedRoom();

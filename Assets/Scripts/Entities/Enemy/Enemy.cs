@@ -12,8 +12,10 @@ public class Enemy : CharacterBehaviour
 
     public override void Die()
     {
-        CharacterInfo.CurRoom.RemoveEnemy(this);
-        Main.Get<StageManager>().CheckClear();
-        base.Die();
+        if (!CharacterInfo.IsDead)
+        {
+            Main.Get<StageManager>().CheckClear();
+            base.Die();
+        }
     }
 }
