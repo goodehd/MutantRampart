@@ -34,7 +34,10 @@ public class DayMain_SceneUI : BaseUI
 
     private PocketBlock_PopupUI _pocketBlock;
 
+
     public CameraMovement maincamera;
+    public bool isInventOpen { get; set; }
+
 
     protected override void Init()
     {
@@ -122,7 +125,16 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickInventoryBtn(PointerEventData eventData)
     {
-        _ui.OpenPopup<Inventory_PopupUI>("Inventory_PopupUI");
+        if (isInventOpen) // 인벤토리 열려있으면 버튼 작동 안 하게끔
+        {
+            return;
+        }
+        else if (!isInventOpen)
+        {
+            Inventory_PopupUI ui = _ui.OpenPopup<Inventory_PopupUI>("Inventory_PopupUI");
+            ui.Owner = this;
+            isInventOpen = true;
+        }
     }
 
     private void ClickStageStartBtn(PointerEventData eventData)
@@ -186,8 +198,10 @@ public class DayMain_SceneUI : BaseUI
 
         if (_placingPanel.gameObject.activeSelf)
         {
-            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.5f)
-                .OnComplete(() => { _placingPanelTransform.gameObject.SetActive(false); });
+            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.5f).OnComplete(() =>
+            {
+                _placingPanelTransform.gameObject.SetActive(false);
+            });
         }
         
         _ui.CloseAllPopup();

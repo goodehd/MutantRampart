@@ -44,7 +44,7 @@ public class ItemDescript_PopupUI : BaseUI
         // 아이템 설명 팝업에 뜨는 정보
         _itemName.text = characterData.Key;
         _itemDescript.text =
-            $"Hp : {characterData.Key.ToString()}\nDamage : {characterData.Damage.ToString()}\nDefense : {characterData.Defense.ToString()}\nAttackSpeed : {characterData.AttackSpeed.ToString()}";
+            $"Hp : {characterData.Hp.ToString()}\nDamage : {characterData.Damage.ToString()}\nDefense : {characterData.Defense.ToString()}\nAttackSpeed : {characterData.AttackSpeed.ToString()}";
     }
 
     private void SetRoomItemPopupInfo(RoomData roomData)

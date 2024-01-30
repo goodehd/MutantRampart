@@ -31,7 +31,11 @@ public class InventUnitDescri_PopupUI : BaseUI
 
     public Character UnitData { get; set; }
 
-    public Inventory_PopupUI inventoryPopupUI;
+    //public Inventory_PopupUI inventoryPopupUIOwner { get; set; }
+
+    public InventUnit_ContentsBtnUI Owner { get; set; }
+
+    //public bool isOpen { get; set; }
 
 
     protected override void Init()
@@ -97,15 +101,19 @@ public class InventUnitDescri_PopupUI : BaseUI
         _unitImg.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{UnitData.Data.Key}");
 
     }
+
     private void ClickInventUnitCloseBtn(PointerEventData EventData)
     {
         Main.Get<UIManager>().ClosePopup();
+        Owner._equipCheckImg.gameObject.SetActive(false);
+        Owner.isUnitContentPressed = false;
     }
+
     private void ClickInventUnitDeleteBtn(PointerEventData EventData)
     {
         // 인벤토리를 껐다가 다시 키면 없어져있긴 하는데 삭제되는 순간에 바로 인벤토리 업데이트까지는 안 됨..
         Main.Get<GameManager>().playerUnits.Remove(UnitData);
-        //inventoryPopupUI.SetUnitInventory();
+        //inventoryPopupUIOwner.SetUnitInventory();
     }
     private void ClickFirstSlot(PointerEventData EventData)
     {

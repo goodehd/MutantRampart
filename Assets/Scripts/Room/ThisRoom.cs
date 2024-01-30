@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class ThisRoom 
 {
-    public event Action OnEquipedEvenet;
-    public event Action OnUnEquipedEvenet;
+    public event Action OnEquipedEvent;
+    public event Action OnUnEquipedEvent;
 
     public int IndexX { get; set; }
     public int IndexY { get; set; }
@@ -37,12 +37,12 @@ public class ThisRoom
     public void EquipedRoom()
     {
         IsEquiped = true;
-        OnEquipedEvenet?.Invoke();
+        OnEquipedEvent?.Invoke();
     }
 
     public void UnEquipedRoom()
     {
         IsEquiped = false;
-        OnUnEquipedEvenet?.Invoke();
+        OnUnEquipedEvent?.Invoke();
     }
 }
