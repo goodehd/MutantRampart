@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    
     [SerializeField] private Vector3 Origin;
     [SerializeField] private Vector3 Diference;
     [SerializeField] private bool Drag = false;
 
+    public bool isOnPlacingPanel = false;
+    
     void LateUpdate()
     {
+        if(isOnPlacingPanel)return;
+        
         if (Input.GetMouseButton(0))
         {
             Diference = (Camera.main.ScreenToWorldPoint(Input.mousePosition)) - Camera.main.transform.position;
@@ -29,4 +34,5 @@ public class CameraMovement : MonoBehaviour
             Camera.main.transform.position = Origin - Diference;
         }
     }
+    
 }

@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class GameManager : IManagers
 {
     public int _playerMoney { get; private set; } = 5000;
     private int _playerHp = 5;
+
+    public bool isHomeSet = false;
     public int PlayerHp
     {
         get 
@@ -32,13 +35,13 @@ public class GameManager : IManagers
     {
         //PlayerRooms.Add(Main.Get<DataManager>().Room["Home_2"]);
         ThisRoom room = new ThisRoom();
-        room.Init(Main.Get<DataManager>().Room["Forest"]);
+        room.Init(Main.Get<DataManager>().Room["Home_2"]);
         PlayerRooms.Add(room);
 
         ThisRoom room2 = new ThisRoom();
-        room2.Init(Main.Get<DataManager>().Room["Lava"]);
+        room2.Init(Main.Get<DataManager>().Room["Forest"]);
         PlayerRooms.Add(room2);
-
+        
         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Jotem"]));
 

@@ -19,7 +19,7 @@ public class StageManager : IManagers
 
     private bool _isStageStart = false;
     private int _curStage = 0;
-
+    
     public bool Init()
     {
         _tileManager = Main.Get<TileManager>();
@@ -31,6 +31,8 @@ public class StageManager : IManagers
 
     public void StartStage()
     {
+        
+        
         if (_curStage >= _stages.Count)
             return;
 

@@ -110,6 +110,7 @@ public class MoveState : BaseState
                 Owner.transform.position = Vector3.MoveTowards(Owner.transform.position, _targetPos, step);
                 yield return null;
             }
+            
         }
     }
 }

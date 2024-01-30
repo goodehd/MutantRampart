@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class UnitSelectImageUIPanel : BaseUI
 {
+    private TileManager _tile;
+
     private BatRoom _batRoom;
 
     private Image _unitImage;
+    private Image _selectUnitEquipImage;
 
     private Button _unitSelectButton;
 
@@ -18,11 +21,14 @@ public class UnitSelectImageUIPanel : BaseUI
     
     protected override void Init()
     {
+        _tile = Main.Get<TileManager>();   
+
         SetUI<Image>();
         SetUI<Button>();
         SetUI<TextMeshProUGUI>();
 
         _unitImage = GetUI<Image>("UnitSelectImageUI");
+        _selectUnitEquipImage = GetUI<Image>("SelectUnitEquipImage");
         _unitSelectButton = GetUI<Button>("UnitSelectImageUI");
         _equipText = GetUI<TextMeshProUGUI>("EquipText");
 
@@ -35,7 +41,18 @@ public class UnitSelectImageUIPanel : BaseUI
         if (CharacterData.CurRoom != null)
         {
             _equipText.gameObject.SetActive(true);
+            if (_tile.SelectRoom.RoomInfo == CharacterData.CurRoom.RoomInfo)
+            {
+                _selectUnitEquipImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                _selectUnitEquipImage.gameObject.SetActive(false);
+            }
         }
+        
+
+
 
     }
 
@@ -49,11 +66,17 @@ public class UnitSelectImageUIPanel : BaseUI
         {
             _batRoom.DeleteUnit(CharacterData);
             _equipText.gameObject.SetActive(false);
+            _selectUnitEquipImage.gameObject.SetActive(false);
+
         }
         else if (CharacterData.CurRoom == null)
         {
             if(_batRoom.CreateUnit(CharacterData))
+            {
                 _equipText.gameObject.SetActive(true);
+                _selectUnitEquipImage.gameObject.SetActive(true);
+            }
+
         }
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,11 @@ public class UnitAttackState : BaseState
 {
     private Coroutine _coroutine;
     private LinkedList<CharacterBehaviour> _targets;
+    public event Action OnAttackState; 
 
     public UnitAttackState(CharacterBehaviour owner) : base(owner)
     {
-
+        OnAttackState += owner.CharacterInfo.OnAttackInvoke;
     }
 
     public override void EnterState()
@@ -40,6 +42,7 @@ public class UnitAttackState : BaseState
     private void AttackStart()
     {
         _coroutine = CoroutineManagement.Instance.StartCoroutine(Attack());
+        OnAttackState?.Invoke();
     }
 
     private IEnumerator Attack()

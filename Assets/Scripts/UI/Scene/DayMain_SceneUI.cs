@@ -39,6 +39,9 @@ public class DayMain_SceneUI : BaseUI
 
     private Stack<Action> _btnActions = new Stack<Action>();
 
+    public CameraMovement maincamera;
+    public bool isInventOpen { get; set; }
+
     protected override void Init()
     {
         base.Init();
@@ -47,6 +50,7 @@ public class DayMain_SceneUI : BaseUI
         SetImage();
         SetText();
         SetMoveUI();
+        maincamera = Camera.main.GetComponent<CameraMovement>();
 
         Main.Get<GameManager>().OnChangeMoney += UpdateMoneyText;
     }
@@ -126,11 +130,21 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickInventoryBtn(PointerEventData eventData)
     {
-        _ui.OpenPopup<Inventory_PopupUI>("Inventory_PopupUI");
+        if (isInventOpen) // 인벤토리 열려있으면 버튼 작동 안 하게끔
+        {
+            return;
+        }
+        else if (!isInventOpen)
+        {
+            Inventory_PopupUI ui = _ui.OpenPopup<Inventory_PopupUI>("Inventory_PopupUI");
+            ui.Owner = this;
+            isInventOpen = true;
+        }
     }
 
     private void ClickStageStartBtn(PointerEventData eventData)
     {
+        if(!Main.Get<GameManager>().isHomeSet)return; //아 이걸 어따놓지
         Main.Get<StageManager>().StartStage();
     }
 
@@ -166,7 +180,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickBackBtn(PointerEventData eventData)
     {
-        if(_btnActions.Count >= 1)
+        if (_btnActions.Count >= 1)
             _btnActions.Pop().Invoke();
     }
 
@@ -233,7 +247,7 @@ public class DayMain_SceneUI : BaseUI
         if (_downMoveUIList.Count == 0)
             return;
 
-        if(_downMoveUIList[0].gameObject.activeSelf)
+        if (_downMoveUIList[0].gameObject.activeSelf)
         {
             foreach (var rect in _downMoveUIList)
             {

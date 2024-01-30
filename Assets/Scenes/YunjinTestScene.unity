@@ -444,6 +444,7 @@ MonoBehaviour:
   Origin: {x: 0, y: 0, z: 0}
   Diference: {x: 0, y: 0, z: 0}
   Drag: 0
+  isOnPlacingPanel: 0
 --- !u!1 &1028137579
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,7 +534,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!156049354 &2071714094
 Grid:
   m_ObjectHideFlags: 0
