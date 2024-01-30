@@ -8,6 +8,7 @@ public class Enemy : CharacterBehaviour
     {
         base.Init(data);
         StateMachine.AddState(EState.Attack, new EnemyAttackState(this));
+        StateMachine.AddState(EState.Dead, new EnemyDeadState(this));
     }
 
     public override void Die()

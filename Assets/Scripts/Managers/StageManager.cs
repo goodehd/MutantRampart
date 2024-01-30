@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class StageInfo
 
 public class StageManager : IManagers
 {
+    public event Action OnStageClear;
     public int StageEnemyCount { get; set; }
 
     private TileManager _tileManager;
@@ -49,6 +51,7 @@ public class StageManager : IManagers
         Main.Get<GameManager>().ChangeMoney(_stages[_curStage].SpwanCount * 1000);
         _curStage++;
         _isStageStart = false;
+        OnStageClear?.Invoke();
     }
 
     public void CheckClear()

@@ -26,6 +26,7 @@ public class BatRoom : RoomBehavior
         base.Init(data);
 
         _batType = Enum.Parse<EBatType>(this.gameObject.name);
+        Main.Get<StageManager>().OnStageClear += StageClear;
         UnitCount = 0;
     }
 
@@ -96,9 +97,24 @@ public class BatRoom : RoomBehavior
             {
                 Units[i].CharacterInfo.CurRoom = null;
                 Main.Get<ResourceManager>().Destroy(Units[i].gameObject);
-                UnitCount = 0;
             }
         }
+        UnitCount = 0;
+    }
+
+    private void StageClear()
+    {
+        int count = 0;
+        for (int i = 0; i < Units.Length; i++)
+        {
+            if (Units[i] != null)
+            {
+                Units[i].gameObject.SetActive(true);
+                Units[i].Status.GetStat<Vital>(EstatType.Hp).CurValue = Units[i].Status.GetStat<Vital>(EstatType.Hp).Value;
+                count++;
+            }
+        }
+        UnitCount = count;
     }
 
     private void BuffUnitRoomEBat(Character data)
@@ -164,5 +180,11 @@ public class BatRoom : RoomBehavior
         //data.Status.GetStat<Stat>(EstatType.Damage).AddModifier(mod);        1강화
         //data.Status.GetStat<Stat>(EstatType.AttackSpeed).AddModifier(mod);   1강화
         //data.Status.GetStat<Stat>(EstatType.Defense).AddModifier(mod);       2강화
+    }
+
+    private void OnDestroy()
+    {
+        Main.Get<StageManager>().OnStageClear -= StageClear;
+        DeleteAllUnit();
     }
 }

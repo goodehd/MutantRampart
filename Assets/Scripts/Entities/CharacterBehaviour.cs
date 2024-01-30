@@ -31,7 +31,6 @@ public class CharacterBehaviour : MonoBehaviour
 
         StateMachine.AddState(EState.Idle, new IdleState(this));
         StateMachine.AddState(EState.Move, new MoveState(this));
-        StateMachine.AddState(EState.Dead, new DeadState(this));
         StateMachine.ChangeState(EState.Idle);
 
         CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += Die;

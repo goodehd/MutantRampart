@@ -6,6 +6,7 @@ public class Unit : CharacterBehaviour
     {
         base.Init(data); 
         StateMachine.AddState(EState.Attack, new UnitAttackState(this));
+        StateMachine.AddState(EState.Dead, new UnitDeadState(this));
     }
 
     public override void Die()
