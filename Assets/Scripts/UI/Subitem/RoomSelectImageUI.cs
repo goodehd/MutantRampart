@@ -12,6 +12,7 @@ public class RoomSelectImageUI : BaseUI
 
     private Image _roomImage;
     private Image _isEquipedImage;
+    private Image _selectRoomEquipImage;
     private Button _roomSelectButton;
 
     public ThisRoom Room;
@@ -27,19 +28,30 @@ public class RoomSelectImageUI : BaseUI
 
         _roomImage = GetUI<Image>("RoomSelectImageUI");
         _isEquipedImage = GetUI<Image>("IsEquipedImage");
+        _selectRoomEquipImage = GetUI<Image>("SelectRoomEquipImage");
         _roomSelectButton = GetUI<Button>("RoomSelectImageUI");
 
         if (Room.IsEquiped)
         {
             _isEquipedImage.gameObject.SetActive(true);
         }
+
+        if (_tile.SelectRoom.RoomInfo == Room)
+        {
+            _selectRoomEquipImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            _selectRoomEquipImage.gameObject.SetActive(false);
+        }
+
         _roomImage.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{Room.Data.Key}");
         SetUICallback(_roomSelectButton.gameObject, EUIEventState.Click, ChangeRoom);
         SetUICallback(_roomSelectButton.gameObject, EUIEventState.Hovered, RoomImageHovered);
         SetUICallback(_roomSelectButton.gameObject, EUIEventState.Exit, RoomImageExit);
 
-        Room.OnEquipedEvenet += Equiped;
-        Room.OnUnEquipedEvenet += UnEquiped;
+        Room.OnEquipedEvent += Equiped;
+        Room.OnUnEquipedEvent += UnEquiped;
     }
 
     private void ChangeRoom(PointerEventData EventData)
@@ -62,11 +74,13 @@ public class RoomSelectImageUI : BaseUI
     private void Equiped()
     {
         _isEquipedImage.gameObject.SetActive(true);
+        _selectRoomEquipImage.gameObject.SetActive(true);
     }
 
     private void UnEquiped()
     {
         _isEquipedImage.gameObject.SetActive(false);
+        _selectRoomEquipImage.gameObject.SetActive(false);
     }
 
     private void RoomImageHovered(PointerEventData eventData)
@@ -82,7 +96,7 @@ public class RoomSelectImageUI : BaseUI
 
     private void OnDestroy()
     {
-        Room.OnEquipedEvenet -= Equiped;
-        Room.OnUnEquipedEvenet -= UnEquiped;
+        Room.OnEquipedEvent -= Equiped;
+        Room.OnUnEquipedEvent -= UnEquiped;
     }
 }
