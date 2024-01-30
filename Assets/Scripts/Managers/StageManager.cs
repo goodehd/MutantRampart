@@ -11,6 +11,7 @@ public class StageInfo
 
 public class StageManager : IManagers
 {
+    public event Action OnStageClear;
     public int StageEnemyCount { get; set; }
 
     private TileManager _tileManager;

@@ -75,7 +75,7 @@ public class EnemyAttackState : BaseState
     {
         for(int i = 0; i < _targets.Length; i++)
         {
-            if (_targets[i] != null)
+            if (_targets[i] != null && !_targets[i].CharacterInfo.IsDead)
             {
                 return _targets[i];
             }

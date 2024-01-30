@@ -56,4 +56,9 @@ public class Vital : Stat
     {
         return CurValue / base.Value;
     }
+
+    public void SetCurValueMax()
+    {
+        CurValue = base.Value;
+    }
 }
