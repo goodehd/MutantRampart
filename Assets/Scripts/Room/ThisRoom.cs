@@ -36,12 +36,20 @@ public class ThisRoom
     public void EquipedRoom()
     {
         IsEquiped = true;
+        if(Data.Type == EStatusformat.Home)
+        {
+            Main.Get<GameManager>().isHomeSet = true;
+        }
         OnEquipedEvent?.Invoke();
     }
 
     public void UnEquipedRoom()
     {
         IsEquiped = false;
+        if (Data.Type == EStatusformat.Home)
+        {
+            Main.Get<GameManager>().isHomeSet = false;
+        }
         OnUnEquipedEvent?.Invoke();
     }
 }
