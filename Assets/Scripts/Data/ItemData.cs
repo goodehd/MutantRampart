@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ItemData : Data
 {
-    public string Key { get; set; }
-
     public EItemType Type { get; set; }
     
     public float HpAdd { get; set; }

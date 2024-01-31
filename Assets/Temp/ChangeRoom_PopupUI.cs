@@ -12,16 +12,12 @@ public class ChangeRoom_PopupUI : BaseUI
     
     private Transform _content;
     private Button _exitButton;
-    private bool _isOpenUi = false;
+    
   
     public RoomBehavior SelectRoom;
     public ThisRoom SelectChangeRoom;
 
-    private void Awake()
-    {
-        _isOpenUi = true;
-        //Camera.main.GetComponent<Camera>().cullingMask = 6;
-    }
+    
 
     protected override void Init()
     {

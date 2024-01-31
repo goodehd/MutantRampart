@@ -26,7 +26,7 @@ public class Room : MonoBehaviour
     [SerializeField] protected Material _buildNotAvailable;
     public bool isEquipedRoom = false;
     public RoomData ThisRoomData { get; set; }
-    public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
+    //public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
     
     public LinkedList<CharacterBehaviour> Enemys { get; private set; } = new LinkedList<CharacterBehaviour>();
 

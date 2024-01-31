@@ -23,7 +23,7 @@ public class TrapRoom : Room
 
         _roomStatus = EStatusformat.Trap;
         _trapType = Enum.Parse<ETrapType>(this.gameObject.name);
-        OnEnemyEnterRoom += EnemyEnterRoom;
+        //OnEnemyEnterRoom += EnemyEnterRoom;
         
         return true;
     }
