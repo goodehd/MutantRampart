@@ -12,9 +12,7 @@ public class InventRoom_ContentsBtnUI : BaseUI
 
     public ThisRoom RoomData { get; set; }
 
-    public bool isRoomContentPressed { get; set; }
-
-    //public Inventory_PopupUI Owner { get; set; }
+    public Inventory_PopupUI Owner { get; set; }
 
     protected override void Init()
     {
@@ -39,20 +37,18 @@ public class InventRoom_ContentsBtnUI : BaseUI
 
     private void ClickRoomContentBtn(PointerEventData data)
     {
-        if (isRoomContentPressed) // 버튼을 눌러 설명창이 기존에 열려있다면 리턴시키고,
+        if (Owner.inventRoomDescri_PopupUI == null) // 설명 팝업이 안 떠 있다면
         {
-            return;
+            Owner.inventRoomDescri_PopupUI = Main.Get<UIManager>().OpenPopup<InventRoomDescri_PopupUI>(); // 설명창 열어주고
+            Owner.inventRoomDescri_PopupUI.RoomData = RoomData; // 데이터 넘겨주고
+            Owner.inventRoomDescri_PopupUI.Owner = this; // owner 설정해주고
         }
-        else if (!isRoomContentPressed) // 버튼을 눌러 설명창이 기존에 안 열려있다면
+        else // 설명 팝업이 이미 떠 있다면,
         {
-            _equipCheckImg.gameObject.SetActive(true);
-            isRoomContentPressed = true;
+            Owner.inventRoomDescri_PopupUI.RoomData = RoomData; // 데이터 넘겨주고
+            Owner.inventRoomDescri_PopupUI.SetInfo(); // 데이터 갱신
 
-            InventRoomDescri_PopupUI ui = Main.Get<UIManager>().OpenPopup<InventRoomDescri_PopupUI>("InventRoomDescri_PopupUI"); // 설명창 열어주고
-            ui.RoomData = RoomData; // 데이터 넘겨주고
-            ui.Owner = this; // owner 설정해주고
-
-            //Main.Get<UIManager>().OpenPopup<InventRoomDescri_PopupUI>("InventRoomDescri_PopupUI").isOpen = true;
+            //_equipCheckImg.gameObject.SetActive(true);
 
         }
     }

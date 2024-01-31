@@ -32,6 +32,10 @@ public class Inventory_PopupUI : BaseUI
 
     public DayMain_SceneUI Owner { get; set; }
 
+    public InventRoomDescri_PopupUI inventRoomDescri_PopupUI;
+
+    public InventUnitDescri_PopupUI inventUnitDescri_PopupUI;
+
     protected override void Init()
     {
         SetUI<Button>();
@@ -57,42 +61,15 @@ public class Inventory_PopupUI : BaseUI
         _inventUnitContent = GetUI<Transform>("InventUnit_Content");
 
 
-        // 인벤토리 room & unit content 안에 보유 아이템 연결해주기 !
-
-        SetUnitInventory();
         SetRoomInventory();
-
-
-
-
-    }
-
-    private void SetInfo()
-    {
-
-    }
-
-    public void SetUnitInventory()
-    {
-        // unit
-        List<Character> playerUnits = Main.Get<GameManager>().playerUnits;
-        foreach (Transform item in _inventUnitContent.transform) // todo : 초기화 관련 ?
-        {
-            Destroy(item.gameObject);
-        }
-        for (int i = 0; i < playerUnits.Count; i++)
-        {
-            InventUnit_ContentsBtnUI inventUnitItems = Main.Get<UIManager>().CreateSubitem<InventUnit_ContentsBtnUI>("InventUnit_ContentsBtnUI", _inventUnitContent);
-            inventUnitItems.UnitData = playerUnits[i];
-            //inventUnitItems.inventoryPopupUIOwner = this;
-        }
+        SetUnitInventory();
     }
 
     public void SetRoomInventory()
     {
         // room
         List<ThisRoom> playerRooms = Main.Get<GameManager>().PlayerRooms;
-        foreach (Transform item in _inventRoomContent.transform)
+        foreach (Transform item in _inventRoomContent.transform) // todo : 초기화 관련 ?
         {
             Destroy(item.gameObject);
         }
@@ -100,6 +77,23 @@ public class Inventory_PopupUI : BaseUI
         {
             InventRoom_ContentsBtnUI inventRoomItems = Main.Get<UIManager>().CreateSubitem<InventRoom_ContentsBtnUI>("InventRoom_ContentsBtnUI", _inventRoomContent);
             inventRoomItems.RoomData = playerRooms[i];
+            inventRoomItems.Owner = this;
+        }
+    }
+
+    public void SetUnitInventory()
+    {
+        // unit
+        List<Character> playerUnits = Main.Get<GameManager>().playerUnits;
+        foreach (Transform item in _inventUnitContent.transform) 
+        {
+            Destroy(item.gameObject);
+        }
+        for (int i = 0; i < playerUnits.Count; i++)
+        {
+            InventUnit_ContentsBtnUI inventUnitItems = Main.Get<UIManager>().CreateSubitem<InventUnit_ContentsBtnUI>("InventUnit_ContentsBtnUI", _inventUnitContent);
+            inventUnitItems.UnitData = playerUnits[i];
+            inventUnitItems.Owner = this;
         }
     }
 

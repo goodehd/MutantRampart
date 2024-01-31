@@ -10,9 +10,7 @@ public class InventUnit_ContentsBtnUI : BaseUI
 
     public Character UnitData { get; set; }
 
-    //public Inventory_PopupUI inventoryPopupUIOwner { get; set; }
-
-    public bool isUnitContentPressed { get; set; }
+    public Inventory_PopupUI Owner { get; set; }
 
     protected override void Init()
     {
@@ -37,19 +35,22 @@ public class InventUnit_ContentsBtnUI : BaseUI
 
     private void ClickUnitContentBtn(PointerEventData data)
     {
-        if (isUnitContentPressed) // 버튼을 눌러 설명창이 기존에 열려있다면 리턴시키고,
+        if (Owner.inventUnitDescri_PopupUI == null) // 설명창이 안 열려 있다면
         {
-            return;
-        }
-        else if (!isUnitContentPressed) // 버튼을 눌러 설명창이 기존에 안 열려있다면
-        {
-            _equipCheckImg.gameObject.SetActive(true);
-            isUnitContentPressed = true;
+            Owner.inventUnitDescri_PopupUI = Main.Get<UIManager>().OpenPopup<InventUnitDescri_PopupUI>("InventUnitDescri_PopupUI"); // 설명창 열어주고
+            Owner.inventUnitDescri_PopupUI.UnitData = UnitData; // 데이터 넘겨주고
+            Owner.inventUnitDescri_PopupUI.Owner = this; // owner 설정해주고
 
-            InventUnitDescri_PopupUI ui = Main.Get<UIManager>().OpenPopup<InventUnitDescri_PopupUI>("InventUnitDescri_PopupUI"); // 설명창 열어주고
-            ui.UnitData = UnitData; // 데이터 넘겨주고
-            ui.Owner = this; // owner 설정해주고
-            //ui.inventoryPopupUIOwner = inventoryPopupUIOwner;
+            _equipCheckImg.gameObject.SetActive(true);
+            //if (UnitData)
+
+        }
+        else // 설명창이 이미 열려 있다면
+        {
+            Owner.inventUnitDescri_PopupUI.UnitData = UnitData; // 데이터 넘겨주고
+            Owner.inventUnitDescri_PopupUI.SetInfo(); // 데이터 갱신 !
+
+            _equipCheckImg.gameObject.SetActive(true);
         }
 
     }
@@ -57,13 +58,10 @@ public class InventUnit_ContentsBtnUI : BaseUI
     private void HoveredUnitContentBtn(PointerEventData data)
     {
         _unitContentsImg.color = Color.cyan;
-        //_equipCheckImg.gameObject.SetActive(true);
     }
 
     private void ExitUnitContentBtn(PointerEventData data)
     {
         _unitContentsImg.color = Color.white;
-
-        //_equipCheckImg.gameObject.SetActive(false);
     }
 }

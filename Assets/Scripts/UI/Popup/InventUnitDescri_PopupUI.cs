@@ -94,7 +94,7 @@ public class InventUnitDescri_PopupUI : BaseUI
         SetInfo();
     }
 
-    private void SetInfo()
+    public void SetInfo()
     {
         _unitName.text = UnitData.Data.Key;
         _unitDescription.text = $"Hp : {UnitData.Data.Hp.ToString()}\nDamage : {UnitData.Data.Damage.ToString()}\nDefense : {UnitData.Data.Defense.ToString()}\nATK Speed : {UnitData.Data.AttackSpeed.ToString()}";
@@ -106,26 +106,34 @@ public class InventUnitDescri_PopupUI : BaseUI
     {
         Main.Get<UIManager>().ClosePopup();
         Owner._equipCheckImg.gameObject.SetActive(false);
-        Owner.isUnitContentPressed = false;
     }
 
     private void ClickInventUnitDeleteBtn(PointerEventData EventData)
     {
         // 인벤토리를 껐다가 다시 키면 없어져있긴 하는데 삭제되는 순간에 바로 인벤토리 업데이트까지는 안 됨..
         Main.Get<GameManager>().playerUnits.Remove(UnitData);
-        //inventoryPopupUIOwner.SetUnitInventory();
+        Main.Get<UIManager>().ClosePopup(); // 설명창 닫아주고
+        Owner.Owner.SetUnitInventory();// 인벤토리 초기화
     }
+
     private void ClickFirstSlot(PointerEventData EventData)
     {
         // 1번 장착된 아이템 해제
     }
+
     private void ClickSecondSlot(PointerEventData EventData)
     {
         // 2번 장착된 아이템 해제
     }
+
     private void ClickThirdSlot(PointerEventData EventData)
     {
         // 3번 장착된 아이템 해제
+    }
+
+    private void OnDestroy()
+    {
+        Owner.Owner.inventUnitDescri_PopupUI = null; // null 처리 !
     }
 
 }

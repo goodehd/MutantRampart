@@ -52,7 +52,7 @@ public class ItemDescript_PopupUI : BaseUI
         // 아이템 설명 팝업에 뜨는 정보
         _itemName.text = roomData.Key;
         _itemDescript.text =
-            $"설명 : {roomData.Instruction.ToString()}";
+            $"설명 :\n{roomData.Instruction.ToString()}";
     }
 
     private void ClickPopupCloseBtn(PointerEventData EventData)
