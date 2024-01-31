@@ -6,20 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="64c89d60-885a-4ce1-aad4-c0a2f98a32c9" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MutantRampart/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MutantRampart/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/ItemData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/ItemData.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/ItemData.csv.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/ItemData.csv.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/RoomData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/@Resources/Data/Excel/RoomData.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/UI/Subitem/CharacterHpBarUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/UI/Subitem/CharacterHpBarUI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/UI/Subitem/MyItemsImgBtnUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/UI/Subitem/MyItemsImgBtnUI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/YunjinTestScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/YunjinTestScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/YunjinTestScene.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/YunjinTestScene.unity.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Character.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Character.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Item/Item.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Item/Item.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Popup/InventUnitDescri_PopupUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Popup/InventUnitDescri_PopupUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Popup/ItemDescript_PopupUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Popup/ItemDescript_PopupUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Popup/Shop_PopupUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Popup/Shop_PopupUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Subitem/MyItemsImgBtnUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Subitem/MyItemsImgBtnUI.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

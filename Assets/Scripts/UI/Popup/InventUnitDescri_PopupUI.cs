@@ -11,7 +11,6 @@ public class InventUnitDescri_PopupUI : BaseUI
     private Button _closeBtn;
     private Button _deleteBtn;
     private Button[] _equipSlots = new Button[3];
-    private bool[] _isequipSlotBool = new bool[3] { false, false, false };
     
     //private Button _firstSlot;
     //private Button _secondSlot;
@@ -103,6 +102,14 @@ public class InventUnitDescri_PopupUI : BaseUI
         _unitDescription.text = $"Hp : {UnitData.Data.Hp.ToString()}\nDamage : {UnitData.Data.Damage.ToString()}\nDefense : {UnitData.Data.Defense.ToString()}\nATK Speed : {UnitData.Data.AttackSpeed.ToString()}";
         _unitImg.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{UnitData.Data.Key}");
 
+        for (int i = 0; i < _equipSlots.Length; i++)
+        {
+            if (UnitData.Item[i] != null)
+            {
+                _equipSlotsImgs[i].sprite = Main.Get<ResourceManager>()
+                    .Load<Sprite>($"{Literals.ITEM_SPRITE_PATH}{UnitData.Item[i].EquipItemData.Key}");
+            }
+        }
     }
 
     private void ClickInventUnitCloseBtn(PointerEventData EventData)
@@ -136,22 +143,22 @@ public class InventUnitDescri_PopupUI : BaseUI
     {
         for (int i = 0; i < _equipSlots.Length; i++)
         {
-            if (!_isequipSlotBool[i])
+            if (UnitData.Item[i] == null)
             {
                 _equipSlotsImgs[i].sprite = Main.Get<ResourceManager>()
                     .Load<Sprite>($"{Literals.ITEM_SPRITE_PATH}{data.EquipItemData.Key}");
-                _isequipSlotBool[i] = true;
                 UnitData.Item[i] = data;
+                UnitData.Item[i].EquipItem(UnitData);
                 break;
             }
-        }
-        for (int i = 0; i < UnitData.Item.Length; i++)
-        {
-            if (UnitData.Item[i] != null)
+            else
             {
-                UnitData.Item[i].EquipItem(UnitData);
+                _equipSlotsImgs[i].sprite = Main.Get<ResourceManager>()
+                .Load<Sprite>($"{Literals.ITEM_SPRITE_PATH}{UnitData.Item[i].EquipItemData.Key}");
             }
+            
         }
+        
     }
 }
 

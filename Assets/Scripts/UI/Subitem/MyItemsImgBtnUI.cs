@@ -12,7 +12,6 @@ public class MyItemsImgBtnUI : BaseUI
     private Image _equipCheckImg;
     private bool _isIEquiped;
     public Item ItemData { get; set; }
-
     public InventUnitDescri_PopupUI Owner { get; set; }
     protected override void Init()
     {
