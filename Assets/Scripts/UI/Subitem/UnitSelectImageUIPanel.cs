@@ -67,6 +67,7 @@ public class UnitSelectImageUIPanel : BaseUI
             _batRoom.DeleteUnit(CharacterData);
             _equipText.gameObject.SetActive(false);
             _selectUnitEquipImage.gameObject.SetActive(false);
+            _batRoom.SortCharacter();
         }
         else if (CharacterData.CurRoom == null)
         {
@@ -74,6 +75,7 @@ public class UnitSelectImageUIPanel : BaseUI
             {
                 _equipText.gameObject.SetActive(true);
                 _selectUnitEquipImage.gameObject.SetActive(true);
+                _batRoom.SortCharacter();
             }
 
         }

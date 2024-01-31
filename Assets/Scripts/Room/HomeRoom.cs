@@ -16,7 +16,7 @@ public class HomeRoom : RoomBehavior
        Main.Get<GameManager>().isHomeSet = true;
        Debug.Log("생김");
        Debug.Log(Main.Get<GameManager>().isHomeSet);
-     }
+    }
     
     public override void EnterRoom(Enemy enemy)
     {
