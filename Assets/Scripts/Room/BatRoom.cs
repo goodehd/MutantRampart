@@ -53,6 +53,38 @@ public class BatRoom : RoomBehavior
         }
     }
 
+    protected override void OnMouseDown()
+    {
+        base.OnMouseDown();
+        SortCharacter();
+    }
+
+    public void SortCharacter()
+    {
+        if(Units != null)
+        {
+            foreach (CharacterBehaviour unit in Units)
+            {
+                if (unit != null)
+                {
+                    // 현재 Unit의 CharacterInfo 가져오기
+                    Character characterInfo = unit.CharacterInfo;
+
+                    // CharacterInfo가 playerUnits에 있는지 확인
+                    int indexInPlayerUnits = Main.Get<GameManager>().playerUnits.IndexOf(characterInfo);
+                    int index = Array.IndexOf(Units, unit);
+                    if (indexInPlayerUnits != -1)
+                    {
+                        // 해당 CharacterInfo가 playerUnits에 존재하면 해당 데이터를 인덱스 위치로 옮김
+                        Character playerUnit = Main.Get<GameManager>().playerUnits[indexInPlayerUnits];
+                        Main.Get<GameManager>().playerUnits.RemoveAt(indexInPlayerUnits);
+                        Main.Get<GameManager>().playerUnits.Insert(index, playerUnit);
+                    }
+                }
+            }
+        }
+    }
+
     public bool CreateUnit(Character data)
     {
         if (UnitCount >= RoomInfo.Data.MaxUnitCount)

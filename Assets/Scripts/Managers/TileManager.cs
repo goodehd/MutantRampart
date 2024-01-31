@@ -80,6 +80,7 @@ public class TileManager : IManagers
         SelectRoom.RoomInfo.UnEquipedRoom();
         resource.Destroy(SelectRoom.gameObject);
         SelectRoom = room;
+        SelectRoom.StartFlashing();
 
         return room;
     }
