@@ -13,24 +13,14 @@ public class HomeRoom : RoomBehavior
     
        isEndPoint = true;
        
-       Main.Get<GameManager>().isHomeSet = true;
        Debug.Log("생김");
-       Debug.Log(Main.Get<GameManager>().isHomeSet);
      }
     
     public override void EnterRoom(Enemy enemy)
     {
         Debug.Log("집침입");
         base.EnterRoom(enemy);
-         enemy.Die();
-         Main.Get<GameManager>().PlayerHp--;
-         
-    }
-
-    private void OnDestroy()
-    {
-        Main.Get<GameManager>().isHomeSet = false;
-        Debug.Log("없어짐");
-        Debug.Log(Main.Get<GameManager>().isHomeSet);
+        enemy.Die();
+        Main.Get<GameManager>().PlayerHP.CurValue--;
     }
 }

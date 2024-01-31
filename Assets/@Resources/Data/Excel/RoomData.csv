@@ -1,11 +1,11 @@
 ﻿Key,Type,Instruction,MaxUnitCount,Price
 Forest,Bat,싱그러운 숲~ (으략캬~),1,100
-Igloo,Bat,읏추읏추 이글루,0,101
+Igloo,Bat,읏추읏추 이글루,2,101
 Lava,Trap,앗뜨앗뜨 용암,0,102
-LivingRoom,Bat,평범한 거실,0,103
+LivingRoom,Bat,평범한 거실,3,103
 Molar,Trap,몰?루 어금니,0,104
 Snow,Trap,손이 꽁꽁꽁,0,105
 Temple,Bat,신비한 사원,0,106
 Default,DefaultTile,기본타일,0,107
-Home_1,Bat,집1 이거는 들어오면 끝인거고,1,108
-Home_2,Bat,집2 이거는 배치할 수 있는거고,1,109
+Home_1,Bat,집1 이거는 들어오면 끝인거고,0,108
+Home_2,Bat,집2 이거는 배치할 수 있는거고,0,109

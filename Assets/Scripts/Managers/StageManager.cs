@@ -11,7 +11,8 @@ public class StageInfo
 
 public class StageManager : IManagers
 {
-    public event Action OnStageClear;
+    public event Action<int> OnStageStartEvent;
+    public event Action<int> OnStageClearEvent;
     public int StageEnemyCount { get; set; }
 
     private TileManager _tileManager;
@@ -31,8 +32,6 @@ public class StageManager : IManagers
 
     public void StartStage()
     {
-        
-        
         if (_curStage >= _stages.Count)
             return;
 
@@ -42,6 +41,8 @@ public class StageManager : IManagers
         StageEnemyCount = _stages[_curStage].SpwanCount;
         _tileManager.SpawnTile.StartStage(_stages[_curStage].SpwanEnemyName, _stages[_curStage].SpwanCount);
         _isStageStart = true;
+
+        OnStageStartEvent?.Invoke(_curStage);
     }
 
     public void StageClear()
@@ -51,9 +52,8 @@ public class StageManager : IManagers
         ui._rewardsGold = _stages[_curStage].SpwanCount * 1000;
 
         Main.Get<GameManager>().ChangeMoney(_stages[_curStage].SpwanCount * 1000);
-        _curStage++;
         _isStageStart = false;
-        OnStageClear?.Invoke();
+        OnStageClearEvent?.Invoke(++_curStage);
     }
 
     public void CheckClear()

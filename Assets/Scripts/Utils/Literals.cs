@@ -22,6 +22,8 @@ public static class Literals
     public static readonly int Move = Animator.StringToHash("IsMove");
     public static readonly int Attack = Animator.StringToHash("IsAttack");
     public static readonly int Dead = Animator.StringToHash("IsDead");
+    public static readonly int StageStart = Animator.StringToHash("StageStart");
+    public static readonly int StageEnd = Animator.StringToHash("StageEnd");
 
     public static readonly List<Vector3> BatPos = new List<Vector3>
     {
