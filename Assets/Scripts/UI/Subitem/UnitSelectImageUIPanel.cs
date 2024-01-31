@@ -67,7 +67,6 @@ public class UnitSelectImageUIPanel : BaseUI
             _batRoom.DeleteUnit(CharacterData);
             _equipText.gameObject.SetActive(false);
             _selectUnitEquipImage.gameObject.SetActive(false);
-
         }
         else if (CharacterData.CurRoom == null)
         {

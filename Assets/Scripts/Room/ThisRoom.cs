@@ -14,7 +14,6 @@ public class ThisRoom
     public RoomBehavior Owner { get; set; }
     public RoomData Data { get; private set; }
     public LinkedList<CharacterBehaviour> Enemys { get; set; } = new LinkedList<CharacterBehaviour>();
-
     public ThisRoom() { }
     public ThisRoom(RoomData data) 
     {

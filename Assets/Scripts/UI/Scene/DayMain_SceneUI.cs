@@ -182,6 +182,8 @@ public class DayMain_SceneUI : BaseUI
     {
         if (_btnActions.Count >= 1)
             _btnActions.Pop().Invoke();
+        if (Main.Get<TileManager>().SelectRoom != null)
+            Main.Get<TileManager>().SelectRoom.StopFlashing();
     }
 
     private void ClickPlacingBtn(PointerEventData eventData)
