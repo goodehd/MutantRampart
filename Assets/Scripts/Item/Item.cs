@@ -10,19 +10,22 @@ public enum EItemType
     Count
 }
 
-public class Item : MonoBehaviour
+public class Item
 {
     public ItemData EquipItemData;
+    public bool IsEquiped { get; set; }
 
     public void Init(ItemData data)
     {
         EquipItemData = data;
+        IsEquiped = false;
     }
 
     public virtual void EquipItem(Character data)
     {
+        Debug.Log("장착시작");
         if(EquipItemData == null)return;
-        
+        Debug.Log("장착됨");
         StatModifier HPADD = new StatModifier(EquipItemData.HpAdd, EStatModType.Add, 1, this);
         StatModifier DFADD = new StatModifier(EquipItemData.DefenseAdd, EStatModType.Add, 1 , this);
         StatModifier ATADD = new StatModifier(EquipItemData.AttackAdd, EStatModType.Add, 1, this);
@@ -32,6 +35,7 @@ public class Item : MonoBehaviour
         data.Status.GetStat<Stat>(EstatType.Defense).AddModifier(DFADD);
         data.Status.GetStat<Stat>(EstatType.Damage).AddModifier(ATADD);
         data.Status.GetStat<Stat>(EstatType.AttackSpeed).AddModifier(SPADD);
+        IsEquiped = true;
         
     }
 
@@ -41,6 +45,7 @@ public class Item : MonoBehaviour
         data.Status.GetStat<Stat>(EstatType.Defense).RemoveAllModifier(this);
         data.Status.GetStat<Stat>(EstatType.Damage).RemoveAllModifier(this);
         data.Status.GetStat<Stat>(EstatType.AttackSpeed).RemoveAllModifier(this);
+        IsEquiped = false;
     }
 
     public virtual void AttackEffect()

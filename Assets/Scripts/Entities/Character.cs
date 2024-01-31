@@ -15,7 +15,7 @@ public class Character
     public CharacterStatus Status { get; private set; }
 
 
-    public Item Item { get; set; }
+    public Item[] Item { get; set; } = new Item[3];
     public event Action OnAttack;
     
 
@@ -40,9 +40,10 @@ public class Character
 
         CurPosX = -1;
         CurPosY = -1;
+        
     }
 
-    public T EquipItem<T>() where T : Item
+    public T EquipItem<T>() where T : Item //아이템 클래스가 다양해지면?
     {
         T empty = Activator.CreateInstance<T>();
 
@@ -54,4 +55,5 @@ public class Character
         OnAttack?.Invoke();
     }
 
+    
 }

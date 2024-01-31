@@ -15,6 +15,8 @@ public class ItemDescript_PopupUI : BaseUI
 
     public CharacterData ShopUnitData { get; set; }
     public RoomData ShopRoomData { get; set; }
+    
+    // TODO : 아이템데이터도 추가해야함.
 
     protected override void Init()
     {

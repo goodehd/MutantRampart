@@ -11,6 +11,8 @@ public class InventUnitDescri_PopupUI : BaseUI
     private Button _closeBtn;
     private Button _deleteBtn;
     private Button[] _equipSlots = new Button[3];
+    private bool[] _isequipSlotBool = new bool[3] { false, false, false };
+    
     //private Button _firstSlot;
     //private Button _secondSlot;
     //private Button _thirdSlot;
@@ -80,16 +82,17 @@ public class InventUnitDescri_PopupUI : BaseUI
         // 1. 게임매니저에 구매한 서브아이템 담을 list 만들어서 연결하기
         // 2. MyItems_Content 자식으로 List.Count 만큼 생성하기
 
-        //  List<ThisRoom> playerSubItems = Main.Get<GameManager>().PlayerRooms;
-        //foreach (Transform item in _myItemsContent.transform) // todo : 이건 무슨의미일까 ? 초기화 관련한걸까 ?
-        //{
-        //    Destroy(item.gameObject);
-        //}
-        //for (int i = 0; i < playerRooms.Count; i++)
-        //{
-        //    MyItemsImgBtnUI inventSubItems = Main.Get<UIManager>().CreateSubitem<MyItemsImgBtnUI>("MyItemsImgBtnUI", _myItemsContent);
-        //    inventSubItems.RoomData = playerRooms[i];
-        //}
+        List<Item> playerSubItems = Main.Get<GameManager>().PlayerItems;
+        foreach (Transform item in _myItemsContent.transform) // todo : 이건 무슨의미일까 ? 초기화 관련한걸까 ?
+        {
+            Destroy(item.gameObject);
+        }
+        for (int i = 0; i < playerSubItems.Count; i++)
+        {
+            MyItemsImgBtnUI inventSubItems = Main.Get<UIManager>().CreateSubitem<MyItemsImgBtnUI>("MyItemsImgBtnUI", _myItemsContent);
+            inventSubItems.ItemData = playerSubItems[i];
+            inventSubItems.Owner = this;
+        }
 
         SetInfo();
     }
@@ -107,6 +110,7 @@ public class InventUnitDescri_PopupUI : BaseUI
         Main.Get<UIManager>().ClosePopup();
         Owner._equipCheckImg.gameObject.SetActive(false);
         Owner.isUnitContentPressed = false;
+        
     }
 
     private void ClickInventUnitDeleteBtn(PointerEventData EventData)
@@ -128,6 +132,27 @@ public class InventUnitDescri_PopupUI : BaseUI
         // 3번 장착된 아이템 해제
     }
 
+    public void ItemEquip(Item data)
+    {
+        for (int i = 0; i < _equipSlots.Length; i++)
+        {
+            if (!_isequipSlotBool[i])
+            {
+                _equipSlotsImgs[i].sprite = Main.Get<ResourceManager>()
+                    .Load<Sprite>($"{Literals.ITEM_SPRITE_PATH}{data.EquipItemData.Key}");
+                _isequipSlotBool[i] = true;
+                UnitData.Item[i] = data;
+                break;
+            }
+        }
+        for (int i = 0; i < UnitData.Item.Length; i++)
+        {
+            if (UnitData.Item[i] != null)
+            {
+                UnitData.Item[i].EquipItem(UnitData);
+            }
+        }
+    }
 }
 
 // slot 위에 마우스 hovered 하면 _equipCancelImgs active 되게끔 츄라이 !

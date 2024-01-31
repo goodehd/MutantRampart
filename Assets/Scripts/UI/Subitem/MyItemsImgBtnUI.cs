@@ -10,9 +10,10 @@ public class MyItemsImgBtnUI : BaseUI
     private Image _itemImg;
     private Button _itemImgBtn;
     private Image _equipCheckImg;
+    private bool _isIEquiped;
+    public Item ItemData { get; set; }
 
-    // item data 추가하기
-
+    public InventUnitDescri_PopupUI Owner { get; set; }
     protected override void Init()
     {
         SetUI<Image>();
@@ -23,19 +24,32 @@ public class MyItemsImgBtnUI : BaseUI
         _equipCheckImg = GetUI<Image>("ItemEquipCheckImg");
 
         SetUICallback(_itemImgBtn.gameObject, EUIEventState.Click, ClickUItemImgBtn);
+        SetUICallback(_itemImgBtn.gameObject, EUIEventState.Hovered, HoveredUnitContentBtn);
+        SetUICallback(_itemImgBtn.gameObject, EUIEventState.Exit, ExitUnitContentBtn);
 
         SetInfo();
     }
 
     private void SetInfo()
     {
-
+        _itemImg.sprite = Main.Get<ResourceManager>()
+            .Load<Sprite>($"{Literals.ITEM_SPRITE_PATH}{ItemData.EquipItemData.Key}");
     }
 
     private void ClickUItemImgBtn(PointerEventData data)
     {
-        // 슬롯에 장착하기
+        if(_isIEquiped)return;
+        Owner.ItemEquip(ItemData);
         _equipCheckImg.gameObject.SetActive(true);
+        _isIEquiped = true;
+    }
+    private void HoveredUnitContentBtn(PointerEventData data)
+    {
+        _itemImg.color = Color.cyan;
     }
 
+    private void ExitUnitContentBtn(PointerEventData data)
+    {
+        _itemImg.color = Color.white;
+    }
 }
