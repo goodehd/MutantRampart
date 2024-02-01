@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TileManager : IManagers
@@ -10,8 +10,10 @@ public class TileManager : IManagers
     private GameObject _gridObject;
 
     public SpawnTile SpawnTile { get; private set; }
-    public RoomBehavior SelectRoom { get; set; }
     public BatPoint BatSlot { get; set; }
+
+    public RoomBehavior SelectRoom { get; private set; }
+    public event Action OnSlectRoomEvent;
 
     public void GenerateMap(int x, int y)
     {
@@ -64,6 +66,13 @@ public class TileManager : IManagers
         return true;
     }
 
+    public void SetSelectRoom(RoomBehavior room)
+    {
+        SelectRoom = room;
+        if(room != null)
+            OnSlectRoomEvent?.Invoke();
+    }
+
     public RoomBehavior ChangeRoom(ThisRoom changeRoom)
     {
         GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"{changeRoom.Data.Key}");
@@ -85,22 +94,6 @@ public class TileManager : IManagers
         return room;
     }
 
-    public RoomBehavior ChangeRoomToDefault(int indexX, int indexY)
-    {
-        Vector3 pos = _roomObjList[indexX][indexY].transform.position;
-        resource.Destroy(_roomObjList[indexX][indexY].gameObject);
-
-        GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"Default");
-        obj.transform.position = pos;
-        obj.transform.parent = _gridObject.transform;
-        _roomObjList[indexX][indexY] = obj;
-
-        RoomBehavior room = obj.GetComponent<RoomBehavior>();
-        room.IndexX = indexX;
-        room.IndexY = indexY;
-        return room;
-    }
-
     public List<GameObject> GetNeighbors(int curPosX, int curPosY)
     {
         List<GameObject> outPut = new List<GameObject>();
@@ -118,15 +111,15 @@ public class TileManager : IManagers
 
             outPut.Add(_roomObjList[curPosX + dx[i]][curPosY + dy[i]]);
         }
-
         return outPut;
     }
 
     public GameObject GetRoom(int x, int y)
     {
         if (!IsRoomPositionValid(x, y))
+        {
             return null;
-
+        }
         return _roomObjList[x][y];
     }
 
@@ -154,12 +147,10 @@ public class TileManager : IManagers
         {
             return false;
         }
-
         if (posY < 0 || posY >= _roomObjList[posX].Count)
         {
             return false;
         }
-
         return true;
     }
 }

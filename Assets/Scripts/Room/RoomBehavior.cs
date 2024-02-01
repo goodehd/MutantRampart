@@ -24,11 +24,14 @@ public class RoomBehavior : MonoBehaviour
     private float blinkDuration = 0.4f;
 
     private Coroutine _flashingCoroutine;
+    private TileManager _tile;
 
     public virtual void Init(RoomData data)
     {
         if (_initialize)
             return;
+
+        _tile = Main.Get<TileManager>();
 
         RoomInfo = new ThisRoom();
         RoomInfo.Init(data);
@@ -73,29 +76,19 @@ public class RoomBehavior : MonoBehaviour
     }
     protected virtual void OnMouseDown()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
-        FocusCamera();
-
-        ((DayMain_SceneUI)Main.Get<UIManager>().SceneUI).TileBat();
-
-        if(Main.Get<TileManager>().SelectRoom != this)
+        if (EventSystem.current.IsPointerOverGameObject())
         {
-            if (Main.Get<TileManager>().SelectRoom != null)
-                Main.Get<TileManager>().SelectRoom.StopFlashing();
-            Main.Get<TileManager>().SelectRoom = this;
+            return;
+        }
+
+        if(_tile.SelectRoom != this)
+        {
+            if (_tile.SelectRoom != null)
+                _tile.SelectRoom.StopFlashing();
+            _tile.SetSelectRoom(this);
             Main.Get<UIManager>().CloseAllPopup();
             SortRoom();
         }
-        
-        if(_flashingCoroutine == null)
-            StartFlashing();
-    }
-
-
-    private void FocusCamera()
-    {
-        Vector3 pos = new Vector3(transform.position.x + 1.5f, transform.position.y + 1.8f, Camera.main.transform.position.z);
-        Camera.main.transform.DOMove(pos, 0.5f);
     }
 
     public void RemoveEnemy(CharacterBehaviour src)
