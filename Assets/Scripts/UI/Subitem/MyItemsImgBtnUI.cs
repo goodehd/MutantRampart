@@ -13,6 +13,9 @@ public class MyItemsImgBtnUI : BaseUI
     private bool _isIEquiped;
     public Item ItemData { get; set; }
     public InventUnitDescri_PopupUI Owner { get; set; }
+
+    private InventItemDetailBox _descriptPopupUI;
+    
     protected override void Init()
     {
         SetUI<Image>();
@@ -33,6 +36,9 @@ public class MyItemsImgBtnUI : BaseUI
     {
         _itemImg.sprite = Main.Get<ResourceManager>()
             .Load<Sprite>($"{Literals.ITEM_SPRITE_PATH}{ItemData.EquipItemData.Key}");
+        if(ItemData == null)return;
+        _isIEquiped = ItemData.IsEquiped;
+        _equipCheckImg.gameObject.SetActive(_isIEquiped);
     }
 
     private void ClickUItemImgBtn(PointerEventData data)
@@ -45,10 +51,15 @@ public class MyItemsImgBtnUI : BaseUI
     private void HoveredUnitContentBtn(PointerEventData data)
     {
         _itemImg.color = Color.cyan;
+        if(_descriptPopupUI != null) return;
+        _descriptPopupUI = Main.Get<UIManager>().CreateSubitem<InventItemDetailBox>("InventItemDetailBox");
+        _descriptPopupUI.HoveredItemData = ItemData.EquipItemData;
     }
 
     private void ExitUnitContentBtn(PointerEventData data)
     {
         _itemImg.color = Color.white;
+        if(_descriptPopupUI == null) return;
+        Main.Get<UIManager>().DestroySubItem(_descriptPopupUI.gameObject);
     }
 }
