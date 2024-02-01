@@ -62,6 +62,8 @@ public class DayMain_SceneUI : BaseUI
 
     private PocketBlock_PopupUI _pocketBlock;
 
+    public Inventory_PopupUI inventory_PopupUI;
+
     private Stack<UIState> _btnActions = new Stack<UIState>();
 
     public CameraMovement maincamera;
@@ -282,6 +284,11 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickInventoryBtn(PointerEventData eventData)
     {
+        if (inventory_PopupUI == null) // 유니티 play 하고 Hierarchy 창을 클릭한 후에 게임Scene 에서 타일을 누르면 인벤토리가 없어지고, 인벤토리 버튼 누르면 인벤토리가 다시 안 뜨는 이슈해결을 위해.
+        {
+            isInventOpen = false;
+        }
+
         if (isInventOpen) // 인벤토리 열려있으면 버튼 작동 안 하게끔
         {
             return;

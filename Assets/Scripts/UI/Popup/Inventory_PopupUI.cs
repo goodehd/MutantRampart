@@ -59,6 +59,7 @@ public class Inventory_PopupUI : BaseUI
         _inventRoomContent = GetUI<Transform>("InventRoom_Content");
         _inventUnitContent = GetUI<Transform>("InventUnit_Content");
 
+        Owner.inventory_PopupUI = this;
 
         SetRoomInventory();
         SetUnitInventory();
