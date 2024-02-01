@@ -101,7 +101,7 @@ public class InventUnitDescri_PopupUI : BaseUI
     private void ClickInventUnitCloseBtn(PointerEventData EventData)
     {
         Main.Get<UIManager>().ClosePopup();
-        Owner._equipCheckImg.gameObject.SetActive(false);
+        Owner._selectCheckImg.gameObject.SetActive(false);
     }
 
     private void ClickInventUnitDeleteBtn(PointerEventData EventData)

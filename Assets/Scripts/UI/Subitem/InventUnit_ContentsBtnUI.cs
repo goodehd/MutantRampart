@@ -6,7 +6,7 @@ public class InventUnit_ContentsBtnUI : BaseUI
 {
     private Image _unitContentsImg;
     private Button _unitContentsBtn;
-    public Image _equipCheckImg { get; private set; }
+    public Image _selectCheckImg { get; private set; }
 
     public Character UnitData { get; set; }
 
@@ -19,7 +19,7 @@ public class InventUnit_ContentsBtnUI : BaseUI
 
         _unitContentsImg = GetUI<Image>("InventUnit_ContentsBtnUI");
         _unitContentsBtn = GetUI<Button>("InventUnit_ContentsBtnUI");
-        _equipCheckImg = GetUI<Image>("InventUnitEquipCheckImg");
+        _selectCheckImg = GetUI<Image>("InventUnitEquipCheckImg");
 
         SetUICallback(_unitContentsBtn.gameObject, EUIEventState.Click, ClickUnitContentBtn);
         SetUICallback(_unitContentsBtn.gameObject, EUIEventState.Hovered, HoveredUnitContentBtn);
@@ -41,24 +41,17 @@ public class InventUnit_ContentsBtnUI : BaseUI
             Owner.inventUnitDescri_PopupUI.UnitData = UnitData; // 데이터 넘겨주고
             Owner.inventUnitDescri_PopupUI.Owner = this; // owner 설정해주고
 
-            // 선택체크표시 활성화 관련 로직 - 어떻게 '나'와 '다른아이템' 을 구분할 수 있을까
-            // 나를 선택했을 땐 체크표시 활성화, 다른 아이템 선택했을 땐 나의 체크표시 비활성화
-            //if (UnitData == this)
-            //{
-            //    _equipCheckImg.gameObject.SetActive(true);
-            //}
-            //else
-            //{
-
-            //}
-
+            _selectCheckImg.gameObject.SetActive(true);
         }
         else // 설명창이 이미 열려 있다면
         {
+            Owner.inventUnitDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false); // 선택표시가 기존에 활성화되어있다면 일단 꺼준다.
+
             Owner.inventUnitDescri_PopupUI.UnitData = UnitData; // 데이터 넘겨주고
             Owner.inventUnitDescri_PopupUI.SetInfo(); // 데이터 갱신 !
+            Owner.inventUnitDescri_PopupUI.Owner = this; // owner 업데이트
 
-            //_equipCheckImg.gameObject.SetActive(true);
+            _selectCheckImg.gameObject.SetActive(true); // 그리고 다시 선택표시가 active 해주기.
         }
 
     }

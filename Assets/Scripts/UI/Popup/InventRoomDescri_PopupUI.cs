@@ -57,7 +57,7 @@ public class InventRoomDescri_PopupUI : BaseUI
     private void ClickCloseBtn(PointerEventData EventData)
     {
         Main.Get<UIManager>().ClosePopup();
-        Owner._equipCheckImg.gameObject.SetActive(false);
+        Owner._selectCheckImg.gameObject.SetActive(false);
     }
 
     private void ClickUpgradeBtn(PointerEventData EventData)

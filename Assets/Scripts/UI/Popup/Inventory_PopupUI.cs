@@ -36,7 +36,8 @@ public class Inventory_PopupUI : BaseUI
 
     public InventUnitDescri_PopupUI inventUnitDescri_PopupUI;
 
-
+    //public InventRoom_ContentsBtnUI inventRoom_ContentsBtnUI;
+    //public Image _roomSelectCheckImg;
     protected override void Init()
     {
         SetUI<Button>();

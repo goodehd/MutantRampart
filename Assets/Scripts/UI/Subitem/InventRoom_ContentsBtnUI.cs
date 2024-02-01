@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,7 +6,7 @@ public class InventRoom_ContentsBtnUI : BaseUI
 {
     private Image _roomContentsImg;
     private Button _roomContentsBtn;
-    public Image _equipCheckImg { get; private set; }
+    public Image _selectCheckImg { get; private set; }
 
     public ThisRoom RoomData { get; set; }
 
@@ -21,7 +19,7 @@ public class InventRoom_ContentsBtnUI : BaseUI
 
         _roomContentsImg = GetUI<Image>("InventRoom_ContentsBtnUI");
         _roomContentsBtn = GetUI<Button>("InventRoom_ContentsBtnUI");
-        _equipCheckImg = GetUI<Image>("InventRoomEquipCheckImg");
+        _selectCheckImg = GetUI<Image>("InventRoomEquipCheckImg");
 
         SetUICallback(_roomContentsBtn.gameObject, EUIEventState.Click, ClickRoomContentBtn);
         SetUICallback(_roomContentsBtn.gameObject, EUIEventState.Hovered, HoveredUnitContentBtn);
@@ -32,7 +30,7 @@ public class InventRoom_ContentsBtnUI : BaseUI
 
     private void SetInfo()
     {
-        _roomContentsImg.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{RoomData.Data.Key}");        
+        _roomContentsImg.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{RoomData.Data.Key}");
     }
 
     private void ClickRoomContentBtn(PointerEventData data)
@@ -42,13 +40,19 @@ public class InventRoom_ContentsBtnUI : BaseUI
             Owner.inventRoomDescri_PopupUI = Main.Get<UIManager>().OpenPopup<InventRoomDescri_PopupUI>(); // 설명창 열어주고
             Owner.inventRoomDescri_PopupUI.RoomData = RoomData; // 데이터 넘겨주고
             Owner.inventRoomDescri_PopupUI.Owner = this; // owner 설정해주고
+
+            _selectCheckImg.gameObject.SetActive(true);
         }
-        else // 설명 팝업이 이미 떠 있다면,
+
+        else // 설명 팝업이 이미 떠 있다면
         {
+            Owner.inventRoomDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false); // 선택표시가 기존에 활성화되어있다면 일단 꺼준다.
+
             Owner.inventRoomDescri_PopupUI.RoomData = RoomData; // 데이터 넘겨주고
             Owner.inventRoomDescri_PopupUI.SetInfo(); // 데이터 갱신
+            Owner.inventRoomDescri_PopupUI.Owner = this; // owner 업데이트
 
-            //_equipCheckImg.gameObject.SetActive(true);
+            _selectCheckImg.gameObject.SetActive(true); // 그리고 다시 선택표시가 active 해주기.
 
         }
     }
