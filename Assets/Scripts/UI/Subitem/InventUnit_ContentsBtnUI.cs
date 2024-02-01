@@ -41,8 +41,16 @@ public class InventUnit_ContentsBtnUI : BaseUI
             Owner.inventUnitDescri_PopupUI.UnitData = UnitData; // 데이터 넘겨주고
             Owner.inventUnitDescri_PopupUI.Owner = this; // owner 설정해주고
 
-            _equipCheckImg.gameObject.SetActive(true);
-            //if (UnitData)
+            // 선택체크표시 활성화 관련 로직 - 어떻게 '나'와 '다른아이템' 을 구분할 수 있을까
+            // 나를 선택했을 땐 체크표시 활성화, 다른 아이템 선택했을 땐 나의 체크표시 비활성화
+            //if (UnitData == this)
+            //{
+            //    _equipCheckImg.gameObject.SetActive(true);
+            //}
+            //else
+            //{
+
+            //}
 
         }
         else // 설명창이 이미 열려 있다면
@@ -50,7 +58,7 @@ public class InventUnit_ContentsBtnUI : BaseUI
             Owner.inventUnitDescri_PopupUI.UnitData = UnitData; // 데이터 넘겨주고
             Owner.inventUnitDescri_PopupUI.SetInfo(); // 데이터 갱신 !
 
-            _equipCheckImg.gameObject.SetActive(true);
+            //_equipCheckImg.gameObject.SetActive(true);
         }
 
     }

@@ -68,10 +68,9 @@ public class InventRoomDescri_PopupUI : BaseUI
 
     private void ClickDeleteBtn(PointerEventData EventData)
     {
-        // 인벤토리를 껐다가 다시 키면 없어져있긴 하는데 삭제되는 순간에 바로 인벤토리 업데이트까지는 안 됨..
         Main.Get<GameManager>().PlayerRooms.Remove(RoomData);
         Main.Get<UIManager>().ClosePopup(); // 설명창 닫아주고
-        Owner.Owner.SetRoomInventory(); // 인벤토리 초기화
+        Owner.Owner.SetRoomInventory(); // 인벤토리 리프레쉬
     }
 
     private void OnDestroy()

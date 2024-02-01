@@ -51,7 +51,7 @@ public class NightMain_SceneUI : BaseUI
         _playBtn.gameObject.SetActive(false);
         _x2SpeedBtn.gameObject.SetActive(true);
         _pausedBtn.gameObject.SetActive(false);
-        // todo ; 플레이 속도 1배속 -> 2배속으로 설정
+        // 플레이 속도 1배속 -> 2배속으로 설정
 
     }
     private void ClickMultiplySpeedBtn(PointerEventData eventData)
@@ -59,7 +59,7 @@ public class NightMain_SceneUI : BaseUI
         _playBtn.gameObject.SetActive(false);
         _x2SpeedBtn.gameObject.SetActive(false);
         _pausedBtn.gameObject.SetActive(true);
-        // todo ; 플레이 속도 2배속 -> 일시정지로 설정
+        // 플레이 속도 2배속 -> 일시정지로 설정
         Time.timeScale = 0.0f;
 
     }
@@ -68,7 +68,7 @@ public class NightMain_SceneUI : BaseUI
         _playBtn.gameObject.SetActive(true);
         _x2SpeedBtn.gameObject.SetActive(false);
         _pausedBtn.gameObject.SetActive(false);
-        // todo ; 플레이 속도 일시정지 -> 1배속으로 설정
+        // 플레이 속도 일시정지 -> 1배속으로 설정
 
     }
 

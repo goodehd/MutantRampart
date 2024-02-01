@@ -31,11 +31,7 @@ public class InventUnitDescri_PopupUI : BaseUI
 
     public Character UnitData { get; set; }
 
-    //public Inventory_PopupUI inventoryPopupUIOwner { get; set; }
-
     public InventUnit_ContentsBtnUI Owner { get; set; }
-
-    //public bool isOpen { get; set; }
 
 
     protected override void Init()
@@ -106,14 +102,14 @@ public class InventUnitDescri_PopupUI : BaseUI
     {
         Main.Get<UIManager>().ClosePopup();
         Owner._equipCheckImg.gameObject.SetActive(false);
+        //Owner.isDescripOpen = false;
     }
 
     private void ClickInventUnitDeleteBtn(PointerEventData EventData)
     {
-        // 인벤토리를 껐다가 다시 키면 없어져있긴 하는데 삭제되는 순간에 바로 인벤토리 업데이트까지는 안 됨..
         Main.Get<GameManager>().playerUnits.Remove(UnitData);
         Main.Get<UIManager>().ClosePopup(); // 설명창 닫아주고
-        Owner.Owner.SetUnitInventory();// 인벤토리 초기화
+        Owner.Owner.SetUnitInventory();// 인벤토리 리프레쉬
     }
 
     private void ClickFirstSlot(PointerEventData EventData)

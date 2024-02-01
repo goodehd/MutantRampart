@@ -36,6 +36,7 @@ public class Inventory_PopupUI : BaseUI
 
     public InventUnitDescri_PopupUI inventUnitDescri_PopupUI;
 
+
     protected override void Init()
     {
         SetUI<Button>();
@@ -109,14 +110,27 @@ public class Inventory_PopupUI : BaseUI
     {
         _inventRoomScrollView.gameObject.SetActive(true);
         _inventUnitScrollView.gameObject.SetActive(false);
-        
+
+        // unit description 창이 켜져있는 걸 꺼줘야하는데 열려있다는 정보를 어디서 어떻게 가져와야하는 것인가
+        if (inventUnitDescri_PopupUI != null) // unit 창이 켜져있다면
+        {
+            Main.Get<UIManager>().ClosePopup(); // stack 으로 popup 이 쌓임. -> 후입선출 되는 흐름 ! 그래서 ClosePopup 하게 되면 제일 최근에 생성된 UnitDescri_PopupUI 가 닫히는 것이다 !
+            inventUnitDescri_PopupUI = null;
+        }
 
     }
     private void ClickUnitBtn(PointerEventData EventData)
     {
         _inventRoomScrollView.gameObject.SetActive(false);
         _inventUnitScrollView.gameObject.SetActive(true);
-    }    
+
+        // room description 창이 켜져있는 걸 꺼줘야하는데 열려있다는 정보를 어디서 어떻게 가져와야하는 것인가
+        if (inventRoomDescri_PopupUI != null) // room 설명창이 열려 있다면
+        {
+            Main.Get<UIManager>().ClosePopup();
+            inventRoomDescri_PopupUI = null;
+        }
+    }
 
     private void ClickCloseBtn(PointerEventData EventData)
     {
