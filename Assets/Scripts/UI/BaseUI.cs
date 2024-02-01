@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class BaseUI : MonoBehaviour
 {
     protected UIManager _ui;
+    protected GameManager _gameManager;
     protected Dictionary<Type, Dictionary<string, UnityEngine.Object>> _uiObjects = new Dictionary<Type, Dictionary<string, UnityEngine.Object>>();
 
     private void Start()
@@ -17,6 +18,7 @@ public class BaseUI : MonoBehaviour
 
     protected virtual void Init()
     {
+        _gameManager = Main.Get<GameManager>();
         _ui = Main.Get<UIManager>();
     }
 

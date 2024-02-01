@@ -64,10 +64,12 @@ public class RoomSelectImageUI : BaseUI
         if(_tile.SelectRoom.RoomInfo == Room)
         {
             _tile.ChangeRoom(new ThisRoom(_data.Room["Default"]));
+            Main.Get<TileManager>().SelectRoom.SortRoom();
         }
         else
         {
             _tile.ChangeRoom(Room);
+            Main.Get<TileManager>().SelectRoom.SortRoom();
         }
     }
 

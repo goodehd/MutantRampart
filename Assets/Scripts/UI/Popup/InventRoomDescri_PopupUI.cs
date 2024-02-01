@@ -22,8 +22,6 @@ public class InventRoomDescri_PopupUI : BaseUI
 
     public InventRoom_ContentsBtnUI Owner { get; set; }
 
-    //public bool isOpen { get; set; }
-
     protected override void Init()
     {
         SetUI<Button>();
@@ -48,7 +46,7 @@ public class InventRoomDescri_PopupUI : BaseUI
 
     }
 
-    private void SetInfo()
+    public void SetInfo()
     {
         _roomName.text = RoomData.Data.Key;
         _roomType.text = RoomData.Data.Type.ToString();
@@ -60,7 +58,6 @@ public class InventRoomDescri_PopupUI : BaseUI
     {
         Main.Get<UIManager>().ClosePopup();
         Owner._equipCheckImg.gameObject.SetActive(false);
-        Owner.isRoomContentPressed = false;
     }
 
     private void ClickUpgradeBtn(PointerEventData EventData)
@@ -73,5 +70,12 @@ public class InventRoomDescri_PopupUI : BaseUI
     {
         // 인벤토리를 껐다가 다시 키면 없어져있긴 하는데 삭제되는 순간에 바로 인벤토리 업데이트까지는 안 됨..
         Main.Get<GameManager>().PlayerRooms.Remove(RoomData);
+        Main.Get<UIManager>().ClosePopup(); // 설명창 닫아주고
+        Owner.Owner.SetRoomInventory(); // 인벤토리 초기화
+    }
+
+    private void OnDestroy()
+    {
+        Owner.Owner.inventRoomDescri_PopupUI = null; // null 처리 !
     }
 }

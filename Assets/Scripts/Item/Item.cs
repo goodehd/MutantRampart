@@ -53,7 +53,7 @@ public class Item
         Debug.Log("엄마");
     }
 
-    public virtual void EndEffect()
+    public virtual void EndEffect(int stage)
     {
         Debug.Log("엄마");
     }
@@ -85,16 +85,16 @@ public class GoldCoinItem : Item
     public override void EquipItem(Character data)
     {
         base.EquipItem(data);
-        Main.Get<StageManager>().OnStageClear += EndEffect;
+        Main.Get<StageManager>().OnStageClearEvent += EndEffect;
     }
 
     public override void UnEquipItem(Character data)
     {
         base.UnEquipItem(data);
-        Main.Get<StageManager>().OnStageClear -= EndEffect;
+        Main.Get<StageManager>().OnStageClearEvent -= EndEffect;
     }
 
-    public override void EndEffect()
+    public override void EndEffect(int stage)
     {
         Main.Get<GameManager>().ChangeMoney(+1000);
     }

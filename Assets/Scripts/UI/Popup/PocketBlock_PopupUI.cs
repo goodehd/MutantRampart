@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -103,17 +102,17 @@ public class PocketBlock_PopupUI : BaseUI
     {
         if(isUint)
         {
-            tile.BatSlot.SetActive(true);
             tile.BatSlot.transform.localPosition = new Vector3(tile.SelectRoom.transform.localPosition.x, 
                 tile.SelectRoom.transform.position.y + 0.25f, 2.5f);
             _unitScroll.gameObject.SetActive(true);
             _roomScroll.gameObject.SetActive(false);
+            tile.ActiveBatSlot();
         }
         else
         {
-            tile.BatSlot.SetActive(false);
             _roomScroll.gameObject.SetActive(true);
             _unitScroll.gameObject.SetActive(false);
+            tile.InactiveBatSlot();
         }
     }
 }

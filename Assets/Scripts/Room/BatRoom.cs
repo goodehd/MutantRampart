@@ -26,7 +26,8 @@ public class BatRoom : RoomBehavior
         base.Init(data);
 
         _batType = Enum.Parse<EBatType>(this.gameObject.name);
-        Main.Get<StageManager>().OnStageClear += StageClear;
+        Main.Get<StageManager>().OnStageClearEvent -= StageClear;
+        Main.Get<StageManager>().OnStageClearEvent += StageClear;
         UnitCount = 0;
     }
 
@@ -134,7 +135,7 @@ public class BatRoom : RoomBehavior
         UnitCount = 0;
     }
 
-    private void StageClear()
+    private void StageClear(int stage)
     {
         int count = 0;
         for (int i = 0; i < Units.Length; i++)
@@ -216,7 +217,6 @@ public class BatRoom : RoomBehavior
 
     private void OnDestroy()
     {
-        Main.Get<StageManager>().OnStageClear -= StageClear;
         DeleteAllUnit();
     }
 }

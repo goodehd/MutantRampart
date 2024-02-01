@@ -6,25 +6,9 @@ using UnityEngine.Experimental.GlobalIllumination;
 public class GameManager : IManagers
 {
     public int _playerMoney { get; private set; } = 5000;
-    private int _playerHp = 5;
+    public Vital PlayerHP { get; private set; }
 
     public bool isHomeSet = false;
-    public int PlayerHp
-    {
-        get 
-        { 
-            return _playerHp; 
-        }
-        set
-        {
-            _playerHp = value;
-            if (_playerHp <= 0)
-            {
-                GameOver();
-            }
-            Debug.Log($"플레이어 체력 : {_playerHp}");
-        }
-    }
 
     public List<Character> playerUnits { get; private set; } = new List<Character>();   // 플레이어가 보유한 유닛 리스트
     public List<ThisRoom> PlayerRooms { get; private set; } = new List<ThisRoom>();     // 플레이어가 보유한 Room 리스트
@@ -45,6 +29,7 @@ public class GameManager : IManagers
         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Jotem"]));
 
+
         Item item1 = new Item();
         item1.Init(Main.Get<DataManager>().Item["Meat"]);
         PlayerItems.Add(item1);
@@ -52,7 +37,10 @@ public class GameManager : IManagers
         Item item2 = new Item();
         item2.Init(Main.Get<DataManager>().Item["BlueBook"]);
         PlayerItems.Add(item2);
-        
+
+        PlayerHP = new Vital(EstatType.Hp, 5);
+        PlayerHP.OnValueZero += GameOver;
+
         return true;
     }
 
