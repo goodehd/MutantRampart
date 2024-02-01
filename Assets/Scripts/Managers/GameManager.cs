@@ -37,6 +37,13 @@ public class GameManager : IManagers
         Item item2 = new Item();
         item2.Init(Main.Get<DataManager>().Item["BlueBook"]);
         PlayerItems.Add(item2);
+        Item item3 = new Item();
+        item3.Init(Main.Get<DataManager>().Item["RedBook"]);
+        PlayerItems.Add(item3);
+        
+        Item item4 = new Item();
+        item4.Init(Main.Get<DataManager>().Item["SilverCoin"]);
+        PlayerItems.Add(item4);
 
         PlayerHP = new Vital(EstatType.Hp, 5);
         PlayerHP.OnValueZero += GameOver;

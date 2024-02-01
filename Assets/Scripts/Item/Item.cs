@@ -15,6 +15,10 @@ public class Item
     public ItemData EquipItemData;
     public bool IsEquiped { get; set; }
 
+    public int ItemIndex;
+    
+    public Character Owner;
+    
     public void Init(ItemData data)
     {
         EquipItemData = data;
@@ -36,7 +40,7 @@ public class Item
         data.Status.GetStat<Stat>(EstatType.Damage).AddModifier(ATADD);
         data.Status.GetStat<Stat>(EstatType.AttackSpeed).AddModifier(SPADD);
         IsEquiped = true;
-        
+        Owner = data;
     }
 
     public virtual void UnEquipItem(Character data)

@@ -16,6 +16,7 @@ public class Character
 
 
     public Item[] Item { get; set; } = new Item[3];
+    public int[] itemnumbers = new int[3];
     public event Action OnAttack;
     
 
