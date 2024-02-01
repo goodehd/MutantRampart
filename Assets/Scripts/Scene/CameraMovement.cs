@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    
-    [SerializeField] private Vector3 Origin;
-    [SerializeField] private Vector3 Diference;
-    [SerializeField] private bool Drag = false;
-
-    public bool isOnPlacingPanel = false;
+    private Vector3 Origin;
+    private Vector3 Diference;
+    private bool Drag = false;
+    public bool Rock { get; set; } = false;
     
     void LateUpdate()
     {
-        if(isOnPlacingPanel)return;
+        if (Rock)
+        {
+            return;
+        }
         
         if (Input.GetMouseButton(0))
         {
@@ -34,5 +35,4 @@ public class CameraMovement : MonoBehaviour
             Camera.main.transform.position = Origin - Diference;
         }
     }
-    
 }

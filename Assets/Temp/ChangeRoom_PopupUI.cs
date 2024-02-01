@@ -71,7 +71,7 @@ public class ChangeRoom_PopupUI : BaseUI
         {
             if (changeRoom.IsEquiped && changeRoom == SelectRoom.RoomInfo)
             {
-                SelectRoom = Main.Get<TileManager>().ChangeRoomToDefault(SelectRoom.IndexX, SelectRoom.IndexY);
+                //SelectRoom = Main.Get<TileManager>().ChangeRoomToDefault(SelectRoom.IndexX, SelectRoom.IndexY);
                 changeRoom.IsEquiped = false;
             }
             else

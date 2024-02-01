@@ -24,6 +24,7 @@ public class Shop_PopupUI : BaseUI
     public List<CharacterData> ShopUnitItems { get; private set; } = new List<CharacterData>(); // 상점 - UnitItems
     public List<RoomData> ShopRoomItems { get; private set; } = new List<RoomData>(); // 상점 - RoomItems
 
+    public List<ItemData> ShopItemItems { get; private set; } = new List<ItemData>(); // 상점 - ItemItems;
 
     protected override void Init()
     {
@@ -70,6 +71,18 @@ public class Shop_PopupUI : BaseUI
         ShopRoomItems.Add(Main.Get<DataManager>().Room["Molar"]);
         ShopRoomItems.Add(Main.Get<DataManager>().Room["Snow"]);
         ShopRoomItems.Add(Main.Get<DataManager>().Room["Temple"]);
+        
+        ShopItemItems.Add(Main.Get<DataManager>().Item["Feather"]);
+        ShopItemItems.Add(Main.Get<DataManager>().Item["TrainingEgg"]);
+        ShopItemItems.Add(Main.Get<DataManager>().Item["FrozenTuna"]);
+        ShopItemItems.Add(Main.Get<DataManager>().Item["RedBook"]);
+        ShopItemItems.Add(Main.Get<DataManager>().Item["BlueBook"]);
+        ShopItemItems.Add(Main.Get<DataManager>().Item["GoldenCoin"]);
+        ShopItemItems.Add(Main.Get<DataManager>().Item["SilverCoin"]);
+        ShopItemItems.Add(Main.Get<DataManager>().Item["StrangeCandy"]);
+        ShopItemItems.Add(Main.Get<DataManager>().Item["Meat"]);
+        ShopItemItems.Add(Main.Get<DataManager>().Item["SilverBar"]);
+        ShopItemItems.Add(Main.Get<DataManager>().Item["GoldBar"]);
 
         // Shop - Unit Items
         for (int i = 0; i < ShopUnitItems.Count; i++)

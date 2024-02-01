@@ -15,6 +15,7 @@ public class ItemDescript_PopupUI : BaseUI
 
     public CharacterData ShopUnitData { get; set; }
     public RoomData ShopRoomData { get; set; }
+    public ItemData ShopItemData { get; set; }
 
     protected override void Init()
     {
@@ -33,9 +34,13 @@ public class ItemDescript_PopupUI : BaseUI
         {
             SetUnitItemPopupInfo(ShopUnitData);
         }
-        else // 구분 - 설명팝업 데이터가 Room 일 때
+        else if(ShopRoomData != null) // 구분 - 설명팝업 데이터가 Room 일 때
         {
             SetRoomItemPopupInfo(ShopRoomData);
+        }
+        else if (ShopItemData != null) // 구뷴 - 설명팝업 데이터가 item 일 때
+        {
+            SetItemItemPopupInfo(ShopItemData);
         }
     }
 
@@ -53,6 +58,13 @@ public class ItemDescript_PopupUI : BaseUI
         _itemName.text = roomData.Key;
         _itemDescript.text =
             $"설명 :\n{roomData.Instruction.ToString()}";
+    }
+
+    private void SetItemItemPopupInfo(ItemData itemData)
+    {
+        _itemName.text = itemData.Key;
+        _itemDescript.text =
+            $"Type : {itemData.Type.ToString()}\nHp : {itemData.HpAdd.ToString()}\nDamage : {itemData.AttackAdd.ToString()}\nDefense : {itemData.DefenseAdd.ToString()}\nAttackSpeed : {itemData.SpeedAdd.ToString()}\n\n설명\n {itemData.Instruction}";
     }
 
     private void ClickPopupCloseBtn(PointerEventData EventData)

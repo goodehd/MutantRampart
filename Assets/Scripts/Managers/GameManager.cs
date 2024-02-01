@@ -11,8 +11,8 @@ public class GameManager : IManagers
     public bool isHomeSet = false;
 
     public List<Character> playerUnits { get; private set; } = new List<Character>();   // 플레이어가 보유한 유닛 리스트
-    public List<ThisRoom> PlayerRooms { get; private set; } = new List<ThisRoom>();             // 플레이어가 보유한 Room 리스트
-
+    public List<ThisRoom> PlayerRooms { get; private set; } = new List<ThisRoom>();     // 플레이어가 보유한 Room 리스트
+    public List<Item> PlayerItems { get; private set; } = new List<Item>();             // 플레이어가 보유한 아이템 리스트
     public event Action<int> OnChangeMoney;
 
     public bool Init()
@@ -28,6 +28,15 @@ public class GameManager : IManagers
         
         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Jotem"]));
+
+
+        Item item1 = new Item();
+        item1.Init(Main.Get<DataManager>().Item["Meat"]);
+        PlayerItems.Add(item1);
+        
+        Item item2 = new Item();
+        item2.Init(Main.Get<DataManager>().Item["BlueBook"]);
+        PlayerItems.Add(item2);
 
         PlayerHP = new Vital(EstatType.Hp, 5);
         PlayerHP.OnValueZero += GameOver;

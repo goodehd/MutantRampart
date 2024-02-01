@@ -11,6 +11,7 @@ public class InventUnitDescri_PopupUI : BaseUI
     private Button _closeBtn;
     private Button _deleteBtn;
     private Button[] _equipSlots = new Button[3];
+    
     //private Button _firstSlot;
     //private Button _secondSlot;
     //private Button _thirdSlot;
@@ -76,16 +77,17 @@ public class InventUnitDescri_PopupUI : BaseUI
         // 1. 게임매니저에 구매한 서브아이템 담을 list 만들어서 연결하기
         // 2. MyItems_Content 자식으로 List.Count 만큼 생성하기
 
-        //  List<ThisRoom> playerSubItems = Main.Get<GameManager>().PlayerRooms;
-        //foreach (Transform item in _myItemsContent.transform) // todo : 이건 무슨의미일까 ? 초기화 관련한걸까 ?
-        //{
-        //    Destroy(item.gameObject);
-        //}
-        //for (int i = 0; i < playerRooms.Count; i++)
-        //{
-        //    MyItemsImgBtnUI inventSubItems = Main.Get<UIManager>().CreateSubitem<MyItemsImgBtnUI>("MyItemsImgBtnUI", _myItemsContent);
-        //    inventSubItems.RoomData = playerRooms[i];
-        //}
+        List<Item> playerSubItems = Main.Get<GameManager>().PlayerItems;
+        foreach (Transform item in _myItemsContent.transform) // todo : 이건 무슨의미일까 ? 초기화 관련한걸까 ?
+        {
+            Destroy(item.gameObject);
+        }
+        for (int i = 0; i < playerSubItems.Count; i++)
+        {
+            MyItemsImgBtnUI inventSubItems = Main.Get<UIManager>().CreateSubitem<MyItemsImgBtnUI>("MyItemsImgBtnUI", _myItemsContent);
+            inventSubItems.ItemData = playerSubItems[i];
+            inventSubItems.Owner = this;
+        }
 
         SetInfo();
     }
@@ -96,6 +98,14 @@ public class InventUnitDescri_PopupUI : BaseUI
         _unitDescription.text = $"Hp : {UnitData.Data.Hp.ToString()}\nDamage : {UnitData.Data.Damage.ToString()}\nDefense : {UnitData.Data.Defense.ToString()}\nATK Speed : {UnitData.Data.AttackSpeed.ToString()}";
         _unitImg.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{UnitData.Data.Key}");
 
+        for (int i = 0; i < _equipSlots.Length; i++)
+        {
+            if (UnitData.Item[i] != null)
+            {
+                _equipSlotsImgs[i].sprite = Main.Get<ResourceManager>()
+                    .Load<Sprite>($"{Literals.ITEM_SPRITE_PATH}{UnitData.Item[i].EquipItemData.Key}");
+            }
+        }
     }
 
     private void ClickInventUnitCloseBtn(PointerEventData EventData)
@@ -126,11 +136,33 @@ public class InventUnitDescri_PopupUI : BaseUI
         // 3번 장착된 아이템 해제
     }
 
+    public void ItemEquip(Item data)
+    {
+        for (int i = 0; i < _equipSlots.Length; i++)
+        {
+            if (UnitData.Item[i] == null)
+            {
+                _equipSlotsImgs[i].sprite = Main.Get<ResourceManager>()
+                    .Load<Sprite>($"{Literals.ITEM_SPRITE_PATH}{data.EquipItemData.Key}");
+                UnitData.Item[i] = data;
+                UnitData.Item[i].EquipItem(UnitData);
+                break;
+            }
+            else
+            {
+                _equipSlotsImgs[i].sprite = Main.Get<ResourceManager>()
+                .Load<Sprite>($"{Literals.ITEM_SPRITE_PATH}{UnitData.Item[i].EquipItemData.Key}");
+            }
+            
+        }
+        
+    }
+
     private void OnDestroy()
     {
         Owner.Owner.inventUnitDescri_PopupUI = null; // null 처리 !
     }
-
+    
 }
 
 // slot 위에 마우스 hovered 하면 _equipCancelImgs active 되게끔 츄라이 !

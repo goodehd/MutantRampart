@@ -1,16 +1,31 @@
 using DG.Tweening;
+using DG.Tweening.Core.Easing;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public class UIState
+{
+    public Action BtnActions;
+    public EUIstate UIStagte;
+
+    public UIState(Action btnActions, EUIstate uIStagte)
+    {
+        BtnActions = btnActions;
+        UIStagte = uIStagte;
+    }
+}
+
 public class DayMain_SceneUI : BaseUI
 {
     #region Field
     private StageManager stageManager;
     private TileManager tileManager;
+    private GameManager gameManager;
 
     private Image _backPanel;
     private Image _stageImagePanel;
@@ -36,7 +51,6 @@ public class DayMain_SceneUI : BaseUI
     private TextMeshProUGUI _stageText;
 
     private Slider _hpProgressbar;
-
     private Animator _dayImageAnimator;
 
     private List<RectTransform> _downMoveUIList = new List<RectTransform>();
@@ -48,10 +62,12 @@ public class DayMain_SceneUI : BaseUI
 
     private PocketBlock_PopupUI _pocketBlock;
 
-    private Stack<Action> _btnActions = new Stack<Action>();
+    private Stack<UIState> _btnActions = new Stack<UIState>();
 
     public CameraMovement maincamera;
-    public bool isInventOpen { get; set; }
+    public bool isInventOpen { get; set; } = false;
+    public bool isUIAnimating { get; set; } = false;
+    public float animationDuration = 0.3f;
 
     #endregion
 
@@ -67,6 +83,7 @@ public class DayMain_SceneUI : BaseUI
 
         stageManager = Main.Get<StageManager>();
         tileManager = Main.Get<TileManager>();
+        gameManager = Main.Get<GameManager>();
 
         maincamera = Camera.main.GetComponent<CameraMovement>();
 
@@ -76,6 +93,8 @@ public class DayMain_SceneUI : BaseUI
         stageManager.OnStageStartEvent += ClickStart;
         stageManager.OnStageClearEvent += ClickStart;
         stageManager.OnStageClearEvent += UpdateDayCount;
+
+        tileManager.OnSlectRoomEvent += TileBat;
     }
 
     #region UiBind
@@ -183,17 +202,22 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickStageStartBtn(PointerEventData eventData)
     {
-        Main.Get<StageManager>().StartStage();
+        stageManager.StartStage();
+
+        //if (gameManager.isHomeSet)
+        //{
+        //    stageManager.StartStage();
+        //}
+        //else
+        //{
+        //    Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
+        //    ui.curErrorText = "홈타입의 방을 설치해 주세요.";
+        //}
     }
 
     private void ClickUnitBtn(PointerEventData eventData)
     {
         OpenPoketBlock(true);
-
-        Action curAction = _btnActions.Pop();
-        curAction -= tileManager.InactiveBatSlot;
-        curAction += tileManager.InactiveBatSlot;
-        _btnActions.Push(curAction);
     }
 
     private void ClickRoomBtn(PointerEventData eventData)
@@ -203,20 +227,16 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickBackBtn(PointerEventData eventData)
     {
-        if (_btnActions.Count >= 1)
+        if (_btnActions.Count >= 1 && !isUIAnimating)
         {
-            _btnActions.Pop().Invoke();
-        }
-        if (Main.Get<TileManager>().SelectRoom != null)
-        {
-            Main.Get<TileManager>().SelectRoom.StopFlashing();
+            _btnActions.Pop().BtnActions.Invoke();
         }
     }
 
     private void ClickPlacingBtn(PointerEventData eventData)
     {
         ClickPlacing();
-        _btnActions.Push(ClickPlacing);
+        _btnActions.Push(new UIState(ClickPlacing, EUIstate.Main));
     }
 
     private void ClickShopBtn(PointerEventData eventData)
@@ -252,9 +272,8 @@ public class DayMain_SceneUI : BaseUI
         {
             _dayImageAnimator.SetTrigger(Literals.StageStart);
         }
-
-        DownMoveUI();
-        NightUIMove();
+        MovePosYUI(_downMoveUIList, -240f);
+        MovePosYUI(_nightTransform, 200f);
     }
 
     private void ClickInventoryBtn(PointerEventData eventData)
@@ -295,50 +314,92 @@ public class DayMain_SceneUI : BaseUI
         }
     }
 
+    private void ClickPlacing()
+    {
+        if (isUIAnimating)
+            return;
+
+        StartCoroutine(ButtonRock());
+        _backPanel.gameObject.SetActive(!_backPanel.gameObject.activeSelf);
+        MovePosYUI(_upMoveUIList, 240f);
+        MovePosYUI(_placingPanelTransform, 220f);
+        MovePosYUI(_downMoveUIList, -240f);
+        MovePosYUI(_backBtnTransform, -220f);
+    }
+
     public void TileBat()
     {
-        SetTileBatUI();
+        if (_btnActions.Count <= 0)
+        {
+            return;
+        }
 
-        if (_btnActions.Peek() != SetTileBatUI)
-            _btnActions.Push(SetTileBatUI);
+        if (isUIAnimating)
+        {
+            return;
+        }
+
+        maincamera.Rock = true;
+        tileManager.SelectRoom.StartFlashing();
+        FocusCamera();
+
+        if (_btnActions.Peek().UIStagte != EUIstate.ChangeTileSelect)
+        {
+            _btnActions.Push(new UIState(SetTileBatUI, EUIstate.ChangeTileSelect));
+            SetTileBatUI();
+        }
     }
 
     public void SetTileBatUI()
     {
-        if (_btnActions.Count <= 0)
+        if (isUIAnimating)
             return;
 
-        if (_btnActions.Peek() == SetTileBatUI)
-            return;
-
-        ActiveCategory();
-        PlacingPanel();
-        _ui.CloseAllPopup();
-    }
-
-    private void ClickPlacing()
-    {
-        _backPanel.gameObject.SetActive(!_backPanel.gameObject.activeSelf);
-        UpMoveUI();
-        DownMoveUI();
-        BackBtnMove();
-        PlacingPanel();
+        StartCoroutine(ButtonRock());
+        MovePosYUI(_placingPanelTransform, 220f);
+        MovePosXUI(_categoryTransform, 200f);
+        
+        if (_btnActions.Peek().UIStagte != EUIstate.ChangeTileSelect)
+        {
+            tileManager.SelectRoom.StopFlashing();
+            tileManager.InactiveBatSlot();
+            tileManager.SetSelectRoom(null);
+            _ui.CloseAllPopup();
+            Camera.main.DOOrthoSize(5.0f, animationDuration);
+            maincamera.Rock = false;
+        }
     }
 
     #endregion
 
     #region UIDOTween
 
-    private void UpMoveUI()
+    private void MovePosYUI(RectTransform ui, float offset)
     {
-        if (_upMoveUIList.Count == 0)
+        if (!ui.gameObject.activeSelf)
+        {
+            ui.gameObject.SetActive(true);
+            ui.DOAnchorPosY(ui.anchoredPosition.y + offset, animationDuration);
+        }
+        else
+        {
+            ui.DOAnchorPosY(ui.anchoredPosition.y - offset, animationDuration).OnComplete(() =>
+            {
+                ui.gameObject.SetActive(false);
+            });
+        }
+    }
+
+    private void MovePosYUI(List<RectTransform> ui, float offset)
+    {
+        if (ui.Count == 0)
             return;
 
-        if (_upMoveUIList[0].gameObject.activeSelf)
+        if (ui[0].gameObject.activeSelf)
         {
-            foreach (var rect in _upMoveUIList)
+            foreach (var rect in ui)
             {
-                rect.DOAnchorPosY(rect.anchoredPosition.y + 240f, 0.3f).OnComplete(() => 
+                rect.DOAnchorPosY(rect.anchoredPosition.y + offset, animationDuration).OnComplete(() =>
                 {
                     rect.gameObject.SetActive(false);
                 });
@@ -346,104 +407,44 @@ public class DayMain_SceneUI : BaseUI
         }
         else
         {
-            foreach (var rect in _upMoveUIList)
+            foreach (var rect in ui)
             {
                 rect.gameObject.SetActive(true);
-                rect.DOAnchorPosY(rect.anchoredPosition.y - 240f, 0.3f);
+                rect.DOAnchorPosY(rect.anchoredPosition.y - offset, animationDuration);
             }
         }
     }
 
-    private void DownMoveUI()
+    private void MovePosXUI(RectTransform ui, float offset)
     {
-        if (_downMoveUIList.Count == 0)
-            return;
-
-        if (_downMoveUIList[0].gameObject.activeSelf)
+        if (!ui.gameObject.activeSelf)
         {
-            foreach (var rect in _downMoveUIList)
-            {
-                rect.DOAnchorPosY(rect.anchoredPosition.y - 220f, 0.3f).OnComplete(() => 
-                {
-                    rect.gameObject.SetActive(false);
-                });
-            }
+            ui.gameObject.SetActive(true);
+            ui.DOAnchorPosX(ui.anchoredPosition.x - offset, animationDuration);
         }
         else
         {
-            foreach (var rect in _downMoveUIList)
+            ui.DOAnchorPosX(ui.anchoredPosition.x + offset, animationDuration).OnComplete(() =>
             {
-                rect.gameObject.SetActive(true);
-                rect.DOAnchorPosY(rect.anchoredPosition.y + 220f, 0.3f);
-            }
-        }
-    }
-
-    private void PlacingPanel()
-    {
-        if (!_placingPanel.gameObject.activeSelf)
-        {
-            _placingPanel.gameObject.SetActive(true);
-            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y + 220f, 0.3f);
-        }
-        else
-        {
-            _placingPanelTransform.DOAnchorPosY(_placingPanelTransform.anchoredPosition.y - 220f, 0.3f).OnComplete(() => 
-            {
-                _placingPanelTransform.gameObject.SetActive(false);
+                ui.gameObject.SetActive(false);
             });
         }
     }
 
-    private void ActiveCategory()
+    private void FocusCamera()
     {
-        if (!_categoryPanel.gameObject.activeSelf)
-        {
-            _categoryPanel.gameObject.SetActive(true);
-            _categoryTransform.DOAnchorPosX(_categoryTransform.anchoredPosition.x - 200f, 0.4f);
-            Camera.main.DOOrthoSize(2.5f, 0.5f);
-        }
-        else
-        {
-            _categoryTransform.DOAnchorPosX(_categoryTransform.anchoredPosition.x + 200f, 0.4f).OnComplete(() => 
-            {
-                _categoryPanel.gameObject.SetActive(false);
-            });
-            Camera.main.DOOrthoSize(5f, 1.0f);
-        }
+        Vector3 pos = new Vector3(tileManager.SelectRoom.transform.position.x,
+            tileManager.SelectRoom.transform.position.y + 1.8f, Camera.main.transform.position.z);
+        Camera.main.transform.DOMove(pos, animationDuration);
+        Camera.main.DOOrthoSize(2.5f, animationDuration);
     }
 
-    private void BackBtnMove()
+    private IEnumerator ButtonRock()
     {
-        if (!_backBtnTransform.gameObject.activeSelf)
-        {
-            _backBtnTransform.gameObject.SetActive(true);
-            _backBtnTransform.DOAnchorPosY(_backBtnTransform.anchoredPosition.y - 220f, 0.3f);
-        }
-        else
-        {
-            _backBtnTransform.DOAnchorPosY(_backBtnTransform.anchoredPosition.y + 220f, 0.3f).OnComplete( () =>
-            {
-                _backBtnTransform.gameObject.SetActive(false);
-            });
-        }
+        isUIAnimating = true;
+        var sec = new WaitForSeconds(animationDuration);
+        yield return sec;
+        isUIAnimating = false;
     }
-
-    private void NightUIMove()
-    {
-        if (!_nightTransform.gameObject.activeSelf)
-        {
-            _nightTransform.gameObject.SetActive(true);
-            _nightTransform.DOAnchorPosY(_nightTransform.anchoredPosition.y + 200f, 0.3f);
-        }
-        else
-        {
-            _nightTransform.DOAnchorPosY(_nightTransform.anchoredPosition.y - 200f, 0.3f).OnComplete(() =>
-            {
-                _nightTransform.gameObject.SetActive(false);
-            });
-        }
-    }
-
     #endregion
 }

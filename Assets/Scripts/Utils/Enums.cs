@@ -30,3 +30,10 @@ public enum EState
     Attack,
     Dead
 }
+
+public enum EUIstate
+{
+    Main,
+    ChangeTileSelect,
+    ChangeUnitAndRoom
+}
