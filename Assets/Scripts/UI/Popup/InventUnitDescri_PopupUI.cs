@@ -102,7 +102,6 @@ public class InventUnitDescri_PopupUI : BaseUI
     {
         Main.Get<UIManager>().ClosePopup();
         Owner._equipCheckImg.gameObject.SetActive(false);
-        //Owner.isDescripOpen = false;
     }
 
     private void ClickInventUnitDeleteBtn(PointerEventData EventData)
