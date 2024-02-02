@@ -5,20 +5,25 @@ using UnityEngine;
 public class MoveState : BaseState
 {
     private TileManager _tileMap;
+    private Stack<GameObject> _pathObjStk;
     private Vector3 _targetPos = Vector3.zero;
     private Coroutine _coroutine;
     private bool _isMove;
+    private bool[,] _visited;
 
     public MoveState(CharacterBehaviour owner) : base(owner)
     {
         _tileMap = Main.Get<TileManager>();
         _isMove = false;
+        _pathObjStk = new Stack<GameObject>();
     }
 
     public override void EnterState()
     {
-        MoveStart();
         Owner.Animator.SetBool(Literals.Move, true);
+        _tileMap.GetMapSize(out int x, out int y);
+        _visited = new bool[x, y];
+        MoveStart();
     }
 
     public override void ExitState()
@@ -50,36 +55,44 @@ public class MoveState : BaseState
         }
     }
 
-    private void SetTargetPos(out int targetX, out int targetY)
+    private void SetPathList()
     {
         List<GameObject> rooms = _tileMap.GetNeighbors(Owner.CurPosX, Owner.CurPosY);
+        List<GameObject> targetRoom = new List<GameObject>();
 
-        if(rooms.Count == 0)
+        if (rooms.Count == 0)
         {
-            SetStageStartMovePos(out targetX, out targetY);
+            SetStageStartMovePos();
             return;
         }
+        else
+        {
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                RoomBehavior room = rooms[i].GetComponent<RoomBehavior>();
+                if (!_visited[room.IndexX, room.IndexY])
+                {
+                    targetRoom.Add(rooms[i]);
+                }
+            }
+        }
 
-        int randomIndex = Random.Range(0, rooms.Count);
-
-        RoomBehavior room = rooms[randomIndex].GetComponent<RoomBehavior>();
-        _targetPos = room.transform.position;
-        _targetPos.y += 1.5f;
-        _targetPos.z = 3f;
-
-        targetX = room.IndexX; 
-        targetY = room.IndexY;
+        if (targetRoom.Count == 0)
+        {
+            _pathObjStk = _tileMap.FindUnvisitedRoom(Owner.CurPosX, Owner.CurPosY, _visited);
+        }
+        else
+        {
+            int randomIndex = Random.Range(0, targetRoom.Count);
+            _pathObjStk.Push(targetRoom[randomIndex]);
+        }
     }
 
-    private void SetStageStartMovePos(out int targetX, out int targetY)
+    private void SetStageStartMovePos()
     {
+        _pathObjStk.Push(_tileMap.GetRoom(1, 0));
         RoomBehavior room = _tileMap.GetRoom(1, 0).GetComponent<RoomBehavior>();
-        _targetPos = room.transform.position;
-        _targetPos.y += 1.5f;
-        _targetPos.z = 3f;
-
-        targetX = room.IndexX;
-        targetY = room.IndexY;
+        _visited[room.IndexX, room.IndexY] = true;
     }
 
     private void SetDir()
@@ -97,11 +110,25 @@ public class MoveState : BaseState
         }
     }
 
+    private void SetTargetPos()
+    {
+        GameObject obj = _pathObjStk.Pop();
+        RoomBehavior roomBehavior = obj.GetComponent<RoomBehavior>();
+        _targetPos = obj.transform.position;
+        _targetPos.y += 1.5f;
+        _targetPos.z = 3f;
+        _visited[roomBehavior.IndexX, roomBehavior.IndexY] = true;
+    }
+
     private IEnumerator Movement()
     {
         while (true)
         {
-            SetTargetPos(out int x, out int y);
+            if(_pathObjStk.Count <= 0)
+            {
+                SetPathList();
+            }
+            SetTargetPos();
             SetDir();
 
             while (Owner.transform.position != _targetPos)
@@ -110,7 +137,6 @@ public class MoveState : BaseState
                 Owner.transform.position = Vector3.MoveTowards(Owner.transform.position, _targetPos, step);
                 yield return null;
             }
-            
         }
     }
 }

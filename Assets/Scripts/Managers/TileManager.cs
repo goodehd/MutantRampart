@@ -3,6 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class PathInfo
+{
+    public GameObject CurRoom;
+    public PathInfo PrevRoom;
+
+    public PathInfo(GameObject cur, PathInfo prev)
+    {
+        CurRoom = cur;
+        PrevRoom = prev;
+    }
+}
+
 public class TileManager : IManagers
 {
     private ResourceManager resource;
@@ -139,6 +151,60 @@ public class TileManager : IManagers
     public void InactiveBatSlot()
     {
         BatSlot.gameObject.SetActive(false);
+    }
+
+    public Stack<GameObject> FindUnvisitedRoom(int x, int y, bool[,] visited)
+    {
+        Queue<PathInfo> roomQ = new Queue<PathInfo>();
+        List<GameObject> Neighbors = GetNeighbors(x, y);
+        bool[,] isVisited = new bool[_roomObjList.Count, _roomObjList[0].Count];
+
+        foreach (var neighbor in Neighbors)
+        {
+            roomQ.Enqueue(new PathInfo(neighbor, null));
+            RoomBehavior room = neighbor.GetComponent<RoomBehavior>();
+            isVisited[room.IndexX, room.IndexY] = true;
+        }
+
+        PathInfo targetInfo = null;
+        bool isfind = false;
+        while (true)
+        {
+            PathInfo info = roomQ.Dequeue();
+            RoomBehavior curRoom = info.CurRoom.GetComponent<RoomBehavior>();
+            Neighbors = GetNeighbors(curRoom.IndexX, curRoom.IndexY);
+
+            foreach (var neighbor in Neighbors)
+            {
+                RoomBehavior neighborRoom = neighbor.GetComponent<RoomBehavior>();
+                if (!visited[neighborRoom.IndexX, neighborRoom.IndexY])
+                {
+                    targetInfo = new PathInfo(neighborRoom.gameObject, info);
+                    isfind = true;
+                    break;
+                }
+                else if (!isVisited[neighborRoom.IndexX, neighborRoom.IndexY])
+                {
+                    roomQ.Enqueue(new PathInfo(neighborRoom.gameObject, info));
+                    isVisited[neighborRoom.IndexX, neighborRoom.IndexY] = true;
+                }
+            }
+            
+            if (isfind)
+                break;
+
+            if (roomQ.Count <= 0)
+                return null;
+        }
+
+        Stack<GameObject> pathList = new Stack<GameObject>();
+        while (targetInfo != null)
+        {
+            pathList.Push(targetInfo.CurRoom);
+            targetInfo = targetInfo.PrevRoom;
+        }
+
+        return pathList;
     }
 
     private bool IsRoomPositionValid(int posX, int posY)
