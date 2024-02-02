@@ -60,6 +60,8 @@ public class DayMain_SceneUI : BaseUI
     private RectTransform _backBtnTransform;
     private RectTransform _nightTransform;
 
+    private Error_PopupUI _errorPopupUI;
+
     private PocketBlock_PopupUI _pocketBlock;
 
     public Inventory_PopupUI inventory_PopupUI;
@@ -204,17 +206,17 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickStageStartBtn(PointerEventData eventData)
     {
-        stageManager.StartStage();
+        //stageManager.StartStage();
 
-        //if (gameManager.isHomeSet)
-        //{
-        //    stageManager.StartStage();
-        //}
-        //else
-        //{
-        //    Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
-        //    ui.curErrorText = "홈타입의 방을 설치해 주세요.";
-        //}
+        if (gameManager.isHomeSet)
+        {
+            stageManager.StartStage();
+        }
+        else
+        {
+            Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
+            ui.curErrorText = "홈타입의 방을 설치해 주세요.";
+        }
     }
 
     private void ClickUnitBtn(PointerEventData eventData)

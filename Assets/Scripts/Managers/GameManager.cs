@@ -17,9 +17,9 @@ public class GameManager : IManagers
 
     public bool Init()
     {
-        //PlayerRooms.Add(Main.Get<DataManager>().Room["Home_2"]);
+        //PlayerRooms.Add(Main.Get<DataManager>().Room["Home"]);
         ThisRoom room = new ThisRoom();
-        room.Init(Main.Get<DataManager>().Room["Home_2"]);
+        room.Init(Main.Get<DataManager>().Room["Home"]);
         PlayerRooms.Add(room);
 
         ThisRoom room2 = new ThisRoom();
