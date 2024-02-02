@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrapRoom : Room
+public class TrapRoom : RoomBehavior
 {
     private enum ETrapType
     {
@@ -16,16 +16,15 @@ public class TrapRoom : Room
     private ETrapType _trapType;
 
     public event Action<GameObject> OnFallinTrap;
+    public int UnitCount { get; set; }
     
-    public override bool Initialize()
+    public override void Init(RoomData data)
     {
-        if (!base.Initialize()) return false;
+        base.Init(data);
 
-        _roomStatus = EStatusformat.Trap;
         _trapType = Enum.Parse<ETrapType>(this.gameObject.name);
-        //OnEnemyEnterRoom += EnemyEnterRoom;
-        
-        return true;
+
+        UnitCount = 0;
     }
 
     protected override void OnMouseEnter()
@@ -43,28 +42,12 @@ public class TrapRoom : Room
         base.OnMouseDown();
     }
 
-    public override void EnemyEnterRoom(GameObject g)
+    public override void EnterRoom(Enemy enemy)
     {
-        base.EnemyEnterRoom(g);
-
-        Character enemy = g.GetComponent<Character>();
-        OnFallinTrap = null;
-        switch (_trapType)
-        {
-            case ETrapType.Lava :
-                OnFallinTrap += LavaTrap;
-                break;
-            case ETrapType.Snow : 
-                OnFallinTrap += SnowTrap;
-                break;
-            default:
-                break;
-        }
-        OnFallinTrap?.Invoke(g);
-        
+        base.EnterRoom(enemy);
     }
 
-    private void LavaTrap(GameObject g)
+    /*private void LavaTrap(GameObject g)
     {
         StartCoroutine(LavaDamage(g));//0.5초마다 1의 데미지를 10번
     }
@@ -78,9 +61,9 @@ public class TrapRoom : Room
             
             yield return new WaitForSeconds(0.5f);
         }
-    }
+    }*/
 
-    private void SnowTrap(GameObject g)
+    /*private void SnowTrap(GameObject g)
     {
         StartCoroutine(SnowSlow(g));
     }
@@ -92,15 +75,6 @@ public class TrapRoom : Room
         enemy.Status.GetStat<Stat>(EstatType.MoveSpeed).AddModifier(mod);
         yield return new WaitForSeconds(2);
         enemy.Status.GetStat<Stat>(EstatType.MoveSpeed).RemoveModifier(mod);
-    }
-
-    private void MolarTrap(GameObject g)
-    {
-        //몰?루 아이디어
-        //깨물어서 데미주고 잠시 멈추게하기
-        
-        //아이디어2
-        //내편이 되어라! 
-    }
+    }*/
 
 }
