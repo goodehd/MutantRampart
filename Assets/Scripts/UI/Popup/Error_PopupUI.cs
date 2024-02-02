@@ -29,7 +29,7 @@ public class Error_PopupUI : BaseUI
 
     private void ClickCloseBtn(PointerEventData EventData)
     {
-        
         Main.Get<UIManager>().ClosePopup();
     }
+    
 }
