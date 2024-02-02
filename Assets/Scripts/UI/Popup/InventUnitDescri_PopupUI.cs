@@ -54,14 +54,10 @@ public class InventUnitDescri_PopupUI : BaseUI
         for (int i = 0; i < _equipSlots.Length; i++)
         {
             // slot 의 버튼과 이미지와, 장착여부 이미지
-            _equipSlots[i] = GetUI<Button>($"EquipSlot{i + 1}");
-            _equipSlotsImgs[i] = GetUI<Image>($"EquipSlot{i + 1}");
+            _equipSlots[i] = GetUI<Button>($"EquipSlotBtn{i + 1}");
+            _equipSlotsImgs[i] = GetUI<Image>($"EquipSlotBtn{i + 1}");
             _equipCancelImgs[i] = GetUI<Image>($"EquipCancelImg{i + 1}");
 
-            if (i < 1)
-            {
-                _equipSlotsImgs[i].color = Color.white;
-            }
         }
 
         SetUICallback(_closeBtn.gameObject, EUIEventState.Click, ClickInventUnitCloseBtn);
@@ -90,7 +86,7 @@ public class InventUnitDescri_PopupUI : BaseUI
         // 2. MyItems_Content 자식으로 List.Count 만큼 생성하기
 
         List<Item> playerSubItems = Main.Get<GameManager>().PlayerItems;
-        foreach (Transform item in _myItemsContent.transform) // todo : 이건 무슨의미일까 ? 초기화 관련한걸까 ?
+        foreach (Transform item in _myItemsContent.transform) // 초기화 관련 ?
         {
             Destroy(item.gameObject);
         }
@@ -117,11 +113,12 @@ public class InventUnitDescri_PopupUI : BaseUI
             {
                 _equipSlotsImgs[i].sprite = Main.Get<ResourceManager>()
                     .Load<Sprite>($"{Literals.ITEM_SPRITE_PATH}{UnitData.Item[i].EquipItemData.Key}");
-
+                _equipSlotsImgs[i].enabled = true; // image 컴포넌트 체크 설정.
             }
             else if (UnitData.Item[i] == null)
             {
                 _equipSlotsImgs[i].sprite = null;
+                _equipSlotsImgs[i].enabled = false; // image 컴포넌트 체크 해제.
             }
         }
 
@@ -199,6 +196,7 @@ public class InventUnitDescri_PopupUI : BaseUI
         UnitData.Item[i].UnEquipItem(UnitData); //능력치를 빼고
         UnitData.Item[i] = null; //캐릭터의 아이템도 빼버리고
         _equipSlotsImgs[i].sprite = null; //이미지도 빼버리고
+        _equipSlotsImgs[i].enabled = false; // image 컴포넌트 체크 해제.
         SetInfo();
         inventSubItems[UnitData.itemnumbers[i]].SetInfo();
         
@@ -231,23 +229,3 @@ public class InventUnitDescri_PopupUI : BaseUI
         Owner.Owner.inventUnitDescri_PopupUI = null; // null 처리 !
     }
 }
-
-// slot 위에 마우스 hovered 하면 _equipCancelImgs active 되게끔 츄라이 !
-// todo : 보유중인 아이템(MyItems_Content) 위에 마우스 올렸을 떄 정보가 뜨게끔 !
-
-/*
- *
-        //_inventItemNameTxt = GetUI<TMP_Text>("InventItemNameTxt");
-        //_inventItemDescriTxt = GetUI<TMP_Text>("InventItemDescriTxt");
-
-        //_inventItemNameTxt.text = _selectItemNameTxt;
-        //_inventItemDescriTxt.text = _selectItemDescriTxt;
-
-        _inventUnitImg = GetUI<Image>("InventUnitImg");
-        //_inventUnitImg.sprite =
-        _inventItemDetailBox = GetUI<Image>("InventItemDetailBox");
-
-        _myItemsContent = GetUI<Transform>("MyItems_Content");
-
-    }
-*/
