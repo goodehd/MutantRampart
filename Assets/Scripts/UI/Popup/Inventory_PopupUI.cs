@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Inventory_PopupUI : BaseUI
 {
-    private Button _backButton;
+    //private Button _backButton;
     private Button _roomButton;
     private Button _unitButton;
     private Button _closeBtn;
@@ -43,12 +43,12 @@ public class Inventory_PopupUI : BaseUI
         SetUI<Transform>();
         SetUI<ScrollRect>();
 
-        _backButton = GetUI<Button>("InventBackBtn");
+        //_backButton = GetUI<Button>("InventBackBtn");
         _roomButton = GetUI<Button>("InventRoomBtn");
         _unitButton = GetUI<Button>("InventUnitBtn");
         _closeBtn = GetUI<Button>("InventoryCloseBtn");
 
-        SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickBackBtn);
+        //SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickBackBtn);
         SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
         SetUICallback(_closeBtn.gameObject, EUIEventState.Click, ClickCloseBtn);

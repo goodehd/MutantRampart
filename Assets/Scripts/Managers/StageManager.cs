@@ -59,7 +59,7 @@ public class StageManager : IManagers
     public void CheckClear()
     {
         StageEnemyCount--;
-        if(StageEnemyCount <= 0)
+        if (StageEnemyCount <= 0 && Main.Get<GameManager>().PlayerHP.CurValue > 0)
         {
             StageClear();
         }

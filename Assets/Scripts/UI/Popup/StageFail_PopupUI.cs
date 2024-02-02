@@ -36,11 +36,17 @@ public class StageFail_PopupUI : BaseUI
 
     private void ClickMainMenuBtn(PointerEventData data)
     {
-        // 시작 Scene 으로
+        // 시작 Scene 으로 이동
+        //Main.Get<UIManager>().CloseAllPopup();
+        Main.Get<UIManager>().ClosePopup();
+        Main.Get<SceneManager>().ChangeScene<StartScene>();
     }
 
     private void ClickRetryBtn(PointerEventData data)
     {
         //  스테이지 re 도전 ? 이 되려나 ?
+        // 일단은 시작Scene 으로 이동
+        Main.Get<UIManager>().ClosePopup();
+        Main.Get<SceneManager>().ChangeScene<StartScene>();
     }
 }
