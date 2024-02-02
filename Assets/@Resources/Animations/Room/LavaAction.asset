@@ -13,13 +13,19 @@ MonoBehaviour:
   m_Name: LavaAction
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 21300000, guid: abc937b30098f21469fe95acf5672037, type: 3}
-  - {fileID: 21300000, guid: 15161deb77df09646b88368bbf01568e, type: 3}
+  - {fileID: 21300000, guid: 9be0ebe527c711448a4c393676ede500, type: 3}
   - {fileID: 21300000, guid: 9be0ebe527c711448a4c393676ede500, type: 3}
   - {fileID: 21300000, guid: 13ea1d8428e49c14c90442cec4ef095e, type: 3}
   - {fileID: 21300000, guid: 485bab44178e01949bee7c4ebe48bacb, type: 3}
   - {fileID: 21300000, guid: eef2814b295b565498b6c5a7d12f33e7, type: 3}
   - {fileID: 21300000, guid: 4ae23acbbd0567947a6051d8f4ef6629, type: 3}
+  - {fileID: 21300000, guid: 4ae23acbbd0567947a6051d8f4ef6629, type: 3}
+  - {fileID: 21300000, guid: 4ae23acbbd0567947a6051d8f4ef6629, type: 3}
+  - {fileID: 21300000, guid: eef2814b295b565498b6c5a7d12f33e7, type: 3}
+  - {fileID: 21300000, guid: 485bab44178e01949bee7c4ebe48bacb, type: 3}
+  - {fileID: 21300000, guid: 13ea1d8428e49c14c90442cec4ef095e, type: 3}
+  - {fileID: 21300000, guid: 9be0ebe527c711448a4c393676ede500, type: 3}
+  - {fileID: 21300000, guid: 9be0ebe527c711448a4c393676ede500, type: 3}
   m_MinSpeed: 3
   m_MaxSpeed: 3
   m_AnimationStartTime: 0
