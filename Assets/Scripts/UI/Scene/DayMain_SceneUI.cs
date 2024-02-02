@@ -1,5 +1,4 @@
 using DG.Tweening;
-using DG.Tweening.Core.Easing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -239,16 +238,26 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickPlacingBtn(PointerEventData eventData)
     {
+        if (isInventOpen)
+        {
+            _ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
+        }
+        //_ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
         isInventOpen = false;
-        _ui.ClosePopup(); // 인벤토리 열린 상태에서 배치 버튼 눌렀을 때 인벤토리 닫히도록.
+
         ClickPlacing();
         _btnActions.Push(new UIState(ClickPlacing, EUIstate.Main));
     }
 
     private void ClickShopBtn(PointerEventData eventData)
     {
+        if (isInventOpen)
+        {
+            _ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
+        }
+        //_ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
         isInventOpen = false;
-        _ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
+
         _ui.OpenPopup<Shop_PopupUI>("Shop_PopupUI");
     }
 
@@ -371,7 +380,7 @@ public class DayMain_SceneUI : BaseUI
         StartCoroutine(ButtonRock());
         MovePosYUI(_placingPanelTransform, 220f);
         MovePosXUI(_categoryTransform, 200f);
-        
+
         if (_btnActions.Peek().UIStagte != EUIstate.ChangeTileSelect)
         {
             tileManager.SelectRoom.StopFlashing();
