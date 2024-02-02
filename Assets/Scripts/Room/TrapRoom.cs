@@ -16,7 +16,7 @@ public class TrapRoom : RoomBehavior
     private ETrapType _trapType;
 
     public event Action<GameObject> OnFallinTrap;
-
+    private bool _isTrapOn = false;
     
     public override void Init(RoomData data)
     {
@@ -28,58 +28,31 @@ public class TrapRoom : RoomBehavior
     public override void EnterRoom(Enemy enemy)
     {
         base.EnterRoom(enemy);
+        if (_isTrapOn)return;
+        StartCoroutine(LavaTrap(Enemys,enemy));
+        
+    }
+
+    IEnumerator LavaTrap(LinkedList<CharacterBehaviour> enemys, Enemy enemy)
+    {
         enemy.Renderer.flipX = false;
-        enemy.StateMachine.ChangeState(EState.Idle);
         enemy.transform.position = Literals.TrapEnemyPos[Enemys.Count % 6] + transform.position;
-        Enemys.AddLast(enemy);
-        
-        
-        
-    }
-    protected override void OnMouseEnter()
-    {
-        base.OnMouseEnter();
-    }
-
-    protected override void OnMouseExit()
-    {
-        base.OnMouseExit();
-    }
-
-    protected override void OnMouseDown()
-    {
-        base.OnMouseDown();
-    }
-    
-
-    /*private void LavaTrap(GameObject g)
-    {
-        StartCoroutine(LavaDamage(g));//0.5초마다 1의 데미지를 10번
-    }
-
-    IEnumerator LavaDamage(GameObject g)
-    {
-        Character enemy = g.GetComponent<Character>();
-        for (int i = 0; i < 10; i++) //0.5초마다 1의 데미지를 10번
-        {
-            enemy.Status.GetStat<Vital>(EstatType.Hp).CurValue -= 1;
-            
-            yield return new WaitForSeconds(0.5f);
-        }
-    }*/
-
-    /*private void SnowTrap(GameObject g)
-    {
-        StartCoroutine(SnowSlow(g));
-    }
-    IEnumerator SnowSlow(GameObject g)
-    { 
-        //느려지게 하는 함수
-        Character enemy = g.GetComponent<Character>();
-        StatModifier mod = new StatModifier(0.5f, EStatModType.Multip, 1);
+        StatModifier mod = new StatModifier(0f, EStatModType.Multip, 1, this);
         enemy.Status.GetStat<Stat>(EstatType.MoveSpeed).AddModifier(mod);
-        yield return new WaitForSeconds(2);
-        enemy.Status.GetStat<Stat>(EstatType.MoveSpeed).RemoveModifier(mod);
-    }*/
+        Enemys.AddLast(enemy);
+
+        yield return new WaitForSeconds(3f); //피해를 주기까지의 시간
+        
+        foreach (var listenemy in enemys)
+        {
+            //피해를 주는 로직
+            listenemy.Status.GetStat<Vital>(EstatType.Hp).CurValue -= 10;
+            //피해를 주었으니 enemy가 움직일 수 있게하고
+            listenemy.Status.GetStat<Stat>(EstatType.MoveSpeed).RemoveModifier(mod);
+        }
+        _isTrapOn = true;
+        yield return new WaitForSeconds(5f); //쿨타임
+        _isTrapOn = false;
+    }
 
 }
