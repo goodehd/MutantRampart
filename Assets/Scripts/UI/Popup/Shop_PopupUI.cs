@@ -18,6 +18,7 @@ public class Shop_PopupUI : BaseUI
     private ScrollRect _itemScrollView;
     private Transform _unitContent;
     private Transform _roomContent;
+    private Transform _itemContent;
 
     private TMP_Text _playerMoneyText;
 
@@ -47,6 +48,7 @@ public class Shop_PopupUI : BaseUI
 
         _unitContent = GetUI<Transform>("Unit_Content");
         _roomContent = GetUI<Transform>("Room_Content");
+        _itemContent = GetUI<Transform>("Item_Content");
 
         _playerMoneyText = GetUI<TMP_Text>("ShopPlayerMoneyText");
         _playerMoneyText.text = Main.Get<GameManager>()._playerMoney.ToString();
@@ -101,7 +103,11 @@ public class Shop_PopupUI : BaseUI
         // todo : Shop - Ground Item
 
         // todo : Shop - Item
-
+        for (int i = 0; i < ShopItemItems.Count; i++)
+        {
+            Item_ListUI itemItemsList = Main.Get<UIManager>().CreateSubitem<Item_ListUI>("Item_ListUI", _itemContent);
+            itemItemsList.ShopItemData = ShopItemItems[i];
+        }
     }
 
     private void UpdateMoneyText(int amount)

@@ -69,6 +69,12 @@ public class InventUnitDescri_PopupUI : BaseUI
         SetUICallback(_equipSlots[0].gameObject, EUIEventState.Click, ClickFirstSlot);
         SetUICallback(_equipSlots[1].gameObject, EUIEventState.Click, ClickSecondSlot);
         SetUICallback(_equipSlots[2].gameObject, EUIEventState.Click, ClickThirdSlot);
+        SetUICallback(_equipSlots[0].gameObject, EUIEventState.Hovered, HoveredFirstSlot);
+        SetUICallback(_equipSlots[0].gameObject, EUIEventState.Exit, ExitFirstSlot);
+        SetUICallback(_equipSlots[1].gameObject, EUIEventState.Hovered, HoveredSecondSlot);
+        SetUICallback(_equipSlots[1].gameObject, EUIEventState.Exit, ExitSecondSlot);
+        SetUICallback(_equipSlots[2].gameObject, EUIEventState.Hovered, HoveredThirdSlot);
+        SetUICallback(_equipSlots[2].gameObject, EUIEventState.Exit, ExitThirdSlot);
 
         _unitName = GetUI<TMP_Text>("InventUnitNameTxt");
         _unitDescription = GetUI<TMP_Text>("InventUnitDescriTxt");
@@ -142,6 +148,33 @@ public class InventUnitDescri_PopupUI : BaseUI
 
         Owner.Owner.SetUnitInventory();// 인벤토리 리프레쉬
 
+    }
+
+    private void HoveredFirstSlot(PointerEventData EventData)
+    {
+        _equipCancelImgs[0].gameObject.SetActive(true);
+    }
+    private void ExitFirstSlot(PointerEventData EventData)
+    {
+        _equipCancelImgs[0].gameObject.SetActive(false);
+    }
+
+    private void HoveredSecondSlot(PointerEventData EventData)
+    {
+        _equipCancelImgs[1].gameObject.SetActive(true);
+    }
+    private void ExitSecondSlot(PointerEventData EventData)
+    {
+        _equipCancelImgs[1].gameObject.SetActive(false);
+    }
+
+    private void HoveredThirdSlot(PointerEventData EventData)
+    {
+        _equipCancelImgs[2].gameObject.SetActive(true);
+    }
+    private void ExitThirdSlot(PointerEventData EventData)
+    {
+        _equipCancelImgs[2].gameObject.SetActive(false);
     }
 
     // TODO : 아 매우 불편한 함수 구조... 이건 언젠가 바꾸고 만다 중간발표 이후에 ㅋㅋ 버튼3개
