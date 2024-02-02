@@ -25,7 +25,17 @@ public class TrapRoom : RoomBehavior
         _trapType = Enum.Parse<ETrapType>(this.gameObject.name);
 
     }
-
+    public override void EnterRoom(Enemy enemy)
+    {
+        base.EnterRoom(enemy);
+        enemy.Renderer.flipX = false;
+        enemy.StateMachine.ChangeState(EState.Idle);
+        enemy.transform.position = Literals.TrapEnemyPos[Enemys.Count % 6] + transform.position;
+        Enemys.AddLast(enemy);
+        
+        
+        
+    }
     protected override void OnMouseEnter()
     {
         base.OnMouseEnter();
@@ -40,11 +50,7 @@ public class TrapRoom : RoomBehavior
     {
         base.OnMouseDown();
     }
-
-    public override void EnterRoom(Enemy enemy)
-    {
-        base.EnterRoom(enemy);
-    }
+    
 
     /*private void LavaTrap(GameObject g)
     {
