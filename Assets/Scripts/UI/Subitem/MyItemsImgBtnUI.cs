@@ -14,6 +14,7 @@ public class MyItemsImgBtnUI : BaseUI
     public Item ItemData { get; set; }
     public InventUnitDescri_PopupUI Owner { get; set; }
 
+    
     private InventItemDetailBox _descriptPopupUI;
     
     protected override void Init()
@@ -32,19 +33,25 @@ public class MyItemsImgBtnUI : BaseUI
         SetInfo();
     }
 
-    private void SetInfo()
+    public void SetInfo()
     {
         _itemImg.sprite = Main.Get<ResourceManager>()
             .Load<Sprite>($"{Literals.ITEM_SPRITE_PATH}{ItemData.EquipItemData.Key}");
-        if(ItemData == null)return;
-        _isIEquiped = ItemData.IsEquiped;
+        if (ItemData == null)
+        {
+            _isIEquiped = false;
+        }
+        else
+        {
+            _isIEquiped = ItemData.IsEquiped;
+        }
         _equipCheckImg.gameObject.SetActive(_isIEquiped);
     }
 
     private void ClickUItemImgBtn(PointerEventData data)
     {
         if(_isIEquiped)return;
-        Owner.ItemEquip(ItemData);
+        Owner.ItemEquip(this);
         _equipCheckImg.gameObject.SetActive(true);
         _isIEquiped = true;
     }

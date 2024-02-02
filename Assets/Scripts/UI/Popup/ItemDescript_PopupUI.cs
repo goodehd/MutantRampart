@@ -64,7 +64,7 @@ public class ItemDescript_PopupUI : BaseUI
     {
         _itemName.text = itemData.Key;
         _itemDescript.text =
-            $"Type : {itemData.Type.ToString()}\nHp : {itemData.HpAdd.ToString()}\nDamage : {itemData.AttackAdd.ToString()}\nDefense : {itemData.DefenseAdd.ToString()}\nAttackSpeed : {itemData.SpeedAdd.ToString()}\n\n설명\n {itemData.Instruction}";
+            $"Type : {itemData.Type.ToString()}\nHp : {itemData.HpAdd.ToString()}\nDamage : {itemData.AttackAdd.ToString()}\nDefense : {itemData.DefenseAdd.ToString()}\nAttackSpeed : {itemData.SpeedAdd.ToString()}\n\n설명\n{itemData.Instruction}";
     }
 
     private void ClickPopupCloseBtn(PointerEventData EventData)

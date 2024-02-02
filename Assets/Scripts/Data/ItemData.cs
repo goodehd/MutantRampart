@@ -15,4 +15,6 @@ public class ItemData : Data
     public float SpeedAdd{ get; set; }
     
     public string Instruction { get; set; }
+
+    public int Price { get; set; }
 }

@@ -1,5 +1,4 @@
 using DG.Tweening;
-using DG.Tweening.Core.Easing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -60,7 +59,11 @@ public class DayMain_SceneUI : BaseUI
     private RectTransform _backBtnTransform;
     private RectTransform _nightTransform;
 
+    private Error_PopupUI _errorPopupUI;
+
     private PocketBlock_PopupUI _pocketBlock;
+
+    public Inventory_PopupUI inventory_PopupUI;
 
     private Stack<UIState> _btnActions = new Stack<UIState>();
 
@@ -202,17 +205,17 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickStageStartBtn(PointerEventData eventData)
     {
-        stageManager.StartStage();
+        //stageManager.StartStage();
 
-        //if (gameManager.isHomeSet)
-        //{
-        //    stageManager.StartStage();
-        //}
-        //else
-        //{
-        //    Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
-        //    ui.curErrorText = "홈타입의 방을 설치해 주세요.";
-        //}
+        if (gameManager.isHomeSet)
+        {
+            stageManager.StartStage();
+        }
+        else
+        {
+            Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
+            ui.curErrorText = "홈타입의 방을 설치해 주세요.";
+        }
     }
 
     private void ClickUnitBtn(PointerEventData eventData)
@@ -235,12 +238,26 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickPlacingBtn(PointerEventData eventData)
     {
+        if (isInventOpen)
+        {
+            _ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
+        }
+        //_ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
+        isInventOpen = false;
+
         ClickPlacing();
         _btnActions.Push(new UIState(ClickPlacing, EUIstate.Main));
     }
 
     private void ClickShopBtn(PointerEventData eventData)
     {
+        if (isInventOpen)
+        {
+            _ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
+        }
+        //_ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
+        isInventOpen = false;
+
         _ui.OpenPopup<Shop_PopupUI>("Shop_PopupUI");
     }
 
@@ -278,6 +295,11 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickInventoryBtn(PointerEventData eventData)
     {
+        if (inventory_PopupUI == null) // 유니티 play 하고 Hierarchy 창을 클릭한 후에 게임Scene 에서 타일을 누르면 인벤토리가 없어지고, 인벤토리 버튼 누르면 인벤토리가 다시 안 뜨는 이슈해결을 위해.
+        {
+            isInventOpen = false;
+        }
+
         if (isInventOpen) // 인벤토리 열려있으면 버튼 작동 안 하게끔
         {
             return;
@@ -358,7 +380,7 @@ public class DayMain_SceneUI : BaseUI
         StartCoroutine(ButtonRock());
         MovePosYUI(_placingPanelTransform, 220f);
         MovePosXUI(_categoryTransform, 200f);
-        
+
         if (_btnActions.Peek().UIStagte != EUIstate.ChangeTileSelect)
         {
             tileManager.SelectRoom.StopFlashing();

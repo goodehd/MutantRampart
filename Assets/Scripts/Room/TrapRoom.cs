@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrapRoom : Room
+public class TrapRoom : RoomBehavior
 {
     private enum ETrapType
     {
@@ -16,91 +16,43 @@ public class TrapRoom : Room
     private ETrapType _trapType;
 
     public event Action<GameObject> OnFallinTrap;
+    private bool _isTrapOn = false;
     
-    public override bool Initialize()
+    public override void Init(RoomData data)
     {
-        if (!base.Initialize()) return false;
+        base.Init(data);
 
-        _roomStatus = EStatusformat.Trap;
         _trapType = Enum.Parse<ETrapType>(this.gameObject.name);
-        //OnEnemyEnterRoom += EnemyEnterRoom;
-        
-        return true;
+
     }
-
-    protected override void OnMouseEnter()
+    public override void EnterRoom(Enemy enemy)
     {
-        base.OnMouseEnter();
-    }
-
-    protected override void OnMouseExit()
-    {
-        base.OnMouseExit();
-    }
-
-    protected override void OnMouseDown()
-    {
-        base.OnMouseDown();
-    }
-
-    public override void EnemyEnterRoom(GameObject g)
-    {
-        base.EnemyEnterRoom(g);
-
-        Character enemy = g.GetComponent<Character>();
-        OnFallinTrap = null;
-        switch (_trapType)
-        {
-            case ETrapType.Lava :
-                OnFallinTrap += LavaTrap;
-                break;
-            case ETrapType.Snow : 
-                OnFallinTrap += SnowTrap;
-                break;
-            default:
-                break;
-        }
-        OnFallinTrap?.Invoke(g);
+        base.EnterRoom(enemy);
+        if (_isTrapOn)return;
+        StartCoroutine(LavaTrap(Enemys,enemy));
         
     }
 
-    private void LavaTrap(GameObject g)
+    IEnumerator LavaTrap(LinkedList<CharacterBehaviour> enemys, Enemy enemy)
     {
-        StartCoroutine(LavaDamage(g));//0.5초마다 1의 데미지를 10번
-    }
-
-    IEnumerator LavaDamage(GameObject g)
-    {
-        Character enemy = g.GetComponent<Character>();
-        for (int i = 0; i < 10; i++) //0.5초마다 1의 데미지를 10번
-        {
-            enemy.Status.GetStat<Vital>(EstatType.Hp).CurValue -= 1;
-            
-            yield return new WaitForSeconds(0.5f);
-        }
-    }
-
-    private void SnowTrap(GameObject g)
-    {
-        StartCoroutine(SnowSlow(g));
-    }
-    IEnumerator SnowSlow(GameObject g)
-    { 
-        //느려지게 하는 함수
-        Character enemy = g.GetComponent<Character>();
-        StatModifier mod = new StatModifier(0.5f, EStatModType.Multip, 1);
+        enemy.Renderer.flipX = false;
+        enemy.transform.position = Literals.TrapEnemyPos[Enemys.Count % 6] + transform.position;
+        StatModifier mod = new StatModifier(0f, EStatModType.Multip, 1, this);
         enemy.Status.GetStat<Stat>(EstatType.MoveSpeed).AddModifier(mod);
-        yield return new WaitForSeconds(2);
-        enemy.Status.GetStat<Stat>(EstatType.MoveSpeed).RemoveModifier(mod);
-    }
+        Enemys.AddLast(enemy);
 
-    private void MolarTrap(GameObject g)
-    {
-        //몰?루 아이디어
-        //깨물어서 데미주고 잠시 멈추게하기
+        yield return new WaitForSeconds(3f); //피해를 주기까지의 시간
         
-        //아이디어2
-        //내편이 되어라! 
+        foreach (var listenemy in enemys)
+        {
+            //피해를 주는 로직
+            listenemy.Status.GetStat<Vital>(EstatType.Hp).CurValue -= 10;
+            //피해를 주었으니 enemy가 움직일 수 있게하고
+            listenemy.Status.GetStat<Stat>(EstatType.MoveSpeed).RemoveModifier(mod);
+        }
+        _isTrapOn = true;
+        yield return new WaitForSeconds(5f); //쿨타임
+        _isTrapOn = false;
     }
 
 }

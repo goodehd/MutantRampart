@@ -17,9 +17,9 @@ public class GameManager : IManagers
 
     public bool Init()
     {
-        //PlayerRooms.Add(Main.Get<DataManager>().Room["Home_2"]);
+        //PlayerRooms.Add(Main.Get<DataManager>().Room["Home"]);
         ThisRoom room = new ThisRoom();
-        room.Init(Main.Get<DataManager>().Room["Home_2"]);
+        room.Init(Main.Get<DataManager>().Room["Home"]);
         PlayerRooms.Add(room);
 
         ThisRoom room2 = new ThisRoom();
@@ -37,6 +37,13 @@ public class GameManager : IManagers
         Item item2 = new Item();
         item2.Init(Main.Get<DataManager>().Item["BlueBook"]);
         PlayerItems.Add(item2);
+        Item item3 = new Item();
+        item3.Init(Main.Get<DataManager>().Item["RedBook"]);
+        PlayerItems.Add(item3);
+        
+        Item item4 = new Item();
+        item4.Init(Main.Get<DataManager>().Item["SilverCoin"]);
+        PlayerItems.Add(item4);
 
         PlayerHP = new Vital(EstatType.Hp, 5);
         PlayerHP.OnValueZero += GameOver;
