@@ -16,7 +16,7 @@ public class TrapRoom : RoomBehavior
     private ETrapType _trapType;
 
     public event Action<GameObject> OnFallinTrap;
-    public int UnitCount { get; set; }
+
     
     public override void Init(RoomData data)
     {
@@ -24,7 +24,6 @@ public class TrapRoom : RoomBehavior
 
         _trapType = Enum.Parse<ETrapType>(this.gameObject.name);
 
-        UnitCount = 0;
     }
 
     protected override void OnMouseEnter()
