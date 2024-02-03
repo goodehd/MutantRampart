@@ -14,12 +14,10 @@ public class Character
     public CharacterData Data { get; private set; }
     public CharacterStatus Status { get; private set; }
 
-
     public Item[] Item { get; set; } = new Item[3];
     public int[] itemnumbers = new int[3];
     public event Action OnAttack;
     
-
     public Character(CharacterData data)
     {
         Data = data;

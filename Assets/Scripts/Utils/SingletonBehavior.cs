@@ -10,6 +10,11 @@ public abstract class SingletonBehavior<T> : MonoBehaviour where T : MonoBehavio
     {
         get
         {
+            if (_isDisabled)
+            {
+                return null;
+            }
+
             if(_instance != null)
             {
                 return _instance;
@@ -41,4 +46,14 @@ public abstract class SingletonBehavior<T> : MonoBehaviour where T : MonoBehavio
     }
 
     protected abstract void Init();
+
+    protected static bool _isDisabled;
+
+    protected virtual void OnDestroy()
+    {
+        if (_instance == this)
+        {
+            _isDisabled = true;
+        }
+    }
 }

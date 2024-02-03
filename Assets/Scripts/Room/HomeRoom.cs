@@ -20,7 +20,7 @@ public class HomeRoom : RoomBehavior
     {
         Debug.Log("집침입");
         base.EnterRoom(enemy);
-        enemy.Die();
         Main.Get<GameManager>().PlayerHP.CurValue--;
+        enemy.Die();
     }
 }
