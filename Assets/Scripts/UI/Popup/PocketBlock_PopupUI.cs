@@ -56,7 +56,7 @@ public class PocketBlock_PopupUI : BaseUI
         _roomDescript = GetUI<TextMeshProUGUI>("RoomDescriptionTxt");
 
         List<Character> playerUnits = player.playerUnits;
-        List<ThisRoom> playerRooms = player.PlayerRooms;
+        List<Room> playerRooms = player.PlayerRooms;
 
         for(int i = 0; i < playerUnits.Count; i++)
         {
@@ -91,7 +91,7 @@ public class PocketBlock_PopupUI : BaseUI
         _unitATKSpeed.text = $"ATKSpeed : {data.Status[EstatType.AttackSpeed].Value}";
     }
 
-    public void SetRoomInfo(ThisRoom room)
+    public void SetRoomInfo(Room room)
     {
         _roomName.text = $"{room.Data.Key}";
         _roomType.text = $"{room.Data.Type}";

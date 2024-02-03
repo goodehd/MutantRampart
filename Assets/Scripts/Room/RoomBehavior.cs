@@ -11,7 +11,7 @@ public class RoomBehavior : MonoBehaviour
 {
     public TilemapRenderer Renderer { get; private set; }
     public Tilemap[] tilemap = new Tilemap[2];
-    public ThisRoom RoomInfo { get; set; }
+    public Room RoomInfo { get; set; }
     public bool isEndPoint { get; set; }
     public bool isFlashing { get; set; } = false;
 
@@ -33,7 +33,7 @@ public class RoomBehavior : MonoBehaviour
 
         _tile = Main.Get<TileManager>();
 
-        RoomInfo = new ThisRoom();
+        RoomInfo = new Room();
         RoomInfo.Init(data);
         for (int i = 0; i < 2; i++)
         {
@@ -50,7 +50,7 @@ public class RoomBehavior : MonoBehaviour
         enemy.CurRoom = this;
     }
 
-    public void SetData(ThisRoom data)
+    public void SetData(Room data)
     {
         RoomInfo = data;
     }
@@ -148,7 +148,7 @@ public class RoomBehavior : MonoBehaviour
 
     public void SortRoom()
     {
-        ThisRoom Room = RoomInfo;
+        Room Room = RoomInfo;
 
         if (RoomInfo.Data.Key != "Default")
         {

@@ -37,3 +37,12 @@ public enum EUIstate
     ChangeTileSelect,
     ChangeUnitAndRoom
 }
+
+public enum EStatusformat
+{
+    Bat,
+    Trap,
+    Home,
+    DefaultTile,
+    Count
+}

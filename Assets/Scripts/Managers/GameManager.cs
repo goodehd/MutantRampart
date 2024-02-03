@@ -11,18 +11,18 @@ public class GameManager : IManagers
     public bool isHomeSet = false;
 
     public List<Character> playerUnits { get; private set; } = new List<Character>();   // 플레이어가 보유한 유닛 리스트
-    public List<ThisRoom> PlayerRooms { get; private set; } = new List<ThisRoom>();     // 플레이어가 보유한 Room 리스트
+    public List<Room> PlayerRooms { get; private set; } = new List<Room>();     // 플레이어가 보유한 Room 리스트
     public List<Item> PlayerItems { get; private set; } = new List<Item>();             // 플레이어가 보유한 아이템 리스트
     public event Action<int> OnChangeMoney;
 
     public bool Init()
     {
         //PlayerRooms.Add(Main.Get<DataManager>().Room["Home"]);
-        ThisRoom room = new ThisRoom();
+        Room room = new Room();
         room.Init(Main.Get<DataManager>().Room["Home"]);
         PlayerRooms.Add(room);
 
-        ThisRoom room2 = new ThisRoom();
+        Room room2 = new Room();
         room2.Init(Main.Get<DataManager>().Room["Forest"]);
         PlayerRooms.Add(room2);
         

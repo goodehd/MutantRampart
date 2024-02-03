@@ -8,7 +8,7 @@ public class InventRoom_ContentsBtnUI : BaseUI
     private Button _roomContentsBtn;
     public Image _selectCheckImg { get; private set; }
 
-    public ThisRoom RoomData { get; set; }
+    public Room RoomData { get; set; }
 
     public Inventory_PopupUI Owner { get; set; }
 
