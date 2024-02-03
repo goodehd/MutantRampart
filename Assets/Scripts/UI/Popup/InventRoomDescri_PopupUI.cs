@@ -18,7 +18,7 @@ public class InventRoomDescri_PopupUI : BaseUI
 
     private Image _inventRoomImg;
 
-    public ThisRoom RoomData { get; set; }
+    public Room RoomData { get; set; }
 
     public InventRoom_ContentsBtnUI Owner { get; set; }
 

@@ -15,7 +15,7 @@ public class RoomSelectImageUI : BaseUI
     private Image _selectRoomEquipImage;
     private Button _roomSelectButton;
 
-    public ThisRoom Room;
+    public Room Room;
     public PocketBlock_PopupUI Owner;
 
     protected override void Init()
@@ -63,7 +63,7 @@ public class RoomSelectImageUI : BaseUI
 
         if(_tile.SelectRoom.RoomInfo == Room)
         {
-            _tile.ChangeRoom(new ThisRoom(_data.Room["Default"]));
+            _tile.ChangeRoom(new Room(_data.Room["Default"]));
             Main.Get<TileManager>().SelectRoom.SortRoom();
         }
         else

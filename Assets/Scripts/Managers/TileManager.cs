@@ -85,7 +85,7 @@ public class TileManager : IManagers
             OnSlectRoomEvent?.Invoke();
     }
 
-    public RoomBehavior ChangeRoom(ThisRoom changeRoom)
+    public RoomBehavior ChangeRoom(Room changeRoom)
     {
         GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"{changeRoom.Data.Key}");
         obj.transform.position = SelectRoom.transform.position;

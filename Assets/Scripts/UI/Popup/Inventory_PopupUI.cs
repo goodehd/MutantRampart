@@ -68,7 +68,7 @@ public class Inventory_PopupUI : BaseUI
     public void SetRoomInventory()
     {
         // room
-        List<ThisRoom> playerRooms = Main.Get<GameManager>().PlayerRooms;
+        List<Room> playerRooms = Main.Get<GameManager>().PlayerRooms;
         foreach (Transform item in _inventRoomContent.transform) // todo : 초기화 관련 ?
         {
             Destroy(item.gameObject);

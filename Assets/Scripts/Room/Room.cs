@@ -2,111 +2,54 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.EventSystems;
-using DG.Tweening;
 
-public enum EStatusformat
+public class Room 
 {
-    Bat,
-    Trap,
-    Home,
-    DefaultTile,
-    Count
-}
-
-public class Room : MonoBehaviour
-{
-    private bool _isInitialized;
-    private GameObject[] _childObj = new GameObject[2];
-    protected TilemapRenderer[] _renderer = new TilemapRenderer[2];
-    protected Material[] _origin = new Material[2];
-    protected EStatusformat _roomStatus = EStatusformat.DefaultTile;
-    [SerializeField] protected Material _buildAvailable;
-    [SerializeField] protected Material _buildNotAvailable;
-    public bool isEquipedRoom = false;
-    public RoomData ThisRoomData { get; set; }
-    //public event Action<GameObject> OnEnemyEnterRoom; //임시로 GameObject를 넣어둠
-    
-    public LinkedList<CharacterBehaviour> Enemys { get; private set; } = new LinkedList<CharacterBehaviour>();
+    public event Action OnEquipedEvent;
+    public event Action OnUnEquipedEvent;
 
     public int IndexX { get; set; }
     public int IndexY { get; set; }
-    public bool isEndPoint { get; protected set; }
-
-    public virtual void Start()
+    public bool IsEquiped { get; set; }
+    public RoomBehavior Owner { get; set; }
+    public RoomData Data { get; private set; }
+    public LinkedList<CharacterBehaviour> Enemys { get; set; } = new LinkedList<CharacterBehaviour>();
+    public Room() { }
+    public Room(RoomData data) 
     {
-        Initialize();
+        Data = data;
+
+        IsEquiped = false;
+
+        IndexX = 0; IndexY = 0;
     }
-    
 
-    public virtual bool Initialize()
+    public void Init(RoomData data)
     {
-        if (_isInitialized) return false;
-        for (int i = 0; i < 2; i++)
+        Data = data;
+
+        IsEquiped = false;
+
+        IndexX = 0; IndexY = 0;
+    }
+
+    public void EquipedRoom()
+    {
+        IsEquiped = true;
+        if(Data.Type == EStatusformat.Home)
         {
-            _renderer[i] = this.transform.GetChild(i).GetComponent<TilemapRenderer>();
-            _origin[i] = this.transform.GetChild(i).GetComponent<TilemapRenderer>().material;
-            _childObj[i] = this.transform.GetChild(i).gameObject;
+            Main.Get<GameManager>().isHomeSet = true;
         }
-        ThisRoomData = Main.Get<DataManager>().Room[gameObject.name];
-
-        _isInitialized = true;
-        return true;
+        OnEquipedEvent?.Invoke();
     }
 
-    public virtual void EnemyEnterRoom(GameObject g) //매개변수로 Enemy스크립트가 들어갈듯? 혹은 움직임 로직 관련 (이벤트에도)
+    public void UnEquipedRoom()
     {
-        // thisRoomNum을 리턴시켜줌(어떤 형식으로 보내줄지는 미정)
-        // Enemy가 방을 기억하고 다시 올 확률을 낮추기 위해서.
-        CharacterBehaviour enemy = g.GetComponent<CharacterBehaviour>();
-        enemy.CurPosX = this.IndexX;
-        enemy.CurPosY = this.IndexY;
-        //enemy.CurRoom = this;
-    }
-    protected virtual void OnMouseEnter()
-    {
-        if(EventSystem.current.IsPointerOverGameObject())return;
-        foreach (var _Ren in _renderer)
+        IsEquiped = false;
+        if (Data.Type == EStatusformat.Home)
         {
-            _Ren.material = _buildAvailable;
+            Main.Get<GameManager>().isHomeSet = false;
         }
-        
-        
-    }
-
-    protected virtual void OnMouseExit()
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            _renderer[i].material = _origin[i];
-        }
-        
-        
-    }
-
-    protected virtual void OnMouseDown()
-    {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
-        FocusCamera();
-
-        //((DayMain_SceneUI)Main.Get<UIManager>().SceneUI).ActiveCategory();
-
-
-        //ChangeRoom_PopupUI changeRoomUI = Main.Get<UIManager>().OpenPopup<ChangeRoom_PopupUI>("ChangeRoom_PopUpUI");
-        //changeRoomUI.SelectRoom = this;
-        //changeRoomUI.RoomName = gameObject.name;
-    }
-
-    private void FocusCamera()
-    {
-        Vector3 pos = new Vector3(transform.position.x + 1.5f, transform.position.y + 1.8f, Camera.main.transform.position.z);
-        Camera.main.transform.DOMove(pos, 0.5f);
-        Camera.main.DOOrthoSize(2.5f, 0.5f);
-    }
-
-    public void RemoveEnemy(CharacterBehaviour src)
-    {
-        Enemys.Remove(src);
+        OnUnEquipedEvent?.Invoke();
     }
 }

@@ -85,7 +85,7 @@ public class YesNo_PopupUI : BaseUI
         if (Main.Get<GameManager>()._playerMoney >= data.Price)
         {
             Main.Get<GameManager>().ChangeMoney(-data.Price);
-            ThisRoom newRoom = new ThisRoom();
+            Room newRoom = new Room();
             newRoom.Init(data);
             Main.Get<GameManager>().PlayerRooms.Add(newRoom);
             Debug.Log("구매완료했습니다.");

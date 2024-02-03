@@ -15,7 +15,7 @@ public class ChangeRoom_PopupUI : BaseUI
     
   
     public RoomBehavior SelectRoom;
-    public ThisRoom SelectChangeRoom;
+    public Room SelectChangeRoom;
 
     
 
@@ -53,7 +53,7 @@ public class ChangeRoom_PopupUI : BaseUI
         
     }
 
-    public void EquipRoom(ThisRoom changeRoom)
+    public void EquipRoom(Room changeRoom)
     {
         if (!SelectRoom.RoomInfo.IsEquiped)
         {
