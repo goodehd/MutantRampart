@@ -15,17 +15,22 @@ public class CSVReader
 
         Dictionary<string, T> list = new Dictionary<string, T>();
         //파일이 경로에 있는지 없는지 검사
+        /*
         if (!File.Exists($"{Application.dataPath}/@Resources/Data/Excel/{type.Name}.csv"))
         {
             return null;
         }
+        
         //파일을 전부 읽어서
         StreamReader sr = new StreamReader($"{Application.dataPath}/@Resources/Data/Excel/{type.Name}.csv");
         string source = sr.ReadToEnd();
         sr.Close();
 
+        */
+        TextAsset tx = Resources.Load<TextAsset>($"Data/{type.Name}");
         //행마다 나눠서 리스트에 저장
-        string[] lines = Regex.Split(source, "\n");
+        //string[] lines = Regex.Split(source, "\n");
+        string[] lines = tx.text.Split("\n");
 
         //예외처리
         if (lines.Length <= 0) return null;
