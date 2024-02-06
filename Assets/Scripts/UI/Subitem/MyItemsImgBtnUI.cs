@@ -51,7 +51,7 @@ public class MyItemsImgBtnUI : BaseUI
     private void ClickUItemImgBtn(PointerEventData data)
     {
         if(_isIEquiped)return;
-        Owner.ItemEquip(this);
+        if(!Owner.ItemEquip(this)) return;
         _equipCheckImg.gameObject.SetActive(true);
         _isIEquiped = true;
     }

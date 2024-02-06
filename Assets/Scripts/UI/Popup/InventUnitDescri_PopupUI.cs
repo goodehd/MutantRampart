@@ -202,7 +202,7 @@ public class InventUnitDescri_PopupUI : BaseUI
         
     }
 
-    public void ItemEquip(MyItemsImgBtnUI Imagedata)
+    public bool ItemEquip(MyItemsImgBtnUI Imagedata)
     {
         for (int i = 0; i < _equipSlots.Length; i++)
         {
@@ -215,13 +215,14 @@ public class InventUnitDescri_PopupUI : BaseUI
                 UnitData.itemnumbers[i] = Imagedata.ItemData.ItemIndex;
                 break;
             }
-            else
+
+            if (i >= 2 && i != null)
             {
-                _equipSlotsImgs[i].sprite = Main.Get<ResourceManager>()
-                    .Load<Sprite>($"{Literals.ITEM_SPRITE_PATH}{UnitData.Item[i].EquipItemData.Key}");
+                return false;
             }
         }
         SetInfo();
+        return true;
     }
 
     private void OnDestroy()
