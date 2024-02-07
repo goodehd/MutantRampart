@@ -70,13 +70,11 @@ public class TileManager : IManagers
             }
         }
 
-
-
-        GameObject spawn = resource.InstantiateWithPoolingOption("Prefabs/Room/SpawnTile", _gridObject.transform);
+        GameObject spawn = resource.Instantiate("Prefabs/Room/SpawnTile", _gridObject.transform);
         spawn.transform.position = new Vector3(-6f, 0, 0);
         SpawnTile = spawn.GetComponent<SpawnTile>();
 
-        BatSlot = resource.InstantiateWithPoolingOption("Prefabs/Room/BatPoint", _gridObject.transform).GetComponent<BatPoint>();
+        BatSlot = resource.Instantiate("Prefabs/Room/BatPoint", _gridObject.transform).GetComponent<BatPoint>();
     }
 
     public void ExpandMapRow()
