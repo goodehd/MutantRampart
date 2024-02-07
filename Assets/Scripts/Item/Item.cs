@@ -7,7 +7,8 @@ public enum EItemType
     Weapon,
     Armor,
     Consume,
-    Count
+    Count,
+    ExpandMap
 }
 
 public class Item

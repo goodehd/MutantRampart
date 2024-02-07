@@ -5,10 +5,12 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 public class GameManager : IManagers
 {
-    public int _playerMoney { get; private set; } = 5000;
+    public int _playerMoney { get; private set; } = 20000;
     public Vital PlayerHP { get; private set; }
 
     public bool isHomeSet = false;
+
+    public int CurStage;
 
     public List<Character> playerUnits { get; private set; } = new List<Character>();   // 플레이어가 보유한 유닛 리스트
     public List<Room> PlayerRooms { get; private set; } = new List<Room>();     // 플레이어가 보유한 Room 리스트
@@ -22,7 +24,7 @@ public class GameManager : IManagers
         room.Init(Main.Get<DataManager>().Room["Home"]);
         PlayerRooms.Add(room);
 
-        Room room2 = new Room();
+       /* Room room2 = new Room();
         room2.Init(Main.Get<DataManager>().Room["Forest"]);
         PlayerRooms.Add(room2);
         
@@ -43,7 +45,7 @@ public class GameManager : IManagers
         
         Item item4 = new Item();
         item4.Init(Main.Get<DataManager>().Item["SilverCoin"]);
-        PlayerItems.Add(item4);
+        PlayerItems.Add(item4);*/
 
         PlayerHP = new Vital(EstatType.Hp, 5);
         PlayerHP.OnValueZero += GameOver;
@@ -60,6 +62,8 @@ public class GameManager : IManagers
     public void GameOver()
     {
         Time.timeScale = 0.0f;
-        Main.Get<UIManager>().OpenPopup<StageFail_PopupUI>("StageFail_PopupUI");
+        StageFail_PopupUI ui = Main.Get<UIManager>().OpenPopup<StageFail_PopupUI>("StageFail_PopupUI");
+        ui._curStage = CurStage;
+
     }
 }

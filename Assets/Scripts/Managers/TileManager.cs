@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class PathInfo
 {
     public GameObject CurRoom;
     public PathInfo PrevRoom;
+    
 
     public PathInfo(GameObject cur, PathInfo prev)
     {
@@ -17,6 +19,7 @@ public class PathInfo
 
 public class TileManager : IManagers
 {
+   
     private ResourceManager resource;
     private List<List<GameObject>> _roomObjList = new List<List<GameObject>>();
     private GameObject _gridObject;
@@ -26,6 +29,8 @@ public class TileManager : IManagers
 
     public RoomBehavior SelectRoom { get; private set; }
     public event Action OnSlectRoomEvent;
+    public int CurMapRow = 3;
+    public int CurMapCol = 3;
 
     public void GenerateMap(int x, int y)
     {
@@ -65,13 +70,55 @@ public class TileManager : IManagers
             }
         }
 
-        GameObject spawn = resource.Instantiate("Prefabs/Room/SpawnTile", _gridObject.transform);
+
+
+        GameObject spawn = resource.InstantiateWithPoolingOption("Prefabs/Room/SpawnTile", _gridObject.transform);
         spawn.transform.position = new Vector3(-6f, 0, 0);
         SpawnTile = spawn.GetComponent<SpawnTile>();
 
-        BatSlot = resource.Instantiate("Prefabs/Room/BatPoint", _gridObject.transform).GetComponent<BatPoint>();
+        BatSlot = resource.InstantiateWithPoolingOption("Prefabs/Room/BatPoint", _gridObject.transform).GetComponent<BatPoint>();
     }
 
+    public void ExpandMapRow()
+    {
+        Vector2 pos = Vector2.zero;
+        Vector2 offset = Vector2.zero;
+
+        _roomObjList.Add(new List<GameObject>());
+        pos.Set(-3f * CurMapRow, 1.5f * CurMapRow);
+        for (int i = 0; i < CurMapCol; i++)
+        {
+            offset.Set(3f * i, 1.5f * i);
+            GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
+            obj.transform.position = pos + offset;
+            obj.transform.parent = _gridObject.transform;
+            _roomObjList[CurMapRow].Add(obj);
+            RoomBehavior room = obj.GetComponent<RoomBehavior>();
+            room.IndexX = CurMapRow;
+            room.IndexY = i;
+        }
+        CurMapRow++;
+    }
+
+    public void ExpandMapCol()
+    {
+        Vector2 pos = Vector2.zero;
+        Vector2 offset = Vector2.zero;
+
+        pos.Set(3f * CurMapCol, 1.5f * CurMapCol);
+        for (int i = 0; i < CurMapRow; i++)
+        {
+            offset.Set(-3f * i, 1.5f * i);
+            GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
+            obj.transform.position = pos + offset;
+            obj.transform.parent = _gridObject.transform;
+            _roomObjList[i].Add(obj);
+            RoomBehavior room = obj.GetComponent<RoomBehavior>();
+            room.IndexX = i;
+            room.IndexY = CurMapCol;
+        }
+        CurMapCol++;
+    }
     public bool Init()
     {
         resource = Main.Get<ResourceManager>();

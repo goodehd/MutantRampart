@@ -56,6 +56,5 @@ public class Item_ListUI : BaseUI
         YesNo_PopupUI ui = Main.Get<UIManager>().OpenPopup<YesNo_PopupUI>("YesNo_PopupUI");
         ui.curAskingText = "구매하시겠습니까 ?";
         ui.ShopItemData = ShopItemData;
-
     }
 }

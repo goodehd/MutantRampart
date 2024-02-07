@@ -14,6 +14,7 @@ public class YesNo_PopupUI : BaseUI
     public CharacterData ShopUnitData { get; set; }
     public RoomData ShopRoomData { get; set; }
     public ItemData ShopItemData { get; set; }
+    public ItemData ShopGroundItemData { get; set; }
 
     public string curAskingText { get; set; }
 
@@ -46,6 +47,10 @@ public class YesNo_PopupUI : BaseUI
         else if (ShopItemData != null) // 구분 - 구매하려는 데이터가 Item 일 때
         {
             BuyItemItem(ShopItemData);
+        }
+        else if (ShopGroundItemData != null)
+        {
+            BuyGroundItem(ShopGroundItemData);
         }
 
         Main.Get<UIManager>().ClosePopup();
@@ -108,6 +113,30 @@ public class YesNo_PopupUI : BaseUI
             Item newItem = new Item();
             newItem.Init(data);
             Main.Get<GameManager>().PlayerItems.Add(newItem);
+            Debug.Log("구매완료했습니다.");
+            Debug.Log($"잔액 : {Main.Get<GameManager>()._playerMoney}");
+        }
+        else
+        {
+            Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI"); // 돈이 아이템 금액보다 적으면 돈부족 경고창 띄우기
+            ui.curErrorText = "돈이 부족해서 구매할 수 없습니다.";
+            Debug.Log("돈이 부족해서 구매할 수 없습니다.");
+        }
+    }
+
+    private void BuyGroundItem(ItemData data)
+    {
+        if (Main.Get<GameManager>()._playerMoney >= data.Price)
+        {
+            if(data.Key == "ExpandMapRow")
+            {
+                Main.Get<TileManager>().ExpandMapRow();
+            }
+            else if(data.Key == "ExpandMapCol")
+            {
+                Main.Get<TileManager>().ExpandMapCol();
+            }
+            Main.Get<GameManager>().ChangeMoney(-data.Price);
             Debug.Log("구매완료했습니다.");
             Debug.Log($"잔액 : {Main.Get<GameManager>()._playerMoney}");
         }
