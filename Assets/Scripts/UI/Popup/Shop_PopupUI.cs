@@ -19,6 +19,7 @@ public class Shop_PopupUI : BaseUI
     private Transform _unitContent;
     private Transform _roomContent;
     private Transform _itemContent;
+    private Transform _groundContent;
 
     private TMP_Text _playerMoneyText;
 
@@ -27,6 +28,7 @@ public class Shop_PopupUI : BaseUI
 
     public List<ItemData> ShopItemItems { get; private set; } = new List<ItemData>(); // 상점 - ItemItems;
 
+    public List<ItemData> ShopGroundItems { get; private set; } = new List<ItemData>();
     protected override void Init()
     {
         SetUI<Button>();
@@ -49,6 +51,7 @@ public class Shop_PopupUI : BaseUI
         _unitContent = GetUI<Transform>("Unit_Content");
         _roomContent = GetUI<Transform>("Room_Content");
         _itemContent = GetUI<Transform>("Item_Content");
+        _groundContent = GetUI<Transform>("Ground_Content");
 
         _playerMoneyText = GetUI<TMP_Text>("ShopPlayerMoneyText");
         _playerMoneyText.text = Main.Get<GameManager>()._playerMoney.ToString();
@@ -86,6 +89,9 @@ public class Shop_PopupUI : BaseUI
         ShopItemItems.Add(Main.Get<DataManager>().Item["SilverBar"]);
         ShopItemItems.Add(Main.Get<DataManager>().Item["GoldBar"]);
 
+        ShopGroundItems.Add(Main.Get<DataManager>().Item["ExpandMapRow"]);
+        ShopGroundItems.Add(Main.Get<DataManager>().Item["ExpandMapCol"]);
+
         // Shop - Unit Items
         for (int i = 0; i < ShopUnitItems.Count; i++)
         {
@@ -101,6 +107,12 @@ public class Shop_PopupUI : BaseUI
         }
 
         // todo : Shop - Ground Item
+
+        for (int i =0; i < ShopGroundItems.Count; i++)
+        {
+            Ground_ListUI groundItemsList = Main.Get<UIManager>().CreateSubitem<Ground_ListUI>("Ground_ListUI", _groundContent);
+            groundItemsList.ShopGroundItemData = ShopGroundItems[i];
+        }
 
         // todo : Shop - Item
         for (int i = 0; i < ShopItemItems.Count; i++)
@@ -154,5 +166,6 @@ public class Shop_PopupUI : BaseUI
     private void ClickCloseBtn(PointerEventData eventData)
     {
         Main.Get<UIManager>().ClosePopup();
+        Camera.main.GetComponent<CameraMovement>().Rock = false;
     }
 }

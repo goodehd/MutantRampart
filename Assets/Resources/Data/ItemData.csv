@@ -10,3 +10,5 @@ StrangeCandy,Consume,0,0,0,0,레벨을 올려주는 이상한사탕,800
 Meat,Consume,100,0,0,100,흠 뭐하지,900
 SilverBar,Armor,10,5,0,0,처음맞는 5회의 공격을 피해없이 방어한다,1000
 GoldBar,Weapon,0,0,10,3,처음 때리는 5회의 공격에 +100의 피해를 준다.,1010
+ExpandMapRow,ExpandMap,0,0,0,0,기본타일을 행으로 확장시킨다,5000
+ExpandMapCol,ExpandMap,0,0,0,0,기본타일을 열로 확장시킨다,5000

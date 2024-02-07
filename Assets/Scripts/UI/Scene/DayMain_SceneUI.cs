@@ -259,6 +259,7 @@ public class DayMain_SceneUI : BaseUI
         isInventOpen = false;
 
         _ui.OpenPopup<Shop_PopupUI>("Shop_PopupUI");
+        maincamera.Rock = true;
     }
 
     private void ClickSpeed1Btn(PointerEventData eventData)
