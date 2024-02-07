@@ -78,7 +78,7 @@ public class PoolManager : IManagers
     public bool Push(GameObject gameObject)
     {
         // 1. 풀이 있는지 확인한다.
-        if(_pools.ContainsKey(gameObject.name) == false)
+        if (_pools.ContainsKey(gameObject.name) == false)
         {
             return false;
         }
@@ -86,11 +86,6 @@ public class PoolManager : IManagers
         _pools[gameObject.name].Push(gameObject);
 
         return true;
-    }
-
-    public void Clear()
-    {
-        _pools.Clear();
     }
 
     public bool IsPooling(string name)
@@ -102,11 +97,27 @@ public class PoolManager : IManagers
     {
         Pool pool = new Pool(prefab);
         _pools.Add(prefab.name, pool);
-        Debug.Log($"[pool] {prefab.name} 생성");
+    }
+
+    public void CreatePool(string key)
+    {
+        GameObject obj = Main.Get<ResourceManager>().Load<GameObject>(key);
+        if (_pools.ContainsKey(obj.name))
+        {
+            return;
+        }
+        Pool pool = new Pool(obj);
+        _pools.Add(obj.name, pool);
+    }
+
+    private void Clear()
+    {
+        _pools.Clear();
     }
 
     public bool Init()
     {
+        Clear();
         return true;
     }
 }

@@ -14,4 +14,10 @@ public class Unit : CharacterBehaviour
         ((BatRoom)CharacterInfo.CurRoom).UnitCount--;
         base.Die();
     }
+
+    public override void ResetCharacter()
+    {
+        base.ResetCharacter();
+    }
+
 }

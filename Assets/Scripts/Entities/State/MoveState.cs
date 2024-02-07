@@ -8,13 +8,11 @@ public class MoveState : BaseState
     private Stack<GameObject> _pathObjStk;
     private Vector3 _targetPos = Vector3.zero;
     private Coroutine _coroutine;
-    private bool _isMove;
     private bool[,] _visited;
 
     public MoveState(CharacterBehaviour owner) : base(owner)
     {
         _tileMap = Main.Get<TileManager>();
-        _isMove = false;
         _pathObjStk = new Stack<GameObject>();
     }
 
@@ -30,7 +28,6 @@ public class MoveState : BaseState
     {
         Owner.Animator.SetBool(Literals.Move, false);
         StopCoroutine();
-        _isMove = false;
     }
 
     public override void UpdateState()
@@ -49,10 +46,7 @@ public class MoveState : BaseState
 
     private void MoveStart()
     {
-        if (!_isMove)
-        {
-            _coroutine = Owner.StartCoroutine(Movement());
-        }
+        _coroutine = Owner.StartCoroutine(Movement());
     }
 
     private void SetPathList()

@@ -19,11 +19,11 @@ public class Main : SingletonBehavior<Main>
     protected override void Init()
     {
         CreateManager<DataManager>();
+        CreateManager<PoolManager>();
         CreateManager<ResourceManager>();
         CreateManager<SceneManager>();
         CreateManager<SoundManager>();
         CreateManager<UIManager>();
-        CreateManager<PoolManager>();
         CreateManager<TileManager>();
         CreateManager<GameManager>();
         CreateManager<StageManager>();

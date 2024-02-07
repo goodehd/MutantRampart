@@ -59,8 +59,10 @@ public class CharacterBehaviour : MonoBehaviour
         }
     }
 
-    public void ResetCharacter()
+    public virtual void ResetCharacter()
     {
+        CurPosX = -1;
+        CurPosY = -1;
         CharacterInfo.IsDead = false;
         Status.GetStat<Vital>(EstatType.Hp).SetCurValueMax();
         StateMachine.ChangeState(EState.Idle);
