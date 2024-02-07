@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class EnemyAttackState : BaseState
 {
@@ -30,18 +29,18 @@ public class EnemyAttackState : BaseState
 
     }
 
-    public override void StopCoroutine()
+    public void StopCoroutine()
     {
         if (_coroutine != null)
         {
-            CoroutineManagement.Instance.StopCoroutine(_coroutine);
+            Owner.StopCoroutine(_coroutine);
             _coroutine = null;
         }
     }
 
     private void AttackStart()
     {
-        _coroutine = CoroutineManagement.Instance.StartCoroutine(Attack());
+        _coroutine = Owner.StartCoroutine(Attack());
     }
 
     private IEnumerator Attack()

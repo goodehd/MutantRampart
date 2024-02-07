@@ -25,11 +25,11 @@ public class UnitAttackState : BaseState
         StopCoroutine();
     }
 
-    public override void StopCoroutine()
+    public void StopCoroutine()
     {
         if(_coroutine != null)
         {
-            CoroutineManagement.Instance.StopCoroutine(_coroutine);
+            Owner.StopCoroutine(_coroutine);
             _coroutine = null;
         }
     }
@@ -41,7 +41,7 @@ public class UnitAttackState : BaseState
 
     private void AttackStart()
     {
-        _coroutine = CoroutineManagement.Instance.StartCoroutine(Attack());
+        _coroutine = Owner.StartCoroutine(Attack());
         OnAttackState?.Invoke();
     }
 

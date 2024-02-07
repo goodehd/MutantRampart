@@ -10,7 +10,7 @@ public class DeadState : BaseState
 
     public override void EnterState()
     {
-        CoroutineManagement.Instance.StartCoroutine(DieObject());
+        Owner.StartCoroutine(DieObject());
     }
 
     public override void ExitState()
@@ -19,11 +19,6 @@ public class DeadState : BaseState
     }
 
     public override void UpdateState()
-    {
-
-    }
-
-    public override void StopCoroutine()
     {
 
     }

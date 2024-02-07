@@ -38,11 +38,11 @@ public class MoveState : BaseState
 
     }
 
-    public override void StopCoroutine()
+    public void StopCoroutine()
     {
         if (_coroutine != null)
         {
-            CoroutineManagement.Instance.StopCoroutine(_coroutine);
+            Owner.StopCoroutine(_coroutine);
             _coroutine = null;
         }
     }
@@ -51,7 +51,7 @@ public class MoveState : BaseState
     {
         if (!_isMove)
         {
-            _coroutine = CoroutineManagement.Instance.StartManagedCoroutine(Movement());
+            _coroutine = Owner.StartCoroutine(Movement());
         }
     }
 
