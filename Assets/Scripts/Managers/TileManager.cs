@@ -29,8 +29,7 @@ public class TileManager : IManagers
 
     public RoomBehavior SelectRoom { get; private set; }
     public event Action OnSlectRoomEvent;
-    public int CurMapRow = 3;
-    public int CurMapCol = 3;
+    
 
     public void GenerateMap(int x, int y)
     {
@@ -81,30 +80,34 @@ public class TileManager : IManagers
     {
         Vector2 pos = Vector2.zero;
         Vector2 offset = Vector2.zero;
-
+        int x;
+        int y;
+        GetMapSize(out x, out y);
         _roomObjList.Add(new List<GameObject>());
-        pos.Set(-3f * CurMapRow, 1.5f * CurMapRow);
-        for (int i = 0; i < CurMapCol; i++)
+        pos.Set(-3f * x, 1.5f * x);
+        for (int i = 0; i < y; i++)
         {
             offset.Set(3f * i, 1.5f * i);
             GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
             obj.transform.position = pos + offset;
             obj.transform.parent = _gridObject.transform;
-            _roomObjList[CurMapRow].Add(obj);
+            _roomObjList[y].Add(obj);
             RoomBehavior room = obj.GetComponent<RoomBehavior>();
-            room.IndexX = CurMapRow;
+            room.IndexX = y;
             room.IndexY = i;
         }
-        CurMapRow++;
+        
     }
 
     public void ExpandMapCol()
     {
         Vector2 pos = Vector2.zero;
         Vector2 offset = Vector2.zero;
-
-        pos.Set(3f * CurMapCol, 1.5f * CurMapCol);
-        for (int i = 0; i < CurMapRow; i++)
+        int x;
+        int y;
+        GetMapSize(out x, out y);
+        pos.Set(3f * y, 1.5f * y);
+        for (int i = 0; i < x; i++)
         {
             offset.Set(-3f * i, 1.5f * i);
             GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
@@ -113,9 +116,8 @@ public class TileManager : IManagers
             _roomObjList[i].Add(obj);
             RoomBehavior room = obj.GetComponent<RoomBehavior>();
             room.IndexX = i;
-            room.IndexY = CurMapCol;
+            room.IndexY = y;
         }
-        CurMapCol++;
     }
     public bool Init()
     {
