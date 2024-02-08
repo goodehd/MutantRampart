@@ -135,6 +135,7 @@ public class Inventory_PopupUI : BaseUI
     {
         Main.Get<UIManager>().CloseAllPopup();
         Owner.isInventOpen = false;
+        Camera.main.GetComponent<CameraMovement>().Rock = false;
     }
 
 }

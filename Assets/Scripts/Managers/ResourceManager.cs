@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ResourceManager : IManagers
 {
+    private PoolManager _pool; 
     private Dictionary<string, Object> _resources = new Dictionary<string, Object>();
 
     public bool Init()
     {
+        _pool = Main.Get<PoolManager>();
         return true;
     }
 
@@ -52,18 +55,20 @@ public class ResourceManager : IManagers
         return resource as T;
     }
 
-    public GameObject InstantiateWithPoolingOption(string key, Transform parent = null, bool pooling = false) // 선택적 매개변수 -- 위치 항상 뒤에 있도록 주의 !
+    public GameObject Instantiate(string key, Transform parent = null)
     {
         GameObject prefab = LoadResource<GameObject>(key);
         if (prefab == null)
         {
-            Debug.LogError($"[ResourceManager] InstantiateWithPoolingOption({key}) : Failed to load resource_prefab.");
+            Debug.LogError($"[ResourceManager] Instantiate({key}) : Failed to load resource_prefab.");
             return null;
         }
 
-        if (pooling)
+        if (_pool.IsPooling(prefab.name))
         {
-            return Main.Get<PoolManager>().Pop(prefab);
+            GameObject go = _pool.Pop(prefab);
+            go.transform.SetParent(parent);
+            return go;
         }
 
         // pooling 이 false 면 pooling 옵션 없는 Instantiate 진행 !
@@ -79,12 +84,11 @@ public class ResourceManager : IManagers
             return;
         }
 
-        if (Main.Get<PoolManager>().Push(obj))
+        if (_pool.Push(obj))
         {
             return;
         }
 
-        // pooling 이 적용 안 된 친구들은 Destroy.
         Object.Destroy(obj);
     }
 }

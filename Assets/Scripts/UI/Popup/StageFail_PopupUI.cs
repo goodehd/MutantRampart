@@ -13,7 +13,7 @@ public class StageFail_PopupUI : BaseUI
     private Button _mainMenuBtn;
     private Button _retryBtn;
 
-    //public int _curStage { get; set; }
+    public int _curStage { get; set; }
 
     //public int _rewardsGold { get; set; }
 
@@ -30,7 +30,7 @@ public class StageFail_PopupUI : BaseUI
         SetUICallback(_mainMenuBtn.gameObject, EUIEventState.Click, ClickMainMenuBtn);
         SetUICallback(_retryBtn.gameObject, EUIEventState.Click, ClickRetryBtn);
 
-        //_stageText.text = ;
+        _stageText.text = $"Stage {_curStage}";
         //_rewardsText.text = ;
     }
 

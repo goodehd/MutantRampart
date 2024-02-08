@@ -43,6 +43,7 @@ public class CharacterBehaviour : MonoBehaviour
     public void SetData(Character data)
     {
         CharacterInfo = data;
+        data.Owner = this;
         CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += Die;
     }
 
@@ -60,10 +61,17 @@ public class CharacterBehaviour : MonoBehaviour
         }
     }
 
-    public void ResetCharacter()
+    public virtual void ResetCharacter()
     {
+        CurPosX = -1;
+        CurPosY = -1;
         CharacterInfo.IsDead = false;
         Status.GetStat<Vital>(EstatType.Hp).SetCurValueMax();
         StateMachine.ChangeState(EState.Idle);
+    }
+
+    private void OnDestroy()
+    {
+        CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero -= Die;
     }
 }

@@ -242,7 +242,6 @@ public class DayMain_SceneUI : BaseUI
         {
             _ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
         }
-        //_ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
         isInventOpen = false;
 
         ClickPlacing();
@@ -255,9 +254,10 @@ public class DayMain_SceneUI : BaseUI
         {
             _ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
         }
-        //_ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
         isInventOpen = false;
 
+        //_ui.OpenPopup<PastShop_PopupUI>("PastShop_PopupUI");
+        maincamera.Rock = true;
         _ui.OpenPopup<Shop_PopupUI>("Shop_PopupUI");
     }
 
@@ -295,6 +295,8 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickInventoryBtn(PointerEventData eventData)
     {
+        maincamera.Rock = true;
+
         if (inventory_PopupUI == null) // 유니티 play 하고 Hierarchy 창을 클릭한 후에 게임Scene 에서 타일을 누르면 인벤토리가 없어지고, 인벤토리 버튼 누르면 인벤토리가 다시 안 뜨는 이슈해결을 위해.
         {
             isInventOpen = false;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Scene : MonoBehaviour
 {
@@ -20,22 +21,27 @@ public class Scene : MonoBehaviour
         _resource = Main.Get<ResourceManager>();
         _data = Main.Get<DataManager>();
         _ui = Main.Get<UIManager>();
+        _pool = Main.Get<PoolManager>();
+        SettingPool();
+    }
+
+    private void SettingPool()
+    {
+        _pool.CreatePool($"{Literals.UNIT_PREFABS_PATH}Slime");
     }
 
     public CharacterBehaviour CreateCharacter(string key)
     {
-        GameObject obj = _resource.InstantiateWithPoolingOption($"{Literals.UNIT_PREFABS_PATH}{key}");
+        GameObject obj = _resource.Instantiate($"{Literals.UNIT_PREFABS_PATH}{key}");
         CharacterBehaviour character = Utility.GetAddComponent<CharacterBehaviour>(obj);
-
         character.Init(_data.Character[key]);
-        _ui.CreateSubitem<CharacterHpBarUI>("CharacterHpBarUI", obj.transform).transform.localPosition = new Vector3(0, 0.5f, 3f);
 
         return character;
     }
 
     public GameObject CreateRoom(string key)
     {
-        GameObject obj = _resource.InstantiateWithPoolingOption($"{Literals.ROOM_PREFABS_PATH}{key}");
+        GameObject obj = _resource.Instantiate($"{Literals.ROOM_PREFABS_PATH}{key}");
         RoomBehavior room = Utility.GetAddComponent<RoomBehavior>(obj);
         room.Init(_data.Room[key]);
 

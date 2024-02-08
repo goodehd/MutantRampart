@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UIManager : IManagers
 {
+    private ResourceManager _resource;
+
     private Stack<BaseUI> _popupStack = new Stack<BaseUI>();
     private Transform _rootUI;
     public BaseUI SceneUI { get; private set; }
@@ -31,6 +33,7 @@ public class UIManager : IManagers
     public bool Init()
     {
         _rootUI = null;
+        _resource = Main.Get<ResourceManager>();
         return true;
     }
 
@@ -95,17 +98,8 @@ public class UIManager : IManagers
     private GameObject InstantiateUI(string prefabName, string path)
     {
         string fullPath = $"{path}{prefabName}";
-        GameObject obj = Resources.Load<GameObject>(fullPath);
-
-        if(obj == null)
-        {
-            Debug.LogError($"UI Prefab not Found, Path : {fullPath}");
-            return null;
-        }
-
-        GameObject uiObj = Object.Instantiate(obj);
+        GameObject uiObj = _resource.Instantiate(fullPath);
         uiObj.transform.SetParent(RootUI);
-        uiObj.name = obj.name;
         return uiObj;
     }
 
