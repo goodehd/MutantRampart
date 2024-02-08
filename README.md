@@ -1,6 +1,7 @@
 # MutantRampart
 
 조형승 - Shop_PopupUI.cs - Assets/Scripts/UI/Popup/Shop_PopupUI.cs
+- *중복되는 코드들이 있는 것 같아 이 부분을 어떻게 개선할 수 있을지 고민중입니다 ! 개선 방안에 대해 좋은 아이디어가 있으시다면 공유 부탁드립니다 !*
 
 천홍 - TileManager - Assets/Scripts/Managers/TileManager.cs  
 천홍 - RoomBehavior - Assets/Scripts/Room/RoomBehavior.cs
