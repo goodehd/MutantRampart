@@ -9,4 +9,9 @@ public class RoomData : Data
     public int MaxUnitCount { get; set; }
 
     public int Price { get; set; }
+    
+    public float Duration { get; set; }
+    public float UpgradeValue_1 { get; set; }
+    public float UpgradeValue_2 { get; set; }
+    public float UpgradeValue_3 { get; set; }
 }
