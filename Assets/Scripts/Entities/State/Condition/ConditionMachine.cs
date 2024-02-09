@@ -42,9 +42,9 @@ public class ConditionMachine
     {
         _curConditionList.Remove(basecondition);
     }
+    
     public void ClearConditions()
     {
         _curConditionList.Clear();
     }
-    
 }

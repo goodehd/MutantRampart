@@ -8,16 +8,13 @@ public abstract class BaseCondition
    protected CharacterBehaviour Owner { get; private set; }
    protected Data OwnerData { get; set; }
    protected float Duration { get; set; }
-   protected float UpgradeValue_1 { get; set; }
-   protected float UpgradeValue_2 { get; set; }
-   protected float UpgradeValue_3 { get; set; }
+
 
    public abstract event Action<BaseCondition> OnEndCondition;
    public BaseCondition(CharacterBehaviour owner, Data data)
    {
       Owner = owner;
       OwnerData = data;
-      
    }
 
    public abstract void EnterCondition();

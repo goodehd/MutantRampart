@@ -6,8 +6,11 @@ using UnityEngine;
 public class HealingCondition : BaseCondition
 {
     public override event Action<BaseCondition> OnEndCondition;
+    
     private Coroutine _coroutine;
-
+    private float UpgradeValue_1 { get; set; }
+    private float UpgradeValue_2 { get; set; }
+    private float UpgradeValue_3 { get; set; }
     public HealingCondition(CharacterBehaviour owner, RoomData data) : base(owner, data)
     {
         OwnerData = data;
@@ -18,7 +21,6 @@ public class HealingCondition : BaseCondition
 
         Owner.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += ExitCondition;
     }
-
     public HealingCondition(CharacterBehaviour owner, CharacterData data) : base(owner, data)
     {
         OwnerData = data;
@@ -28,12 +30,10 @@ public class HealingCondition : BaseCondition
     {
         OwnerData = data;
     }
-
-
+    
     public override void EnterCondition()
     {
-        //CoroutineManagement.Instance.StartCoroutine(ConditionDuration(Duration));
-        _coroutine = CoroutineManagement.Instance.StartCoroutine(ConditionEffect());
+        //_coroutine = CoroutineManagement.Instance.StartCoroutine(ConditionEffect(UpgradeValue_1));
     }
 
     public override void UpdateCondition()
@@ -51,7 +51,7 @@ public class HealingCondition : BaseCondition
     {
         if (_coroutine != null)
         {
-            CoroutineManagement.Instance.StopCoroutine(_coroutine);
+            //CoroutineManagement.Instance.StopCoroutine(_coroutine);
             _coroutine = null;
         }
     }
@@ -62,12 +62,11 @@ public class HealingCondition : BaseCondition
         StopCoroutine();
     }
 
-    public IEnumerator ConditionEffect()
+    public IEnumerator ConditionEffect(float a)
     {
         while (true)
         {
-            Owner.Status.GetStat<Vital>(EstatType.Hp).CurValue += 10f;
-            Debug.Log(Owner.Status.GetStat<Vital>(EstatType.Hp).CurValue);
+            Owner.Status.GetStat<Vital>(EstatType.Hp).CurValue += a;
             yield return new WaitForSeconds(1f);
         }
     }
