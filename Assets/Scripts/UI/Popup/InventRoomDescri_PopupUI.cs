@@ -62,7 +62,7 @@ public class InventRoomDescri_PopupUI : BaseUI
 
     private void ClickUpgradeBtn(PointerEventData EventData)
     {
-        Main.Get<UIManager>().OpenPopup<Upgrade_PopupUI>("Upgrade_PopupUI");
+        Main.Get<UIManager>().OpenPopup<PastUpgrade_PopupUI>("PastUpgrade_PopupUI");
 
     }
 

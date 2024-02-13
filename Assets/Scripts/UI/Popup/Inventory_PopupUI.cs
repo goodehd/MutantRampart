@@ -9,25 +9,14 @@ public class Inventory_PopupUI : BaseUI
     //private Button _backButton;
     private Button _roomButton;
     private Button _unitButton;
-    private Button _closeBtn;
+    private Button _closeButton;
+    private Button _upgradeButton;
 
     private ScrollRect _inventRoomScrollView;
     private ScrollRect _inventUnitScrollView;
 
     private Transform _inventRoomContent;
     private Transform _inventUnitContent;
-
-    //private TMP_Text _inventItemNameTxt;
-    //private TMP_Text _inventItemDescriTxt;
-
-    //private Image _inventUnitImg;
-
-    // InventItemDetailBox 관련
-    //private Image _inventItemDetailBox;
-    //private Transform _myItemsContent;
-
-    //public string _selectItemNameTxt { get; set; }
-    //public string _selectItemDescriTxt { get; set; }
 
     public DayMain_SceneUI Owner { get; set; }
 
@@ -46,12 +35,14 @@ public class Inventory_PopupUI : BaseUI
         //_backButton = GetUI<Button>("InventBackBtn");
         _roomButton = GetUI<Button>("InventRoomBtn");
         _unitButton = GetUI<Button>("InventUnitBtn");
-        _closeBtn = GetUI<Button>("InventoryCloseBtn");
+        _closeButton = GetUI<Button>("InventoryCloseBtn");
+        _upgradeButton = GetUI<Button>("InventoryUpgradeBtn");
 
         //SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickBackBtn);
         SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
-        SetUICallback(_closeBtn.gameObject, EUIEventState.Click, ClickCloseBtn);
+        SetUICallback(_closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
+        SetUICallback(_upgradeButton.gameObject, EUIEventState.Click, ClickUpgradeBtn);
 
         _inventRoomScrollView = GetUI<ScrollRect>("InventRoom_Scroll View");
         _inventUnitScrollView = GetUI<ScrollRect>("InventUnit_Scroll View");
@@ -69,7 +60,7 @@ public class Inventory_PopupUI : BaseUI
     {
         // room
         List<Room> playerRooms = Main.Get<GameManager>().PlayerRooms;
-        foreach (Transform item in _inventRoomContent.transform) // todo : 초기화 관련 ?
+        foreach (Transform item in _inventRoomContent.transform) // 초기화 관련 ?
         {
             Destroy(item.gameObject);
         }
@@ -98,12 +89,11 @@ public class Inventory_PopupUI : BaseUI
     }
 
 
-    private void ClickBackBtn(PointerEventData EventData)
-    {
-        Main.Get<UIManager>().CloseAllPopup();
-        Owner.isInventOpen = false;
-
-    }
+    //private void ClickBackBtn(PointerEventData EventData)
+    //{
+    //    Main.Get<UIManager>().CloseAllPopup();
+    //    Owner.isInventOpen = false;
+    //}
 
     private void ClickRoomBtn(PointerEventData EventData)
     {
@@ -138,6 +128,10 @@ public class Inventory_PopupUI : BaseUI
         Camera.main.GetComponent<CameraMovement>().Rock = false;
     }
 
+    private void ClickUpgradeBtn(PointerEventData EventData)
+    {
+        // todo : Main.Get<UIManager>().OpenPopup<>();
+    }
 }
 
 

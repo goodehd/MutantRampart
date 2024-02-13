@@ -106,7 +106,7 @@ public class PastShop_PopupUI : BaseUI
             roomItemsList.ShopRoomData = ShopRoomItems[i];
         }
 
-        // todo : Shop - Ground Item
+        // Shop - Ground Item
 
         for (int i =0; i < ShopGroundItems.Count; i++)
         {
@@ -114,7 +114,7 @@ public class PastShop_PopupUI : BaseUI
             groundItemsList.ShopGroundItemData = ShopGroundItems[i];
         }
 
-        // todo : Shop - Item
+        //Shop - Item
         for (int i = 0; i < ShopItemItems.Count; i++)
         {
             Item_ListUI itemItemsList = Main.Get<UIManager>().CreateSubitem<Item_ListUI>("Item_ListUI", _itemContent);
