@@ -14,8 +14,7 @@ public class TrapRoom : RoomBehavior
     }
     
     private ETrapType _trapType;
-
-    public event Action<GameObject> OnFallinTrap;
+    
     private bool _isTrapOn = false;
     
     public override void Init(RoomData data)

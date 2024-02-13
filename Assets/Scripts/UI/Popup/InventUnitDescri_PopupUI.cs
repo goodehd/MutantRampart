@@ -215,7 +215,7 @@ public class InventUnitDescri_PopupUI : BaseUI
                 break;
             }
 
-            if (i >= 2 && i != null)
+            if (i >= 2)
             {
                 return false;
             }

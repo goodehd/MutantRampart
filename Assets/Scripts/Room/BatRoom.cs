@@ -101,6 +101,8 @@ public class BatRoom : RoomBehavior
         Units[index].SetData(data);
         Units[index].CurRoom = this;
         Units[index].transform.position = Literals.BatPos[index] + transform.position;
+        //유닛 체력이 회복되는가 체크 해봤슴 나중에 버프타일 함수에다가 넣으면 된다~~
+        //Units[index].ConditionMachine.AddCondition(Condition.Healing,new HealingCondition(Units[index],RoomInfo.Data));
         UnitCount++;
 
         return true;
