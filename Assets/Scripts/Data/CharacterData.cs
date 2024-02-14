@@ -1,5 +1,5 @@
 
-public class CharacterData : Data
+public class CharacterData : Data, INextKey
 {
     public float Hp { get; set; }
     public float Damage { get; set; }
@@ -7,4 +7,6 @@ public class CharacterData : Data
     public float AttackSpeed { get; set; }
     public float MoveSpeed { get; set; }
     public int Price { get; set; }
+    public string Nextkey { get; set; }
+
 }

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class InventRoomDescri_PopupUI : BaseUI
 {
     private Button _closeBtn;
-    private Button _upgradeBtn;
+    //private Button _upgradeBtn;
     private Button _deleteBtn;
 
     private TMP_Text _roomName;
@@ -29,11 +29,11 @@ public class InventRoomDescri_PopupUI : BaseUI
         SetUI<Image>();
 
         _closeBtn = GetUI<Button>("InventRoomCloseBtn");
-        _upgradeBtn = GetUI<Button>("InventRoomUpgradeBtn");
+        //_upgradeBtn = GetUI<Button>("InventRoomUpgradeBtn");
         _deleteBtn = GetUI<Button>("InventRoomDeleteBtn");
 
         SetUICallback(_closeBtn.gameObject, EUIEventState.Click, ClickCloseBtn);
-        SetUICallback(_upgradeBtn.gameObject, EUIEventState.Click, ClickUpgradeBtn);
+        //SetUICallback(_upgradeBtn.gameObject, EUIEventState.Click, ClickUpgradeBtn);
         SetUICallback(_deleteBtn.gameObject, EUIEventState.Click, ClickDeleteBtn);
 
         _roomName = GetUI<TMP_Text>("InventRoomNameTxt");
@@ -60,11 +60,11 @@ public class InventRoomDescri_PopupUI : BaseUI
         Owner._selectCheckImg.gameObject.SetActive(false);
     }
 
-    private void ClickUpgradeBtn(PointerEventData EventData)
-    {
-        Main.Get<UIManager>().OpenPopup<PastUpgrade_PopupUI>("PastUpgrade_PopupUI");
+    //private void ClickUpgradeBtn(PointerEventData EventData)
+    //{
+    //    Main.Get<UIManager>().OpenPopup<PastUpgrade_PopupUI>("PastUpgrade_PopupUI");
 
-    }
+    //}
 
     private void ClickDeleteBtn(PointerEventData EventData)
     {

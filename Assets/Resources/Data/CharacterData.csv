@@ -1,5 +1,11 @@
-Key,Hp,Damage,Defense,AttackSpeed,MoveSpeed,Price
-Slime,100,10,5,0.5,2,1000
-Gun,100,10,5,1,1,1010
-Jotem,200,20,10,4,1,1050
-Warrior,300,30,15,6,1,1100
+Key,Hp,Damage,Defense,AttackSpeed,MoveSpeed,Price,Nextkey
+Slime,100,10,5,0.5,2,1000,0
+Gun,100,10,5,1,1,1000,Guner
+Guner,110,13,7,1.5,1,1300,GunBBang
+GunBBang,120,16,9,2,1,1600,0
+Jotem,200,20,10,4,1,2000,Jotemm
+Jotemm,210,23,12,4.5,1,2300,Jotemmm
+Jotemmm,220,26,14,5,1,2600,0
+Warrior,300,30,15,6,1,3000,Warriorr
+Warriorr,310,33,17,6.5,1,3300,Warriorrr
+Warriorrr,320,36,19,7,1,3600,0

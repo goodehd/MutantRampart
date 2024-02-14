@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class GameManager : IManagers
 {
@@ -24,28 +23,28 @@ public class GameManager : IManagers
         room.Init(Main.Get<DataManager>().Room["Home"]);
         PlayerRooms.Add(room);
 
-       /* Room room2 = new Room();
-        room2.Init(Main.Get<DataManager>().Room["Forest"]);
-        PlayerRooms.Add(room2);
-        
-        playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
-        playerUnits.Add(new Character(Main.Get<DataManager>().Character["Jotem"]));
+        /* Room room2 = new Room();
+         room2.Init(Main.Get<DataManager>().Room["Forest"]);
+         PlayerRooms.Add(room2);
+
+         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
+         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Jotem"]));
 
 
-        Item item1 = new Item();
-        item1.Init(Main.Get<DataManager>().Item["Meat"]);
-        PlayerItems.Add(item1);
-        
-        Item item2 = new Item();
-        item2.Init(Main.Get<DataManager>().Item["BlueBook"]);
-        PlayerItems.Add(item2);
-        Item item3 = new Item();
-        item3.Init(Main.Get<DataManager>().Item["RedBook"]);
-        PlayerItems.Add(item3);
-        
-        Item item4 = new Item();
-        item4.Init(Main.Get<DataManager>().Item["SilverCoin"]);
-        PlayerItems.Add(item4);*/
+         Item item1 = new Item();
+         item1.Init(Main.Get<DataManager>().Item["Meat"]);
+         PlayerItems.Add(item1);
+
+         Item item2 = new Item();
+         item2.Init(Main.Get<DataManager>().Item["BlueBook"]);
+         PlayerItems.Add(item2);
+         Item item3 = new Item();
+         item3.Init(Main.Get<DataManager>().Item["RedBook"]);
+         PlayerItems.Add(item3);
+
+         Item item4 = new Item();
+         item4.Init(Main.Get<DataManager>().Item["SilverCoin"]);
+         PlayerItems.Add(item4);*/
 
         PlayerHP = new Vital(EstatType.Hp, 5);
         PlayerHP.OnValueZero += GameOver;
@@ -66,4 +65,30 @@ public class GameManager : IManagers
         ui._curStage = CurStage;
 
     }
+
+    public void RemoveUnit(Character unit) // unit
+    {
+        ((BatRoom)unit.CurRoom).DeleteUnit(unit); // 배치되어있는 유닛 빼면서
+        playerUnits.Remove(unit); // 인벤토리에서도 지우고 
+        Item[] items = unit.Item; // 아이템 장착되어있는 것도 빼주고
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] != null)
+            {
+                items[i].IsEquiped = false;
+                items[i].Owner = null;
+            }
+        }
+    }
+
+    // todo : Room 뺄 때 해야하는 것들 함수로 작동시키기 !
+    //public void RemoveRoom(Room room) // room -- 배치 삭제, 인벤토리에서도 삭제
+    //{
+
+    //}
+    // todo : Item 뺄 때 해야하는 것들 함수로 작동시키기 !
+    //public void RemoveItem(Item item) // item -- 인벤토리에서 삭제, 장착되어있는 것에서 해제
+    //{
+
+    //}
 }

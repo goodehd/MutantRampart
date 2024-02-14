@@ -35,7 +35,18 @@ public class InventUnit_ContentsBtnUI : BaseUI
 
     private void ClickUnitContentBtn(PointerEventData data)
     {
-        if (Owner.inventUnitDescri_PopupUI == null) // 설명창이 안 열려 있다면
+        if (Owner.inventUpgrade_PopupUI != null) // 업그레이드창이 열려있다면
+        {
+            if (Owner.inventUpgrade_PopupUI.Count >= 3) // 3개 가득 찬 경우 예외처리 해주기
+            {
+                Debug.Log("슬롯가득참!");
+                return;
+            }
+
+            Owner.inventUpgrade_PopupUI.AddUpgradeUnitSlot(UnitData);
+            //Owner.inventUpgrade_PopupUI.SetUnitInfo(UnitData);
+        }
+        else if (Owner.inventUnitDescri_PopupUI == null) // 설명창이 안 열려 있다면
         {
             Owner.inventUnitDescri_PopupUI = Main.Get<UIManager>().OpenPopup<InventUnitDescri_PopupUI>("InventUnitDescri_PopupUI"); // 설명창 열어주고
             Owner.inventUnitDescri_PopupUI.UnitData = UnitData; // 데이터 넘겨주고
@@ -43,7 +54,7 @@ public class InventUnit_ContentsBtnUI : BaseUI
 
             _selectCheckImg.gameObject.SetActive(true);
         }
-        else // 설명창이 이미 열려 있다면
+        else                                            // 설명창이 이미 열려 있다면
         {
             Owner.inventUnitDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false); // 선택표시가 기존에 활성화되어있다면 일단 꺼준다.
 

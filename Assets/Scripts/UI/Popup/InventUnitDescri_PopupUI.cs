@@ -139,7 +139,7 @@ public class InventUnitDescri_PopupUI : BaseUI
 
     private void ClickInventUnitDeleteBtn(PointerEventData EventData)
     {
-        Main.Get<GameManager>().playerUnits.Remove(UnitData);
+        Main.Get<GameManager>().RemoveUnit(UnitData);
         Main.Get<UIManager>().ClosePopup(); // 설명창 닫아주고
 
         Owner.Owner.SetUnitInventory();// 인벤토리 리프레쉬

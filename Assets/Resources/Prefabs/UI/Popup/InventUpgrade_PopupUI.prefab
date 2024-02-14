@@ -311,7 +311,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -184}
-  m_SizeDelta: {x: 232.8375, y: 93.135}
+  m_SizeDelta: {x: 188.7352, y: 95.819}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3312874836068464628
 CanvasRenderer:
@@ -334,14 +334,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.74509805, g: 1, b: 0.7294118, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1660710944, guid: a96185ad81a6f744787d09fc07c12120, type: 3}
+  m_Sprite: {fileID: 379336120, guid: 63c2a5afd15f118408e7a3d1fadd1ef2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1424,8 +1424,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.89
-  m_fontSizeBase: 38.89
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1501,8 +1501,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -277}
-  m_SizeDelta: {x: 427.8473, y: 63.5047}
+  m_AnchoredPosition: {x: 0, y: -281}
+  m_SizeDelta: {x: 542.8358, y: 80.5723}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4218005560272449264
 CanvasRenderer:
@@ -1532,10 +1532,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD569\uC131\uC744 \uC704\uD574\uC11C\uB294 \uB3D9\uC77C\uD55C \uC544\uC774\uD15C
-    3\uAC1C\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4.\n\uD569\uC131\uC744 \uC9C4\uD589\uD558\uBA74
-    \uC0C8\uB86D\uAC8C \uB2A5\uB825\uC774 \uBD80\uC5EC\uB41C \uC544\uC774\uD15C 1\uAC1C\uB97C
-    \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  m_text: "\uC5C5\uADF8\uB808\uC774\uB4DC\uB97C \uC704\uD574\uC11C\uB294 \uB3D9\uC77C\uD55C
+    \uC544\uC774\uD15C 3\uAC1C\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4.\n\uC5C5\uADF8\uB808\uC774\uB4DC\uB97C
+    \uC9C4\uD589\uD558\uBA74 \uC0C8\uB86D\uAC8C \uB2A5\uB825\uC774 \uBD80\uC5EC\uB41C
+    \uC544\uC774\uD15C 1\uAC1C\uB97C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6c5bd75a1bb2b0b4593be30c6e1c4e8a, type: 2}
   m_sharedMaterial: {fileID: 919464689362892429, guid: 6c5bd75a1bb2b0b4593be30c6e1c4e8a, type: 2}
@@ -1562,8 +1562,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1713,7 +1713,7 @@ RectTransform:
   m_Children:
   - {fileID: 3718380533767077987}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

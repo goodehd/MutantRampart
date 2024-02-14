@@ -24,6 +24,8 @@ public class Inventory_PopupUI : BaseUI
 
     public InventUnitDescri_PopupUI inventUnitDescri_PopupUI;
 
+    public InventUpgrade_PopupUI inventUpgrade_PopupUI;
+
     protected override void Init()
     {
         SetUI<Button>();
@@ -130,7 +132,22 @@ public class Inventory_PopupUI : BaseUI
 
     private void ClickUpgradeBtn(PointerEventData EventData)
     {
-        // todo : Main.Get<UIManager>().OpenPopup<>();
+        if (inventUnitDescri_PopupUI != null) // unit description 창이 켜져있다면
+        {
+            inventUnitDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false);
+            Main.Get<UIManager>().ClosePopup();
+            inventUnitDescri_PopupUI = null;
+        }
+
+        if (inventRoomDescri_PopupUI != null) // room description 설명창이 열려 있다면
+        {
+            inventRoomDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false);
+            Main.Get<UIManager>().ClosePopup();
+            inventRoomDescri_PopupUI = null;
+        }
+
+        InventUpgrade_PopupUI ui = Main.Get<UIManager>().OpenPopup<InventUpgrade_PopupUI>("InventUpgrade_PopupUI");
+        ui.Owner = this;
     }
 }
 

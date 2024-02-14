@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemData : Data
+public class ItemData : Data, INextKey
 {
     public EItemType Type { get; set; }
     
@@ -17,4 +17,6 @@ public class ItemData : Data
     public string Instruction { get; set; }
 
     public int Price { get; set; }
+
+    public string Nextkey { get; set; }
 }
