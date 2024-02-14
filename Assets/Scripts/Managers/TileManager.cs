@@ -2,27 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-
-public class PathInfo
-{
-    public GameObject CurRoom;
-    public PathInfo PrevRoom;
-    
-
-    public PathInfo(GameObject cur, PathInfo prev)
-    {
-        CurRoom = cur;
-        PrevRoom = prev;
-    }
-}
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class TileManager : IManagers
 {
-   
     private ResourceManager resource;
-    private List<List<GameObject>> _roomObjList = new List<List<GameObject>>();
+    private List<List<RoomBehavior>> _roomObjList = new List<List<RoomBehavior>>();
     private GameObject _gridObject;
+    private NavigationTile _navigation;
 
     public SpawnTile SpawnTile { get; private set; }
     public BatPoint BatSlot { get; set; }
@@ -51,9 +38,10 @@ public class TileManager : IManagers
         Vector2 pos = Vector2.zero;
         Vector2 offset = Vector2.zero;
 
+        _roomObjList.Clear();
         for (int i = 0; i < x; i++)
         {
-            _roomObjList.Add(new List<GameObject>());
+            _roomObjList.Add(new List<RoomBehavior>());
 
             pos.Set(-3f * i, 1.5f * i);
             for (int j = 0; j < y; j++)
@@ -62,10 +50,10 @@ public class TileManager : IManagers
                 GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
                 obj.transform.position = pos + offset;
                 obj.transform.parent = _gridObject.transform;
-                _roomObjList[i].Add(obj);
                 RoomBehavior room = obj.GetComponent<RoomBehavior>();
                 room.IndexX = i;
                 room.IndexY = j;
+                _roomObjList[i].Add(room);
             }
         }
 
@@ -74,6 +62,8 @@ public class TileManager : IManagers
         SpawnTile = spawn.GetComponent<SpawnTile>();
 
         BatSlot = resource.Instantiate("Prefabs/Room/BatPoint", _gridObject.transform).GetComponent<BatPoint>();
+
+        _navigation.CreateNavigation(_roomObjList);
     }
 
     public void ExpandMapRow()
@@ -83,7 +73,7 @@ public class TileManager : IManagers
         int x;
         int y;
         GetMapSize(out x, out y);
-        _roomObjList.Add(new List<GameObject>());
+        _roomObjList.Add(new List<RoomBehavior>());
         pos.Set(-3f * x, 1.5f * x);
         for (int i = 0; i < y; i++)
         {
@@ -91,12 +81,12 @@ public class TileManager : IManagers
             GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
             obj.transform.position = pos + offset;
             obj.transform.parent = _gridObject.transform;
-            _roomObjList[y].Add(obj);
             RoomBehavior room = obj.GetComponent<RoomBehavior>();
             room.IndexX = y;
             room.IndexY = i;
+            _roomObjList[_roomObjList.Count - 1].Add(room);
         }
-        
+        _navigation.ExpandNodeRow();
     }
 
     public void ExpandMapCol()
@@ -113,15 +103,18 @@ public class TileManager : IManagers
             GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
             obj.transform.position = pos + offset;
             obj.transform.parent = _gridObject.transform;
-            _roomObjList[i].Add(obj);
             RoomBehavior room = obj.GetComponent<RoomBehavior>();
             room.IndexX = i;
             room.IndexY = y;
+            _roomObjList[i].Add(room);
         }
+        _navigation.ExpandNodeCol();
     }
+
     public bool Init()
     {
         resource = Main.Get<ResourceManager>();
+        _navigation = new NavigationTile();
         return true;
     }
 
@@ -137,13 +130,14 @@ public class TileManager : IManagers
         GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"{changeRoom.Data.Key}");
         obj.transform.position = SelectRoom.transform.position;
         obj.transform.parent = _gridObject.transform;
-        _roomObjList[SelectRoom.IndexX][SelectRoom.IndexY] = obj;
 
         RoomBehavior room = obj.GetComponent<RoomBehavior>();
         room.RoomInfo = changeRoom;
         room.IndexX = SelectRoom.IndexX;
         room.IndexY = SelectRoom.IndexY;
         room.RoomInfo.EquipedRoom();
+
+        _roomObjList[SelectRoom.IndexX][SelectRoom.IndexY] = room;
 
         SelectRoom.RoomInfo.UnEquipedRoom();
         resource.Destroy(SelectRoom.gameObject);
@@ -153,9 +147,9 @@ public class TileManager : IManagers
         return room;
     }
 
-    public List<GameObject> GetNeighbors(int curPosX, int curPosY)
+    public List<RoomBehavior> GetNeighbors(int curPosX, int curPosY)
     {
-        List<GameObject> outPut = new List<GameObject>();
+        List<RoomBehavior> outPut = new List<RoomBehavior>();
 
         // 오른쪽, 왼쪽, 위, 아래
         int[] dx = { 1, -1, 0, 0 };
@@ -173,7 +167,7 @@ public class TileManager : IManagers
         return outPut;
     }
 
-    public GameObject GetRoom(int x, int y)
+    public RoomBehavior GetRoom(int x, int y)
     {
         if (!IsRoomPositionValid(x, y))
         {
@@ -200,58 +194,48 @@ public class TileManager : IManagers
         BatSlot.gameObject.SetActive(false);
     }
 
-    public Stack<GameObject> FindUnvisitedRoom(int x, int y, bool[,] visited)
+    public Stack<GameObject> FindUnvisitedRoom(int x, int y, bool[,] visited) 
+    { 
+        return _navigation.FindUnvisitedRoom(x, y, visited);
+    }
+
+    public bool FindPath(Vector2 start, Vector2 end, out Stack<Vector2> stackPath)
     {
-        Queue<PathInfo> roomQ = new Queue<PathInfo>();
-        List<GameObject> Neighbors = GetNeighbors(x, y);
-        bool[,] isVisited = new bool[_roomObjList.Count, _roomObjList[0].Count];
+        return _navigation.FindPath(start, end, out stackPath);
+    }
 
-        foreach (var neighbor in Neighbors)
+    public void SetRoomDir(RoomBehavior room, ERoomDir dir, bool isOpen)
+    {
+        RoomBehavior Neighbor = null;
+        switch (dir)
         {
-            roomQ.Enqueue(new PathInfo(neighbor, null));
-            RoomBehavior room = neighbor.GetComponent<RoomBehavior>();
-            isVisited[room.IndexX, room.IndexY] = true;
-        }
-
-        PathInfo targetInfo = null;
-        bool isfind = false;
-        while (true)
-        {
-            PathInfo info = roomQ.Dequeue();
-            RoomBehavior curRoom = info.CurRoom.GetComponent<RoomBehavior>();
-            Neighbors = GetNeighbors(curRoom.IndexX, curRoom.IndexY);
-
-            foreach (var neighbor in Neighbors)
-            {
-                RoomBehavior neighborRoom = neighbor.GetComponent<RoomBehavior>();
-                if (!visited[neighborRoom.IndexX, neighborRoom.IndexY])
-                {
-                    targetInfo = new PathInfo(neighborRoom.gameObject, info);
-                    isfind = true;
-                    break;
-                }
-                else if (!isVisited[neighborRoom.IndexX, neighborRoom.IndexY])
-                {
-                    roomQ.Enqueue(new PathInfo(neighborRoom.gameObject, info));
-                    isVisited[neighborRoom.IndexX, neighborRoom.IndexY] = true;
-                }
-            }
-            
-            if (isfind)
+            case ERoomDir.RightTop:
+                Neighbor = GetRoom(room.IndexX, room.IndexY + 1);
+                if (Neighbor == null)
+                    return;
+                Neighbor.ModifyDoor(ERoomDir.LeftBottom, isOpen);
                 break;
-
-            if (roomQ.Count <= 0)
-                return null;
+            case ERoomDir.RightBottom:
+                Neighbor = GetRoom(room.IndexX - 1, room.IndexY);
+                if (Neighbor == null)
+                    return;
+                Neighbor.ModifyDoor(ERoomDir.LeftTop, isOpen);
+                break;
+            case ERoomDir.LeftTop:
+                Neighbor = GetRoom(room.IndexX + 1, room.IndexY);
+                if (Neighbor == null)
+                    return;
+                Neighbor.ModifyDoor(ERoomDir.RightBottom, isOpen);
+                break;
+            case ERoomDir.LeftBottom:
+                Neighbor = GetRoom(room.IndexX, room.IndexY - 1);
+                if (Neighbor == null)
+                    return;
+                Neighbor.ModifyDoor(ERoomDir.RightTop, isOpen);
+                break;
         }
-
-        Stack<GameObject> pathList = new Stack<GameObject>();
-        while (targetInfo != null)
-        {
-            pathList.Push(targetInfo.CurRoom);
-            targetInfo = targetInfo.PrevRoom;
-        }
-
-        return pathList;
+        room.ModifyDoor(dir, isOpen);
+        _navigation.SetCheckWall(room);
     }
 
     private bool IsRoomPositionValid(int posX, int posY)

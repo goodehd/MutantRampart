@@ -51,8 +51,8 @@ public class MoveState : BaseState
 
     private void SetPathList()
     {
-        List<GameObject> rooms = _tileMap.GetNeighbors(Owner.CurPosX, Owner.CurPosY);
-        List<GameObject> targetRoom = new List<GameObject>();
+        List<RoomBehavior> rooms = _tileMap.GetNeighbors(Owner.CurPosX, Owner.CurPosY);
+        List<RoomBehavior> targetRoom = new List<RoomBehavior>();
 
         if (rooms.Count == 0)
         {
@@ -63,8 +63,7 @@ public class MoveState : BaseState
         {
             for (int i = 0; i < rooms.Count; i++)
             {
-                RoomBehavior room = rooms[i].GetComponent<RoomBehavior>();
-                if (!_visited[room.IndexX, room.IndexY])
+                if (!_visited[rooms[i].IndexX, rooms[i].IndexY])
                 {
                     targetRoom.Add(rooms[i]);
                 }
@@ -78,14 +77,14 @@ public class MoveState : BaseState
         else
         {
             int randomIndex = Random.Range(0, targetRoom.Count);
-            _pathObjStk.Push(targetRoom[randomIndex]);
+            _pathObjStk.Push(targetRoom[randomIndex].gameObject);
         }
     }
 
     private void SetStageStartMovePos()
     {
-        _pathObjStk.Push(_tileMap.GetRoom(1, 0));
-        RoomBehavior room = _tileMap.GetRoom(1, 0).GetComponent<RoomBehavior>();
+        _pathObjStk.Push(_tileMap.GetRoom(1, 0).gameObject);
+        RoomBehavior room = _tileMap.GetRoom(1, 0);
         _visited[room.IndexX, room.IndexY] = true;
     }
 

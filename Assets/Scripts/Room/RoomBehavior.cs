@@ -6,11 +6,22 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
+[Flags]
+public enum ERoomDir
+{
+    RightTop = 1 << 0,
+    RightBottom = 1 << 1,
+    LeftTop = 1 << 2,
+    LeftBottom = 1 << 3,
+    All = RightTop | RightBottom | LeftTop | LeftBottom
+}
+
 public class RoomBehavior : MonoBehaviour
 {
     public TilemapRenderer Renderer { get; private set; }
     public Tilemap[] tilemap = new Tilemap[2];
     public Room RoomInfo { get; set; }
+    public ERoomDir RoomDir { get; set; }
     public bool isEndPoint { get; set; }
     public bool isFlashing { get; set; } = false;
 
@@ -38,6 +49,8 @@ public class RoomBehavior : MonoBehaviour
         {
             tilemap[i] = transform.GetChild(i).GetComponent<Tilemap>();
         }
+
+        RoomDir = ERoomDir.All;
 
         _initialize = true;
     }
@@ -160,6 +173,33 @@ public class RoomBehavior : MonoBehaviour
                 Main.Get<GameManager>().PlayerRooms.RemoveAt(index);
                 Main.Get<GameManager>().PlayerRooms.Insert(0, Room);
             }
+        }
+    }
+
+    public bool IsDoorOpen(ERoomDir direction)
+    {
+        return (RoomDir & direction) != 0;
+    }
+
+    public void OpenDoor(ERoomDir direction)
+    {
+        RoomDir |= direction;
+    }
+
+    public void CloseDoor(ERoomDir direction)
+    {
+        RoomDir &= ~direction;
+    }
+
+    public void ModifyDoor(ERoomDir direction, bool isOpen)
+    {
+        if (isOpen)
+        {
+            OpenDoor(direction);
+        }
+        else
+        {
+            CloseDoor(direction);
         }
     }
 }

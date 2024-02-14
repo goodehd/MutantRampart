@@ -46,3 +46,10 @@ public enum EStatusformat
     DefaultTile,
     Count
 }
+
+public enum ENaveNodeState
+{
+    Noen,
+    Open,
+    Close
+}

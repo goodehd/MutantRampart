@@ -34,7 +34,7 @@ public class Shop_PopupUI : BaseUI
     public List<CharacterData> GachaUnitItems { get; private set; } = new List<CharacterData>();
     public List<RoomData> GachaRoomItems { get; private set; } = new List<RoomData>();
     public List<ItemData> GachaItemItems { get; private set; } = new List<ItemData>();
-    
+
     // Ground 확장 판매
     public List<ItemData> ShopGroundItems { get; private set; } = new List<ItemData>();
 
@@ -208,7 +208,7 @@ public class Shop_PopupUI : BaseUI
         ClickGachaItem(1);
     }
 
-    private void ClickItem3Btn(PointerEventData eventData) 
+    private void ClickItem3Btn(PointerEventData eventData)
     {
         ClickGachaItem(3);
     }
@@ -249,7 +249,7 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickGachaRoom(int count)
     {
-        if (_myGachaRooms != null) 
+        if (_myGachaRooms != null)
         {
             _myGachaRooms.Clear();
         }
