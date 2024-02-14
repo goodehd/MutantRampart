@@ -108,6 +108,12 @@ public class Inventory_PopupUI : BaseUI
             Main.Get<UIManager>().ClosePopup(); // stack 으로 popup 이 쌓임. -> 후입선출 되는 흐름 ! 그래서 ClosePopup 하게 되면 제일 최근에 생성된 UnitDescri_PopupUI 가 닫히는 것이다 !
             inventUnitDescri_PopupUI = null;
         }
+
+        if (inventUpgrade_PopupUI != null) // 업그레이드창이 켜져있다면
+        {
+            Main.Get<UIManager>().ClosePopup();
+            inventUpgrade_PopupUI = null;
+        }
     }
 
     private void ClickUnitBtn(PointerEventData EventData)
@@ -120,6 +126,12 @@ public class Inventory_PopupUI : BaseUI
             inventRoomDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false);
             Main.Get<UIManager>().ClosePopup();
             inventRoomDescri_PopupUI = null;
+        }
+
+        if (inventUpgrade_PopupUI != null) // 업그레이드창이 켜져있다면
+        {
+            Main.Get<UIManager>().ClosePopup();
+            inventUpgrade_PopupUI = null;
         }
     }
 
