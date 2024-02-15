@@ -257,13 +257,10 @@ public class Shop_PopupUI : BaseUI
         if (Main.Get<GameManager>()._playerMoney >= count * 1000)
         {
             Main.Get<GameManager>().ChangeMoney(-count * 1000);
-            Debug.Log("구매완료했습니다.");
-            Debug.Log($"잔액 : {Main.Get<GameManager>()._playerMoney}");
 
             for (int i = 0; i < count; i++)
             {
                 _myGachaRooms.Add(RandomPickRoom());
-                Debug.Log($"{_myGachaRooms[i].Key}");
             }
 
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
@@ -272,7 +269,6 @@ public class Shop_PopupUI : BaseUI
         else
         {
             Error_PopupUI errorUI = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
-            errorUI.curErrorText = "돈이 부족해서 구매할 수 없습니다.";
         }
     }
 

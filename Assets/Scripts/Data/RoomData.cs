@@ -14,4 +14,6 @@ public class RoomData : Data
     public float UpgradeValue_1 { get; set; }
     public float UpgradeValue_2 { get; set; }
     public float UpgradeValue_3 { get; set; }
+
+    public string NextKey { get; set; }
 }
