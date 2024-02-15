@@ -1,4 +1,4 @@
 public interface INextKey
 {
-    public string Nextkey {  get; set; }
+    public string NextKey {  get; set; }
 }

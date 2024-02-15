@@ -138,6 +138,8 @@ public class InventUpgrade_PopupUI : BaseUI
         // slot 이 null 인 경우 예외처리할 것
         if (_upgradeSlotsImgs[0].sprite == null || _upgradeSlotsImgs[1].sprite == null || _upgradeSlotsImgs[2].sprite == null)
         {
+            Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
+            ui.curErrorText = "슬롯이 비어있습니다!";
             Debug.Log("슬롯이 비어있습니다!");
             return;
         }
@@ -154,8 +156,8 @@ public class InventUpgrade_PopupUI : BaseUI
                 Owner.SetUnitInventory();
             }
 
-            // 합성 후 새롭게 능력 부여된 아이템 제공 - Nextkey 통해.
-            Main.Get<GameManager>().playerUnits.Add(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.Nextkey]));
+            // 합성 후 새롭게 능력 부여된 아이템 제공 - NextKey 통해.
+            Main.Get<GameManager>().playerUnits.Add(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
             Owner.SetUnitInventory();
 
             Array.Clear(UpgradeUnitSlots, 0, UpgradeUnitSlots.Length);
@@ -163,7 +165,9 @@ public class InventUpgrade_PopupUI : BaseUI
         }
         else
         {
-            Debug.Log("동일한 아이템을 넣어주세요!");
+            Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
+            ui.curErrorText = "동일한 종류,\n레벨의 유닛을 넣어주세요!";
+            Debug.Log("동일한 유닛을 넣어주세요!");
         }
         // slot 에 있는 데이터는 다 지워주고 새롭게 능력이 부여된 아이템 획득
         // slot[i] == null 이면 return; 해주기

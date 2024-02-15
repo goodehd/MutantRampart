@@ -68,7 +68,10 @@ public class GameManager : IManagers
 
     public void RemoveUnit(Character unit) // unit
     {
-        ((BatRoom)unit.CurRoom).DeleteUnit(unit); // 배치되어있는 유닛 빼면서
+        if (unit.CurRoom != null) // 유닛이 배치되어있는 경우에
+        {
+            ((BatRoom)unit.CurRoom).DeleteUnit(unit); // 배치되어있는 유닛 빼면서
+        }
         playerUnits.Remove(unit); // 인벤토리에서도 지우고 
         Item[] items = unit.Item; // 아이템 장착되어있는 것도 빼주고
         for (int i = 0; i < items.Length; i++)

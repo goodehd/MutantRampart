@@ -39,6 +39,8 @@ public class InventUnit_ContentsBtnUI : BaseUI
         {
             if (Owner.inventUpgrade_PopupUI.Count >= 3) // 3개 가득 찬 경우 예외처리 해주기
             {
+                Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
+                ui.curErrorText = "슬롯이 가득 찼습니다!";
                 Debug.Log("슬롯가득참!");
                 return;
             }

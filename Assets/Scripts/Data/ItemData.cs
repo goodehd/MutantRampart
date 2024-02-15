@@ -18,5 +18,5 @@ public class ItemData : Data, INextKey
 
     public int Price { get; set; }
 
-    public string Nextkey { get; set; }
+    public string NextKey { get; set; }
 }
