@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TestHandler : MonoBehaviour
 {
@@ -52,6 +53,9 @@ public class TestHandler : MonoBehaviour
                 IsStartClick = false;
                 IsEndClick = false;
             }
+
+            (int resultX, int resultY) = Main.Get<TileManager>()._navigation.GetIndex(worldPosition);
+            UnityEngine.Debug.Log("Position (" + worldPosition.x + ", " + worldPosition.y + ") is at index (" + resultX + ", " + resultY + ")");
         }
     }
 

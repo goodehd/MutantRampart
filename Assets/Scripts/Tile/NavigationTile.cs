@@ -13,9 +13,9 @@ public class NavNode : IComparable<NavNode>
     public int IndexX = -1;
     public int IndexY = -1;
 
-    public float Cost = float.MaxValue;  
-    public float Dist = float.MaxValue;  
-    public float Total = float.MaxValue; 
+    public float Cost = float.MaxValue;
+    public float Dist = float.MaxValue;
+    public float Total = float.MaxValue;
 
     public int CompareTo(NavNode other)
     {
@@ -53,33 +53,21 @@ public class NavigationTile
     private List<NavNode> _openNodeList = new List<NavNode>();
     private List<NavNode> _useNodeList = new List<NavNode>();
 
-    private List<List<GameObject>> _testGizmo = new List<List<GameObject>>(); // TEST
-
     public void CreateNavigation(List<List<RoomBehavior>> map)
     {
         tileManager = Main.Get<TileManager>();
         _nodeList.Clear();
         _map = map;
 
+        Vector2 pos = new Vector2();
         for (int i = 0; i < map.Count * _maxGridsPerTile; ++i)
         {
-            _testGizmo.Add(new List<GameObject>()); // TEST 
             _nodeList.Add(new List<NavNode>());
             for (int j = 0; j < map[0].Count * _maxGridsPerTile; ++j)
             {
-                GameObject go = Main.Get<ResourceManager>().Instantiate("Prefabs/Circle");
-                go.transform.position = new Vector2(-_halfGridWidth * i + _halfGridWidth * j, 
-                    _halfGridHeight * i + _halfGridHeight * j + 0.5f);
-
-                NavNode navNode = CreateNavNode(i, j, go.transform.position);
-
-                if((navNode.IndexX + 1) % _maxGridsPerTile == 0 || (navNode.IndexY + 1) % _maxGridsPerTile == 0) // test
-                {
-                    go.GetComponent<SpriteRenderer>().color = Color.red;
-                }
-
+                pos.Set(-_halfGridWidth * i + _halfGridWidth * j, _halfGridHeight * i + _halfGridHeight * j + 0.5f);
+                NavNode navNode = CreateNavNode(i, j, pos);
                 _nodeList[i].Add(navNode);
-                _testGizmo[i].Add(go); // TEST
             }
         }
 
@@ -94,49 +82,42 @@ public class NavigationTile
 
     public void ExpandNodeRow()
     {
-        for(int i = 0; i < _maxGridsPerTile; ++i)
+        Vector2 pos = new Vector2();
+        for (int i = 0; i < _maxGridsPerTile; ++i)
         {
-            _testGizmo.Add(new List<GameObject>()); // TEST 
             _nodeList.Add(new List<NavNode>());
             for(int j = 0; j < _nodeList[0].Count; ++j)
             {
-                GameObject go = Main.Get<ResourceManager>().Instantiate("Prefabs/Circle");
-                go.transform.position = new Vector2(-_halfGridWidth * (_nodeList.Count - 1) + _halfGridWidth * j,
+                pos.Set(-_halfGridWidth * (_nodeList.Count - 1) + _halfGridWidth * j, 
                     _halfGridHeight * (_nodeList.Count - 1) + _halfGridHeight * j + 0.5f);
-
-                NavNode navNode = CreateNavNode(_nodeList.Count - 1, j, go.transform.position);
-
-                if ((navNode.IndexX + 1) % _maxGridsPerTile == 0 || (navNode.IndexY + 1) % _maxGridsPerTile == 0) // test
-                {
-                    go.GetComponent<SpriteRenderer>().color = Color.red;
-                }
-
+                NavNode navNode = CreateNavNode(_nodeList.Count - 1, j, pos);
                 _nodeList[_nodeList.Count - 1].Add(navNode);
-                _testGizmo[_testGizmo.Count - 1].Add(go); // TEST
             }
+        }
+
+        for(int i = 0; i < _map[0].Count; ++i)
+        {
+            SetCheckWall(_map[_map.Count - 1][i]);
         }
     }
 
     public void ExpandNodeCol()
     {
-        for(int i = 0; i < _nodeList.Count; ++i)
+        Vector2 pos = new Vector2();
+        for (int i = 0; i < _nodeList.Count; ++i)
         {
             for(int j = 0; j < _maxGridsPerTile; ++j)
             {
-                GameObject go = Main.Get<ResourceManager>().Instantiate("Prefabs/Circle");
-                go.transform.position = new Vector2(-_halfGridWidth * i + _halfGridWidth * _nodeList[i].Count,
+                pos.Set(-_halfGridWidth * i + _halfGridWidth * _nodeList[i].Count,
                     _halfGridHeight * i + _halfGridHeight * _nodeList[i].Count + 0.5f);
-
-                NavNode navNode = CreateNavNode(i, _nodeList[i].Count, go.transform.position);
-
-                if ((navNode.IndexX + 1) % _maxGridsPerTile == 0 || (navNode.IndexY + 1) % _maxGridsPerTile == 0) // test
-                {
-                    go.GetComponent<SpriteRenderer>().color = Color.red;
-                }
-
+                NavNode navNode = CreateNavNode(i, _nodeList[i].Count, pos);
                 _nodeList[i].Add(navNode);
-                _testGizmo[i].Add(go); // TEST
             }
+        }
+
+        for(int i = 0; i < _map.Count; ++i)
+        {
+            SetCheckWall(_map[i][_map[i].Count - 1]);
         }
     }
 
@@ -413,7 +394,7 @@ public class NavigationTile
         return _nodeList[x][y];
     }
 
-    public Stack<GameObject> FindUnvisitedRoom(int x, int y, bool[,] visited)
+    public Stack<RoomBehavior> FindUnvisitedRoom(int x, int y, bool[,] visited)
     {
         Queue<PathInfo> roomQ = new Queue<PathInfo>();
         List<RoomBehavior> Neighbors = tileManager.GetNeighbors(x, y);
@@ -455,10 +436,10 @@ public class NavigationTile
                 return null;
         }
 
-        Stack<GameObject> pathList = new Stack<GameObject>();
+        Stack<RoomBehavior> pathList = new Stack<RoomBehavior>();
         while (targetInfo != null)
         {
-            pathList.Push(targetInfo.CurRoom.gameObject); 
+            pathList.Push(targetInfo.CurRoom); 
             targetInfo = targetInfo.PrevRoom;
         }
 
@@ -512,11 +493,6 @@ public class NavigationTile
         }
 
         Node.IsWall = !isOpen;
-
-        //test
-        (int resultX, int resultY) = GetIndex(Pos);
-        Color co = isOpen ? Color.blue : Color.red;
-        _testGizmo[resultX][resultY].GetComponent<SpriteRenderer>().color = co;
     }
 
     private NavNode CreateNavNode(int x, int y, Vector2 pos)

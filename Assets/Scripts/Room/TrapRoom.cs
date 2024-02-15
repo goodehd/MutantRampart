@@ -37,8 +37,9 @@ public class TrapRoom : RoomBehavior
     {
         enemy.Renderer.flipX = false;
         enemy.transform.position = Literals.TrapEnemyPos[Enemys.Count % 6] + transform.position;
-        StatModifier mod = new StatModifier(0f, EStatModType.Multip, 1, this);
-        enemy.Status.GetStat<Stat>(EstatType.MoveSpeed).AddModifier(mod);
+        //StatModifier mod = new StatModifier(0f, EStatModType.Multip, 1, this);
+        //enemy.Status.GetStat<Stat>(EstatType.MoveSpeed).AddModifier(mod);
+        enemy.StateMachine.ChangeState(EState.Idle);
         Enemys.AddLast(enemy);
 
         yield return new WaitForSeconds(3f); //피해를 주기까지의 시간
@@ -48,7 +49,8 @@ public class TrapRoom : RoomBehavior
             //피해를 주는 로직
             listenemy.Status.GetStat<Vital>(EstatType.Hp).CurValue -= 10;
             //피해를 주었으니 enemy가 움직일 수 있게하고
-            listenemy.Status.GetStat<Stat>(EstatType.MoveSpeed).RemoveModifier(mod);
+            enemy.StateMachine.ChangeState(EState.Move);
+            //listenemy.Status.GetStat<Stat>(EstatType.MoveSpeed).RemoveModifier(mod);
         }
         _isTrapOn = true;
         yield return new WaitForSeconds(5f); //쿨타임

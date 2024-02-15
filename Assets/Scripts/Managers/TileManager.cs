@@ -9,7 +9,7 @@ public class TileManager : IManagers
     private ResourceManager resource;
     private List<List<RoomBehavior>> _roomObjList = new List<List<RoomBehavior>>();
     private GameObject _gridObject;
-    private NavigationTile _navigation;
+    public NavigationTile _navigation;
 
     public SpawnTile SpawnTile { get; private set; }
     public BatPoint BatSlot { get; set; }
@@ -47,12 +47,7 @@ public class TileManager : IManagers
             for (int j = 0; j < y; j++)
             {
                 offset.Set(3f * j, 1.5f * j);
-                GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
-                obj.transform.position = pos + offset;
-                obj.transform.parent = _gridObject.transform;
-                RoomBehavior room = obj.GetComponent<RoomBehavior>();
-                room.IndexX = i;
-                room.IndexY = j;
+                RoomBehavior room = CreateDefaultRoom(i, j, pos + offset);
                 _roomObjList[i].Add(room);
             }
         }
@@ -70,20 +65,13 @@ public class TileManager : IManagers
     {
         Vector2 pos = Vector2.zero;
         Vector2 offset = Vector2.zero;
-        int x;
-        int y;
-        GetMapSize(out x, out y);
+        GetMapSize(out int x, out int y);
         _roomObjList.Add(new List<RoomBehavior>());
         pos.Set(-3f * x, 1.5f * x);
         for (int i = 0; i < y; i++)
         {
             offset.Set(3f * i, 1.5f * i);
-            GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
-            obj.transform.position = pos + offset;
-            obj.transform.parent = _gridObject.transform;
-            RoomBehavior room = obj.GetComponent<RoomBehavior>();
-            room.IndexX = y;
-            room.IndexY = i;
+            RoomBehavior room = CreateDefaultRoom(y, i, pos + offset);
             _roomObjList[_roomObjList.Count - 1].Add(room);
         }
         _navigation.ExpandNodeRow();
@@ -93,19 +81,12 @@ public class TileManager : IManagers
     {
         Vector2 pos = Vector2.zero;
         Vector2 offset = Vector2.zero;
-        int x;
-        int y;
-        GetMapSize(out x, out y);
+        GetMapSize(out int x, out int y);
         pos.Set(3f * y, 1.5f * y);
         for (int i = 0; i < x; i++)
         {
             offset.Set(-3f * i, 1.5f * i);
-            GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
-            obj.transform.position = pos + offset;
-            obj.transform.parent = _gridObject.transform;
-            RoomBehavior room = obj.GetComponent<RoomBehavior>();
-            room.IndexX = i;
-            room.IndexY = y;
+            RoomBehavior room = CreateDefaultRoom(i, y, pos + offset);
             _roomObjList[i].Add(room);
         }
         _navigation.ExpandNodeCol();
@@ -194,7 +175,7 @@ public class TileManager : IManagers
         BatSlot.gameObject.SetActive(false);
     }
 
-    public Stack<GameObject> FindUnvisitedRoom(int x, int y, bool[,] visited) 
+    public Stack<RoomBehavior> FindUnvisitedRoom(int x, int y, bool[,] visited) 
     { 
         return _navigation.FindUnvisitedRoom(x, y, visited);
     }
@@ -249,5 +230,17 @@ public class TileManager : IManagers
             return false;
         }
         return true;
+    }
+
+    private RoomBehavior CreateDefaultRoom(int x, int y, Vector2 pos)
+    {
+        GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
+        obj.transform.position = pos;
+        obj.transform.parent = _gridObject.transform;
+        RoomBehavior room = obj.GetComponent<RoomBehavior>();
+        room.IndexX = x;
+        room.IndexY = y;
+
+        return room;
     }
 }

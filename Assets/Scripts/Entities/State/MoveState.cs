@@ -5,7 +5,8 @@ using UnityEngine;
 public class MoveState : BaseState
 {
     private TileManager _tileMap;
-    private Stack<GameObject> _pathObjStk;
+    private Stack<RoomBehavior> _pathObjStk;
+    private Stack<Vector2> _pathPosStk;
     private Vector3 _targetPos = Vector3.zero;
     private Coroutine _coroutine;
     private bool[,] _visited;
@@ -13,20 +14,26 @@ public class MoveState : BaseState
     public MoveState(CharacterBehaviour owner) : base(owner)
     {
         _tileMap = Main.Get<TileManager>();
-        _pathObjStk = new Stack<GameObject>();
+        _pathObjStk = new Stack<RoomBehavior>();
+        _pathPosStk = new Stack<Vector2>();
+
+        _tileMap.GetMapSize(out int x, out int y);
+        _visited = new bool[x, y];
+
+        SetStageStartMovePos();
     }
 
     public override void EnterState()
     {
         Owner.Animator.SetBool(Literals.Move, true);
-        _tileMap.GetMapSize(out int x, out int y);
-        _visited = new bool[x, y];
         MoveStart();
     }
 
     public override void ExitState()
     {
         Owner.Animator.SetBool(Literals.Move, false);
+        _pathObjStk.Clear();
+        _pathPosStk.Clear();
         StopCoroutine();
     }
 
@@ -49,24 +56,28 @@ public class MoveState : BaseState
         _coroutine = Owner.StartCoroutine(Movement());
     }
 
-    private void SetPathList()
+    private void SetStageStartMovePos()
+    {
+        Vector3 startPos = _tileMap.GetRoom(1, 0).transform.position;
+        startPos.y += 1.5f;
+        startPos.z = 3f;
+
+        _pathPosStk.Push(startPos);
+
+        RoomBehavior room = _tileMap.GetRoom(1, 0);
+        _visited[room.IndexX, room.IndexY] = true;
+    }
+
+    private void SetPathObjList()
     {
         List<RoomBehavior> rooms = _tileMap.GetNeighbors(Owner.CurPosX, Owner.CurPosY);
         List<RoomBehavior> targetRoom = new List<RoomBehavior>();
 
-        if (rooms.Count == 0)
+        for (int i = 0; i < rooms.Count; i++)
         {
-            SetStageStartMovePos();
-            return;
-        }
-        else
-        {
-            for (int i = 0; i < rooms.Count; i++)
+            if (!_visited[rooms[i].IndexX, rooms[i].IndexY])
             {
-                if (!_visited[rooms[i].IndexX, rooms[i].IndexY])
-                {
-                    targetRoom.Add(rooms[i]);
-                }
+                targetRoom.Add(rooms[i]);
             }
         }
 
@@ -77,15 +88,31 @@ public class MoveState : BaseState
         else
         {
             int randomIndex = Random.Range(0, targetRoom.Count);
-            _pathObjStk.Push(targetRoom[randomIndex].gameObject);
+            _pathObjStk.Push(targetRoom[randomIndex]);
         }
     }
 
-    private void SetStageStartMovePos()
+    private void SetPathPosList()
     {
-        _pathObjStk.Push(_tileMap.GetRoom(1, 0).gameObject);
-        RoomBehavior room = _tileMap.GetRoom(1, 0);
-        _visited[room.IndexX, room.IndexY] = true;
+        if (_pathObjStk.Count <= 0)
+        {
+            SetPathObjList();
+        }
+
+        RoomBehavior roomBehavior = _pathObjStk.Pop();
+        _visited[roomBehavior.IndexX, roomBehavior.IndexY] = true;
+
+        Vector3 endPos = roomBehavior.transform.position;
+        endPos.y += 1.5f;
+        endPos.z = 3f;
+
+        _tileMap.FindPath(Owner.transform.position, endPos, out _pathPosStk);
+    }
+
+    private void SetTargetPos()
+    {
+        _targetPos = _pathPosStk.Pop();
+        _targetPos.z = 3.0f;
     }
 
     private void SetDir()
@@ -103,23 +130,13 @@ public class MoveState : BaseState
         }
     }
 
-    private void SetTargetPos()
-    {
-        GameObject obj = _pathObjStk.Pop();
-        RoomBehavior roomBehavior = obj.GetComponent<RoomBehavior>();
-        _targetPos = obj.transform.position;
-        _targetPos.y += 1.5f;
-        _targetPos.z = 3f;
-        _visited[roomBehavior.IndexX, roomBehavior.IndexY] = true;
-    }
-
     private IEnumerator Movement()
     {
         while (true)
         {
-            if(_pathObjStk.Count <= 0)
+            if(_pathPosStk.Count <= 0)
             {
-                SetPathList();
+                SetPathPosList();
             }
             SetTargetPos();
             SetDir();

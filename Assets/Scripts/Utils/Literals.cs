@@ -41,13 +41,22 @@ public static class Literals
         new Vector3(-0.15f, 1.25f, 3.0f),
         new Vector3(0.12f, 1.1f, 3.0f)
     };
+    //public static readonly List<Vector3> TrapEnemyPos = new List<Vector3>
+    //{
+    //    new Vector3(0.7f, 2.2f, 3.0f),
+    //    new Vector3(0.5f, 1.9f, 3.0f),
+    //    new Vector3(0f, 1.6f, 3.0f),
+    //    new Vector3(-0.5f, 1.4f, 3.0f),
+    //    new Vector3(0f, 1.75f, 3.0f),
+    //    new Vector3(0.12f, 1.1f, 3.0f)
+    //};
     public static readonly List<Vector3> TrapEnemyPos = new List<Vector3>
     {
-        new Vector3(0.7f, 2.2f, 3.0f),
-        new Vector3(0.5f, 1.9f, 3.0f),
+        new Vector3(-0.3f, 2.2f, 3.0f),
+        new Vector3(1.5f, 1.9f, 3.0f),
         new Vector3(0f, 1.6f, 3.0f),
-        new Vector3(-0.5f, 1.4f, 3.0f),
-        new Vector3(0f, 1.75f, 3.0f),
+        new Vector3(-2.5f, 1.4f, 3.0f),
+        new Vector3(-2.0f, 1.75f, 3.0f),
         new Vector3(0.12f, 1.1f, 3.0f)
     };
 }
