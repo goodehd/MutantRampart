@@ -68,7 +68,7 @@ public class InventRoomDescri_PopupUI : BaseUI
 
     private void ClickDeleteBtn(PointerEventData EventData)
     {
-        Main.Get<GameManager>().PlayerRooms.Remove(RoomData);
+        Main.Get<GameManager>().RemoveRoom(RoomData);
         Main.Get<UIManager>().ClosePopup(); // 설명창 닫아주고
         Owner.Owner.SetRoomInventory(); // 인벤토리 리프레쉬
     }

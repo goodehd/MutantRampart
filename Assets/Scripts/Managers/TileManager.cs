@@ -108,7 +108,7 @@ public class TileManager : IManagers
 
     public RoomBehavior ChangeRoom(Room changeRoom)
     {
-        GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"{changeRoom.Data.Key}");
+        GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"{changeRoom.Data.PrefabName}");
         obj.transform.position = SelectRoom.transform.position;
         obj.transform.parent = _gridObject.transform;
 
@@ -242,5 +242,12 @@ public class TileManager : IManagers
         room.IndexY = y;
 
         return room;
+    }
+
+    public void DeleteRoom(Room room)
+    {
+        RoomBehavior newRoom = CreateDefaultRoom(room.IndexX, room.IndexY, _roomObjList[room.IndexX][room.IndexY].transform.position);
+        resource.Destroy(_roomObjList[room.IndexX][room.IndexY].gameObject);
+        _roomObjList[room.IndexX][room.IndexY] = newRoom;
     }
 }

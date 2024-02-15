@@ -16,4 +16,6 @@ public class RoomData : Data, INextKey
     public float UpgradeValue_3 { get; set; }
 
     public string NextKey { get; set; }
+    public string PrefabName { get; set; }
+
 }

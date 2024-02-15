@@ -239,11 +239,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickPlacingBtn(PointerEventData eventData)
     {
-        if (isInventOpen)
-        {
-            _ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
-        }
-        isInventOpen = false;
+        _ui.CloseAllPopup();
 
         ClickPlacing();
         _btnActions.Push(new UIState(ClickPlacing, EUIstate.Main));
@@ -251,11 +247,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickShopBtn(PointerEventData eventData)
     {
-        if (isInventOpen)
-        {
-            _ui.ClosePopup(); // 인벤토리 열린 상태에서 상점 버튼 눌렀을 때 인벤토리 닫히도록.
-        }
-        isInventOpen = false;
+        _ui.CloseAllPopup();
 
         //_ui.OpenPopup<PastShop_PopupUI>("PastShop_PopupUI");
         maincamera.Rock = true;
@@ -317,6 +309,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickSettingBtn(PointerEventData eventData)
     {
+        maincamera.Rock = true;
         Main.Get<UIManager>().OpenPopup<Setting_PopupUI>();
         Main.Get<GameManager>().SaveData();
     }

@@ -35,7 +35,19 @@ public class InventRoom_ContentsBtnUI : BaseUI
 
     private void ClickRoomContentBtn(PointerEventData data)
     {
-        if (Owner.inventRoomDescri_PopupUI == null) // 설명 팝업이 안 떠 있다면
+        if (Owner.inventUpgrade_PopupUI != null) // 업그레이드창이 열려있다면
+        {
+            if (Owner.inventUpgrade_PopupUI.Count >= 3) // 3개 가득 찬 경우 예외처리 해주기
+            {
+                Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
+                ui.curErrorText = "슬롯이 가득 찼습니다!";
+                Debug.Log("슬롯가득참!");
+                return;
+            }
+
+            Owner.inventUpgrade_PopupUI.AddUpgradeRoomSlot(RoomData);
+        }
+        else if (Owner.inventRoomDescri_PopupUI == null) // 설명 팝업이 안 떠 있다면
         {
             Owner.inventRoomDescri_PopupUI = Main.Get<UIManager>().OpenPopup<InventRoomDescri_PopupUI>(); // 설명창 열어주고
             Owner.inventRoomDescri_PopupUI.RoomData = RoomData; // 데이터 넘겨주고

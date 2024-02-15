@@ -15,17 +15,13 @@ public class InventUpgrade_PopupUI : BaseUI
 
     public Inventory_PopupUI Owner { get; set; }
 
-    // Data
+    // Upgrade Slot 관련
     private Character[] UpgradeUnitSlots = new Character[3];
+    private Room[] UpgradeRoomSlots = new Room[3];
 
     public int Count { get; private set; } // slot 얼마나 찼는지 체크해주는 역할.
 
-    public RoomData RoomData { get; set; }
     public ItemData ItemData { get; set; }
-
-    // slot 주머니 -- 크기는 3(0,1,2), slot 안에 character 도 오고 room 도 오고 item 도 올텐데...
-    //private List<Character> UpgradeUnitSlots = new List<Character>(3);
-
 
     protected override void Init()
     {
@@ -59,7 +55,7 @@ public class InventUpgrade_PopupUI : BaseUI
         Count = 0;
     }
 
-    public void SetUnitInfo(int index)
+    public void SetUnitInfo(int index) // Unit
     {
         _upgradeSlotsImgs[index].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{UpgradeUnitSlots[index].Data.Key}");
         _upgradeSlotsImgs[index].enabled = true;
@@ -79,6 +75,12 @@ public class InventUpgrade_PopupUI : BaseUI
 
         //    }
         //}
+    }
+
+    public void SetRoomInfo(int index) // Room
+    {
+        _upgradeSlotsImgs[index].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{UpgradeRoomSlots[index].Data.Key}");
+        _upgradeSlotsImgs[index].enabled = true;
     }
 
     //public void SetUnitInfo(Character unitData)
@@ -129,6 +131,10 @@ public class InventUpgrade_PopupUI : BaseUI
 
     private void ClickCloseBtn(PointerEventData data)
     {
+        //Array.Clear(UpgradeUnitSlots, 0, UpgradeUnitSlots.Length); // unit slot 배열 초기화
+        //Array.Clear(UpgradeRoomSlots, 0, UpgradeRoomSlots.Length); // room slot 배열 초기화
+        //Count = 0;
+
         Main.Get<UIManager>().ClosePopup();
         //Owner.inventUnitDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false);
     }
@@ -144,38 +150,70 @@ public class InventUpgrade_PopupUI : BaseUI
             return;
         }
 
-        // slot 3개에 모두 동일한 데이터가 들어왔다면.
-        if (UpgradeUnitSlots[0].Data.Key == UpgradeUnitSlots[1].Data.Key && UpgradeUnitSlots[1].Data.Key == UpgradeUnitSlots[2].Data.Key)
+        if (UpgradeUnitSlots[0] != null && UpgradeUnitSlots[1] != null && UpgradeUnitSlots[2] != null) // Unit slot 구분
         {
-            for (int i = 0; i < UpgradeUnitSlots.Length; i++)
+            // slot 3개에 모두 동일한 데이터가 들어왔다면.
+            if (UpgradeUnitSlots[0].Data.Key == UpgradeUnitSlots[1].Data.Key && UpgradeUnitSlots[1].Data.Key == UpgradeUnitSlots[2].Data.Key)
             {
-                _upgradeSlotsImgs[i].sprite = null; // slot image 빼기.
-                _upgradeSlotsImgs[i].enabled = false; // image 컴포넌트 체크 해제.
+                for (int i = 0; i < UpgradeUnitSlots.Length; i++)
+                {
+                    _upgradeSlotsImgs[i].sprite = null; // slot image 빼기.
+                    _upgradeSlotsImgs[i].enabled = false; // image 컴포넌트 체크 해제.
 
-                Main.Get<GameManager>().RemoveUnit(UpgradeUnitSlots[i]);
+                    Main.Get<GameManager>().RemoveUnit(UpgradeUnitSlots[i]);
+                    Owner.SetUnitInventory();
+                }
+
+                // 합성 후 새롭게 능력 부여된 아이템 제공 - NextKey 통해.
+                Main.Get<GameManager>().playerUnits.Add(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
                 Owner.SetUnitInventory();
+
+                Array.Clear(UpgradeUnitSlots, 0, UpgradeUnitSlots.Length);
+                Count = 0;
             }
-
-            // 합성 후 새롭게 능력 부여된 아이템 제공 - NextKey 통해.
-            Main.Get<GameManager>().playerUnits.Add(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
-            Owner.SetUnitInventory();
-
-            Array.Clear(UpgradeUnitSlots, 0, UpgradeUnitSlots.Length);
-            Count = 0;
+            else
+            {
+                Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
+                ui.curErrorText = "동일한 종류,\n레벨의 유닛을 넣어주세요!";
+                Debug.Log("동일한 유닛을 넣어주세요!");
+            }
+            // slot 에 있는 데이터는 다 지워주고 새롭게 능력이 부여된 아이템 획득
+            // slot[i] == null 이면 return; 해주기
+            //_upgradeSlotsImgs[i].sprite = null; // slot image 빼버리고
+            //_upgradeSlotsImgs[i].enabled = false; // image 컴포넌트 체크 해제.
+            //// 새롭게 능력이 부여된 아이템 획득
+            //Character newChar = new Character(data);
+            //Main.Get<GameManager>().playerUnits.Add(newChar);
         }
-        else
+
+        if (UpgradeRoomSlots[0] != null && UpgradeRoomSlots[1] != null && UpgradeRoomSlots[2] != null) // Room slot 구분
         {
-            Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
-            ui.curErrorText = "동일한 종류,\n레벨의 유닛을 넣어주세요!";
-            Debug.Log("동일한 유닛을 넣어주세요!");
+            // slot 3개에 모두 동일한 데이터가 들어왔다면.
+            if (UpgradeRoomSlots[0].Data.Key == UpgradeRoomSlots[1].Data.Key && UpgradeRoomSlots[1].Data.Key == UpgradeRoomSlots[2].Data.Key)
+            {
+                for (int i = 0; i < UpgradeRoomSlots.Length; i++)
+                {
+                    _upgradeSlotsImgs[i].sprite = null; // slot image 빼기.
+                    _upgradeSlotsImgs[i].enabled = false; // image 컴포넌트 체크 해제.
+
+                    Main.Get<GameManager>().RemoveRoom(UpgradeRoomSlots[i]);
+                    Owner.SetRoomInventory();
+                }
+
+                // 합성 후 새롭게 능력 부여된 아이템 제공 - NextKey 통해.
+                Main.Get<GameManager>().PlayerRooms.Add(new Room(Main.Get<DataManager>().Room[UpgradeRoomSlots[0].Data.NextKey]));
+                Owner.SetRoomInventory();
+
+                Array.Clear(UpgradeRoomSlots, 0, UpgradeRoomSlots.Length);
+                Count = 0;
+            }
+            else
+            {
+                Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
+                ui.curErrorText = "동일한 종류,\n레벨의 룸을 넣어주세요!";
+                Debug.Log("동일한 룸을 넣어주세요!");
+            }
         }
-        // slot 에 있는 데이터는 다 지워주고 새롭게 능력이 부여된 아이템 획득
-        // slot[i] == null 이면 return; 해주기
-        //_upgradeSlotsImgs[i].sprite = null; // slot image 빼버리고
-        //_upgradeSlotsImgs[i].enabled = false; // image 컴포넌트 체크 해제.
-        //// 새롭게 능력이 부여된 아이템 획득
-        //Character newChar = new Character(data);
-        //Main.Get<GameManager>().playerUnits.Add(newChar);
 
     }
 
@@ -186,33 +224,28 @@ public class InventUpgrade_PopupUI : BaseUI
 
     private void ClickSecondSlot(PointerEventData data)
     {
-        //if (UpgradeUnitSlots[0] == null) // slot0 이 null 이면 clickSlot0 되도록
-        //{
-        //    ClickSlot(0);
-        //}
-
         ClickSlot(1); // slot1 에서 Remove
     }
 
     private void ClickThirdSlot(PointerEventData data)
     {
-        //if (UpgradeUnitSlots[0] == null && UpgradeUnitSlots[1] == null) // slot0 과 1 모두 null 이면 clickSlot0 되도록
-        //{
-        //    ClickSlot(0);
-        //}
-        //else if (UpgradeUnitSlots[0] == null || UpgradeUnitSlots[1] == null) // slot0 또는 1 이 null 이면 clickSlot1 되도록
-        //{
-        //    ClickSlot(1);
-        //}
-
         ClickSlot(2); // slot2 에서 Remove
     }
 
     private void ClickSlot(int i)
     {
-        if (UpgradeUnitSlots == null) return;
+        if (UpgradeUnitSlots == null || UpgradeRoomSlots == null) return;
+
         Count--;
-        UpgradeUnitSlots[i] = null;
+
+        if (UpgradeUnitSlots[i] != null)
+        {
+            UpgradeUnitSlots[i] = null;
+        }
+        else if (UpgradeRoomSlots[i] != null)
+        {
+            UpgradeRoomSlots[i] = null;
+        }
 
         _upgradeSlotsImgs[i].sprite = null; // slot image 빼기
         _upgradeSlotsImgs[i].enabled = false; // image 컴포넌트 체크 해제.
@@ -276,10 +309,30 @@ public class InventUpgrade_PopupUI : BaseUI
         Count++;
     }
 
-    // todo : public void AddUpgradeRoomSlot()
-    //{
+    public void AddUpgradeRoomSlot(Room room)
+    {
+        int index = -1;
 
-    //}
+        for (int i = 0; i < UpgradeRoomSlots.Length; i++)
+        {
+            if (UpgradeRoomSlots[i] == null && index == -1)
+            {
+                index = i;
+            }
+            if (UpgradeRoomSlots[i] == room)
+            {
+                return;
+            }
+        }
+
+        if (index == -1)
+        {
+            return;
+        }
+        UpgradeRoomSlots[index] = room;
+        SetRoomInfo(index);
+        Count++;
+    }
 
     // todo : public void AddUpgradeItemSlot()
     //{

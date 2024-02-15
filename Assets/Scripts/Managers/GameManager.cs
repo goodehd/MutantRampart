@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : IManagers
 {
+    private TileManager _tile;
     public int PlayerMoney { get; set; }
     public Vital PlayerHP { get; private set; }
 
@@ -18,6 +19,8 @@ public class GameManager : IManagers
 
     public bool Init()
     {
+        _tile = Main.Get<TileManager>();
+
         //PlayerRooms.Add(Main.Get<DataManager>().Room["Home"]);
         Room room = new Room();
         room.Init(Main.Get<DataManager>().Room["Home"]);
@@ -84,17 +87,23 @@ public class GameManager : IManagers
         }
     }
 
+    public void RemoveRoom(Room room) // room
+    {
+        if (room.IsEquiped) // 배치되어있다면 room 해제
+        {
+            room.IsEquiped = false;
+            _tile.DeleteRoom(room);
+        }
+        PlayerRooms.Remove(room); // 인벤토리에서 지우고
+    }
+
     public void SaveData()
     {
         Main.Get<SaveDataManager>().Player.Curstage = CurStage;
         Main.Get<SaveDataManager>().Player.PlayerMoney = PlayerMoney;
         Main.Get<SaveDataManager>().SaveData();
     }
-    // todo : Room 뺄 때 해야하는 것들 함수로 작동시키기 !
-    //public void RemoveRoom(Room room) // room -- 배치 삭제, 인벤토리에서도 삭제
-    //{
 
-    //}
     // todo : Item 뺄 때 해야하는 것들 함수로 작동시키기 !
     //public void RemoveItem(Item item) // item -- 인벤토리에서 삭제, 장착되어있는 것에서 해제
     //{

@@ -68,6 +68,7 @@ public class Setting_PopupUI : BaseUI
     private void ClickCloseBtn(PointerEventData EventData)
     {
         Main.Get<UIManager>().ClosePopup();
+        Camera.main.GetComponent<CameraMovement>().Rock = false;
     }
 
     private void ClickBGMMuteBtn(PointerEventData EventData)
