@@ -9,7 +9,8 @@ public class Inventory_PopupUI : BaseUI
     //private Button _backButton;
     private Button _roomButton;
     private Button _unitButton;
-    private Button _closeBtn;
+    private Button _closeButton;
+    private Button _upgradeButton;
 
     private ScrollRect _inventRoomScrollView;
     private ScrollRect _inventUnitScrollView;
@@ -17,23 +18,13 @@ public class Inventory_PopupUI : BaseUI
     private Transform _inventRoomContent;
     private Transform _inventUnitContent;
 
-    //private TMP_Text _inventItemNameTxt;
-    //private TMP_Text _inventItemDescriTxt;
-
-    //private Image _inventUnitImg;
-
-    // InventItemDetailBox 관련
-    //private Image _inventItemDetailBox;
-    //private Transform _myItemsContent;
-
-    //public string _selectItemNameTxt { get; set; }
-    //public string _selectItemDescriTxt { get; set; }
-
     public DayMain_SceneUI Owner { get; set; }
 
     public InventRoomDescri_PopupUI inventRoomDescri_PopupUI;
 
     public InventUnitDescri_PopupUI inventUnitDescri_PopupUI;
+
+    public InventUpgrade_PopupUI inventUpgrade_PopupUI;
 
     protected override void Init()
     {
@@ -46,12 +37,14 @@ public class Inventory_PopupUI : BaseUI
         //_backButton = GetUI<Button>("InventBackBtn");
         _roomButton = GetUI<Button>("InventRoomBtn");
         _unitButton = GetUI<Button>("InventUnitBtn");
-        _closeBtn = GetUI<Button>("InventoryCloseBtn");
+        _closeButton = GetUI<Button>("InventoryCloseBtn");
+        _upgradeButton = GetUI<Button>("InventoryUpgradeBtn");
 
         //SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickBackBtn);
         SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
-        SetUICallback(_closeBtn.gameObject, EUIEventState.Click, ClickCloseBtn);
+        SetUICallback(_closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
+        SetUICallback(_upgradeButton.gameObject, EUIEventState.Click, ClickUpgradeBtn);
 
         _inventRoomScrollView = GetUI<ScrollRect>("InventRoom_Scroll View");
         _inventUnitScrollView = GetUI<ScrollRect>("InventUnit_Scroll View");
@@ -69,7 +62,7 @@ public class Inventory_PopupUI : BaseUI
     {
         // room
         List<Room> playerRooms = Main.Get<GameManager>().PlayerRooms;
-        foreach (Transform item in _inventRoomContent.transform) // todo : 초기화 관련 ?
+        foreach (Transform item in _inventRoomContent.transform) // 초기화 관련 ?
         {
             Destroy(item.gameObject);
         }
@@ -98,12 +91,11 @@ public class Inventory_PopupUI : BaseUI
     }
 
 
-    private void ClickBackBtn(PointerEventData EventData)
-    {
-        Main.Get<UIManager>().CloseAllPopup();
-        Owner.isInventOpen = false;
-
-    }
+    //private void ClickBackBtn(PointerEventData EventData)
+    //{
+    //    Main.Get<UIManager>().CloseAllPopup();
+    //    Owner.isInventOpen = false;
+    //}
 
     private void ClickRoomBtn(PointerEventData EventData)
     {
@@ -115,6 +107,12 @@ public class Inventory_PopupUI : BaseUI
             inventUnitDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false);
             Main.Get<UIManager>().ClosePopup(); // stack 으로 popup 이 쌓임. -> 후입선출 되는 흐름 ! 그래서 ClosePopup 하게 되면 제일 최근에 생성된 UnitDescri_PopupUI 가 닫히는 것이다 !
             inventUnitDescri_PopupUI = null;
+        }
+
+        if (inventUpgrade_PopupUI != null) // 업그레이드창이 켜져있다면
+        {
+            Main.Get<UIManager>().ClosePopup();
+            inventUpgrade_PopupUI = null;
         }
     }
 
@@ -129,6 +127,12 @@ public class Inventory_PopupUI : BaseUI
             Main.Get<UIManager>().ClosePopup();
             inventRoomDescri_PopupUI = null;
         }
+
+        if (inventUpgrade_PopupUI != null) // 업그레이드창이 켜져있다면
+        {
+            Main.Get<UIManager>().ClosePopup();
+            inventUpgrade_PopupUI = null;
+        }
     }
 
     private void ClickCloseBtn(PointerEventData EventData)
@@ -138,6 +142,25 @@ public class Inventory_PopupUI : BaseUI
         Camera.main.GetComponent<CameraMovement>().Rock = false;
     }
 
+    private void ClickUpgradeBtn(PointerEventData EventData)
+    {
+        if (inventUnitDescri_PopupUI != null) // unit description 창이 켜져있다면
+        {
+            inventUnitDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false);
+            Main.Get<UIManager>().ClosePopup();
+            inventUnitDescri_PopupUI = null;
+        }
+
+        if (inventRoomDescri_PopupUI != null) // room description 설명창이 열려 있다면
+        {
+            inventRoomDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false);
+            Main.Get<UIManager>().ClosePopup();
+            inventRoomDescri_PopupUI = null;
+        }
+
+        InventUpgrade_PopupUI ui = Main.Get<UIManager>().OpenPopup<InventUpgrade_PopupUI>("InventUpgrade_PopupUI");
+        ui.Owner = this;
+    }
 }
 
 

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Upgrade_PopupUI : BaseUI
+public class PastUpgrade_PopupUI : BaseUI
 {
     private Button _upgradeConfirmButton;
     private Button _upgradeCancelBtn;

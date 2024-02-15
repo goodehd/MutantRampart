@@ -13,12 +13,10 @@ public class HomeRoom : RoomBehavior
     
        isEndPoint = true;
        
-       Debug.Log("생김");
      }
     
     public override void EnterRoom(Enemy enemy)
     {
-        Debug.Log("집침입");
         base.EnterRoom(enemy);
         Main.Get<GameManager>().PlayerHP.CurValue--;
         enemy.Die();

@@ -770,7 +770,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7266688696964528300}
   - component: {fileID: 7442735371609874373}
-  - component: {fileID: 6599087334936984715}
+  - component: {fileID: 1159275584104224930}
   m_Layer: 0
   m_Name: Lava
   m_TagString: Untagged
@@ -848,7 +848,7 @@ PolygonCollider2D:
       - {x: 3, y: 2.5}
       - {x: 3, y: 1}
   m_UseDelaunayMesh: 0
---- !u!114 &6599087334936984715
+--- !u!114 &1159275584104224930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
