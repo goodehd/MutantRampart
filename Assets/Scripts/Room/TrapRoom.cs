@@ -14,9 +14,8 @@ public class TrapRoom : RoomBehavior
     }
     
     private ETrapType _trapType;
-
-    public event Action<GameObject> OnFallinTrap;
-    private bool _isTrapOn = false;
+    
+    protected bool _isTrapOn = false;
     
     public override void Init(RoomData data)
     {
@@ -29,8 +28,27 @@ public class TrapRoom : RoomBehavior
     {
         base.EnterRoom(enemy);
         if (_isTrapOn)return;
-        StartCoroutine(LavaTrap(Enemys,enemy));
-        
+        ConditionAdd(enemy);
+    }
+    private void ConditionAdd(Enemy enemy)
+    {
+        switch (_trapType)
+        {
+            case ETrapType.Lava:
+                StartCoroutine(LavaTrap(Enemys, enemy));
+                break;
+            case ETrapType.Snow:
+                Debug.Log("눈맵 진입");
+                Debug.Log($"적용 전 속도 : {enemy.CharacterInfo.Status.GetStat<Stat>(EstatType.MoveSpeed).Value}");
+                enemy.ConditionMachine.AddCondition(new FrostbiteCondition(enemy,RoomInfo.Data));
+                Debug.Log($"적용 후 속도 : {enemy.CharacterInfo.Status.GetStat<Stat>(EstatType.MoveSpeed).Value}");
+                break;
+            case ETrapType.Molar:
+                enemy.ConditionMachine.AddCondition(new PuppetCondition(enemy, RoomInfo.Data));
+                break;
+            case ETrapType.Count:
+                break;
+        }
     }
 
     IEnumerator LavaTrap(LinkedList<CharacterBehaviour> enemys, Enemy enemy)
@@ -43,7 +61,7 @@ public class TrapRoom : RoomBehavior
         Enemys.AddLast(enemy);
 
         yield return new WaitForSeconds(3f); //피해를 주기까지의 시간
-        
+
         foreach (var listenemy in enemys)
         {
             //피해를 주는 로직
@@ -52,9 +70,10 @@ public class TrapRoom : RoomBehavior
             enemy.StateMachine.ChangeState(EState.Move);
             //listenemy.Status.GetStat<Stat>(EstatType.MoveSpeed).RemoveModifier(mod);
         }
+
         _isTrapOn = true;
         yield return new WaitForSeconds(5f); //쿨타임
         _isTrapOn = false;
     }
-
 }
+

@@ -505,7 +505,7 @@ GameObject:
   - component: {fileID: 2197149355598029854}
   - component: {fileID: 7388750620351221843}
   m_Layer: 5
-  m_Name: Upgrade_PopupUI
+  m_Name: PastUpgrade_PopupUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

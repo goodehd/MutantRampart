@@ -17,7 +17,7 @@ public class Stat
     public Stat(EstatType statType, float value)
     {
         _statType = statType;
-        _value = value;
+        _value = value; 
         _baseValue = value;
     }
 
