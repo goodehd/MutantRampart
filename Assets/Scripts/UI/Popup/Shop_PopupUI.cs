@@ -269,6 +269,7 @@ public class Shop_PopupUI : BaseUI
         else
         {
             Error_PopupUI errorUI = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
+            errorUI.curErrorText = "돈이 부족해서 구매할 수 없습니다.";
         }
     }
 
