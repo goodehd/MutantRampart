@@ -152,7 +152,8 @@ public class DayMain_SceneUI : BaseUI
         _playerMoneyText = GetUI<TextMeshProUGUI>("MainPlayerMoneyText");
         _stageText = GetUI<TextMeshProUGUI>("CurStageTxt");
 
-        _playerMoneyText.text = Main.Get<GameManager>()._playerMoney.ToString();
+        _playerMoneyText.text = Main.Get<GameManager>().PlayerMoney.ToString();
+        UpdateDayCount(Main.Get<GameManager>().CurStage);
     }
 
     private void SetMoveUI()
@@ -317,6 +318,7 @@ public class DayMain_SceneUI : BaseUI
     private void ClickSettingBtn(PointerEventData eventData)
     {
         Main.Get<UIManager>().OpenPopup<Setting_PopupUI>();
+        Main.Get<GameManager>().SaveData();
     }
 
     private void OpenPoketBlock(bool isUint)

@@ -85,7 +85,7 @@ public class Shop_PopupUI : BaseUI
         _itemBtnBox = GetUI<Transform>("GachaItemBtnBox");
 
         _playerMoneyText = GetUI<TMP_Text>("GachaPlayerMoneyTxt");
-        _playerMoneyText.text = Main.Get<GameManager>()._playerMoney.ToString();
+        _playerMoneyText.text = Main.Get<GameManager>().PlayerMoney.ToString();
 
         _groundRowPriceText = GetUI<TMP_Text>("GroundRowPriceTxt");
         _groundRowPriceText.text = Main.Get<DataManager>().Item["ExpandMapRow"].Price.ToString();
@@ -220,11 +220,11 @@ public class Shop_PopupUI : BaseUI
             _myGachaUnits.Clear();
         }
 
-        if (Main.Get<GameManager>()._playerMoney >= count * 1000) // 금액 계산 로직
+        if (Main.Get<GameManager>().PlayerMoney >= count * 1000) // 금액 계산 로직
         {
             Main.Get<GameManager>().ChangeMoney(-count * 1000);
             Debug.Log("구매완료했습니다.");
-            Debug.Log($"잔액 : {Main.Get<GameManager>()._playerMoney}");
+            Debug.Log($"잔액 : {Main.Get<GameManager>().PlayerMoney}");
 
             for (int i = 0; i < count; i++)
             {
@@ -254,7 +254,7 @@ public class Shop_PopupUI : BaseUI
             _myGachaRooms.Clear();
         }
 
-        if (Main.Get<GameManager>()._playerMoney >= count * 1000)
+        if (Main.Get<GameManager>().PlayerMoney >= count * 1000)
         {
             Main.Get<GameManager>().ChangeMoney(-count * 1000);
 
@@ -285,11 +285,11 @@ public class Shop_PopupUI : BaseUI
             _myGachaItems.Clear();
         }
 
-        if (Main.Get<GameManager>()._playerMoney >= count * 1000)
+        if (Main.Get<GameManager>().PlayerMoney >= count * 1000)
         {
             Main.Get<GameManager>().ChangeMoney(-count * 1000);
             Debug.Log("구매완료했습니다.");
-            Debug.Log($"잔액 : {Main.Get<GameManager>()._playerMoney}");
+            Debug.Log($"잔액 : {Main.Get<GameManager>().PlayerMoney}");
 
             for (int i = 0; i < count; i++)
             {

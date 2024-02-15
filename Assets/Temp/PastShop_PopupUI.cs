@@ -54,7 +54,7 @@ public class PastShop_PopupUI : BaseUI
         _groundContent = GetUI<Transform>("Ground_Content");
 
         _playerMoneyText = GetUI<TMP_Text>("ShopPlayerMoneyText");
-        _playerMoneyText.text = Main.Get<GameManager>()._playerMoney.ToString();
+        _playerMoneyText.text = Main.Get<GameManager>().PlayerMoney.ToString();
 
         Main.Get<GameManager>().OnChangeMoney += UpdateMoneyText;
 
