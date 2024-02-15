@@ -13,7 +13,6 @@ public class BatRoom : RoomBehavior
         Igloo,
         LivingRoom,
         Temple,
-        Home_2,
         Count
     }
     
@@ -102,7 +101,8 @@ public class BatRoom : RoomBehavior
         Units[index].CurRoom = this;
         Units[index].transform.position = Literals.BatPos[index] + transform.position;
         //유닛 체력이 회복되는가 체크 해봤슴 나중에 버프타일 함수에다가 넣으면 된다~~
-        //Units[index].ConditionMachine.AddCondition(Condition.Healing,new HealingCondition(Units[index],RoomInfo.Data));
+        ConditionAdd(Units[index]);
+        //Units[index].ConditionMachine.AddCondition(new HealingCondition(Units[index],RoomInfo.Data)); //TODO : Condition Test
         UnitCount++;
 
         return true;
@@ -152,37 +152,26 @@ public class BatRoom : RoomBehavior
         UnitCount = count;
     }
 
-    private void BuffUnitRoomEBat(Character data)
+    private void ConditionAdd(CharacterBehaviour character)
     {
         switch (_batType)
         {
             case EBatType.Forest:
-                StartCoroutine(ForestBuff(data));
+                character.ConditionMachine.AddCondition(new HealingCondition(character, RoomInfo.Data));
+                Debug.Log("힐링버프 부여");
                 break;
             case EBatType.Igloo:
-                IglooBuff(data);
+                character.ConditionMachine.AddCondition(new FreezingAttackCondition(character, RoomInfo.Data));
+                Debug.Log("이글루 버프 부여");
                 break;
             case EBatType.LivingRoom:
-                LivingRoomBuff(data);
+
                 break;
             case EBatType.Temple:
-                TempleBuff(data);
-                break;
-            case EBatType.Home_2:
-                
+
                 break;
             default:
                 break;
-        }
-    }
-    
-
-    private IEnumerator ForestBuff(Character data)
-    {
-        while (!data.IsDead)
-        {
-            data.Status.GetStat<Vital>(EstatType.Hp).CurValue += 1f;
-            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -204,18 +193,6 @@ public class BatRoom : RoomBehavior
         data.Status.GetStat<Stat>(EstatType.AttackSpeed).AddModifier(mod);
     }
 
-    private void Home_2Buff(Character data)
-    {
-        if (data.Status.GetStat<Vital>(EstatType.Hp).CurValue <= 1f) //아무리봐도 사망처리랑 충돌할 것 같음...
-        {
-            //data.Status.GetStat<Vital>(EstatType.Hp).AddModifier();
-        }
-        
-        //StatModifier mod = new StatModifier(10f, EStatModType.Add, 1);
-        //data.Status.GetStat<Stat>(EstatType.Damage).AddModifier(mod);        1강화
-        //data.Status.GetStat<Stat>(EstatType.AttackSpeed).AddModifier(mod);   1강화
-        //data.Status.GetStat<Stat>(EstatType.Defense).AddModifier(mod);       2강화
-    }
 
     private void OnDestroy()
     {

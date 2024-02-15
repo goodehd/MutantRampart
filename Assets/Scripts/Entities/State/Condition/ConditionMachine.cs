@@ -4,34 +4,10 @@ using UnityEngine;
 
 public class ConditionMachine
 {
-    //private Condition _currentCondition = Condition.None;
-    private List<BaseCondition> _curConditionList = new List<BaseCondition>();
 
-    #region BitMask
-    /*
-    public bool HasCondition(Condition condition)
-    {
-        return (_currentCondition & condition) != 0;
-    }
+    private List<BaseCondition> _curConditionList = new List<BaseCondition>();
     
-    public void AddCondition(Condition condition,BaseCondition basecondition, Data data)
-    {
-        _currentCondition |= condition;
-    }
-    
-    public void RemoveCondition(Condition condition)
-    {
-        _currentCondition &= ~condition;
-    }
-    
-    public void ClearConditions()
-    {
-        _currentCondition = Condition.None;
-    }
-    */
-    #endregion
-    
-    public void AddCondition(Condition condition,BaseCondition basecondition)
+    public void AddCondition(BaseCondition basecondition)
     {
         _curConditionList.Add(basecondition);
         basecondition.EnterCondition();
@@ -47,4 +23,5 @@ public class ConditionMachine
     {
         _curConditionList.Clear();
     }
+
 }
