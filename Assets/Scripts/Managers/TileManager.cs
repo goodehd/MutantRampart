@@ -132,13 +132,18 @@ public class TileManager : IManagers
     {
         List<RoomBehavior> outPut = new List<RoomBehavior>();
 
-        // 오른쪽, 왼쪽, 위, 아래
-        int[] dx = { 1, -1, 0, 0 };
-        int[] dy = { 0, 0, 1, -1 };
+        int[] dx = { 0, -1, 1, 0 };
+        int[] dy = { 1, 0, 0, -1 };
 
         for (int i = 0; i < 4; ++i)
         {
             if (!IsRoomPositionValid(curPosX + dx[i], curPosY + dy[i]))
+            {
+                continue;
+            }
+
+            RoomBehavior room = _roomObjList[curPosX][curPosY];
+            if (!room.IsDoorOpen((ERoomDir)(1 << i)))
             {
                 continue;
             }

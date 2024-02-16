@@ -20,6 +20,10 @@ public class RoomBehavior : MonoBehaviour
 {
     public TilemapRenderer Renderer { get; private set; }
     public Tilemap[] tilemap = new Tilemap[2];
+
+    public GameObject RightWall { get; private set; }
+    public GameObject LeftWall { get; private set; }
+
     public Room RoomInfo { get; set; }
     public ERoomDir RoomDir { get; set; }
     public bool isEndPoint { get; set; }
@@ -49,6 +53,9 @@ public class RoomBehavior : MonoBehaviour
         {
             tilemap[i] = transform.GetChild(i).GetComponent<Tilemap>();
         }
+
+        RightWall = transform.GetChild(2).gameObject;
+        LeftWall = transform.GetChild(3).gameObject;
 
         RoomDir = ERoomDir.All;
 
@@ -184,11 +191,31 @@ public class RoomBehavior : MonoBehaviour
     public void OpenDoor(ERoomDir direction)
     {
         RoomDir |= direction;
+
+        if (direction == ERoomDir.RightTop)
+        {
+            RightWall.SetActive(false);
+        }
+
+        if (direction == ERoomDir.LeftTop)
+        {
+            LeftWall.SetActive(false);
+        }
     }
 
     public void CloseDoor(ERoomDir direction)
     {
         RoomDir &= ~direction;
+
+        if (direction == ERoomDir.RightTop)
+        {
+            RightWall.SetActive(true);
+        }
+
+        if (direction == ERoomDir.LeftTop)
+        {
+            LeftWall.SetActive(true);
+        }
     }
 
     public void ModifyDoor(ERoomDir direction, bool isOpen)

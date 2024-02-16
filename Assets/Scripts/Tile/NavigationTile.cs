@@ -408,7 +408,7 @@ public class NavigationTile
 
         PathInfo targetInfo = null;
         bool isfind = false;
-        while (true)
+        while (roomQ.Count > 0)
         {
             PathInfo info = roomQ.Dequeue();
             RoomBehavior curRoom = info.CurRoom;
@@ -431,9 +431,6 @@ public class NavigationTile
 
             if (isfind)
                 break;
-
-            if (roomQ.Count <= 0)
-                return null;
         }
 
         Stack<RoomBehavior> pathList = new Stack<RoomBehavior>();

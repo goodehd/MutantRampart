@@ -38,7 +38,8 @@ public class TestButton3 : Editor
 
         if (GUILayout.Button("RightTop"))
         {
-            Main.Get<TileManager>().SetRoomDir(generator, ERoomDir.RightTop, !generator.IsDoorOpen(ERoomDir.RightTop));
+            bool test = generator.IsDoorOpen(ERoomDir.RightTop);
+            Main.Get<TileManager>().SetRoomDir(generator, ERoomDir.RightTop, !test);
         }
 
         if (GUILayout.Button("RightBottom"))
