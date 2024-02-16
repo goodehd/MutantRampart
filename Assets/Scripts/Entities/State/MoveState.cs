@@ -17,6 +17,11 @@ public class MoveState : BaseState
         _pathObjStk = new Stack<RoomBehavior>();
         _pathPosStk = new Stack<Vector2>();
 
+        Init();
+    }
+
+    public override void Init()
+    {
         _tileMap.GetMapSize(out int x, out int y);
         _visited = new bool[x, y];
 

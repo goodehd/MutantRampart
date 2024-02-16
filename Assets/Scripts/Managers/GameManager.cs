@@ -52,6 +52,8 @@ public class GameManager : IManagers
         PlayerHP = new Vital(EstatType.Hp, 5);
         PlayerHP.OnValueZero += GameOver;
 
+        PlayerMoney = 20000;
+
         return true;
     }
 

@@ -90,9 +90,8 @@ public class RoomBehavior : MonoBehaviour
         {
             tilemap[i].color = Color.white;
         }
-
-
     }
+
     protected virtual void OnMouseDown()
     {
         if (EventSystem.current.IsPointerOverGameObject())
@@ -105,9 +104,13 @@ public class RoomBehavior : MonoBehaviour
             if (_tile.SelectRoom != null)
                 _tile.SelectRoom.StopFlashing();
             _tile.SetSelectRoom(this);
-            Main.Get<UIManager>().CloseAllPopup();
             SortRoom();
         }
+    }
+
+    public virtual void OnDestroyRoom()
+    {
+
     }
 
     public void RemoveEnemy(CharacterBehaviour src)

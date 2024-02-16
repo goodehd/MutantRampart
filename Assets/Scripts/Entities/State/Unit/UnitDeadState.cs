@@ -6,6 +6,12 @@ public class UnitDeadState : BaseState
 {
     public UnitDeadState(CharacterBehaviour owner) : base(owner)
     {
+
+    }
+
+    public override void Init()
+    {
+
     }
 
     public override void EnterState()

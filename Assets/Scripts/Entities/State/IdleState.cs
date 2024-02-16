@@ -8,6 +8,11 @@ public class IdleState : BaseState
     {
     }
 
+    public override void Init()
+    {
+
+    }
+
     public override void EnterState()
     {
 

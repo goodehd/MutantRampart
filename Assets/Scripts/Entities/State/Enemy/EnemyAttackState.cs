@@ -13,6 +13,11 @@ public class EnemyAttackState : BaseState
         tileManager = Main.Get<TileManager>();
     }
 
+    public override void Init()
+    {
+
+    }
+
     public override void EnterState()
     {
         _targets = ((BatRoom)Owner.CharacterInfo.CurRoom).Units;

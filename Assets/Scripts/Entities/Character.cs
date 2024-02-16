@@ -5,9 +5,32 @@ using UnityEngine;
 
 public class Character
 {
+    public event Action Ondeploy;
+    public event Action OnRecall;
+
+    private RoomBehavior _curRoom;
+    public RoomBehavior CurRoom 
+    {
+        get 
+        {
+            return _curRoom;
+        }
+        set
+        {
+            if(value != null)
+            {
+                Ondeploy?.Invoke();
+            }
+            else
+            {
+                OnRecall?.Invoke();
+            }
+            _curRoom = value;
+        } 
+    }
+
     public int CurPosX { get; set; }
     public int CurPosY { get; set; }
-    public RoomBehavior CurRoom { get; set; }
     public bool IsDead { get; set; }
 
     public CharacterBehaviour Owner { get; set; }
@@ -39,20 +62,10 @@ public class Character
 
         CurPosX = -1;
         CurPosY = -1;
-        
-    }
-
-    public T EquipItem<T>() where T : Item //아이템 클래스가 다양해지면?
-    {
-        T empty = Activator.CreateInstance<T>();
-
-        return empty;
     }
 
     public void OnAttackInvoke()
     {
         OnAttack?.Invoke();
     }
-
-    
 }

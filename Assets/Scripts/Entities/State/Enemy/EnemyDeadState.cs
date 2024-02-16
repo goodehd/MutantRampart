@@ -8,6 +8,11 @@ public class EnemyDeadState : BaseState
     {
     }
 
+    public override void Init()
+    {
+
+    }
+
     public override void EnterState()
     {
         Owner.StartCoroutine(DieObject());
@@ -28,6 +33,7 @@ public class EnemyDeadState : BaseState
         Owner.Animator.SetTrigger(Literals.Dead);
         yield return new WaitForSeconds(1);
         Owner.ResetCharacter();
+        Owner.StateMachine.InitState();
         Main.Get<ResourceManager>().Destroy(Owner.gameObject);
         Owner.CharacterInfo.CurRoom.RemoveEnemy(this.Owner);
     }

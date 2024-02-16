@@ -355,11 +355,14 @@ public class DayMain_SceneUI : BaseUI
 
         if (isUIAnimating)
         {
+            tileManager.SetSelectRoom(null);
             return;
         }
 
         maincamera.Rock = true;
         tileManager.SelectRoom.StartFlashing();
+        tileManager.InactiveBatSlot();
+        _ui.CloseAllPopup();
         FocusCamera();
 
         if (_btnActions.Peek().UIStagte != EUIstate.ChangeTileSelect)

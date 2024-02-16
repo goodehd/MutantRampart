@@ -50,10 +50,9 @@ public class UnitSelectImageUIPanel : BaseUI
                 _selectUnitEquipImage.gameObject.SetActive(false);
             }
         }
-        
 
-
-
+        CharacterData.Ondeploy += ActiveEquip;
+        CharacterData.OnRecall += InactiveEquip;
     }
 
     private void UnitImageClick(PointerEventData EventData)
@@ -90,5 +89,23 @@ public class UnitSelectImageUIPanel : BaseUI
     private void UnitImageExit(PointerEventData EventData)
     {
         Owner._unitDescription.gameObject.SetActive(false);
+    }
+
+    private void ActiveEquip()
+    {
+        _equipText.gameObject.SetActive(false);
+        _selectUnitEquipImage.gameObject.SetActive(true);
+    }
+
+    private void InactiveEquip()
+    {
+        _equipText.gameObject.SetActive(false);
+        _selectUnitEquipImage.gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        CharacterData.Ondeploy -= ActiveEquip;
+        CharacterData.OnRecall -= InactiveEquip;
     }
 }

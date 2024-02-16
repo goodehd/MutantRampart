@@ -101,6 +101,9 @@ public class TileManager : IManagers
 
     public void SetSelectRoom(RoomBehavior room)
     {
+        if (SelectRoom == room)
+            return;
+
         SelectRoom = room;
         if(room != null)
             OnSlectRoomEvent?.Invoke();
@@ -121,6 +124,7 @@ public class TileManager : IManagers
         _roomObjList[SelectRoom.IndexX][SelectRoom.IndexY] = room;
 
         SelectRoom.RoomInfo.UnEquipedRoom();
+        SelectRoom.OnDestroyRoom();
         resource.Destroy(SelectRoom.gameObject);
         SelectRoom = room;
         SelectRoom.StartFlashing();
@@ -252,6 +256,7 @@ public class TileManager : IManagers
     public void DeleteRoom(Room room)
     {
         RoomBehavior newRoom = CreateDefaultRoom(room.IndexX, room.IndexY, _roomObjList[room.IndexX][room.IndexY].transform.position);
+        _roomObjList[room.IndexX][room.IndexY].OnDestroyRoom();
         resource.Destroy(_roomObjList[room.IndexX][room.IndexY].gameObject);
         _roomObjList[room.IndexX][room.IndexY] = newRoom;
     }

@@ -11,6 +11,7 @@ public abstract class BaseState
         Owner = owner;
     }
 
+    public abstract void Init();
     public abstract void EnterState();
     public abstract void UpdateState();
     public abstract void ExitState();

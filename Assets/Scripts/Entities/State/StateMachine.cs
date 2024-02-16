@@ -41,4 +41,12 @@ public class StateMachine
     {
         _curState?.UpdateState();
     }
+
+    public void InitState()
+    {
+        foreach (var state in _states.Values)
+        {
+            state.Init();
+        }
+    }
 }

@@ -9,6 +9,7 @@ public class CharacterBehaviour : MonoBehaviour
     public Character CharacterInfo { get; private set; }
     public StateMachine StateMachine { get; private set; }
     public ConditionMachine ConditionMachine { get; private set; }
+
     public CharacterStatus Status { get { return CharacterInfo.Status; } }
     public int CurPosX { get { return CharacterInfo.CurPosX ; } set { CharacterInfo.CurPosX = value; } }
     public int CurPosY { get { return CharacterInfo.CurPosY; } set { CharacterInfo.CurPosY = value; } }

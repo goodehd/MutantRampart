@@ -14,6 +14,11 @@ public class UnitAttackState : BaseState
         OnAttackState += owner.CharacterInfo.OnAttackInvoke;
     }
 
+    public override void Init()
+    {
+
+    }
+
     public override void EnterState()
     {
         _targets = ((BatRoom)Owner.CharacterInfo.CurRoom).Enemys;

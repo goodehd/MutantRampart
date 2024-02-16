@@ -58,6 +58,12 @@ public class BatRoom : RoomBehavior
         SortCharacter();
     }
 
+    public override void OnDestroyRoom()
+    {
+        base.OnDestroyRoom();
+        DeleteAllUnit();
+    }
+
     public void SortCharacter()
     {
         if(Units != null)
@@ -191,11 +197,5 @@ public class BatRoom : RoomBehavior
     {
         StatModifier mod = new StatModifier(10f, EStatModType.Add, 1);
         data.Status.GetStat<Stat>(EstatType.AttackSpeed).AddModifier(mod);
-    }
-
-
-    private void OnDestroy()
-    {
-        DeleteAllUnit();
     }
 }
