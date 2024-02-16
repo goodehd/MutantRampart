@@ -18,6 +18,7 @@ public class Main : SingletonBehavior<Main>
 
     protected override void Init()
     {
+        CreateManager<SaveDataManager>();
         CreateManager<DataManager>();
         CreateManager<PoolManager>();
         CreateManager<ResourceManager>();

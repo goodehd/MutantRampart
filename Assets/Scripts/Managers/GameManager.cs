@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : IManagers
 {
-    public int _playerMoney { get; private set; } = 20000;
+    public int PlayerMoney { get; set; }
     public Vital PlayerHP { get; private set; }
 
     public bool isHomeSet = false;
@@ -54,8 +54,8 @@ public class GameManager : IManagers
 
     public void ChangeMoney(int amount)
     {
-        _playerMoney += amount;
-        OnChangeMoney?.Invoke(_playerMoney);
+        PlayerMoney += amount;
+        OnChangeMoney?.Invoke(PlayerMoney);
     }
 
     public void GameOver()
@@ -84,6 +84,12 @@ public class GameManager : IManagers
         }
     }
 
+    public void SaveData()
+    {
+        Main.Get<SaveDataManager>().Player.Curstage = CurStage;
+        Main.Get<SaveDataManager>().Player.PlayerMoney = PlayerMoney;
+        Main.Get<SaveDataManager>().SaveData();
+    }
     // todo : Room 뺄 때 해야하는 것들 함수로 작동시키기 !
     //public void RemoveRoom(Room room) // room -- 배치 삭제, 인벤토리에서도 삭제
     //{

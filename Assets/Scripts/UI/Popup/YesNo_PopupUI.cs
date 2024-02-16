@@ -124,7 +124,7 @@ public class YesNo_PopupUI : BaseUI
     //Ground구매
     private void BuyGroundItem(ItemData data)
     {
-        if (Main.Get<GameManager>()._playerMoney >= data.Price)
+        if (Main.Get<GameManager>().PlayerMoney >= data.Price)
         {
             if(data.Key == "ExpandMapRow")
             {
@@ -136,7 +136,7 @@ public class YesNo_PopupUI : BaseUI
             }
             Main.Get<GameManager>().ChangeMoney(-data.Price);
             Debug.Log("구매완료했습니다.");
-            Debug.Log($"잔액 : {Main.Get<GameManager>()._playerMoney}");
+            Debug.Log($"잔액 : {Main.Get<GameManager>().PlayerMoney}");
         }
         else
         {
