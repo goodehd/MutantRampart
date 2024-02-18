@@ -45,6 +45,10 @@ public class DayMain_SceneUI : BaseUI
     private Button _roomButton;
     private Button _speed1Button;
     private Button _speed2Button;
+    private Button _rightTopButton;
+    private Button _rightBottomButton;
+    private Button _leftTopButton;
+    private Button _leftBottomButton;
 
     private TextMeshProUGUI _playerMoneyText;
     private TextMeshProUGUI _stageText;
@@ -58,6 +62,7 @@ public class DayMain_SceneUI : BaseUI
     private RectTransform _placingPanelTransform;
     private RectTransform _backBtnTransform;
     private RectTransform _nightTransform;
+    private RectTransform _roomDirTransform;
 
     private Error_PopupUI _errorPopupUI;
 
@@ -116,6 +121,10 @@ public class DayMain_SceneUI : BaseUI
         _roomButton = GetUI<Button>("RoomBtn");
         _speed1Button = GetUI<Button>("PlayButton");
         _speed2Button = GetUI<Button>("X2SpeedButton");
+        _rightTopButton = GetUI<Button>("RightTop");
+        _rightBottomButton = GetUI<Button>("RightBottom");
+        _leftTopButton = GetUI<Button>("LeftTop");
+        _leftBottomButton = GetUI<Button>("LeftBottom");
 
         SetUICallback(_shopButton.gameObject, EUIEventState.Click, ClickShopBtn);
         SetUICallback(_inventoryButton.gameObject, EUIEventState.Click, ClickInventoryBtn);
@@ -127,6 +136,10 @@ public class DayMain_SceneUI : BaseUI
         SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
         SetUICallback(_speed1Button.gameObject, EUIEventState.Click, ClickSpeed1Btn);
         SetUICallback(_speed2Button.gameObject, EUIEventState.Click, ClickSpeed2Btn);
+        SetUICallback(_rightTopButton.gameObject, EUIEventState.Click, ClickRightTopBtn);
+        SetUICallback(_rightBottomButton.gameObject, EUIEventState.Click, ClickRightBottomBtn);
+        SetUICallback(_leftTopButton.gameObject, EUIEventState.Click, ClickLeftTopBtn);
+        SetUICallback(_leftBottomButton.gameObject, EUIEventState.Click, ClickLeftBottomBtn);
     }
 
     private void SetImage()
@@ -170,6 +183,7 @@ public class DayMain_SceneUI : BaseUI
         _placingPanelTransform = _placingPanel.GetComponent<RectTransform>();
         _backBtnTransform = _backButton.GetComponent<RectTransform>();
         _nightTransform = _speed1Button.transform.parent.GetComponent<RectTransform>();
+        _roomDirTransform = _rightTopButton.transform.parent.GetComponent<RectTransform>();
     }
 
     private void SetOtherItems()
@@ -266,6 +280,30 @@ public class DayMain_SceneUI : BaseUI
         Time.timeScale = 1.0f;
         _speed1Button.gameObject.SetActive(true);
         _speed2Button.gameObject.SetActive(false);
+    }
+
+    private void ClickRightTopBtn(PointerEventData eventData)
+    {
+        RoomBehavior room = tileManager.SelectRoom;
+        tileManager.SetRoomDir(room, ERoomDir.RightTop, !room.IsDoorOpen(ERoomDir.RightTop));
+    }
+
+    private void ClickLeftTopBtn(PointerEventData eventData)
+    {
+        RoomBehavior room = tileManager.SelectRoom;
+        tileManager.SetRoomDir(room, ERoomDir.LeftTop, !room.IsDoorOpen(ERoomDir.LeftTop));
+    }
+
+    private void ClickRightBottomBtn(PointerEventData eventData)
+    {
+        RoomBehavior room = tileManager.SelectRoom;
+        tileManager.SetRoomDir(room, ERoomDir.RightBottom, !room.IsDoorOpen(ERoomDir.RightBottom));
+    }
+
+    private void ClickLeftBottomBtn(PointerEventData eventData)
+    {
+        RoomBehavior room = tileManager.SelectRoom;
+        tileManager.SetRoomDir(room, ERoomDir.LeftBottom, !room.IsDoorOpen(ERoomDir.LeftBottom));
     }
 
     #endregion
@@ -379,7 +417,13 @@ public class DayMain_SceneUI : BaseUI
 
         StartCoroutine(ButtonRock());
         MovePosYUI(_placingPanelTransform, 220f);
-        MovePosXUI(_categoryTransform, 200f);
+        MovePosXUI(_categoryTransform, 200f, () => 
+        {
+            if (_btnActions.Peek().UIStagte == EUIstate.ChangeTileSelect)
+            { 
+                _roomDirTransform.gameObject.SetActive(true);
+            }
+        });
 
         if (_btnActions.Peek().UIStagte != EUIstate.ChangeTileSelect)
         {
@@ -389,6 +433,7 @@ public class DayMain_SceneUI : BaseUI
             _ui.CloseAllPopup();
             Camera.main.DOOrthoSize(5.0f, animationDuration);
             maincamera.Rock = false;
+            _roomDirTransform.gameObject.SetActive(false);
         }
     }
 
@@ -396,23 +441,27 @@ public class DayMain_SceneUI : BaseUI
 
     #region UIDOTween
 
-    private void MovePosYUI(RectTransform ui, float offset)
+    private void MovePosYUI(RectTransform ui, float offset, Action moveEndAction = null)
     {
         if (!ui.gameObject.activeSelf)
         {
             ui.gameObject.SetActive(true);
-            ui.DOAnchorPosY(ui.anchoredPosition.y + offset, animationDuration);
+            ui.DOAnchorPosY(ui.anchoredPosition.y + offset, animationDuration).OnComplete(() =>
+            {
+                moveEndAction?.Invoke();
+            });
         }
         else
         {
             ui.DOAnchorPosY(ui.anchoredPosition.y - offset, animationDuration).OnComplete(() =>
             {
                 ui.gameObject.SetActive(false);
+                moveEndAction?.Invoke();
             });
         }
     }
 
-    private void MovePosYUI(List<RectTransform> ui, float offset)
+    private void MovePosYUI(List<RectTransform> ui, float offset, Action moveEndAction = null)
     {
         if (ui.Count == 0)
             return;
@@ -424,6 +473,7 @@ public class DayMain_SceneUI : BaseUI
                 rect.DOAnchorPosY(rect.anchoredPosition.y + offset, animationDuration).OnComplete(() =>
                 {
                     rect.gameObject.SetActive(false);
+                    moveEndAction?.Invoke();
                 });
             }
         }
@@ -432,23 +482,30 @@ public class DayMain_SceneUI : BaseUI
             foreach (var rect in ui)
             {
                 rect.gameObject.SetActive(true);
-                rect.DOAnchorPosY(rect.anchoredPosition.y - offset, animationDuration);
+                rect.DOAnchorPosY(rect.anchoredPosition.y - offset, animationDuration).OnComplete(() =>
+                {
+                    moveEndAction?.Invoke();
+                });
             }
         }
     }
 
-    private void MovePosXUI(RectTransform ui, float offset)
+    private void MovePosXUI(RectTransform ui, float offset, Action moveEndAction = null)
     {
         if (!ui.gameObject.activeSelf)
         {
             ui.gameObject.SetActive(true);
-            ui.DOAnchorPosX(ui.anchoredPosition.x - offset, animationDuration);
+            ui.DOAnchorPosX(ui.anchoredPosition.x - offset, animationDuration).OnComplete(() =>
+            {
+                moveEndAction?.Invoke();
+            });
         }
         else
         {
             ui.DOAnchorPosX(ui.anchoredPosition.x + offset, animationDuration).OnComplete(() =>
             {
                 ui.gameObject.SetActive(false);
+                moveEndAction?.Invoke();
             });
         }
     }

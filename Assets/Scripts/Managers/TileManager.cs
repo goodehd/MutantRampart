@@ -126,10 +126,27 @@ public class TileManager : IManagers
         SelectRoom.RoomInfo.UnEquipedRoom();
         SelectRoom.OnDestroyRoom();
         resource.Destroy(SelectRoom.gameObject);
+
+        room.RoomDir = SelectRoom.RoomDir;
+
         SelectRoom = room;
         SelectRoom.StartFlashing();
+        SetCheckWall(SelectRoom);
 
         return room;
+    }
+
+    public void SetCheckWall(RoomBehavior room)
+    {
+        foreach (ERoomDir dir in Enum.GetValues(typeof(ERoomDir)))
+        {
+            if (dir > ERoomDir.LeftBottom)
+            {
+                break;
+            }
+
+            SetRoomDir(room, dir, room.IsDoorOpen(dir));
+        }
     }
 
     public List<RoomBehavior> GetNeighbors(int curPosX, int curPosY)
