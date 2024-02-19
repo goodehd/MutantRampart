@@ -80,6 +80,7 @@ public class SelectScene_SceneUI : BaseUI
             _saveDataManager.LoadData();
             SetGameData();
             Main.Get<SceneManager>().ChangeScene<HongTestScene>();
+            Main.Get<GameManager>().isTutorial = false;
         }
         else
         {

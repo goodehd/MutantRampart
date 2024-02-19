@@ -12,6 +12,8 @@ public class GameManager : IManagers
 
     public int CurStage;
 
+    public bool isTutorial = true;
+
     public List<Character> playerUnits { get; private set; } = new List<Character>();   // 플레이어가 보유한 유닛 리스트
     public List<Room> PlayerRooms { get; private set; } = new List<Room>();     // 플레이어가 보유한 Room 리스트
     public List<Item> PlayerItems { get; private set; } = new List<Item>();             // 플레이어가 보유한 아이템 리스트
@@ -52,7 +54,14 @@ public class GameManager : IManagers
         PlayerHP = new Vital(EstatType.Hp, 5);
         PlayerHP.OnValueZero += GameOver;
 
-        PlayerMoney = 20000;
+        if (isTutorial)
+        {
+            PlayerMoney = 40000;
+        }
+        else
+        {
+            PlayerMoney = 20000;
+        }
 
         return true;
     }
@@ -99,16 +108,16 @@ public class GameManager : IManagers
         PlayerRooms.Remove(room); // 인벤토리에서 지우고
     }
 
+    // todo : Item 뺄 때 해야하는 것들 함수로 작동시키기 !
+    //public void RemoveItem(Item item) // item -- 인벤토리에서 삭제, 장착되어있는 것에서 해제
+    //{
+
+    //}
+
     public void SaveData()
     {
         Main.Get<SaveDataManager>().Player.Curstage = CurStage;
         Main.Get<SaveDataManager>().Player.PlayerMoney = PlayerMoney;
         Main.Get<SaveDataManager>().SaveData();
     }
-
-    // todo : Item 뺄 때 해야하는 것들 함수로 작동시키기 !
-    //public void RemoveItem(Item item) // item -- 인벤토리에서 삭제, 장착되어있는 것에서 해제
-    //{
-
-    //}
 }

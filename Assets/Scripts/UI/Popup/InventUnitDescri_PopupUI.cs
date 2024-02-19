@@ -98,6 +98,11 @@ public class InventUnitDescri_PopupUI : BaseUI
             inventSubItems[i].ItemData.ItemIndex = i;
         }
         SetInfo();
+
+        if (Main.Get<GameManager>().isTutorial) // 튜토리얼 진행 중일 때 삭제버튼 비활성화.
+        {
+            _deleteBtn.gameObject.SetActive(false);
+        }
     }
     
     

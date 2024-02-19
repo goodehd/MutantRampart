@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,17 +8,23 @@ public class GachaResult_PopupUI : BaseUI
 {
     private Transform gachaResultContent;
     private Button closeButton;
+    private GameManager gameManager;
+
+    private bool isArrowRotated = false; // close 버튼 누를 때마다 화살표 회전되는거 방지.
 
     // Data
     public List<CharacterData> GachaUnitData { get; set; }
     public List<RoomData> GachaRoomData { get; set; }
     public List<ItemData> GachaItemData { get; set; }
     public List<ItemData> ShopGroundData { get; set; }
+    public Shop_PopupUI Owner { get; set; }
 
     protected override void Init()
     {
         SetUI<Transform>();
         SetUI<Button>();
+
+        gameManager = Main.Get<GameManager>();
 
         gachaResultContent = GetUI<Transform>("GachaResult_Content");
 
@@ -25,6 +32,11 @@ public class GachaResult_PopupUI : BaseUI
         SetUICallback(closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
 
         SetResultImgUInfo();
+
+        if (gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 6)
+        {
+            isArrowRotated = true;
+        }
     }
 
     private void ClickCloseBtn(PointerEventData eventData)
@@ -48,6 +60,22 @@ public class GachaResult_PopupUI : BaseUI
             for (int i = 0; i < GachaItemData.Count; i++)
             {
                 SaveItemInInventory(GachaItemData[i]);
+            }
+        }
+
+        if (gameManager.isTutorial)
+        {
+            if (gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 6)
+            {
+                Owner.isShopTutorialClear = true;
+                Owner.backButton.gameObject.SetActive(true);
+                Owner.tweener.Kill(); // 상점 카테고리 가리키고 있던 화살표 kill.
+                Owner._shopArrowTransform.anchoredPosition = new Vector3(-770f, 484f, 0f); // 상점 뒤로가기 버튼 가리키는 화살표.
+                if (!isArrowRotated)
+                {
+                    Owner._shopArrowTransform.Rotate(0f, 0f, -90f);
+                }
+                Owner.tweener = Owner._shopArrowTransform.DOAnchorPosX(-800f, 0.3f).SetLoops(-1, LoopType.Yoyo);
             }
         }
 

@@ -1,13 +1,15 @@
-using System.Collections;
+using DG.Tweening;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Shop_PopupUI : BaseUI
 {
-    private Button _backButton;
+    private GameManager gameManager;
+
+    public Button backButton { get; set; }
     private Button _unitButton;
     private Button _roomButton;
     private Button _groundButton;
@@ -30,6 +32,19 @@ public class Shop_PopupUI : BaseUI
     private TMP_Text _groundRowPriceText;
     private TMP_Text _groundColPriceText;
 
+    private Image _shopArrowImg;
+
+    public RectTransform _shopArrowTransform { get; set; }
+
+    public Tweener tweener { get; set; }
+
+    public float animationDuration = 0.3f;
+
+    public DayMain_SceneUI Owner { get; set; }
+
+    public bool isShopTutorialClear { get; set; } = false;
+
+
     // 가챠 판매 아이템s
     public List<CharacterData> GachaUnitItems { get; private set; } = new List<CharacterData>();
     public List<RoomData> GachaRoomItems { get; private set; } = new List<RoomData>();
@@ -48,14 +63,17 @@ public class Shop_PopupUI : BaseUI
         SetUI<Button>();
         SetUI<Transform>();
         SetUI<TMP_Text>();
+        SetUI<Image>();
 
-        _backButton = GetUI<Button>("GachaBackBtn");
+        gameManager = Main.Get<GameManager>();
+
+        backButton = GetUI<Button>("GachaBackBtn");
         _unitButton = GetUI<Button>("GachaShopUnitBtn");
         _roomButton = GetUI<Button>("GachaShopRoomBtn");
         _groundButton = GetUI<Button>("GachaShopGroundBtn");
         _itemButton = GetUI<Button>("GachaShopItemBtn");
 
-        SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickCloseBtn);
+        SetUICallback(backButton.gameObject, EUIEventState.Click, ClickCloseBtn);
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
         SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
         SetUICallback(_groundButton.gameObject, EUIEventState.Click, ClickGroundBtn);
@@ -92,38 +110,71 @@ public class Shop_PopupUI : BaseUI
         _groundColPriceText = GetUI<TMP_Text>("GroundColPriceTxt");
         _groundColPriceText.text = Main.Get<DataManager>().Item["ExpandMapCol"].Price.ToString();
 
+        _shopArrowImg = GetUI<Image>("ShopArrowImg");
+
+        _shopArrowTransform = _shopArrowImg.GetComponent<RectTransform>();
+
         Main.Get<GameManager>().OnChangeMoney += UpdateMoneyText;
 
         #region 상점 판매 아이템 추가
         // 가챠 판매 아이템 추가
-        GachaUnitItems.Add(Main.Get<DataManager>().Character["Gun"]);
-        GachaUnitItems.Add(Main.Get<DataManager>().Character["Jotem"]);
-        GachaUnitItems.Add(Main.Get<DataManager>().Character["Warrior"]);
+        if (gameManager.isTutorial) // 튜토리얼 중이라면.
+        {
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Jotem"]);
 
-        GachaRoomItems.Add(Main.Get<DataManager>().Room["Forest"]);
-        GachaRoomItems.Add(Main.Get<DataManager>().Room["Igloo"]);
-        GachaRoomItems.Add(Main.Get<DataManager>().Room["Lava"]);
-        GachaRoomItems.Add(Main.Get<DataManager>().Room["LivingRoom"]);
-        GachaRoomItems.Add(Main.Get<DataManager>().Room["Molar"]);
-        GachaRoomItems.Add(Main.Get<DataManager>().Room["Snow"]);
-        GachaRoomItems.Add(Main.Get<DataManager>().Room["Temple"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Forest"]);
+            //GachaRoomItems.Add(Main.Get<DataManager>().Room["Lava"]);
+        }
+        else
+        {
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Gun"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Jotem"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Warrior"]);
 
-        GachaItemItems.Add(Main.Get<DataManager>().Item["Feather"]);
-        GachaItemItems.Add(Main.Get<DataManager>().Item["TrainingEgg"]);
-        GachaItemItems.Add(Main.Get<DataManager>().Item["FrozenTuna"]);
-        GachaItemItems.Add(Main.Get<DataManager>().Item["RedBook"]);
-        GachaItemItems.Add(Main.Get<DataManager>().Item["BlueBook"]);
-        GachaItemItems.Add(Main.Get<DataManager>().Item["GoldenCoin"]);
-        GachaItemItems.Add(Main.Get<DataManager>().Item["SilverCoin"]);
-        GachaItemItems.Add(Main.Get<DataManager>().Item["StrangeCandy"]);
-        GachaItemItems.Add(Main.Get<DataManager>().Item["Meat"]);
-        GachaItemItems.Add(Main.Get<DataManager>().Item["SilverBar"]);
-        GachaItemItems.Add(Main.Get<DataManager>().Item["GoldBar"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Forest"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Igloo"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Lava"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["LivingRoom"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Molar"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Snow"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Temple"]);
 
-        // Ground 확장
-        ShopGroundItems.Add(Main.Get<DataManager>().Item["ExpandMapRow"]);
-        ShopGroundItems.Add(Main.Get<DataManager>().Item["ExpandMapCol"]);
+            GachaItemItems.Add(Main.Get<DataManager>().Item["Feather"]);
+            GachaItemItems.Add(Main.Get<DataManager>().Item["TrainingEgg"]);
+            GachaItemItems.Add(Main.Get<DataManager>().Item["FrozenTuna"]);
+            GachaItemItems.Add(Main.Get<DataManager>().Item["RedBook"]);
+            GachaItemItems.Add(Main.Get<DataManager>().Item["BlueBook"]);
+            GachaItemItems.Add(Main.Get<DataManager>().Item["GoldenCoin"]);
+            GachaItemItems.Add(Main.Get<DataManager>().Item["SilverCoin"]);
+            GachaItemItems.Add(Main.Get<DataManager>().Item["StrangeCandy"]);
+            GachaItemItems.Add(Main.Get<DataManager>().Item["Meat"]);
+            GachaItemItems.Add(Main.Get<DataManager>().Item["SilverBar"]);
+            GachaItemItems.Add(Main.Get<DataManager>().Item["GoldBar"]);
+            // Ground 확장
+            ShopGroundItems.Add(Main.Get<DataManager>().Item["ExpandMapRow"]);
+            ShopGroundItems.Add(Main.Get<DataManager>().Item["ExpandMapCol"]);
+        }
+
         #endregion
+
+        Owner.shop_PopupUI = this;
+
+        if (gameManager.isTutorial)
+        {
+            backButton.gameObject.SetActive(false);
+            _groundButton.gameObject.SetActive(false);
+            _itemButton.gameObject.SetActive(false);
+
+            if (isShopTutorialClear)
+            {
+                backButton.gameObject.SetActive(true);
+                return; // 상점 튜토리얼 클리어 했으면 상점 내에서 강조하는 화살표 안 뜨도록.
+            }
+
+            _shopArrowImg.gameObject.SetActive(true);
+            _shopArrowTransform.anchoredPosition = new Vector3(-688f, 368f, 0f); // 상점 내 카테고리 가리키는 화살표.
+            tweener = _shopArrowTransform.DOAnchorPosY(338f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+        }
     }
 
     private void UpdateMoneyText(int amount)
@@ -134,7 +185,16 @@ public class Shop_PopupUI : BaseUI
     private void ClickCloseBtn(PointerEventData eventData)
     {
         Main.Get<UIManager>().ClosePopup();
+
+        if (gameManager.isTutorial)
+        {
+            tweener.Kill(); // 상점 화살표 kill.
+            TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
+            ui.curTutorialText = "자, 이제 배치모드에서 구매한 유닛과 룸을 배치해봅시다!";
+        }
+
         Camera.main.GetComponent<CameraMovement>().Rock = false;
+
     }
 
     private void ClickUnitBtn(PointerEventData eventData) // Unit Box 활성화
@@ -234,6 +294,7 @@ public class Shop_PopupUI : BaseUI
 
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
             ui.GachaUnitData = _myGachaUnits;
+            ui.Owner = this;
         }
         else // 보유 금액 부족 시
         {
@@ -265,6 +326,7 @@ public class Shop_PopupUI : BaseUI
 
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
             ui.GachaRoomData = _myGachaRooms;
+            ui.Owner = this;
         }
         else
         {
@@ -299,6 +361,7 @@ public class Shop_PopupUI : BaseUI
 
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
             ui.GachaItemData = _myGachaItems;
+            ui.Owner = this;
         }
         else
         {
