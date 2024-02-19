@@ -21,6 +21,8 @@ public class StageManager : IManagers
     private bool _isStageStart = false;
     private int _curStage = 0;
     
+    private int _addPlusClearGold = 0;
+
     public bool Init()
     {
         _tileManager = Main.Get<TileManager>();
@@ -53,9 +55,9 @@ public class StageManager : IManagers
         StageClear_PopupUI ui = Main.Get<UIManager>().OpenPopup<StageClear_PopupUI>("StageClear_PopupUI");
         ui._curStage = _curStage + 1;
         Main.Get<GameManager>().CurStage = ui._curStage;
-        ui._rewardsGold = _stages[_curStage].SpwanCount * 1000;
+        ui._rewardsGold = _stages[_curStage].SpwanCount * 1000 + _addPlusClearGold;
 
-        Main.Get<GameManager>().ChangeMoney(_stages[_curStage].SpwanCount * 1000);
+        Main.Get<GameManager>().ChangeMoney(_stages[_curStage].SpwanCount * 1000 + _addPlusClearGold);
         _isStageStart = false;
         OnStageClearEvent?.Invoke(++_curStage);
         Time.timeScale = 1.0f;
@@ -68,5 +70,10 @@ public class StageManager : IManagers
         {
             StageClear();
         }
+    }
+
+    public void AddClearGold(int value)
+    {
+        _addPlusClearGold += value;
     }
 }

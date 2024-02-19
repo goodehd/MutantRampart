@@ -46,10 +46,20 @@ public enum EStatusformat
     DefaultTile,
     Count
 }
-
 public enum ENaveNodeState
 {
     Noen,
     Open,
     Close
 }
+public enum ECondition
+{
+    Healing,
+    Frostbite,
+    Frozen,
+    Puppet,
+    FreezingAttack,
+    TempleBuff,
+    Max
+}
+

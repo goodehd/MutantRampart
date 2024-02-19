@@ -1,5 +1,7 @@
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -124,8 +126,9 @@ public class GachaResult_PopupUI : BaseUI
 
     private void SaveItemInInventory(ItemData data)
     {
-        Item newItem = new Item();
+        Item newItem = Main.Get<DataManager>().ItemCDO[data.Key].Clone();
         newItem.Init(data);
         Main.Get<GameManager>().PlayerItems.Add(newItem);
+        Debug.Log(newItem.GetType().Name);
     }
 }

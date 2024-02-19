@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,7 @@ public class CharacterBehaviour : MonoBehaviour
         CharacterInfo = new Character(data);
         CharacterInfo.Init(data);
 
+
         StateMachine = new StateMachine();
 
         StateMachine.AddState(EState.Idle, new IdleState(this));
@@ -39,6 +41,8 @@ public class CharacterBehaviour : MonoBehaviour
         CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += Die;
 
         _initialize = true;
+
+
     }
 
     public void SetData(Character data)
@@ -72,7 +76,8 @@ public class CharacterBehaviour : MonoBehaviour
     }
 
     private void OnDestroy()
-    {
+    {     
         CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero -= Die;
     }
+
 }

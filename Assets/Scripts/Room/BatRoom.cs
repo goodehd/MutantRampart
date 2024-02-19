@@ -183,21 +183,5 @@ public class BatRoom : RoomBehavior
         }
     }
 
-    private void IglooBuff(Character data)
-    {
-        StatModifier mod = new StatModifier(10f, EStatModType.Add, 1);
-        data.Status.GetStat<Stat>(EstatType.Defense).AddModifier(mod);
-    }
-
-    private void LivingRoomBuff(Character data)
-    {
-        StatModifier mod = new StatModifier(10f, EStatModType.Add, 1);
-        data.Status.GetStat<Stat>(EstatType.Damage).AddModifier(mod);
-    }
-
-    private void TempleBuff(Character data)
-    {
-        StatModifier mod = new StatModifier(10f, EStatModType.Add, 1);
-        data.Status.GetStat<Stat>(EstatType.AttackSpeed).AddModifier(mod);
-    }
+    
 }
