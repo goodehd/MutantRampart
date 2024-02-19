@@ -38,7 +38,7 @@ public class Room
         IsEquiped = true;
         if(Data.Type == EStatusformat.Home)
         {
-            Main.Get<GameManager>().isHomeSet = true;
+            Main.Get<GameManager>().SetHomeRoom(Owner);
         }
         OnEquipedEvent?.Invoke();
     }
@@ -48,7 +48,7 @@ public class Room
         IsEquiped = false;
         if (Data.Type == EStatusformat.Home)
         {
-            Main.Get<GameManager>().isHomeSet = false;
+            Main.Get<GameManager>().SetHomeRoom(null);
         }
         OnUnEquipedEvent?.Invoke();
     }

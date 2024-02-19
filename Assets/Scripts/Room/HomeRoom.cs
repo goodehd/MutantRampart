@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class HomeRoom : RoomBehavior
 {
@@ -18,7 +19,10 @@ public class HomeRoom : RoomBehavior
     public override void EnterRoom(Enemy enemy)
     {
         base.EnterRoom(enemy);
+    }
+
+    public void EnemyEnter()
+    {
         Main.Get<GameManager>().PlayerHP.CurValue--;
-        enemy.Die();
     }
 }

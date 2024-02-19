@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MoveState : BaseState
@@ -141,6 +142,13 @@ public class MoveState : BaseState
         {
             if(_pathPosStk.Count <= 0)
             {
+                if (Owner.CurRoom.RoomInfo.Data.Type == EStatusformat.Home)
+                {
+                    ((HomeRoom)Owner.CurRoom).EnemyEnter();
+                    Owner.Die();
+                    yield break;
+                }
+
                 SetPathPosList();
             }
             SetTargetPos();
