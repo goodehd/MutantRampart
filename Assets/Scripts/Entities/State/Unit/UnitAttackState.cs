@@ -7,11 +7,10 @@ public class UnitAttackState : BaseState
 {
     private Coroutine _coroutine;
     private LinkedList<CharacterBehaviour> _targets;
-    public event Action OnAttackState; 
 
     public UnitAttackState(CharacterBehaviour owner) : base(owner)
     {
-        OnAttackState += owner.CharacterInfo.OnAttackInvoke;
+
     }
 
     public override void Init()
@@ -36,7 +35,9 @@ public class UnitAttackState : BaseState
         {
             Owner.StopCoroutine(_coroutine);
             _coroutine = null;
+
         }
+        
     }
 
     public override void UpdateState()
@@ -47,7 +48,9 @@ public class UnitAttackState : BaseState
     private void AttackStart()
     {
         _coroutine = Owner.StartCoroutine(Attack());
-        OnAttackState?.Invoke();
+        
+
+
     }
 
     private IEnumerator Attack()
@@ -68,8 +71,8 @@ public class UnitAttackState : BaseState
             }
 
             Owner.Animator.SetTrigger(Literals.Attack);
+            Owner.CharacterInfo.InvokeAttackAction(target);
             target.Status.GetStat<Vital>(EstatType.Hp).CurValue -= Owner.Status[EstatType.Damage].Value;
-
             yield return new WaitForSeconds(1 / Owner.Status[EstatType.AttackSpeed].Value);
         }
     }

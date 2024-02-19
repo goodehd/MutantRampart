@@ -223,13 +223,10 @@ public class Shop_PopupUI : BaseUI
         if (Main.Get<GameManager>().PlayerMoney >= count * 1000) // 금액 계산 로직
         {
             Main.Get<GameManager>().ChangeMoney(-count * 1000);
-            Debug.Log("구매완료했습니다.");
-            Debug.Log($"잔액 : {Main.Get<GameManager>().PlayerMoney}");
 
             for (int i = 0; i < count; i++)
             {
                 _myGachaUnits.Add(RandomPickUnit());
-                Debug.Log($"{_myGachaUnits[i].Key}");
             }
 
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
@@ -288,13 +285,11 @@ public class Shop_PopupUI : BaseUI
         if (Main.Get<GameManager>().PlayerMoney >= count * 1000)
         {
             Main.Get<GameManager>().ChangeMoney(-count * 1000);
-            Debug.Log("구매완료했습니다.");
-            Debug.Log($"잔액 : {Main.Get<GameManager>().PlayerMoney}");
+
 
             for (int i = 0; i < count; i++)
             {
                 _myGachaItems.Add(RandomPickItem());
-                Debug.Log($"{_myGachaItems[i].Key}");
             }
 
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");

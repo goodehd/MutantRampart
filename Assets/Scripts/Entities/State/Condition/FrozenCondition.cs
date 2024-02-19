@@ -10,30 +10,35 @@ public class FrozenCondition : BaseCondition //TODO : 유닛한테 버프를 쥐
         OwnerData = data;
         Duration = data.Duration;
         _upgradeValue_1 = data.UpgradeValue_1;
+        ConditionName = ECondition.Frozen;
+        Owner.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += ExitCondition;
+        Conditionpersonality = EConditionpersonality.debuff;
     }
     public FrozenCondition(CharacterBehaviour owner, float duration) : base(owner, duration)
     {
         Duration = duration;
+        ConditionName = ECondition.Frozen;
+        Conditionpersonality = EConditionpersonality.debuff;
+        Owner.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += ExitCondition;
     }
 
     public override void EnterCondition()
     {
-        Owner.StartCoroutine(ConditionEffect(_upgradeValue_1));
         Owner.StartCoroutine(ConditionDuration(Duration));
+        ConditionEffect(_upgradeValue_1);
     }
 
     public override IEnumerator ConditionDuration(float duration)
     {
         yield return new WaitForSeconds(duration);
-        StopCoroutine();
+        ExitCondition();
     }
 
-    public IEnumerator ConditionEffect(float DataValue)
+    public void ConditionEffect(float DataValue)
     {
         StatModifier mod = new StatModifier(0f, EStatModType.Multip, 1, this);
         Owner.Status.GetStat<Stat>(EstatType.MoveSpeed).AddModifier(mod);
         Owner.Status.GetStat<Stat>(EstatType.AttackSpeed).AddModifier(mod);
-        yield return null;
     }
 
     public override void ExitCondition()
@@ -45,7 +50,7 @@ public class FrozenCondition : BaseCondition //TODO : 유닛한테 버프를 쥐
     public override void StopCoroutine()
     {
         Owner.Status.GetStat<Stat>(EstatType.MoveSpeed).RemoveAllModifier(this);
-        Owner.StopCoroutine(ConditionEffect(_upgradeValue_1));
+        Owner.Status.GetStat<Stat>(EstatType.AttackSpeed).RemoveAllModifier(this);
     }
 
     public override void UpdateCondition()

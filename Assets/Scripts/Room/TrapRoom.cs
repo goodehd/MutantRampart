@@ -38,10 +38,7 @@ public class TrapRoom : RoomBehavior
                 StartCoroutine(LavaTrap(Enemys, enemy));
                 break;
             case ETrapType.Snow:
-                Debug.Log("눈맵 진입");
-                Debug.Log($"적용 전 속도 : {enemy.CharacterInfo.Status.GetStat<Stat>(EstatType.MoveSpeed).Value}");
-                enemy.ConditionMachine.AddCondition(new FrostbiteCondition(enemy,RoomInfo.Data));
-                Debug.Log($"적용 후 속도 : {enemy.CharacterInfo.Status.GetStat<Stat>(EstatType.MoveSpeed).Value}");
+                 enemy.ConditionMachine.AddCondition(new FrostbiteCondition(enemy,RoomInfo.Data));
                 break;
             case ETrapType.Molar:
                 enemy.ConditionMachine.AddCondition(new PuppetCondition(enemy, RoomInfo.Data));

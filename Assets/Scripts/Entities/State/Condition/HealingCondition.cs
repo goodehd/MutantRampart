@@ -15,7 +15,7 @@ public class HealingCondition : BaseCondition
         _upgradeValue_1 = data.UpgradeValue_1;
         _upgradeValue_2 = data.UpgradeValue_2;
         _upgradeValue_3 = data.UpgradeValue_3;
-
+        ConditionName = ECondition.Healing;
         Owner.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += ExitCondition;
     }
 
@@ -31,8 +31,8 @@ public class HealingCondition : BaseCondition
     
     public override void EnterCondition()
     {
-        Owner.StartCoroutine(ConditionEffect(_upgradeValue_1));
         Owner.StartCoroutine(ConditionDuration(Duration));
+        Owner.StartCoroutine(ConditionEffect(_upgradeValue_1));
     }
 
     public override void UpdateCondition()
@@ -48,6 +48,7 @@ public class HealingCondition : BaseCondition
 
     public override void StopCoroutine()
     {
+        if (Owner == null) return;
         Owner.StopCoroutine(ConditionEffect(_upgradeValue_1));
     }
 
@@ -55,14 +56,14 @@ public class HealingCondition : BaseCondition
     {
         if (Duration >= 999) yield break;
         yield return new WaitForSeconds(duration);
-        StopCoroutine();
+        ExitCondition();
     }
 
     public IEnumerator ConditionEffect(float DataValue)
     {
         while (true)
         {
-            Owner.Status.GetStat<Vital>(EstatType.Hp).CurValue += DataValue;
+            Owner.Status.GetStat<Vital>(EstatType.Hp).CurValue += Owner.Status.GetStat<Vital>(EstatType.Hp).Value * (DataValue*0.01f);
             yield return new WaitForSeconds(1f);
         }
     }

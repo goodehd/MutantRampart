@@ -26,17 +26,18 @@ public class GameManager : IManagers
         room.Init(Main.Get<DataManager>().Room["Home"]);
         PlayerRooms.Add(room);
 
-        /* Room room2 = new Room();
-         room2.Init(Main.Get<DataManager>().Room["Forest"]);
-         PlayerRooms.Add(room2);
+        Room room2 = new Room();
+        room2.Init(Main.Get<DataManager>().Room["Igloo"]);
+        PlayerRooms.Add(room2);
 
-         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
+        playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
+        /* 
+
+         
          playerUnits.Add(new Character(Main.Get<DataManager>().Character["Jotem"]));
 
 
-         Item item1 = new Item();
-         item1.Init(Main.Get<DataManager>().Item["Meat"]);
-         PlayerItems.Add(item1);
+        
 
          Item item2 = new Item();
          item2.Init(Main.Get<DataManager>().Item["BlueBook"]);

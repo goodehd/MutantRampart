@@ -16,6 +16,7 @@ public abstract class BaseCondition
     protected float Duration { get; set; }
 
     protected EConditionpersonality Conditionpersonality;
+    public ECondition ConditionName { get; set; }
 
     public event Action<BaseCondition> OnEndCondition;
     

@@ -12,26 +12,36 @@ public class FreezingAttackCondition : BaseCondition
         Duration = data.Duration;
         _upgradeValue_1 = data.UpgradeValue_1;
         _upgradeValue_2 = data.UpgradeValue_2;
+        ConditionName = ECondition.FreezingAttack;
     }
 
     public override void EnterCondition()
     {
         Owner.StartCoroutine(ConditionDuration(Duration));
-        //캐릭터가 때릴 때 이벤트(때린놈 캐릭터비헤이비어) += ConditionEffect
+        //캐릭터가 때릴 때 이벤트(맞은놈 캐릭터비헤이비어) += ConditionEffect
+        Owner.CharacterInfo.OnAttackState += ConditionEffect;
     }
 
     public override IEnumerator ConditionDuration(float duration)
     {
         if (Duration >= 999) yield break;
         yield return new WaitForSeconds(duration);
-        StopCoroutine();
+        ExitCondition();
     }
 
     public void ConditionEffect(CharacterBehaviour attackEntity)
     {
+        if (attackEntity.ConditionMachine.CheckCondition(ECondition.Frozen)) return;
         float a = Random.Range(0, 100);
-        if (a > _upgradeValue_2) return;
-        attackEntity.ConditionMachine.AddCondition(new FrozenCondition(attackEntity,_upgradeValue_1));
+        if (attackEntity.ConditionMachine.CheckCondition(ECondition.Frostbite))
+        {
+            attackEntity.ConditionMachine.AddCondition(new FrozenCondition(attackEntity, _upgradeValue_1));
+        }
+        else if (a < _upgradeValue_2)
+        {
+            attackEntity.ConditionMachine.AddCondition(new FrozenCondition(attackEntity, _upgradeValue_1));
+        }
+        
     }
 
     public override void ExitCondition()

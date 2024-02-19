@@ -6,7 +6,7 @@ public class PuppetCondition : BaseCondition //TODO : 아군으로 바뀌는 로
 {
     public PuppetCondition(CharacterBehaviour owner, RoomData data) : base(owner, data)
     {
-
+        ConditionName = ECondition.Puppet;
     }
 
     public override IEnumerator ConditionDuration(float duration)

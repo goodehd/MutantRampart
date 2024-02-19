@@ -39,8 +39,9 @@ public class Character
 
     public Item[] Item { get; set; } = new Item[3];
     public int[] itemnumbers = new int[3];
-    public event Action OnAttack;
-    
+
+    public event Action<CharacterBehaviour> OnAttackState;
+
     public Character(CharacterData data)
     {
         Data = data;
@@ -63,9 +64,8 @@ public class Character
         CurPosX = -1;
         CurPosY = -1;
     }
-
-    public void OnAttackInvoke()
+    public void InvokeAttackAction(CharacterBehaviour target)
     {
-        OnAttack?.Invoke();
+        OnAttackState?.Invoke(target);
     }
 }
