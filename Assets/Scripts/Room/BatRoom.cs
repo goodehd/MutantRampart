@@ -18,7 +18,8 @@ public class BatRoom : RoomBehavior
     
     private EBatType _batType;
     public CharacterBehaviour[] Units { get; private set; } = new CharacterBehaviour[3];
-    public int UnitCount { get; set; } 
+    public int UnitCount { get; set; }
+    private int _enemyCount = 0;
 
     public override void Init(RoomData data)
     {
@@ -38,8 +39,8 @@ public class BatRoom : RoomBehavior
         {
             enemy.Renderer.flipX = false;
             enemy.StateMachine.ChangeState(EState.Attack);
-            enemy.transform.position = Literals.EnemyPos[Enemys.Count % 6] + transform.position;
-            Enemys.AddLast(enemy);
+            enemy.transform.position = Literals.EnemyPos[_enemyCount % 6] + transform.position;
+            _enemyCount++;
 
             foreach (CharacterBehaviour unit in Units)
             {
@@ -105,7 +106,7 @@ public class BatRoom : RoomBehavior
         Units[index] = Main.Get<SceneManager>().Scene.CreateCharacter(data.Data.PrefabName);
         Units[index].SetData(data);
         Units[index].CurRoom = this;
-        Units[index].transform.position = Literals.BatPos[index] + transform.position;
+        Units[index].transform.position = Literals.BatPos[index] + transform.position + Units[index].transform.position;
         //유닛 체력이 회복되는가 체크 해봤슴 나중에 버프타일 함수에다가 넣으면 된다~~
         ConditionAdd(Units[index]);
         //Units[index].ConditionMachine.AddCondition(new HealingCondition(Units[index],RoomInfo.Data)); //TODO : Condition Test
@@ -156,6 +157,7 @@ public class BatRoom : RoomBehavior
             }
         }
         UnitCount = count;
+        _enemyCount = 0;
     }
 
     private void ConditionAdd(CharacterBehaviour character)

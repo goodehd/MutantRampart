@@ -64,14 +64,22 @@ public class RoomBehavior : MonoBehaviour
 
     public virtual void EnterRoom(Enemy enemy)
     {
+        RoomBehavior prevRoom = _tile.GetRoom(enemy.CurPosX, enemy.CurPosY);
+        if(prevRoom != null)
+        {
+            prevRoom.RemoveEnemy(enemy);
+        }
+
         enemy.CurPosX = IndexX;
         enemy.CurPosY = IndexY;
+        Enemys.AddLast(enemy);
         enemy.CurRoom = this;
     }
 
     public void SetData(Room data)
     {
         RoomInfo = data;
+        data.Owner = this;
     }
 
     protected virtual void OnMouseEnter()

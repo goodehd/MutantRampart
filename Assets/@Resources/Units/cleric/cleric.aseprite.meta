@@ -1,0 +1,1200 @@
+fileFormatVersion: 2
+guid: 05292e34a3d890046b4ae99fab5b0281
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: cleric_Frame_26
+    originalName: 
+    pivot: {x: 0.6691176, y: -0.01754386}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 167
+      y: 63
+      width: 68
+      height: 57
+    spriteID: 6492d461f51eb864e87ed82ad21408f3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 167, y: 63}
+  - name: cleric_Frame_27
+    originalName: 
+    pivot: {x: 0.3070175, y: -0.013513515}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 129
+      width: 57
+      height: 74
+    spriteID: 244fa6181b93a774ab7f695d40e09f96
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 129}
+  - name: cleric_Frame_28
+    originalName: 
+    pivot: {x: 0.33018863, y: -0.018867925}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 134
+      y: 211
+      width: 53
+      height: 53
+    spriteID: cfe54c2785f34104ea9a470820adf94a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 134, y: 211}
+  - name: cleric_Frame_0
+    originalName: 
+    pivot: {x: 0.41000003, y: -0.03773585}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 433
+      y: 211
+      width: 50
+      height: 53
+    spriteID: 49ebae00fba58f14eb6fa578f700428e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 433, y: 211}
+  - name: cleric_Frame_1
+    originalName: 
+    pivot: {x: 0.41000003, y: -0.037037037}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 375
+      y: 211
+      width: 50
+      height: 54
+    spriteID: 3d7b7e2426db9f6438110dae9a35e34b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 375, y: 211}
+  - name: cleric_Frame_2
+    originalName: 
+    pivot: {x: 0.41346154, y: -0.037037037}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 195
+      y: 211
+      width: 52
+      height: 54
+    spriteID: da475209bbc0fb7499cdea4d648c9122
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 195, y: 211}
+  - name: cleric_Frame_3
+    originalName: 
+    pivot: {x: 0.41346154, y: -0.03773585}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 255
+      y: 211
+      width: 52
+      height: 53
+    spriteID: 91d396dba7b8eaf40a82ce89585167b8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 255, y: 211}
+  - name: cleric_Frame_4
+    originalName: 
+    pivot: {x: 0.40624997, y: -0.03773585}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 116
+      y: 337
+      width: 48
+      height: 53
+    spriteID: 85a7425782ec4be4bbb0c8ddf5108a0d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 116, y: 337}
+  - name: cleric_Frame_5
+    originalName: 
+    pivot: {x: 0.4270833, y: -0.055555552}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 60
+      y: 337
+      width: 48
+      height: 54
+    spriteID: 43ec863cfe2eb9a45bbe4150acfb86d3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 60, y: 337}
+  - name: cleric_Frame_6
+    originalName: 
+    pivot: {x: 0.43000004, y: -0.056603774}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 276
+      width: 50
+      height: 53
+    spriteID: 82d29b9b7ebeedd4196a76a6701baf23
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 276}
+  - name: cleric_Frame_7
+    originalName: 
+    pivot: {x: 0.41000003, y: -0.03773585}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 62
+      y: 276
+      width: 50
+      height: 53
+    spriteID: 614aa07da169f194a8a6a8a1030aa106
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 62, y: 276}
+  - name: cleric_Frame_8
+    originalName: 
+    pivot: {x: 0.38541663, y: -0.03636364}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 337
+      width: 48
+      height: 55
+    spriteID: aa1436cc0757fa94ca0a38d5af14efe5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 337}
+  - name: cleric_Frame_9
+    originalName: 
+    pivot: {x: 0.393617, y: -0.037037037}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 172
+      y: 337
+      width: 47
+      height: 54
+    spriteID: 6396030c26b317b4ab2a0b33057fc48b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 172, y: 337}
+  - name: cleric_Frame_10
+    originalName: 
+    pivot: {x: 0.6796875, y: -0.037037037}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 437
+      y: 129
+      width: 64
+      height: 54
+    spriteID: 4318b37fb17ba834a9ea7464c587ceee
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 437, y: 129}
+  - name: cleric_Frame_11
+    originalName: 
+    pivot: {x: 0.67424244, y: -0.03636364}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 216
+      y: 129
+      width: 66
+      height: 55
+    spriteID: c6b796e1832ec84498e72eed9795b805
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 216, y: 129}
+  - name: cleric_Frame_12
+    originalName: 
+    pivot: {x: 0.3, y: -0.027777778}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 69
+      y: 129
+      width: 55
+      height: 72
+    spriteID: 4b07f8be8548a19438c49a2a7ddd339d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 69, y: 129}
+  - name: cleric_Frame_15
+    originalName: 
+    pivot: {x: 0.576087, y: -0.03636364}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 227
+      y: 337
+      width: 46
+      height: 55
+    spriteID: 80c9fd3d2fd149b42bbd8bdb880f7d6f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 227, y: 337}
+  - name: cleric_Frame_16
+    originalName: 
+    pivot: {x: 0.576087, y: -0.03636364}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 281
+      y: 337
+      width: 46
+      height: 55
+    spriteID: db1440e376417e54b96a7976263848a3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 281, y: 337}
+  - name: cleric_Frame_17
+    originalName: 
+    pivot: {x: 0.576087, y: -0.03636364}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 335
+      y: 337
+      width: 46
+      height: 55
+    spriteID: 57a98beb928aa0e439cf068d4eb4812d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 335, y: 337}
+  - name: cleric_Frame_24
+    originalName: 
+    pivot: {x: 0.6689189, y: -0.03508772}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 85
+      y: 63
+      width: 74
+      height: 57
+    spriteID: 69fe3bd182a03554ab21a817df43b117
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 85, y: 63}
+  - name: cleric_Frame_25
+    originalName: 
+    pivot: {x: 0.65068495, y: -0.03448276}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 63
+      width: 73
+      height: 58
+    spriteID: 070652800c37056409e232c62fe0965d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 63}
+  - name: cleric_Frame_32
+    originalName: 
+    pivot: {x: 0.41000003, y: -0.03773585}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 120
+      y: 276
+      width: 50
+      height: 53
+    spriteID: e3d27764c66f098429ddf5b4d6867edd
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 120, y: 276}
+  - name: cleric_Frame_33
+    originalName: 
+    pivot: {x: 0.41000003, y: -0.03773585}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 178
+      y: 276
+      width: 50
+      height: 53
+    spriteID: 29fba92cdb095f3448e0eb13a46f0488
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 178, y: 276}
+  - name: cleric_Frame_34
+    originalName: 
+    pivot: {x: 0.41000003, y: -0.03773585}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 236
+      y: 276
+      width: 50
+      height: 53
+    spriteID: d75f6e34cbd66624aa506781414b0c52
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 236, y: 276}
+  - name: cleric_Frame_35
+    originalName: 
+    pivot: {x: 0.41000003, y: -0.03773585}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 294
+      y: 276
+      width: 50
+      height: 53
+    spriteID: 84551a86a41e7494ba4c25cc78edd0ee
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 294, y: 276}
+  - name: cleric_Frame_36
+    originalName: 
+    pivot: {x: 0.41000003, y: -0.03773585}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 352
+      y: 276
+      width: 50
+      height: 53
+    spriteID: 90193fb67b4c52c4b8fd5e5a3bbbaff3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 352, y: 276}
+  - name: cleric_Frame_37
+    originalName: 
+    pivot: {x: 0.41000003, y: -0.03773585}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 410
+      y: 276
+      width: 50
+      height: 53
+    spriteID: 0b7e7329c5c827647bd46c795d14b211
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 410, y: 276}
+  - name: cleric_Frame_13
+    originalName: 
+    pivot: {x: 0.32352945, y: -0.039215688}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 98
+      y: 4
+      width: 51
+      height: 51
+    spriteID: c5005f968b52d184f9ef8b811ee039dc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 98, y: 4}
+  - name: cleric_Frame_14
+    originalName: 
+    pivot: {x: 0.3557692, y: -0.03846154}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 315
+      y: 211
+      width: 52
+      height: 52
+    spriteID: 3a45b05781268da45a8feab2c56a9606
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 315, y: 211}
+  - name: cleric_Frame_18
+    originalName: 
+    pivot: {x: 0.2323944, y: -0.039215688}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 290
+      y: 129
+      width: 71
+      height: 51
+    spriteID: 685fdcd82ab4b5246aa770ede825d180
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 290, y: 129}
+  - name: cleric_Frame_19
+    originalName: 
+    pivot: {x: 0.6104651, y: -0.039215688}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 86
+      height: 51
+    spriteID: 9b78620ea6264f74685a3d68006989f6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: cleric_Frame_20
+    originalName: 
+    pivot: {x: 0.71710527, y: -0.04}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 243
+      y: 63
+      width: 76
+      height: 50
+    spriteID: aa8eaff03bc747240a2c7541ce8cc235
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 243, y: 63}
+  - name: cleric_Frame_21
+    originalName: 
+    pivot: {x: 0.71710527, y: -0.04}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 327
+      y: 63
+      width: 76
+      height: 50
+    spriteID: b67044c4f94a2c64991b5e2455de33f3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 327, y: 63}
+  - name: cleric_Frame_22
+    originalName: 
+    pivot: {x: 0.71710527, y: -0.04}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 411
+      y: 63
+      width: 76
+      height: 50
+    spriteID: dea0a67f13721684f9c4dd89f925ad9f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 411, y: 63}
+  - name: cleric_Frame_23
+    originalName: 
+    pivot: {x: 0.71710527, y: -0.04}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 132
+      y: 129
+      width: 76
+      height: 50
+    spriteID: 97b8befe7f46e6a4faa591697a00a605
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 132, y: 129}
+  - name: cleric_Frame_29
+    originalName: 
+    pivot: {x: 0.36607143, y: -0.037037037}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 70
+      y: 211
+      width: 56
+      height: 54
+    spriteID: bc2afca330677374481df896ca4e1bda
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 70, y: 211}
+  - name: cleric_Frame_30
+    originalName: 
+    pivot: {x: 0.37068966, y: -0.01754386}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 211
+      width: 58
+      height: 57
+    spriteID: 7262e4a12f2c29a4598fd5888c615d44
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 211}
+  - name: cleric_Frame_31
+    originalName: 
+    pivot: {x: 0.37500003, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 369
+      y: 129
+      width: 60
+      height: 59
+    spriteID: e6b27e5cd667f5240b5b9bb6869f0b03
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 369, y: 129}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -2006689606
+    name: cleric
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: cleric_Frame_26
+      frameIndex: 26
+      cellRect:
+        x: 9
+        y: 1
+        width: 68
+        height: 57
+      spriteId: 6492d461f51eb864e87ed82ad21408f3
+    - name: cleric_Frame_27
+      frameIndex: 27
+      cellRect:
+        x: 37
+        y: 1
+        width: 57
+        height: 74
+      spriteId: 244fa6181b93a774ab7f695d40e09f96
+    - name: cleric_Frame_28
+      frameIndex: 28
+      cellRect:
+        x: 37
+        y: 1
+        width: 53
+        height: 53
+      spriteId: cfe54c2785f34104ea9a470820adf94a
+    - name: cleric_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 34
+        y: 2
+        width: 50
+        height: 53
+      spriteId: 49ebae00fba58f14eb6fa578f700428e
+    - name: cleric_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 34
+        y: 2
+        width: 50
+        height: 54
+      spriteId: 3d7b7e2426db9f6438110dae9a35e34b
+    - name: cleric_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 33
+        y: 2
+        width: 52
+        height: 54
+      spriteId: da475209bbc0fb7499cdea4d648c9122
+    - name: cleric_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 33
+        y: 2
+        width: 52
+        height: 53
+      spriteId: 91d396dba7b8eaf40a82ce89585167b8
+    - name: cleric_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 35
+        y: 2
+        width: 48
+        height: 53
+      spriteId: 85a7425782ec4be4bbb0c8ddf5108a0d
+    - name: cleric_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 34
+        y: 3
+        width: 48
+        height: 54
+      spriteId: 43ec863cfe2eb9a45bbe4150acfb86d3
+    - name: cleric_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 33
+        y: 3
+        width: 50
+        height: 53
+      spriteId: 82d29b9b7ebeedd4196a76a6701baf23
+    - name: cleric_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 34
+        y: 2
+        width: 50
+        height: 53
+      spriteId: 614aa07da169f194a8a6a8a1030aa106
+    - name: cleric_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 36
+        y: 2
+        width: 48
+        height: 55
+      spriteId: aa1436cc0757fa94ca0a38d5af14efe5
+    - name: cleric_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 36
+        y: 2
+        width: 47
+        height: 54
+      spriteId: 6396030c26b317b4ab2a0b33057fc48b
+    - name: cleric_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 11
+        y: 2
+        width: 64
+        height: 54
+      spriteId: 4318b37fb17ba834a9ea7464c587ceee
+    - name: cleric_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 10
+        y: 2
+        width: 66
+        height: 55
+      spriteId: c6b796e1832ec84498e72eed9795b805
+    - name: cleric_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: 38
+        y: 2
+        width: 55
+        height: 72
+      spriteId: 4b07f8be8548a19438c49a2a7ddd339d
+    - name: cleric_Frame_15
+      frameIndex: 15
+      cellRect:
+        x: 28
+        y: 2
+        width: 46
+        height: 55
+      spriteId: 80c9fd3d2fd149b42bbd8bdb880f7d6f
+    - name: cleric_Frame_16
+      frameIndex: 16
+      cellRect:
+        x: 28
+        y: 2
+        width: 46
+        height: 55
+      spriteId: db1440e376417e54b96a7976263848a3
+    - name: cleric_Frame_17
+      frameIndex: 17
+      cellRect:
+        x: 28
+        y: 2
+        width: 46
+        height: 55
+      spriteId: 57a98beb928aa0e439cf068d4eb4812d
+    - name: cleric_Frame_24
+      frameIndex: 24
+      cellRect:
+        x: 5
+        y: 2
+        width: 74
+        height: 57
+      spriteId: 69fe3bd182a03554ab21a817df43b117
+    - name: cleric_Frame_25
+      frameIndex: 25
+      cellRect:
+        x: 7
+        y: 2
+        width: 73
+        height: 58
+      spriteId: 070652800c37056409e232c62fe0965d
+    - name: cleric_Frame_32
+      frameIndex: 32
+      cellRect:
+        x: 34
+        y: 2
+        width: 50
+        height: 53
+      spriteId: e3d27764c66f098429ddf5b4d6867edd
+    - name: cleric_Frame_33
+      frameIndex: 33
+      cellRect:
+        x: 34
+        y: 2
+        width: 50
+        height: 53
+      spriteId: 29fba92cdb095f3448e0eb13a46f0488
+    - name: cleric_Frame_34
+      frameIndex: 34
+      cellRect:
+        x: 34
+        y: 2
+        width: 50
+        height: 53
+      spriteId: d75f6e34cbd66624aa506781414b0c52
+    - name: cleric_Frame_35
+      frameIndex: 35
+      cellRect:
+        x: 34
+        y: 2
+        width: 50
+        height: 53
+      spriteId: 84551a86a41e7494ba4c25cc78edd0ee
+    - name: cleric_Frame_36
+      frameIndex: 36
+      cellRect:
+        x: 34
+        y: 2
+        width: 50
+        height: 53
+      spriteId: 90193fb67b4c52c4b8fd5e5a3bbbaff3
+    - name: cleric_Frame_37
+      frameIndex: 37
+      cellRect:
+        x: 34
+        y: 2
+        width: 50
+        height: 53
+      spriteId: 0b7e7329c5c827647bd46c795d14b211
+    - name: cleric_Frame_13
+      frameIndex: 13
+      cellRect:
+        x: 38
+        y: 2
+        width: 51
+        height: 51
+      spriteId: c5005f968b52d184f9ef8b811ee039dc
+    - name: cleric_Frame_14
+      frameIndex: 14
+      cellRect:
+        x: 36
+        y: 2
+        width: 52
+        height: 52
+      spriteId: 3a45b05781268da45a8feab2c56a9606
+    - name: cleric_Frame_18
+      frameIndex: 18
+      cellRect:
+        x: 38
+        y: 2
+        width: 71
+        height: 51
+      spriteId: 685fdcd82ab4b5246aa770ede825d180
+    - name: cleric_Frame_19
+      frameIndex: 19
+      cellRect:
+        x: 2
+        y: 2
+        width: 86
+        height: 51
+      spriteId: 9b78620ea6264f74685a3d68006989f6
+    - name: cleric_Frame_20
+      frameIndex: 20
+      cellRect:
+        x: 0
+        y: 2
+        width: 76
+        height: 50
+      spriteId: aa8eaff03bc747240a2c7541ce8cc235
+    - name: cleric_Frame_21
+      frameIndex: 21
+      cellRect:
+        x: 0
+        y: 2
+        width: 76
+        height: 50
+      spriteId: b67044c4f94a2c64991b5e2455de33f3
+    - name: cleric_Frame_22
+      frameIndex: 22
+      cellRect:
+        x: 0
+        y: 2
+        width: 76
+        height: 50
+      spriteId: dea0a67f13721684f9c4dd89f925ad9f
+    - name: cleric_Frame_23
+      frameIndex: 23
+      cellRect:
+        x: 0
+        y: 2
+        width: 76
+        height: 50
+      spriteId: 97b8befe7f46e6a4faa591697a00a605
+    - name: cleric_Frame_29
+      frameIndex: 29
+      cellRect:
+        x: 34
+        y: 2
+        width: 56
+        height: 54
+      spriteId: bc2afca330677374481df896ca4e1bda
+    - name: cleric_Frame_30
+      frameIndex: 30
+      cellRect:
+        x: 33
+        y: 1
+        width: 58
+        height: 57
+      spriteId: 7262e4a12f2c29a4598fd5888c615d44
+    - name: cleric_Frame_31
+      frameIndex: 31
+      cellRect:
+        x: 32
+        y: 0
+        width: 60
+        height: 59
+      spriteId: e6b27e5cd667f5240b5b9bb6869f0b03
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 109, y: 75}

@@ -113,6 +113,8 @@ public class DayMain_SceneUI : BaseUI
         _gameManager.PlayerHP.OnCurValueChanged += UpdateHpUI;
 
         stageManager.OnStageStartEvent += ClickStart;
+        stageManager.OnStageStartEvent += SetTimeScale;
+
         stageManager.OnStageClearEvent += ClickStart;
         stageManager.OnStageClearEvent += UpdateDayCount;
 
@@ -254,11 +256,23 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickStageStartBtn(PointerEventData eventData)
     {
-        //stageManager.StartStage();
-
         if (gameManager.isHomeSet)
         {
-            stageManager.StartStage();
+            Stack<Vector2> newPath;
+            Vector2 startPos = tileManager.GetRoom(1, 0).transform.position;
+            startPos.y += 1.5f;
+            Vector2 endPos = gameManager.HomeRoom.transform.position;
+            endPos.y += 1.5f;
+
+            if (tileManager.FindPath(startPos, endPos, out newPath))
+            {
+                stageManager.StartStage();
+            }
+            else
+            {
+                Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
+                ui.curErrorText = "홈타입의 방으로 가는 길이 없습니다.";
+            }
         }
         else
         {
@@ -403,6 +417,18 @@ public class DayMain_SceneUI : BaseUI
     {
         RoomBehavior room = tileManager.SelectRoom;
         tileManager.SetRoomDir(room, ERoomDir.LeftBottom, !room.IsDoorOpen(ERoomDir.LeftBottom));
+    }
+
+    private void SetTimeScale(int stage)
+    {
+        if (_speed1Button.gameObject.activeSelf)
+        {
+            Time.timeScale = 1.0f;
+        }
+        else
+        {
+            Time.timeScale = 2.0f;
+        }
     }
 
     #endregion
