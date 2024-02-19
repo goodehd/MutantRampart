@@ -26,8 +26,11 @@ public class StageManager : IManagers
     public bool Init()
     {
         _tileManager = Main.Get<TileManager>();
-        _stages.Add(new StageInfo { SpwanEnemyName = "Slime", SpwanCount = 1 });
-        _stages.Add(new StageInfo { SpwanEnemyName = "Slime", SpwanCount = 1 });
+        //_stages.Add(new StageInfo { SpwanEnemyName = "BigBull", SpwanCount = 5 });
+        _stages.Add(new StageInfo { SpwanEnemyName = "BigBull", SpwanCount = 5 });
+        _stages.Add(new StageInfo { SpwanEnemyName = "Snail", SpwanCount = 5 });
+        _stages.Add(new StageInfo { SpwanEnemyName = "PlantBuger", SpwanCount = 5 });
+        _stages.Add(new StageInfo { SpwanEnemyName = "Slime", SpwanCount = 10 });
         _stages.Add(new StageInfo { SpwanEnemyName = "Slime", SpwanCount = 15 });
         return true;
     }
@@ -57,6 +60,7 @@ public class StageManager : IManagers
         Main.Get<GameManager>().ChangeMoney(_stages[_curStage].SpwanCount * 1000 + _addPlusClearGold);
         _isStageStart = false;
         OnStageClearEvent?.Invoke(++_curStage);
+        Time.timeScale = 1.0f;
     }
 
     public void CheckClear()
