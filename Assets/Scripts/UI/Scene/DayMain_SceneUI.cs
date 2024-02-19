@@ -34,11 +34,11 @@ public class DayMain_SceneUI : BaseUI
     private Image _categoryPanel;
     private Image _placingPanel;
     private Image _hpPanel;
-    private Image _dayArrowImg;
+    public Image _dayArrowImg { get; set; }
     private Image _nightArrowImg;
 
-    private Button _shopButton;
-    private Button _placingButton;
+    public Button shopButton { get; set; }
+    public Button placingButton { get; set; }
     private Button _inventoryButton;
     private Button _stageStartButton;
     private Button _settingButton;
@@ -65,7 +65,7 @@ public class DayMain_SceneUI : BaseUI
     private RectTransform _backBtnTransform;
     private RectTransform _nightTransform;
     private RectTransform _roomDirTransform;
-    private RectTransform _dayArrowTransform;
+    public RectTransform _dayArrowTransform { get; set; }
     private RectTransform _nightArrowTransform;
 
     private Error_PopupUI _errorPopupUI;
@@ -79,6 +79,8 @@ public class DayMain_SceneUI : BaseUI
     private bool isPlaceTutorialClear = false; // 배치모드 튜토리얼 클리어했는지 체크.
 
     public Inventory_PopupUI inventory_PopupUI;
+
+    public TutorialMsg_PopupUI tutorialMsg_PopupUI;
 
     public CameraMovement maincamera;
 
@@ -118,13 +120,13 @@ public class DayMain_SceneUI : BaseUI
 
         if (gameManager.isTutorial) // 튜토리얼 중이라면 팝업메세지 띄우고, 강조화살표 등장.
         {
-            _placingButton.gameObject.SetActive(false);
+            placingButton.gameObject.SetActive(false);
             _inventoryButton.gameObject.SetActive(false);
             _stageStartButton.gameObject.SetActive(false);
 
             TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
             ui.curTutorialText =
-                "적의 침입으로부터 메인 거점인 Home 을 지켜내야 해요!\n지키기 위해서는 침입을 막아줄 Unit 과 Room 이 필요해요.\n\n그럼, 상점에서 제공해드린 재화로\nUnit 과 Room 을 구매해봅시다!";
+                "적의 침입으로부터 메인 거점인 Home 을 지켜내야 해요!\n지키기 위해서는 침입을 막아줄 Unit 과 Room 이 필요해요.\n\n그럼, <color=#E9D038><b>상점</b></color>에서 제공해드린 재화로\nUnit 과 Room 을 구매해봅시다!";
             _dayArrowImg.gameObject.SetActive(true);
             _dayArrowTransform.anchoredPosition = new Vector3(-770f, -276f, 0f); // 상점 가리키는 화살표.
             tweener = _dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo);
@@ -137,8 +139,8 @@ public class DayMain_SceneUI : BaseUI
     {
         SetUI<Button>();
 
-        _shopButton = GetUI<Button>("ShopButton");
-        _placingButton = GetUI<Button>("PlacingButton");
+        shopButton = GetUI<Button>("ShopButton");
+        placingButton = GetUI<Button>("PlacingButton");
         _inventoryButton = GetUI<Button>("InventoryButton");
         _settingButton = GetUI<Button>("SettingButton");
         _stageStartButton = GetUI<Button>("StageStartButton");
@@ -152,11 +154,11 @@ public class DayMain_SceneUI : BaseUI
         _leftTopButton = GetUI<Button>("LeftTop");
         _leftBottomButton = GetUI<Button>("LeftBottom");
 
-        SetUICallback(_shopButton.gameObject, EUIEventState.Click, ClickShopBtn);
+        SetUICallback(shopButton.gameObject, EUIEventState.Click, ClickShopBtn);
         SetUICallback(_inventoryButton.gameObject, EUIEventState.Click, ClickInventoryBtn);
         SetUICallback(_settingButton.gameObject, EUIEventState.Click, ClickSettingBtn);
         SetUICallback(_stageStartButton.gameObject, EUIEventState.Click, ClickStageStartBtn);
-        SetUICallback(_placingButton.gameObject, EUIEventState.Click, ClickPlacingBtn);
+        SetUICallback(placingButton.gameObject, EUIEventState.Click, ClickPlacingBtn);
         SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickBackBtn);
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
         SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
@@ -343,22 +345,24 @@ public class DayMain_SceneUI : BaseUI
             tweener.Kill(); // 상점 가리키고 있던 화살표 kill.
             _dayArrowImg.gameObject.SetActive(false);
 
-            if (gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 6) // 상점 튜토리얼 완료했다면, 상점 내에 뒤로가기 버튼 항상 활성화.
+            if (gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 3) // 상점 튜토리얼 완료했다면, 상점 내에 뒤로가기 버튼 항상 활성화.
             {
                 shop_PopupUI.isShopTutorialClear = true;
             }
 
-            if (!(gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 6))
+            if (!(gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 3))
             {
                 TutorialMsg_PopupUI tutorialUI = _ui.OpenPopup<TutorialMsg_PopupUI>();
-                tutorialUI.curTutorialText = "카테고리에서 Unit 과 Room 을 클릭해 구매를 진행해봅시다!\n(Unit 은 3회 이상, Room 은 6회 이상 뽑기를 진행해주세요.)\n\n튜토리얼 후에는 Room 을 배치하는 Ground 와\n유닛의 능력치를 올려주는 Item 도 구매할 수 있어요!";
+                tutorialUI.curTutorialText = "카테고리에서 Unit 과 Room 을 클릭해 구매를 진행해봅시다!\n<color=#E9D038><b>(Unit 과 Room 각각 3회 뽑기를 진행해주세요!)</b></color>\n\n튜토리얼 후에는 Room 을 배치하는 Ground 와\n유닛의 능력치를 올려주는 Item 도 구매할 수 있어요!";
                 tutorialUI.isCloseBtnActive = true;
+                tutorialUI.isBackgroundActive = true;
                 //StartCoroutine(ClosePopupUI());
             }
 
-            _placingButton.gameObject.SetActive(true);
+            shopButton.gameObject.SetActive(false); // 상점 튜토리얼 완료하면 상점 버튼 inactive.
+            _inventoryButton.gameObject.SetActive(true); // 튜토리얼 상점 다음 순서인 인벤토리 버튼 active.
             _dayArrowImg.gameObject.SetActive(true);
-            _dayArrowTransform.anchoredPosition = new Vector3(-500f, -276f, 0f); // 배치모드 가리키는 화살표.
+            _dayArrowTransform.anchoredPosition = new Vector3(-230f, -276f, 0f); // 인벤토리 가리키는 화살표.
             tweener = _dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo);
         }
     }
@@ -423,6 +427,12 @@ public class DayMain_SceneUI : BaseUI
     {
         maincamera.Rock = true;
 
+        if (gameManager.isTutorial) // 튜토리얼 중이라면.
+        {
+            Main.Get<UIManager>().ClosePopup(); // 열려있던 튜토리얼msg 팝업 먼저 끄기.
+            _inventoryButton.gameObject.SetActive(false); // 인벤토리 버튼 비활성화
+        }
+
         if (inventory_PopupUI == null) // 유니티 play 하고 Hierarchy 창을 클릭한 후에 게임Scene 에서 타일을 누르면 인벤토리가 없어지고, 인벤토리 버튼 누르면 인벤토리가 다시 안 뜨는 이슈해결을 위해.
         {
             isInventOpen = false;
@@ -434,9 +444,19 @@ public class DayMain_SceneUI : BaseUI
         }
         else if (!isInventOpen)
         {
-            Inventory_PopupUI ui = _ui.OpenPopup<Inventory_PopupUI>("Inventory_PopupUI");
-            ui.Owner = this;
+            inventory_PopupUI = _ui.OpenPopup<Inventory_PopupUI>("Inventory_PopupUI");
+            inventory_PopupUI.Owner = this;
             isInventOpen = true;
+        }
+
+        if (gameManager.isTutorial) // 튜토리얼 중이라면.
+        {
+            tweener.Kill(); // 인벤토리 버튼 가리키턴 화살표 kill.
+            _dayArrowImg.gameObject.SetActive(false);
+            
+            TutorialMsg_PopupUI tutorialUI = _ui.OpenPopup<TutorialMsg_PopupUI>();
+            tutorialUI.curTutorialText = "그리고 동일한 종류와 레벨의 Unit 이나 Room 이 3개 있으면\n다음 레벨로 업그레이드를 진행할 수도 있어요.\n\n업그레이드 버튼을 누른 다음,\n<color=#E9D038><b>Unit 과 Room 모두\n업그레이드를 진행해주세요!</b></color>";
+            inventory_PopupUI.tutorialMsg_PopupUI = tutorialUI;
         }
     }
 

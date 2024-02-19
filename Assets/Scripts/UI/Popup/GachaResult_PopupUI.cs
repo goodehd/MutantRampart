@@ -33,7 +33,7 @@ public class GachaResult_PopupUI : BaseUI
 
         SetResultImgUInfo();
 
-        if (gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 6)
+        if (gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 3)
         {
             isArrowRotated = true;
         }
@@ -65,7 +65,7 @@ public class GachaResult_PopupUI : BaseUI
 
         if (gameManager.isTutorial)
         {
-            if (gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 6)
+            if (gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 3)
             {
                 Owner.isShopTutorialClear = true;
                 Owner.backButton.gameObject.SetActive(true);

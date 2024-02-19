@@ -120,10 +120,9 @@ public class Shop_PopupUI : BaseUI
         // 가챠 판매 아이템 추가
         if (gameManager.isTutorial) // 튜토리얼 중이라면.
         {
-            GachaUnitItems.Add(Main.Get<DataManager>().Character["Jotem"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Warrior"]);
 
             GachaRoomItems.Add(Main.Get<DataManager>().Room["Forest"]);
-            //GachaRoomItems.Add(Main.Get<DataManager>().Room["Lava"]);
         }
         else
         {
@@ -159,7 +158,7 @@ public class Shop_PopupUI : BaseUI
 
         Owner.shop_PopupUI = this;
 
-        if (gameManager.isTutorial)
+        if (gameManager.isTutorial) // 튜토리얼 중이라면.
         {
             backButton.gameObject.SetActive(false);
             _groundButton.gameObject.SetActive(false);
@@ -189,8 +188,9 @@ public class Shop_PopupUI : BaseUI
         if (gameManager.isTutorial)
         {
             tweener.Kill(); // 상점 화살표 kill.
-            TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-            ui.curTutorialText = "자, 이제 배치모드에서 구매한 유닛과 룸을 배치해봅시다!";
+
+            Owner.tutorialMsg_PopupUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
+            Owner.tutorialMsg_PopupUI.curTutorialText = "<color=#E9D038><b>인벤토리</b></color>에서는\n보유하고 있는 Unit 과 Room 에 대한 정보를 확인할 수 있어요.";
         }
 
         Camera.main.GetComponent<CameraMovement>().Rock = false;

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -5,6 +6,8 @@ using UnityEngine.UI;
 
 public class InventUpgrade_PopupUI : BaseUI
 {
+    private GameManager gameManager;
+
     private Button _closeButton;
     private Button[] _upgradeSlots = new Button[3];
     private Button _upgradeButton;
@@ -27,6 +30,8 @@ public class InventUpgrade_PopupUI : BaseUI
     {
         SetUI<Button>();
         SetUI<Image>();
+
+        gameManager = Main.Get<GameManager>();
 
         _closeButton = GetUI<Button>("InventUpgradeCloseBtn");
 
@@ -212,6 +217,19 @@ public class InventUpgrade_PopupUI : BaseUI
                 Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
                 ui.curErrorText = "동일한 종류,\n레벨의 룸을 넣어주세요!";
                 Debug.Log("동일한 룸을 넣어주세요!");
+            }
+        }
+
+        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        {
+            if (gameManager.playerUnits.Count == 1 && gameManager.PlayerRooms.Count == 2) // 유닛, 룸 업그레이드 완료하면 (보유 유닛 수는 1, 룸은 2(Home 포함).)
+            {
+                Owner.closeButton.gameObject.SetActive(true); // 인벤토리 닫기 버튼 활성화
+                Owner.inventArrowImg.gameObject.SetActive(true);
+                Owner.inventArrowTransform.anchoredPosition = new Vector3(662f, -400f, 0f); // 인벤토리 닫기 버튼 가리키는 화살표.
+                Owner.tweener = Owner.inventArrowTransform.DOAnchorPosY(-430f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
+
+
             }
         }
 

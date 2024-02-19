@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,10 +7,12 @@ using UnityEngine.UI;
 
 public class Inventory_PopupUI : BaseUI
 {
+    private GameManager gameManager;
+
     //private Button _backButton;
     private Button _roomButton;
     private Button _unitButton;
-    private Button _closeButton;
+    public Button closeButton { get; set; }
     private Button _upgradeButton;
 
     private ScrollRect _inventRoomScrollView;
@@ -17,6 +20,14 @@ public class Inventory_PopupUI : BaseUI
 
     private Transform _inventRoomContent;
     private Transform _inventUnitContent;
+
+    public Image inventArrowImg { get; set; }
+
+    public RectTransform inventArrowTransform { get; set; }
+
+    public float animationDuration = 0.3f;
+
+    public Tweener tweener { get; set; }
 
     public DayMain_SceneUI Owner { get; set; }
 
@@ -26,24 +37,28 @@ public class Inventory_PopupUI : BaseUI
 
     public InventUpgrade_PopupUI inventUpgrade_PopupUI;
 
+    public TutorialMsg_PopupUI tutorialMsg_PopupUI;
+
     protected override void Init()
     {
         SetUI<Button>();
-        SetUI<Image>();
         SetUI<TMP_Text>();
         SetUI<Transform>();
         SetUI<ScrollRect>();
+        SetUI<Image>();
+
+        gameManager = Main.Get<GameManager>();
 
         //_backButton = GetUI<Button>("InventBackBtn");
         _roomButton = GetUI<Button>("InventRoomBtn");
         _unitButton = GetUI<Button>("InventUnitBtn");
-        _closeButton = GetUI<Button>("InventoryCloseBtn");
+        closeButton = GetUI<Button>("InventoryCloseBtn");
         _upgradeButton = GetUI<Button>("InventoryUpgradeBtn");
 
         //SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickBackBtn);
         SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
-        SetUICallback(_closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
+        SetUICallback(closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
         SetUICallback(_upgradeButton.gameObject, EUIEventState.Click, ClickUpgradeBtn);
 
         _inventRoomScrollView = GetUI<ScrollRect>("InventRoom_Scroll View");
@@ -52,10 +67,22 @@ public class Inventory_PopupUI : BaseUI
         _inventRoomContent = GetUI<Transform>("InventRoom_Content");
         _inventUnitContent = GetUI<Transform>("InventUnit_Content");
 
+        inventArrowImg = GetUI<Image>("InventArrowImg");
+
+        inventArrowTransform = inventArrowImg.GetComponent<RectTransform>();
+
         Owner.inventory_PopupUI = this;
 
         SetRoomInventory();
         SetUnitInventory();
+
+        if (gameManager.isTutorial)
+        {
+            inventArrowImg.gameObject.SetActive(true);
+            tweener = inventArrowTransform.DOAnchorPosY(-330f, animationDuration).SetLoops(-1, LoopType.Yoyo); // 인벤토리 업그레이드 버튼 가리키는 화살표 DOTween.
+
+            closeButton.gameObject.SetActive(false); // 일단 인벤토리 닫기 버튼 inactive 해두고, 룸, 유닛 업그레이드 완료하면 active 해주기
+        }
     }
 
     public void SetRoomInventory()
@@ -140,10 +167,30 @@ public class Inventory_PopupUI : BaseUI
         Main.Get<UIManager>().CloseAllPopup();
         Owner.isInventOpen = false;
         Camera.main.GetComponent<CameraMovement>().Rock = false;
+
+        if (gameManager.isTutorial) // todo : 인벤토리 닫기 버튼 눌렀을 때
+        {
+            tweener.Kill(); // 인벤토리 닫기 버튼 가리키던 dotween kill 하고
+            inventArrowImg.gameObject.SetActive(false); // 인벤토리 내 화살표 inactive 하고
+            Owner.placingButton.gameObject.SetActive(true); // 배치모드 버튼 활성화하고.
+            Owner._dayArrowImg.gameObject.SetActive(true); // daymain 의 화살표 활성화.
+            Owner._dayArrowTransform.anchoredPosition = new Vector3(-500f, -276f, 0f); // daymain 의 화살표가 배치모드 향하게 하고
+            Owner._dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo); // daymain 화살표 dotween 걸어주고
+
+            TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // tutorialpopup - 배치모드 관련해서 튜토리얼팝업 만들어주고
+            ui.curTutorialText = "자, 이제 <color=#E9D038><b>배치모드</b></color>에서 Unit 과 Room 을 배치해봅시다!";
+        }
     }
 
     private void ClickUpgradeBtn(PointerEventData EventData)
     {
+        if (gameManager.isTutorial && tutorialMsg_PopupUI != null) // todo : 튜토리얼메세지팝업이 떠있을때만 closepopup해주기 , 튜토리얼 중이라면.
+        {
+            Main.Get<UIManager>().ClosePopup(); // 튜토리얼msg 팝업 끄기
+            tweener.Kill(); // 인벤토리 업그레이드 버튼 가리키는 화살표 kill.
+            inventArrowImg.gameObject.SetActive(false);
+        }
+
         if (inventUnitDescri_PopupUI != null) // unit description 창이 켜져있다면
         {
             inventUnitDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false);
