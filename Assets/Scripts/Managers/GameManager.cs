@@ -9,6 +9,7 @@ public class GameManager : IManagers
     public Vital PlayerHP { get; private set; }
 
     public bool isHomeSet = false;
+    public RoomBehavior HomeRoom { get; set; }
 
     public int CurStage;
 
@@ -104,6 +105,20 @@ public class GameManager : IManagers
         Main.Get<SaveDataManager>().Player.Curstage = CurStage;
         Main.Get<SaveDataManager>().Player.PlayerMoney = PlayerMoney;
         Main.Get<SaveDataManager>().SaveData();
+    }
+
+    public void SetHomeRoom(RoomBehavior home)
+    {
+        if(home != null)
+        {
+            isHomeSet = true;
+            HomeRoom = home;
+        }
+        else
+        {
+            isHomeSet = false;
+            HomeRoom = null;
+        }
     }
 
     // todo : Item 뺄 때 해야하는 것들 함수로 작동시키기 !

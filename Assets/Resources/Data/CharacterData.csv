@@ -1,5 +1,8 @@
 Key,Hp,Damage,Defense,AttackSpeed,MoveSpeed,Price,NextKey,PrefabName
-Slime,100,10,5,0.5,2,1000,0,Slime
+Snail,50,5,5,0.4,0.5,0,0,Snail
+PlantBuger,300,5,20,0.5,1,0,0,PlantBuger
+BigBull,200,10,10,1,2,0,0,BigBull
+Slime,100,10,5,0.5,2,0,0,Slime
 Gun,100,10,5,1,1,1000,Guner,Gun
 Guner,110,13,7,1.5,1,1300,GunBBang,Gun
 GunBBang,120,16,9,2,1,1600,0,Gun

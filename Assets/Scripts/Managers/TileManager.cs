@@ -116,7 +116,7 @@ public class TileManager : IManagers
         obj.transform.parent = _gridObject.transform;
 
         RoomBehavior room = obj.GetComponent<RoomBehavior>();
-        room.RoomInfo = changeRoom;
+        room.SetData(changeRoom);
         room.IndexX = SelectRoom.IndexX;
         room.IndexY = SelectRoom.IndexY;
         room.RoomInfo.EquipedRoom();
