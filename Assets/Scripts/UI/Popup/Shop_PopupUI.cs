@@ -121,7 +121,6 @@ public class Shop_PopupUI : BaseUI
         if (gameManager.isTutorial) // 튜토리얼 중이라면.
         {
             GachaUnitItems.Add(Main.Get<DataManager>().Character["Warrior"]);
-
             GachaRoomItems.Add(Main.Get<DataManager>().Room["Forest"]);
         }
         else
@@ -129,6 +128,11 @@ public class Shop_PopupUI : BaseUI
             GachaUnitItems.Add(Main.Get<DataManager>().Character["Gun"]);
             GachaUnitItems.Add(Main.Get<DataManager>().Character["Jotem"]);
             GachaUnitItems.Add(Main.Get<DataManager>().Character["Warrior"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Cleric"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Knight"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Kunoichi"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Priest"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Shaman"]);
 
             GachaRoomItems.Add(Main.Get<DataManager>().Room["Forest"]);
             GachaRoomItems.Add(Main.Get<DataManager>().Room["Igloo"]);
