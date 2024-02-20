@@ -6,6 +6,7 @@ using UnityEngine;
 public class UnitClericSkillState : BaseState
 {
     private LinkedList<CharacterBehaviour> _targets;
+    private CharacterBehaviour[] _units;
 
     public UnitClericSkillState(CharacterBehaviour owner) : base(owner)
     {
@@ -21,6 +22,7 @@ public class UnitClericSkillState : BaseState
         Owner.Animator.SetTrigger(Literals.Skill);
         Owner.Status.GetStat<Vital>(EstatType.Mp).CurValue = 0;
         _targets = ((BatRoom)Owner.CharacterInfo.CurRoom).Enemys;
+        _units = ((BatRoom)Owner.CharacterInfo.CurRoom).Units;
     }
 
     public override void ExitState()
@@ -42,6 +44,14 @@ public class UnitClericSkillState : BaseState
             foreach (CharacterBehaviour target in _targets.ToList())
             {
                 target.Status.GetStat<Vital>(EstatType.Hp).CurValue -= damage;
+            }
+
+            for (int i = 0; i < _units.Length; i++)
+            {
+                if (_units[i] == null)
+                    continue;
+
+                _units[i].Status.GetStat<Vital>(EstatType.Hp).CurValue += damage;
             }
             Owner.StateMachine.ChangeState(EState.Attack);
         }
