@@ -16,6 +16,7 @@ public enum ESoundType
 public enum EstatType
 {
     Hp,
+    Mp,
     Damage,
     Defense,
     AttackSpeed,
@@ -28,7 +29,8 @@ public enum EState
     Idle,
     Move,
     Attack,
-    Dead
+    Dead,
+    Skill
 }
 
 public enum EUIstate
