@@ -28,7 +28,7 @@ public class GameManager : IManagers
         PlayerRooms.Add(room);
 
         Room room2 = new Room();
-        room2.Init(Main.Get<DataManager>().Room["Igloo"]);
+        room2.Init(Main.Get<DataManager>().Room["Temple"]);
         PlayerRooms.Add(room2);
 
         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));

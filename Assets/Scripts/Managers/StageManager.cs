@@ -26,7 +26,6 @@ public class StageManager : IManagers
     public bool Init()
     {
         _tileManager = Main.Get<TileManager>();
-        //_stages.Add(new StageInfo { SpwanEnemyName = "BigBull", SpwanCount = 5 });
         _stages.Add(new StageInfo { SpwanEnemyName = "BigBull", SpwanCount = 5 });
         _stages.Add(new StageInfo { SpwanEnemyName = "Snail", SpwanCount = 5 });
         _stages.Add(new StageInfo { SpwanEnemyName = "PlantBuger", SpwanCount = 5 });

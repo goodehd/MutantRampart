@@ -24,6 +24,7 @@ public class ConditionMachine
     
     public void RemoveCondition(BaseCondition basecondition)
     {
+        basecondition.StopCoroutine();
         _curConditionList[(int)basecondition.ConditionName].Remove(basecondition);
         Debug.Log($"{basecondition.ConditionName}");
     }
@@ -32,7 +33,10 @@ public class ConditionMachine
     {
         for (int i = 0; i < (int)ECondition.Max; i++)
         {
-            _curConditionList[i].Clear();
+            for(int j = 0; j < _curConditionList[i].Count; j++)
+            {
+                RemoveCondition(_curConditionList[i][j]);
+            }
         }
     }
 

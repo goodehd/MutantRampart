@@ -176,7 +176,8 @@ public class BatRoom : RoomBehavior
 
                 break;
             case EBatType.Temple:
-
+                character.ConditionMachine.AddCondition(new TempleBuffCondition(character, RoomInfo.Data));
+                Debug.Log("사원 버프 부여");
                 break;
             default:
                 break;

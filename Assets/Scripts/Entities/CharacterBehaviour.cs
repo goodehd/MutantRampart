@@ -76,7 +76,9 @@ public class CharacterBehaviour : MonoBehaviour
     }
 
     private void OnDestroy()
-    {     
+    {
+        Debug.Log("사라짐 뿅");
+        ConditionMachine.ClearConditions();
         CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero -= Die;
     }
 
