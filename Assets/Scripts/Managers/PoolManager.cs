@@ -46,11 +46,13 @@ public class Pool
 
     private void OnGet(GameObject gameObject)
     {
+        gameObject.transform.SetParent(null);
         gameObject.SetActive(true);
     }
 
     private void OnRelease(GameObject gameObject)
     {
+        gameObject.transform.SetParent(Root);
         gameObject.SetActive(false);
     }
 

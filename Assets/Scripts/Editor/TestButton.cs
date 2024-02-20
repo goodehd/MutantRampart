@@ -56,6 +56,11 @@ public class TestButton2 : Editor
         {
             generator.StateMachine.ChangeState(EState.Dead);
         }
+        if (GUILayout.Button("Skill"))
+        {
+            generator.Init(Main.Get<DataManager>().Character["Shaman"]);
+            generator.StateMachine.ChangeState(EState.Skill);
+        }
     }
 }
 

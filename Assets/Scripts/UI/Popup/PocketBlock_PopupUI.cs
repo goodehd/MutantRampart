@@ -19,6 +19,7 @@ public class PocketBlock_PopupUI : BaseUI
     public TextMeshProUGUI _unitATK;
     public TextMeshProUGUI _unitDEF;
     public TextMeshProUGUI _unitATKSpeed;
+    public TextMeshProUGUI _unitSkillDesc;
     public TextMeshProUGUI _roomName;
     public TextMeshProUGUI _roomType;
     public TextMeshProUGUI _roomDescript;
@@ -50,6 +51,7 @@ public class PocketBlock_PopupUI : BaseUI
         _unitATK = GetUI<TextMeshProUGUI>("UnitAtkTxt");
         _unitDEF = GetUI<TextMeshProUGUI>("UnitDefTxt");
         _unitATKSpeed = GetUI<TextMeshProUGUI>("UnitAtkSpeedTxt");
+        _unitSkillDesc = GetUI<TextMeshProUGUI>("SkillDescText");
 
         _roomName = GetUI<TextMeshProUGUI>("RoomNameTxt");
         _roomType = GetUI<TextMeshProUGUI>("RoomTypeTxt");
@@ -84,11 +86,16 @@ public class PocketBlock_PopupUI : BaseUI
 
     public void SetUintInfo(Character data)
     {
-        _unitName.text = $"{data.Data.Key}";
+        _unitName.text = $"{data.Data.PrefabName}";
         _unitHP.text = $"HP : {data.Status[EstatType.Hp].Value}";
         _unitATK.text = $"ATK : {data.Status[EstatType.Damage].Value}";
         _unitDEF.text = $"DEF : {data.Status[EstatType.Defense].Value}";
         _unitATKSpeed.text = $"ATKSpeed : {data.Status[EstatType.AttackSpeed].Value}";
+
+        if(data.SkillData != null)
+            _unitSkillDesc.text = $"Skill : {data.SkillData.Description}";
+        else
+            _unitSkillDesc.text = $"Skill : None";
     }
 
     public void SetRoomInfo(Room room)

@@ -15,12 +15,12 @@ public class IdleState : BaseState
 
     public override void EnterState()
     {
-
+        Owner.Animator.SetBool(Literals.Idle, true);
     }
 
     public override void ExitState()
     {
-
+        Owner.Animator.SetBool(Literals.Idle, false);
     }
 
     public override void UpdateState()
