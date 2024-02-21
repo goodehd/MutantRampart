@@ -10,6 +10,7 @@ public class UIEventHandler : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        // TODO : 마우스 클릭 효과음 넣는부분;
         if (_Callback[(int)EUIEventState.Click] != null)
             _Callback[(int)EUIEventState.Click](eventData);
     }

@@ -11,6 +11,7 @@ public class HongTestScene : Scene
     {
         base.Init();
         Main.Get<UIManager>().OpenSceneUI<DayMain_SceneUI>();
+        Main.Get<SoundManager>().SoundPlay($"DayBGM", ESoundType.BGM);
         if (Main.Get<SaveDataManager>().isSaveFileExist)
         {
             Main.Get<SaveDataManager>().GenerateSaveMap();
@@ -19,6 +20,7 @@ public class HongTestScene : Scene
         {
             Main.Get<TileManager>().GenerateMap(3, 3);
         }
+
     }
     protected override void OnApplicationQuit()
     {

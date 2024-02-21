@@ -55,6 +55,7 @@ public class Setting_PopupUI : BaseUI
         SetUICallback(_guideBtn.gameObject, EUIEventState.Click, ClickGuideBtn);
         SetUICallback(_usBtn.gameObject, EUIEventState.Click, ClickUsBtn);
         SetUICallback(_exitBtn.gameObject, EUIEventState.Click, ClickExitBtn);
+
     }
 
     private void SetSlider()
@@ -64,9 +65,27 @@ public class Setting_PopupUI : BaseUI
         _bgmSlider = GetUI<Slider>("BGM_Slider");
         _effectSlider = GetUI<Slider>("Effect_Slider");
         _uiSlider = GetUI<Slider>("UI_Slider");
+
+        _bgmSlider.onValueChanged.AddListener(BGMbar);
+        _effectSlider.onValueChanged.AddListener(Effectbar);
+        _uiSlider.onValueChanged.AddListener(UIbar);
+
     }
 
     // todo : slider들(사운드 관련) value 값 조절
+
+    private void BGMbar(float value)
+    {
+        Main.Get<SoundManager>().SetVolume(ESoundType.BGM, value);
+    }
+    private void Effectbar(float value)
+    {
+        Main.Get<SoundManager>().SetVolume(ESoundType.Effect, value);
+    }
+    private void UIbar(float value)
+    {
+        Main.Get<SoundManager>().SetVolume(ESoundType.UI, value);
+    }
 
     private void ClickCloseBtn(PointerEventData EventData)
     {

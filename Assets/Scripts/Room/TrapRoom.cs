@@ -13,11 +13,11 @@ public class TrapRoom : RoomBehavior
         Molar,
         Count
     }
-    
+
     private ETrapType _trapType;
-    
-    protected bool _isTrapOn = false;
-    
+
+
+
     public override void Init(RoomData data)
     {
         base.Init(data);
@@ -28,7 +28,6 @@ public class TrapRoom : RoomBehavior
     public override void EnterRoom(Enemy enemy)
     {
         base.EnterRoom(enemy);
-        if (_isTrapOn)return;
         ConditionAdd(enemy);
     }
     private void ConditionAdd(Enemy enemy)
@@ -36,10 +35,10 @@ public class TrapRoom : RoomBehavior
         switch (_trapType)
         {
             case ETrapType.Lava:
-                StartCoroutine(LavaTrap(Enemys, enemy));
+                StartCoroutine(LavaTrap(enemy));
                 break;
             case ETrapType.Snow:
-                 enemy.ConditionMachine.AddCondition(new FrostbiteCondition(enemy,RoomInfo.Data));
+                enemy.ConditionMachine.AddCondition(new FrostbiteCondition(enemy, RoomInfo.Data));
                 break;
             case ETrapType.Molar:
                 enemy.ConditionMachine.AddCondition(new PuppetCondition(enemy, RoomInfo.Data));
@@ -49,29 +48,20 @@ public class TrapRoom : RoomBehavior
         }
     }
 
-    IEnumerator LavaTrap(LinkedList<CharacterBehaviour> enemys, Enemy enemy)
+    IEnumerator LavaTrap(Enemy enemy)
     {
         enemy.Renderer.flipX = false;
         enemy.transform.position = Literals.TrapEnemyPos[Enemys.Count % 6] + transform.position;
-        //StatModifier mod = new StatModifier(0f, EStatModType.Multip, 1, this);
-        //enemy.Status.GetStat<Stat>(EstatType.MoveSpeed).AddModifier(mod);
         enemy.StateMachine.ChangeState(EState.Idle);
-        Enemys.AddLast(enemy);
 
         yield return new WaitForSeconds(3f); //피해를 주기까지의 시간
 
-        foreach (var listenemy in enemys.ToList())
-        {
-            //피해를 주는 로직
-            listenemy.Status.GetStat<Vital>(EstatType.Hp).CurValue -= 10;
-            //피해를 주었으니 enemy가 움직일 수 있게하고
-            enemy.StateMachine.ChangeState(EState.Move);
-            //listenemy.Status.GetStat<Stat>(EstatType.MoveSpeed).RemoveModifier(mod);
-        }
+        enemy.Status.GetStat<Vital>(EstatType.Hp).CurValue -= 10;
 
-        _isTrapOn = true;
-        yield return new WaitForSeconds(5f); //쿨타임
-        _isTrapOn = false;
+        if (!enemy.CharacterInfo.IsDead)
+        {
+            enemy.StateMachine.ChangeState(EState.Move);
+        }
     }
 }
 

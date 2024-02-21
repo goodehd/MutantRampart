@@ -18,7 +18,7 @@ public enum ERoomDir
 public class RoomBehavior : MonoBehaviour
 {
     public TilemapRenderer Renderer { get; private set; }
-    public Tilemap[] tilemap = new Tilemap[2];
+    public Tilemap[] tilemap;
 
     public GameObject RightWall { get; private set; }
     public GameObject LeftWall { get; private set; }
@@ -42,9 +42,10 @@ public class RoomBehavior : MonoBehaviour
 
     public virtual void Init(RoomData data)
     {
+
         if (_initialize)
             return;
-
+        tilemap = new Tilemap[4];
         _tile = Main.Get<TileManager>();
 
         RoomInfo = new Room();
@@ -55,7 +56,10 @@ public class RoomBehavior : MonoBehaviour
         }
 
         RightWall = transform.GetChild(2).gameObject;
+        tilemap[2] = RightWall.GetComponent<Tilemap>();
         LeftWall = transform.GetChild(3).gameObject;
+        tilemap[3] = LeftWall.GetComponent<Tilemap>();
+
 
         RoomDir = ERoomDir.All;
 
@@ -105,7 +109,7 @@ public class RoomBehavior : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < tilemap.Length; i++)
         {
             tilemap[i].color = Color.green;
         }
@@ -114,7 +118,7 @@ public class RoomBehavior : MonoBehaviour
 
     protected virtual void OnMouseExit()
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < tilemap.Length; i++)
         {
             tilemap[i].color = Color.white;
         }
@@ -166,14 +170,14 @@ public class RoomBehavior : MonoBehaviour
 
         while (isFlashing)
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < tilemap.Length; i++)
             {
                 tilemap[i].color = Color.green;
             }
 
             yield return new WaitForSeconds(blinkDuration);
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < tilemap.Length; i++)
             {
                 tilemap[i].color = Color.white;
             }
@@ -203,7 +207,7 @@ public class RoomBehavior : MonoBehaviour
             _flashingCoroutine = null;
         }
         // 다시 원래 색상으로 되돌리기
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < tilemap.Length; i++)
         {
             tilemap[i].color = Color.white;
         }

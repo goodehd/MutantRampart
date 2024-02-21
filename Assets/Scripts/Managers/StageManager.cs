@@ -102,13 +102,6 @@ public class StageManager : IManagers
         stage.AddMonster("BigBull", 1);
         stage.AddMonster("PlantBuger", 2);
         stageMonsterInfoList.Add(stage);
-        stage = new StageMonsterInfo(2000);
-        stage.AddMonster("Slime", 3);
-        stage.AddMonster("Snail", 5);
-        stage.AddMonster("BigBull", 1);
-        stage.AddMonster("PlantBuger", 2);
-        stageMonsterInfoList.Add(stage);
-
         return true;
     }
 
@@ -126,6 +119,7 @@ public class StageManager : IManagers
         _isStageStart = true;
 
         OnStageStartEvent?.Invoke(_curStage);
+        Main.Get<SoundManager>().SoundPlay($"NightBGM", ESoundType.BGM);
     }
 
     public void StageClear()
@@ -148,6 +142,7 @@ public class StageManager : IManagers
         Main.Get<GameManager>().ChangeMoney(stageMonsterInfoList[_curStage].RewardsGold);
         _isStageStart = false;
         OnStageClearEvent?.Invoke(++_curStage);
+        Main.Get<SoundManager>().SoundPlay($"DayBGM", ESoundType.BGM);
         Time.timeScale = 1.0f;
     }
 
