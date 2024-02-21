@@ -560,7 +560,7 @@ public class DayMain_SceneUI : BaseUI
         }
         else
         {
-            Time.timeScale = 2.0f;
+            Time.timeScale = 1.5f;
         }
     }
 

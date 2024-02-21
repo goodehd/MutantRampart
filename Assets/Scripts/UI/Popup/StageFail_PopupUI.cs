@@ -37,10 +37,11 @@ public class StageFail_PopupUI : BaseUI
     private void ClickMainMenuBtn(PointerEventData data)
     {
         // 시작 Scene 으로 이동
-        //Main.Get<UIManager>().CloseAllPopup();
-        Main.Get<UIManager>().ClosePopup();
         Main.Get<SaveDataManager>().DeleteData();
         Main.Get<GameManager>().Init();
+        Main.Get<UIManager>().Init();
+        Main.Get<SoundManager>().SoundStop(ESoundType.BGM);
+        Time.timeScale = 1.0f;
         Main.Get<SceneManager>().ChangeScene<SelectScene>();
     }
 

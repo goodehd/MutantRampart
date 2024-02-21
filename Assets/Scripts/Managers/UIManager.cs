@@ -7,7 +7,7 @@ public class UIManager : IManagers
 {
     private ResourceManager _resource;
 
-    private Stack<BaseUI> _popupStack = new Stack<BaseUI>();
+    private Stack<BaseUI> _popupStack;
     private Transform _rootUI;
     public BaseUI SceneUI { get; private set; }
 
@@ -33,6 +33,7 @@ public class UIManager : IManagers
     public bool Init()
     {
         _rootUI = null;
+        _popupStack = new Stack<BaseUI>();
         _resource = Main.Get<ResourceManager>();
         return true;
     }
@@ -81,7 +82,7 @@ public class UIManager : IManagers
         if (_popupStack.Count == 0)
             return;
 
-        Object.Destroy(_popupStack.Pop().gameObject);
+        _resource.Destroy(_popupStack.Pop().gameObject);
     }
 
     public void CloseAllPopup()
