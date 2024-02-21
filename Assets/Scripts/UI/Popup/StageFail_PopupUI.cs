@@ -28,7 +28,7 @@ public class StageFail_PopupUI : BaseUI
         _retryBtn = GetUI<Button>("StageFailRetryBtn");
 
         SetUICallback(_mainMenuBtn.gameObject, EUIEventState.Click, ClickMainMenuBtn);
-        SetUICallback(_retryBtn.gameObject, EUIEventState.Click, ClickRetryBtn);
+        //SetUICallback(_retryBtn.gameObject, EUIEventState.Click, ClickRetryBtn);
 
         _stageText.text = $"Stage {_curStage}";
         //_rewardsText.text = ;
@@ -43,11 +43,11 @@ public class StageFail_PopupUI : BaseUI
         Main.Get<SceneManager>().ChangeScene<SelectScene>();
     }
 
-    private void ClickRetryBtn(PointerEventData data)
+    /*private void ClickRetryBtn(PointerEventData data)
     {
         //  스테이지 re 도전 ? 이 되려나 ?
         // 일단은 시작Scene 으로 이동
         Main.Get<UIManager>().ClosePopup();
         Main.Get<SceneManager>().ChangeScene<StartScene>();
-    }
+    }*/
 }
