@@ -54,7 +54,14 @@ public class Vital : Stat
 
     public float Normalized()
     {
-        return CurValue / base.Value;
+        float ratio = 0f;
+
+        if(CurValue != 0f)
+        {
+            ratio = CurValue / base.Value;
+        }
+
+        return ratio;
     }
 
     public void SetCurValueMax()

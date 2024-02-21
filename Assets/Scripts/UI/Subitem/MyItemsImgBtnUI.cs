@@ -33,6 +33,11 @@ public class MyItemsImgBtnUI : BaseUI
         SetInfo();
     }
 
+    public void UnEquiped()
+    {
+        ItemData.IsEquiped = false;
+    }
+
     public void SetInfo()
     {
         _itemImg.sprite = Main.Get<ResourceManager>()

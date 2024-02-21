@@ -12,6 +12,7 @@ public class CharacterStatus
         _stats = new Stat[(int)EstatType.Max]
        {
             new Vital(EstatType.Hp, data.Hp),
+            new Vital(EstatType.Mp, 0, data.Mp),
             new Stat(EstatType.Damage, data.Damage),
             new Stat(EstatType.Defense, data.Defense),
             new Stat(EstatType.AttackSpeed, data.AttackSpeed),

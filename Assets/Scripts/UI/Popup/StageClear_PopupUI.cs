@@ -31,6 +31,7 @@ public class StageClear_PopupUI : BaseUI
 
     private void ClickNextBtn(PointerEventData EventData)
     {
+        Main.Get<GameManager>().SaveData();
         Main.Get<UIManager>().ClosePopup();
     }
 }

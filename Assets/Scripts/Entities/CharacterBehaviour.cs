@@ -14,6 +14,7 @@ public class CharacterBehaviour : MonoBehaviour
     public CharacterStatus Status { get { return CharacterInfo.Status; } }
     public int CurPosX { get { return CharacterInfo.CurPosX ; } set { CharacterInfo.CurPosX = value; } }
     public int CurPosY { get { return CharacterInfo.CurPosY; } set { CharacterInfo.CurPosY = value; } }
+    public int CurIndex { get { return CharacterInfo.CurIndex; } set { CharacterInfo.CurIndex = value; } }
     public RoomBehavior CurRoom { get { return CharacterInfo.CurRoom; } set { CharacterInfo.CurRoom = value; } }
 
     private bool _initialize = false;
@@ -27,11 +28,8 @@ public class CharacterBehaviour : MonoBehaviour
         this.Renderer = GetComponentInChildren<SpriteRenderer>();
 
         CharacterInfo = new Character(data);
-        CharacterInfo.Init(data);
-
 
         StateMachine = new StateMachine();
-
         StateMachine.AddState(EState.Idle, new IdleState(this));
         StateMachine.AddState(EState.Move, new MoveState(this));
         StateMachine.ChangeState(EState.Idle);
@@ -41,8 +39,6 @@ public class CharacterBehaviour : MonoBehaviour
         CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += Die;
 
         _initialize = true;
-
-
     }
 
     public void SetData(Character data)
@@ -68,16 +64,22 @@ public class CharacterBehaviour : MonoBehaviour
 
     public virtual void ResetCharacter()
     {
-        CurPosX = -1;
-        CurPosY = -1;
         CharacterInfo.IsDead = false;
         Status.GetStat<Vital>(EstatType.Hp).SetCurValueMax();
+        Status.GetStat<Vital>(EstatType.Mp).CurValue = 0;
+        this.Renderer.color = Color.white;
         StateMachine.ChangeState(EState.Idle);
     }
 
-    private void OnDestroy()
-    {     
-        CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero -= Die;
+    public Vector3 GetWorldPos()
+    {
+        return transform.position + transform.GetChild(0).localPosition;
     }
 
+    private void OnDestroy()
+    {
+        ConditionMachine.ClearConditions();
+        if(CharacterInfo != null && CharacterInfo.Status != null)
+            CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero -= Die;
+    }
 }

@@ -15,6 +15,10 @@ public class Scene : MonoBehaviour
         Init();
     }
 
+    protected virtual void OnApplicationQuit()
+    {
+    }
+
     protected virtual void Init()
     {
         Main.Get<SceneManager>().Scene = this;
@@ -28,6 +32,8 @@ public class Scene : MonoBehaviour
     private void SettingPool()
     {
         _pool.CreatePool($"{Literals.UNIT_PREFABS_PATH}Slime");
+        _pool.CreatePool($"{Literals.FX_PATH}ShamanFx1");
+        _pool.CreatePool($"{Literals.FX_PATH}ShamanFx2");
     }
 
     public CharacterBehaviour CreateCharacter(string key)

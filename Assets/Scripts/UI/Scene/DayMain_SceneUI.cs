@@ -135,6 +135,7 @@ public class DayMain_SceneUI : BaseUI
             dayArrowTransform.anchoredPosition = new Vector3(-770f, -276f, 0f); // 상점 가리키는 화살표.
             tweener = dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo);
         }
+        UpdateHpUI(0);
     }
 
     #region UiBind
@@ -625,7 +626,6 @@ public class DayMain_SceneUI : BaseUI
     {
         maincamera.Rock = true;
         Main.Get<UIManager>().OpenPopup<Setting_PopupUI>();
-        Main.Get<GameManager>().SaveData();
     }
 
     private void OpenPoketBlock(bool isUint)

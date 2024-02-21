@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,6 +14,7 @@ public class SelectScene_SceneUI : BaseUI
     private Button _continueGameBtn;
     private Button _upgradeBtn;
     private Button _setPlayerNameCheckBtn;
+    private Button _closeBtn;
 
     private TextMeshProUGUI _playerNameTxt;
     private TextMeshProUGUI _playerDayTxt;
@@ -27,6 +27,7 @@ public class SelectScene_SceneUI : BaseUI
     protected override void Init()
     {
         _saveDataManager = Main.Get<SaveDataManager>();
+        _gameManager = Main.Get<GameManager>();
 
         SetUI<Button>();
         SetUI<Image>();
@@ -39,6 +40,7 @@ public class SelectScene_SceneUI : BaseUI
         _continueGameBtn = GetUI<Button>("ContinueBtn");
         _upgradeBtn = GetUI<Button>("UpgradeBtn");
         _setPlayerNameCheckBtn = GetUI<Button>("SetPlayerNameCheckBtn");
+        _closeBtn = GetUI<Button>("CloseBtn");
 
         _playerNameTxt = GetUI<TextMeshProUGUI>("PlayerNameTxt");
         _playerDayTxt = GetUI<TextMeshProUGUI>("PlayerDayTxt");
@@ -48,6 +50,7 @@ public class SelectScene_SceneUI : BaseUI
         SetUICallback(_startNewGameBtn.gameObject, EUIEventState.Click, ClickStartNewBtn);
         SetUICallback(_continueGameBtn.gameObject, EUIEventState.Click, ClickContinueBtn);
         SetUICallback(_setPlayerNameCheckBtn.gameObject, EUIEventState.Click, ClickSetPlayerNameCheckBtn);
+        SetUICallback(_closeBtn.gameObject, EUIEventState.Click, ClickCloseBtn);
 
 
         if (File.Exists(_saveDataManager.path))
@@ -61,13 +64,20 @@ public class SelectScene_SceneUI : BaseUI
         else
         {
             Debug.Log("저장된 데이터가 없습니다.");
+            _playerNameTxt.text = null;
+            _playerDayTxt.text = null;
+            _playerGoldTxt.text = null;
             _saveFile = false;
         }
     }
 
+    private bool HasValidCharacters(string text)
+    {
+        return text.Replace(" ", "").Length > 1;
+    }
+
     private void ClickStartNewBtn(PointerEventData data)
     {
-        _saveDataManager.ClearData();
         _setPlayerNameImage.gameObject.SetActive(true);
         
     }
@@ -77,8 +87,9 @@ public class SelectScene_SceneUI : BaseUI
         // 1. 저장된 데이터가 있을때
         if (_saveFile)
         {
+            Main.Get<SaveDataManager>().isSaveFileExist = true;
             _saveDataManager.LoadData();
-            SetGameData();
+            _saveDataManager.LoadMyData();
             Main.Get<SceneManager>().ChangeScene<HongTestScene>();
             Main.Get<GameManager>().isTutorial = false;
         }
@@ -90,21 +101,24 @@ public class SelectScene_SceneUI : BaseUI
 
     private void ClickSetPlayerNameCheckBtn(PointerEventData data)
     {
-        if (_inputFieldTxt == null) return;
+        string text = _inputFieldTxt.text;
+        if (text.Length == 1 || !HasValidCharacters(text))
+        {
+            Debug.Log("입력된 값이 없습니다");
+            return;
+        }
         _saveDataManager.DeleteData();
         _saveDataManager.Player.Name = _inputFieldTxt.text;
-        _saveDataManager.Player.PlayerMoney = 15000;
-        _saveDataManager.Player.Curstage = 0;
-        SetGameData();
+        Main.Get<GameManager>().PlayerName = _saveDataManager.Player.Name;
         _saveDataManager.SaveData();
         Debug.Log($"{_saveDataManager.Player.Name}");
+        Main.Get<GameManager>().AddHometoInventory();
         Main.Get<SceneManager>().ChangeScene<HongTestScene>();
     }
 
-    private void SetGameData()
+    private void ClickCloseBtn(PointerEventData data)
     {
-        Main.Get<GameManager>().PlayerMoney = _saveDataManager.Player.PlayerMoney;
-        Main.Get<GameManager>().CurStage = _saveDataManager.Player.Curstage;
+        _setPlayerNameImage.gameObject.SetActive(false);
     }
 }
 

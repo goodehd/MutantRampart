@@ -16,7 +16,15 @@ public class Enemy : CharacterBehaviour
         if (!CharacterInfo.IsDead)
         {
             Main.Get<StageManager>().CheckClear();
+            CharacterInfo.CurRoom.RemoveEnemy(this);
             base.Die();
         }
+    }
+
+    public override void ResetCharacter()
+    {
+        base.ResetCharacter();
+        CurPosX = -1;
+        CurPosY = -1;
     }
 }

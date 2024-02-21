@@ -6,32 +6,51 @@ using UnityEngine.UI;
 
 public class CharacterHpBarUI : BaseUI
 {
-    private Image _barImage;
+    private Image _hpBarImage;
+    private Image _mpBarImage;
     private CharacterBehaviour _owner;
 
     protected override void Init()
     {
         SetUI<Image>();
 
-        _barImage = GetUI<Image>("HpBar");
+        _hpBarImage = GetUI<Image>("HpBar");
+        _mpBarImage = GetUI<Image>("MpBar");
 
         _owner = transform.parent.GetComponent<CharacterBehaviour>();
 
-        if (_owner != null)
+        if (_owner != null && _owner.Status != null)
         {
-            _owner.Status.GetStat<Vital>(EstatType.Hp).OnCurValueChanged += SetInfo;
-            SetInfo(_owner.Status.GetStat<Vital>(EstatType.Hp).CurValue);
+            _owner.Status.GetStat<Vital>(EstatType.Hp).OnCurValueChanged += SetHpInfo;
+            _owner.Status.GetStat<Vital>(EstatType.Mp).OnCurValueChanged += SetMpInfo;
+            SetHpInfo(_owner.Status.GetStat<Vital>(EstatType.Hp).CurValue);
+            SetMpInfo(_owner.Status.GetStat<Vital>(EstatType.Mp).CurValue);
+        }
+
+        if(_owner.Status.GetStat<Vital>(EstatType.Mp).Value == 0)
+        {
+            _mpBarImage.transform.parent.gameObject.SetActive(false);
         }
     }
 
-    private void SetInfo(float hp)
+    private void SetHpInfo(float hp)
     {
         float ratio = _owner.Status.GetStat<Vital>(EstatType.Hp).Normalized();
-        _barImage.fillAmount = ratio;
+        _hpBarImage.fillAmount = ratio;
+    }
+
+    private void SetMpInfo(float mp)
+    {
+        float ratio = _owner.Status.GetStat<Vital>(EstatType.Mp).Normalized();
+        _mpBarImage.fillAmount = ratio;
     }
 
     private void OnDestroy()
     {
-        _owner.Status.GetStat<Vital>(EstatType.Hp).OnCurValueChanged -= SetInfo;
+        if(_owner != null)
+        {
+            _owner.Status.GetStat<Vital>(EstatType.Hp).OnCurValueChanged -= SetHpInfo;
+            _owner.Status.GetStat<Vital>(EstatType.Mp).OnCurValueChanged -= SetMpInfo;
+        }
     }
 }

@@ -30,7 +30,7 @@ public class InventItemDetailBox : BaseUI
     {
         _itemName.text = itemData.Key;
         _itemDescript.text =
-            $"Type : {itemData.Type.ToString()}\nHp : {itemData.HpAdd.ToString()}\nDamage : {itemData.AttackAdd.ToString()}\nDefense : {itemData.DefenseAdd.ToString()}\nAttackSpeed : {itemData.SpeedAdd.ToString()}\n\n설명\n {itemData.Instruction}";
+            $"Type : {itemData.Type.ToString()}\nHp : {itemData.HpAdd.ToString()}\nDamage : {itemData.AttackAdd.ToString()}\nDefense : {itemData.DefenseAdd.ToString()}\nAttackSpeed : {itemData.SpeedAdd.ToString("F2")}\n\n설명\n {itemData.Instruction}";
         
     }
 

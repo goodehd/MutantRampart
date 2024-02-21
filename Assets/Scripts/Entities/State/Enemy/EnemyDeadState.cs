@@ -31,7 +31,6 @@ public class EnemyDeadState : BaseState
     private IEnumerator DieObject()
     {
         Owner.Animator.SetTrigger(Literals.Dead);
-        Owner.CharacterInfo.CurRoom.RemoveEnemy(this.Owner);
         yield return new WaitForSeconds(1);
         Owner.ResetCharacter();
         Owner.StateMachine.InitState();

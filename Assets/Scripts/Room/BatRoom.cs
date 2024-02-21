@@ -48,6 +48,13 @@ public class BatRoom : RoomBehavior
                 {
                     continue;
                 }
+
+                if(unit.StateMachine.CurrentStateName == EState.Attack ||
+                    unit.StateMachine.CurrentStateName == EState.Skill)
+                {
+                    return;
+                }
+
                 unit.StateMachine.ChangeState(EState.Attack);
             }
         }
@@ -105,8 +112,13 @@ public class BatRoom : RoomBehavior
 
         Units[index] = Main.Get<SceneManager>().Scene.CreateCharacter(data.Data.PrefabName);
         Units[index].SetData(data);
+        Units[index].StateMachine.InitState();
         Units[index].CurRoom = this;
+        Units[index].CurPosX = IndexX;
+        Units[index].CurPosY = IndexY;
         Units[index].transform.position = Literals.BatPos[index] + transform.position + Units[index].transform.position;
+        Units[index].CurIndex = index;
+        Units[index].CharacterInfo.isEquiped = true;
         //유닛 체력이 회복되는가 체크 해봤슴 나중에 버프타일 함수에다가 넣으면 된다~~
         ConditionAdd(Units[index]);
         //Units[index].ConditionMachine.AddCondition(new HealingCondition(Units[index],RoomInfo.Data)); //TODO : Condition Test
@@ -125,6 +137,9 @@ public class BatRoom : RoomBehavior
             if (Units[i].CharacterInfo == data)
             {
                 Units[i].CharacterInfo.CurRoom = null;
+                Units[i].CharacterInfo.CurPosX = -1;
+                Units[i].CharacterInfo.CurPosY = -1;
+                Units[i].CharacterInfo.isEquiped = false;
                 Main.Get<ResourceManager>().Destroy(Units[i].gameObject);
                 UnitCount--;
             }
@@ -138,6 +153,9 @@ public class BatRoom : RoomBehavior
             if (Units[i] != null)
             {
                 Units[i].CharacterInfo.CurRoom = null;
+                Units[i].CharacterInfo.CurPosX = -1;
+                Units[i].CharacterInfo.CurPosY = -1;
+                Units[i].CharacterInfo.isEquiped = false;
                 Main.Get<ResourceManager>().Destroy(Units[i].gameObject);
             }
         }
@@ -176,7 +194,8 @@ public class BatRoom : RoomBehavior
 
                 break;
             case EBatType.Temple:
-
+                character.ConditionMachine.AddCondition(new TempleBuffCondition(character, RoomInfo.Data));
+                Debug.Log("사원 버프 부여");
                 break;
             default:
                 break;

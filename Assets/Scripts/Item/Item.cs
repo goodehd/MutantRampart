@@ -79,6 +79,11 @@ public class Item
         Debug.Log("엄마");
     }
 
+    public ItemSavableData CreateSavableItemData()
+    {
+        return new ItemSavableData(this);
+    }
+
 }
 
 public class SilverCoin : Item
