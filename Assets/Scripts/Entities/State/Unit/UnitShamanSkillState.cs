@@ -49,7 +49,7 @@ public class UnitShamanSkillState : BaseState
                     break;
 
                 count++;
-                target.Status.GetStat<Vital>(EstatType.Hp).CurValue -= damage;
+                target.TakeDamage(damage);
             }
             Main.Get<SoundManager>().SoundPlay($"{Owner.CharacterInfo.Data.PrefabName}SkillEnd", ESoundType.Effect);
 

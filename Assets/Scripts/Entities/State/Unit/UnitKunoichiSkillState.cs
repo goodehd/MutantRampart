@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class UnitKunoichiSkillState : BaseState
 {
@@ -40,7 +41,7 @@ public class UnitKunoichiSkillState : BaseState
             go.transform.position = pos;
 
             float damage = Owner.CharacterInfo.CalculateSkillValue();
-            _targets.First.Value.Status.GetStat<Vital>(EstatType.Hp).CurValue -= damage;
+            _targets.First.Value.TakeDamage(damage);
             Main.Get<SoundManager>().SoundPlay($"{Owner.CharacterInfo.Data.PrefabName}SkillEnd", ESoundType.Effect);
 
             Owner.StateMachine.ChangeState(EState.Attack);
