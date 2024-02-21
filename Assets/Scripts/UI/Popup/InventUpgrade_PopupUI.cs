@@ -214,8 +214,17 @@ public class InventUpgrade_PopupUI : BaseUI
                 Main.Get<GameManager>().PlayerRooms.Add(new Room(Main.Get<DataManager>().Room[UpgradeRoomSlots[0].Data.NextKey]));
                 Owner.SetRoomInventory();
                 
-                if (gameManager.isTutorial)
+                if (gameManager.isTutorial) // 튜토리얼 중이라면
                 {
+                    if (gameManager.PlayerRooms.Count == 4)
+                    {
+                        if (Owner.tweener.IsActive())
+                        {
+                            Owner.tweener.Kill();
+                        }
+                        Owner.inventArrowImg.gameObject.SetActive(false);
+
+                    }
                     if (gameManager.PlayerRooms.Count == 2)
                     {
                         if (Owner.tweener.IsActive())

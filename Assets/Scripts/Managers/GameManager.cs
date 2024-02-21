@@ -15,8 +15,8 @@ public class GameManager : IManagers
 
     public int CurStage = 0;
 
-    public bool isTutorial = true;
-    
+    public bool isTutorial = false;
+
     public bool isPlacingTutorialClear = false; // 배치모드 튜토리얼 클리어했는지 체크.
 
     public int tutorialIndexX = 1;
@@ -135,15 +135,15 @@ public class GameManager : IManagers
         saveDataManager.Player.PlayerMoney = PlayerMoney;
         saveDataManager.Player.PlayerHP = PlayerHP.CurValue;
         Main.Get<TileManager>().GetMapSize(out saveDataManager.Player.MapSizeX, out saveDataManager.Player.MapSizeY);
-        for (int i = 0; i< playerUnits.Count; i++)
+        for (int i = 0; i < playerUnits.Count; i++)
         {
             saveDataManager.Player.PlayerUnitsSaveData.Add(playerUnits[i].CreateSavableUnitData());
         }
-        for (int i = 0; i< PlayerRooms.Count; i++)
+        for (int i = 0; i < PlayerRooms.Count; i++)
         {
             saveDataManager.Player.PlayerRoomsSaveData.Add(PlayerRooms[i].CreateSavableRoomData());
         }
-        for (int i = 0; i< PlayerItems.Count; i++)
+        for (int i = 0; i < PlayerItems.Count; i++)
         {
             saveDataManager.Player.PlayerItemsSaveData.Add(PlayerItems[i].CreateSavableItemData());
         }
@@ -159,7 +159,7 @@ public class GameManager : IManagers
 
     public void SetHomeRoom(RoomBehavior home)
     {
-        if(home != null)
+        if (home != null)
         {
             isHomeSet = true;
             HomeRoom = home;
@@ -180,7 +180,10 @@ public class GameManager : IManagers
 
     public void ExitGame()
     {
-        SaveData();
+        if (!isTutorial)
+        {
+            SaveData();
+        }
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else

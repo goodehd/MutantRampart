@@ -1,12 +1,6 @@
-using DG.Tweening.Core.Easing;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class HongTestScene : Scene
 {
-    
+
     protected override void Init()
     {
         base.Init();
@@ -24,7 +18,10 @@ public class HongTestScene : Scene
     }
     protected override void OnApplicationQuit()
     {
-        Main.Get<GameManager>().SaveData();
+        if (!Main.Get<GameManager>().isTutorial)
+        {
+            Main.Get<GameManager>().SaveData();
+        }
     }
 
     public void CreateEnemy()
@@ -32,5 +29,5 @@ public class HongTestScene : Scene
         CharacterBehaviour cha = CreateCharacter("Slime");
         cha.StateMachine.ChangeState(EState.Move);
     }
-    
+
 }

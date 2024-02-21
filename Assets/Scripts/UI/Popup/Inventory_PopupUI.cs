@@ -236,7 +236,7 @@ public class Inventory_PopupUI : BaseUI
             if (Main.Get<GameManager>().PlayerRooms.Count == 4) // Rooom 에서 Upgrade 버튼 비활성화 할 때
             {
                 tweener.Kill(); // 인벤토리 업그레이드 버튼 가리키는 화살표 kill.
-                inventArrowTransform.anchoredPosition = new Vector3(525f, -30f, 0f); // 보유 Room 가리키는 화살표
+                inventArrowTransform.anchoredPosition = new Vector3(660f, -30f, 0f); // 보유 Room 가리키는 화살표
                 inventArrowTransform.Rotate(0f, 0f, 180f);
                 tweener = inventArrowTransform.DOAnchorPosY(0f, animationDuration).SetLoops(-1, LoopType.Yoyo);
                 _upgradeButton.gameObject.SetActive(false);

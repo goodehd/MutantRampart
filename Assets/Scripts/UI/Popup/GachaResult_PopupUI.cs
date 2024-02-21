@@ -10,8 +10,6 @@ public class GachaResult_PopupUI : BaseUI
     private Button closeButton;
     private GameManager gameManager;
 
-    private bool isArrowRotated = false; // close 버튼 누를 때마다 화살표 회전되는거 방지.
-
     // Data
     public List<CharacterData> GachaUnitData { get; set; }
     public List<RoomData> GachaRoomData { get; set; }
@@ -32,11 +30,6 @@ public class GachaResult_PopupUI : BaseUI
         SetUICallback(closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
 
         SetResultImgUInfo();
-
-        if (gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 3)
-        {
-            isArrowRotated = true;
-        }
     }
 
     private void ClickCloseBtn(PointerEventData eventData)
@@ -62,7 +55,12 @@ public class GachaResult_PopupUI : BaseUI
                 SaveItemInInventory(GachaItemData[i]);
             }
         }
-        Main.Get<GameManager>().SaveData();
+
+        if (!Main.Get<GameManager>().isTutorial)
+        {
+            Main.Get<GameManager>().SaveData();
+        }
+
         Main.Get<UIManager>().ClosePopup();
 
         if (gameManager.isTutorial)

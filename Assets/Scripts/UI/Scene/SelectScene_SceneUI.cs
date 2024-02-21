@@ -53,7 +53,7 @@ public class SelectScene_SceneUI : BaseUI
         SetUICallback(_closeBtn.gameObject, EUIEventState.Click, ClickCloseBtn);
 
 
-        if (File.Exists(_saveDataManager.path))
+        if (File.Exists(_saveDataManager.path) && !_gameManager.isTutorial)
         {
             _saveFile = true;
             _saveDataManager.LoadData();
@@ -85,13 +85,13 @@ public class SelectScene_SceneUI : BaseUI
     private void ClickContinueBtn(PointerEventData data)
     {
         // 1. 저장된 데이터가 있을때
-        if (_saveFile)
+        if (_saveFile && !_gameManager.isTutorial)
         {
             Main.Get<SaveDataManager>().isSaveFileExist = true;
             _saveDataManager.LoadData();
             _saveDataManager.LoadMyData();
             Main.Get<SceneManager>().ChangeScene<HongTestScene>();
-            Main.Get<GameManager>().isTutorial = false;
+            //Main.Get<GameManager>().isTutorial = false;
         }
         else
         {
@@ -114,6 +114,7 @@ public class SelectScene_SceneUI : BaseUI
         Debug.Log($"{_saveDataManager.Player.Name}");
         Main.Get<GameManager>().AddHometoInventory();
         Main.Get<SceneManager>().ChangeScene<HongTestScene>();
+        Main.Get<GameManager>().isTutorial = true;
     }
 
     private void ClickCloseBtn(PointerEventData data)
