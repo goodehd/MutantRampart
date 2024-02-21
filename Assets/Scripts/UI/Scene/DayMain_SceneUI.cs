@@ -614,8 +614,10 @@ public class DayMain_SceneUI : BaseUI
             _dayArrowImg.gameObject.SetActive(false);
 
             TutorialMsg_PopupUI tutorialUI = _ui.OpenPopup<TutorialMsg_PopupUI>();
-            tutorialUI.curTutorialText = "그리고 동일한 종류와 레벨의 Unit 이나 Room 이 3개 있으면\n다음 레벨로 업그레이드를 진행할 수도 있어요.\n\n업그레이드 버튼을 누른 다음,\n<color=#E9D038><b>Unit 과 Room 모두\n업그레이드를 진행해주세요!</b></color>";
+            tutorialUI.curTutorialText = "그리고 동일한 종류와 레벨의 Unit 이나 Room 이 3개 있으면\n다음 레벨로 업그레이드를 진행할 수도 있어요.\n\n먼저, <color=#E9D038><b>업그레이드 버튼</b></color>을 누른 다음,\n보유한 <color=#E9D038><b>Room</b></color> 을 클릭해서\n업그레이드를 진행해주세요!";
             inventory_PopupUI.tutorialMsg_PopupUI = tutorialUI;
+            tutorialUI.isBackgroundActive = true;
+            tutorialUI.isCloseBtnActive = true;
         }
     }
 

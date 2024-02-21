@@ -58,6 +58,11 @@ public class InventUpgrade_PopupUI : BaseUI
 
         Owner.inventUpgrade_PopupUI = this;
         Count = 0;
+
+        if (gameManager.isTutorial)
+        {
+            _closeButton.gameObject.SetActive(false);
+        }
     }
 
     public void SetUnitInfo(int index) // Unit
@@ -208,6 +213,25 @@ public class InventUpgrade_PopupUI : BaseUI
                 // 합성 후 새롭게 능력 부여된 아이템 제공 - NextKey 통해.
                 Main.Get<GameManager>().PlayerRooms.Add(new Room(Main.Get<DataManager>().Room[UpgradeRoomSlots[0].Data.NextKey]));
                 Owner.SetRoomInventory();
+                
+                if (gameManager.isTutorial)
+                {
+                    if (gameManager.PlayerRooms.Count == 2)
+                    {
+                        if (Owner.tweener.IsActive())
+                        {
+                            Owner.tweener.Kill();
+                        }
+
+                        Owner.inventArrowTransform.anchoredPosition = new Vector3(592f, 270f, 0f); // unit 버튼 화살표
+                        Owner.tweener = Owner.inventArrowTransform.DOAnchorPosY(300f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
+
+                        TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); //
+                        ui.curTutorialText = "같은 방식으로\n보유한 <color=#E9D038><b>Unit</b></color> 도 업그레이드를 진행해주세요!"; // <color=#E9D038><b>
+                        ui.isBackgroundActive = true;
+                        ui.isCloseBtnActive= true;
+                    }
+                }
 
                 Array.Clear(UpgradeRoomSlots, 0, UpgradeRoomSlots.Length);
                 Count = 0;
@@ -227,9 +251,8 @@ public class InventUpgrade_PopupUI : BaseUI
                 Owner.closeButton.gameObject.SetActive(true); // 인벤토리 닫기 버튼 활성화
                 Owner.inventArrowImg.gameObject.SetActive(true);
                 Owner.inventArrowTransform.anchoredPosition = new Vector3(662f, -400f, 0f); // 인벤토리 닫기 버튼 가리키는 화살표.
+                Owner.inventArrowTransform.Rotate(0f, 0f, 180f);
                 Owner.tweener = Owner.inventArrowTransform.DOAnchorPosY(-430f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
-
-
             }
         }
 

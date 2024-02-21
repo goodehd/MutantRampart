@@ -76,6 +76,11 @@ public class Inventory_PopupUI : BaseUI
         SetRoomInventory();
         SetUnitInventory();
 
+        if (!_upgradeButton.gameObject.activeSelf)
+        {
+            _upgradeButton.gameObject.SetActive(true);
+        }
+
         if (gameManager.isTutorial)
         {
             inventArrowImg.gameObject.SetActive(true);
@@ -126,6 +131,11 @@ public class Inventory_PopupUI : BaseUI
 
     private void ClickRoomBtn(PointerEventData EventData)
     {
+        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        {
+            if (gameManager.PlayerRooms.Count == 2) return; // 보유 room 이 2 면 버튼 작동 안 되게끔.
+        }
+
         _inventRoomScrollView.gameObject.SetActive(true);
         _inventUnitScrollView.gameObject.SetActive(false);
 
@@ -136,15 +146,32 @@ public class Inventory_PopupUI : BaseUI
             inventUnitDescri_PopupUI = null;
         }
 
-        if (inventUpgrade_PopupUI != null) // 업그레이드창이 켜져있다면
+        if (!gameManager.isTutorial)
         {
-            Main.Get<UIManager>().ClosePopup();
-            inventUpgrade_PopupUI = null;
+            if (inventUpgrade_PopupUI != null) // 업그레이드창이 켜져있다면
+            {
+                Main.Get<UIManager>().ClosePopup();
+                inventUpgrade_PopupUI = null;
+            }
         }
     }
 
     private void ClickUnitBtn(PointerEventData EventData)
     {
+        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        {
+            if (gameManager.PlayerRooms.Count > 2) return; // room 업그레이드 전에 유닛 버튼 작동 안 되게끔.
+
+            if (gameManager.PlayerRooms.Count == 2 && gameManager.playerUnits.Count == 1) return;
+
+            _upgradeButton.gameObject.SetActive(true);
+            if (tweener.IsActive())
+            {
+                tweener.Kill();
+            }
+            inventArrowImg.gameObject.SetActive(false);
+        }
+
         _inventRoomScrollView.gameObject.SetActive(false);
         _inventUnitScrollView.gameObject.SetActive(true);
 
@@ -184,13 +211,6 @@ public class Inventory_PopupUI : BaseUI
 
     private void ClickUpgradeBtn(PointerEventData EventData)
     {
-        if (gameManager.isTutorial && tutorialMsg_PopupUI != null) // 튜토리얼 중이라면
-        {
-            Main.Get<UIManager>().ClosePopup(); // 튜토리얼msg 팝업 끄기 - 튜토리얼메세지팝업이 떠있을때만 closepopup해주기 , 
-            tweener.Kill(); // 인벤토리 업그레이드 버튼 가리키는 화살표 kill.
-            inventArrowImg.gameObject.SetActive(false);
-        }
-
         if (inventUnitDescri_PopupUI != null) // unit description 창이 켜져있다면
         {
             inventUnitDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false);
@@ -209,6 +229,18 @@ public class Inventory_PopupUI : BaseUI
         {
             InventUpgrade_PopupUI ui = Main.Get<UIManager>().OpenPopup<InventUpgrade_PopupUI>("InventUpgrade_PopupUI");
             ui.Owner = this;
+        }
+
+        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        {
+            if (Main.Get<GameManager>().PlayerRooms.Count == 4) // Rooom 에서 Upgrade 버튼 비활성화 할 때
+            {
+                tweener.Kill(); // 인벤토리 업그레이드 버튼 가리키는 화살표 kill.
+                inventArrowTransform.anchoredPosition = new Vector3(525f, -30f, 0f); // 보유 Room 가리키는 화살표
+                inventArrowTransform.Rotate(0f, 0f, 180f);
+                tweener = inventArrowTransform.DOAnchorPosY(0f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+                _upgradeButton.gameObject.SetActive(false);
+            }
         }
     }
 }

@@ -86,7 +86,7 @@ public class RoomSelectImageUI : BaseUI
                 Owner.Owner.tweener = Owner.Owner.dayArrowTransform.DOAnchorPosX(-377f, Owner.Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
 
                 TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                ui.curTutorialText = "그리고 <color=#E9D038><b>열기/닫기 버튼</b></color>을 통해\nRoom 의 입구를 통제할 수도 있어요.\n\n만약, Home 으로 가는 길이 없다면\nBattle 을 시작할 수 없다는 점 참고해주세요!";
+                ui.curTutorialText = "Room 을 배치하고 <color=#E9D038><b>열기/닫기 버튼</b></color>을 통해\nRoom 의 입구를 통제할 수도 있어요.\n\n만약, Home 으로 가는 길이 없다면\nBattle 을 시작할 수 없다는 점 참고해주세요!";
                 Owner.Owner.rightBottomButton.gameObject.SetActive(true);
                 Owner.Owner.rightTopButton.gameObject.SetActive(true);
                 Owner.Owner.leftBottomButton.gameObject.SetActive(true);

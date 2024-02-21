@@ -220,10 +220,9 @@ public class Shop_PopupUI : BaseUI
         if (gameManager.isTutorial) // 튜토리얼 중이라면 
         {
             if (gameManager.playerUnits.Count < 3 || gameManager.PlayerRooms.Count >= 4) return;
-            //if (gameManager.PlayerRooms.Count >= 4) return;
+
             if (gameManager.playerUnits.Count >= 3) // 먼저 유닛 3회뽑기 완료했을 때만 Room 버튼 작동되도록.
             {
-                //tweener.Kill(); // room 가리키던 화살표 Kill.
                 shopArrowImg.gameObject.SetActive(false);
                 _unitBtnBox.gameObject.SetActive(false);
                 _roomBtnBox.gameObject.SetActive(true);
