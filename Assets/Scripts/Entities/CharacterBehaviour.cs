@@ -68,6 +68,7 @@ public class CharacterBehaviour : MonoBehaviour
         CharacterInfo.IsDead = false;
         Status.GetStat<Vital>(EstatType.Hp).SetCurValueMax();
         Status.GetStat<Vital>(EstatType.Mp).CurValue = 0;
+        this.Renderer.color = Color.white;
         StateMachine.ChangeState(EState.Idle);
     }
 

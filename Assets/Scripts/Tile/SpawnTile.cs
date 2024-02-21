@@ -16,20 +16,22 @@ public class SpawnTile : MonoBehaviour
         _spawnRatio = 1.0f;
     }
 
-    public void StartStage(string enemyName, int count)
+    public void StartStage(StageMonsterInfo info)
     {
-        StartCoroutine(SpawnEnemy(enemyName, count));
+        StartCoroutine(SpawnEnemy(info));
     }
 
-    private IEnumerator SpawnEnemy(string enemyName, int count)
+    private IEnumerator SpawnEnemy(StageMonsterInfo info)
     {
-        while (count != 0)
+        foreach (Monster monsyerInfo in info.Monsters)
         {
-            CharacterBehaviour enemy = _curScene.CreateCharacter(enemyName);
-            enemy.transform.position = _spawnPos;
-            enemy.StateMachine.ChangeState(EState.Move);
-            yield return new WaitForSeconds(_spawnRatio);
-            count--;
+            for(int i = 0; i < monsyerInfo.Count; i++)
+            {
+                CharacterBehaviour enemy = _curScene.CreateCharacter(monsyerInfo.Name);
+                enemy.transform.position = _spawnPos;
+                enemy.StateMachine.ChangeState(EState.Move);
+                yield return new WaitForSeconds(_spawnRatio);
+            }
         }
     }
 }
