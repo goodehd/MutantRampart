@@ -92,7 +92,7 @@ public class UIManager : IManagers
 
     public void DestroySubItem(GameObject obj)
     {
-        Object.Destroy(obj);
+        _resource.Destroy(obj);
     }
 
     private GameObject InstantiateUI(string prefabName, string path)

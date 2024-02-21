@@ -45,11 +45,13 @@ public class Vital : Stat
     public Vital(EstatType stateType, float value, float maxValue) : base(stateType, maxValue)
     {
         _curValue = value;
+        OnValueChanged += CurValueChange;
     }
 
     public Vital(EstatType stateType, float value) : base(stateType, value)
     {
         _curValue = value;
+        OnValueChanged += CurValueChange;
     }
 
     public float Normalized()
@@ -67,5 +69,13 @@ public class Vital : Stat
     public void SetCurValueMax()
     {
         CurValue = base.Value;
+    }
+
+    private void CurValueChange(float value)
+    {
+        if(CurValue >= base.Value)
+        {
+            CurValue = base.Value;
+        }
     }
 }

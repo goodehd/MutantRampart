@@ -21,7 +21,7 @@ public class UnitDeadState : BaseState
 
     public override void ExitState()
     {
-
+        Owner.Renderer.color = Color.white;
     }
 
     public override void UpdateState()
@@ -33,6 +33,7 @@ public class UnitDeadState : BaseState
     {
         Owner.Animator.SetTrigger(Literals.Dead);
         yield return new WaitForSeconds(1);
+        Owner.Renderer.color = Color.white;
         Owner.gameObject.SetActive(false);
     }
 }

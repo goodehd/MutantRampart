@@ -52,6 +52,8 @@ public class EnemyAttackState : BaseState
     {
         while (true)
         {
+            yield return new WaitForSeconds(0.2f);
+
             CharacterBehaviour target = SetAttackTartget();
 
             if (target == null)
