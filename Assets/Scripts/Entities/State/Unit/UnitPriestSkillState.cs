@@ -18,6 +18,8 @@ public class UnitPriestSkillState : BaseState
     public override void EnterState()
     {
         Owner.Animator.SetTrigger(Literals.Skill);
+        Main.Get<SoundManager>().SoundPlay($"{Owner.CharacterInfo.Data.PrefabName}Skill", ESoundType.Effect);
+
         Owner.Status.GetStat<Vital>(EstatType.Mp).CurValue = 0;
         _units = ((BatRoom)Owner.CharacterInfo.CurRoom).Units;
     }

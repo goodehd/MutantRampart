@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TrapRoom : RoomBehavior
@@ -59,7 +60,7 @@ public class TrapRoom : RoomBehavior
 
         yield return new WaitForSeconds(3f); //피해를 주기까지의 시간
 
-        foreach (var listenemy in enemys)
+        foreach (var listenemy in enemys.ToList())
         {
             //피해를 주는 로직
             listenemy.Status.GetStat<Vital>(EstatType.Hp).CurValue -= 10;

@@ -20,6 +20,9 @@ public class UnitKnightSkillState : BaseState
     public override void EnterState()
     {
         Owner.Animator.SetTrigger(Literals.Skill);
+        Main.Get<SoundManager>().SoundPlay($"{Owner.CharacterInfo.Data.PrefabName}Skill", ESoundType.Effect);
+
+        //TODO : 여기쯤에서 애니메이션이 시작한다.
         Owner.Status.GetStat<Vital>(EstatType.Mp).CurValue = 0;
     }
 
@@ -39,7 +42,9 @@ public class UnitKnightSkillState : BaseState
                 IsSkillActive = true;
             }
             Owner.Status.GetStat<Vital>(EstatType.Hp).CurValue += Owner.CharacterInfo.SkillData.DefenseCoefficient * Owner.Status[EstatType.Defense].Value;
+            //TODO : 여기쯤에서 애니메이션이 끝난다.
             Owner.StateMachine.ChangeState(EState.Attack);
+
         }
     }
 }

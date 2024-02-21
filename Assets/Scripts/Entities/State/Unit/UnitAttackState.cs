@@ -74,6 +74,7 @@ public class UnitAttackState : BaseState
                 yield break;
             }
             Owner.Animator.SetTrigger(Literals.Attack);
+            Main.Get<SoundManager>().SoundPlay($"{Owner.CharacterInfo.Data.PrefabName}Attack", ESoundType.Effect);
             target.Status.GetStat<Vital>(EstatType.Hp).CurValue -= Owner.Status[EstatType.Damage].Value;
             yield return new WaitForSeconds(1 / Owner.Status[EstatType.AttackSpeed].Value);
         }
