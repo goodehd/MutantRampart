@@ -76,6 +76,16 @@ public class CharacterBehaviour : MonoBehaviour
         return transform.position + transform.GetChild(0).localPosition;
     }
 
+    public void TakeDamage(float damage)
+    {
+        float finalDamage = damage - Status[EstatType.Defense].Value;
+        if(finalDamage >= 0)
+        {
+            finalDamage = 1;
+        }
+        Status.GetStat<Vital>(EstatType.Hp).CurValue -= finalDamage;
+    }
+
     private void OnDestroy()
     {
         ConditionMachine.ClearConditions();

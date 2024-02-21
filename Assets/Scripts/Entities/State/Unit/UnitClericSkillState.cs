@@ -45,7 +45,7 @@ public class UnitClericSkillState : BaseState
             float damage = Owner.CharacterInfo.CalculateSkillValue();
             foreach (CharacterBehaviour target in _targets.ToList())
             {
-                target.Status.GetStat<Vital>(EstatType.Hp).CurValue -= damage;
+                target.TakeDamage(damage);
             }
 
             for (int i = 0; i < _units.Length; i++)

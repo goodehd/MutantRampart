@@ -69,8 +69,7 @@ public class EnemyAttackState : BaseState
             }
 
             Owner.Animator.SetTrigger(Literals.Attack);
-            target.Status.GetStat<Vital>(EstatType.Hp).CurValue -= Owner.Status[EstatType.Damage].Value;
-
+            target.TakeDamage(Owner.Status[EstatType.Damage].Value);
             yield return new WaitForSeconds(1 / Owner.Status[EstatType.AttackSpeed].Value);
         }
     }
