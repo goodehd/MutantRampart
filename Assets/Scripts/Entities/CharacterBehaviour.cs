@@ -89,13 +89,6 @@ public class CharacterBehaviour : MonoBehaviour
         CreateDamageText(finalDamage);
     }
 
-    private void OnDestroy()
-    {
-        ConditionMachine.ClearConditions();
-        if(CharacterInfo != null && CharacterInfo.Status != null)
-            CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero -= Die;
-    }
-
     private void CreateDamageText(float value)
     {
         DamageTextUI damageUI = _ui.CreateSubitem<DamageTextUI>();
@@ -108,5 +101,11 @@ public class CharacterBehaviour : MonoBehaviour
         {
             damageUI.SetPos(GetWorldPos(), GetWorldPos() + new Vector3(1f, 0f, 0f));
         }
+    }
+
+    public void DestroyUnit()
+    {
+        CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero -= Die;
+        ConditionMachine.ClearConditions();
     }
 }

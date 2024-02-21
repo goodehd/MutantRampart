@@ -59,7 +59,8 @@ public class CharacterHpBarUI : BaseUI
         if(_coroutine != null)
             StopCoroutine(_coroutine);
 
-        StartCoroutine(BaseBarAnimation());
+        if(gameObject.activeSelf)
+            StartCoroutine(BaseBarAnimation());
     }
 
     private void SetMaxHpInfo(float hp)

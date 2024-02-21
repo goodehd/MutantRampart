@@ -136,10 +136,7 @@ public class BatRoom : RoomBehavior
 
             if (Units[i].CharacterInfo == data)
             {
-                Units[i].CharacterInfo.CurRoom = null;
-                Units[i].CharacterInfo.CurPosX = -1;
-                Units[i].CharacterInfo.CurPosY = -1;
-                Units[i].CharacterInfo.isEquiped = false;
+                DestroyUnit(Units[i]);
                 Main.Get<ResourceManager>().Destroy(Units[i].gameObject);
                 UnitCount--;
             }
@@ -152,14 +149,20 @@ public class BatRoom : RoomBehavior
         {
             if (Units[i] != null)
             {
-                Units[i].CharacterInfo.CurRoom = null;
-                Units[i].CharacterInfo.CurPosX = -1;
-                Units[i].CharacterInfo.CurPosY = -1;
-                Units[i].CharacterInfo.isEquiped = false;
+                DestroyUnit(Units[i]);
                 Main.Get<ResourceManager>().Destroy(Units[i].gameObject);
             }
         }
         UnitCount = 0;
+    }
+
+    private void DestroyUnit(CharacterBehaviour unit)
+    {
+        unit.CharacterInfo.CurPosX = -1;
+        unit.CharacterInfo.CurPosY = -1;
+        unit.CharacterInfo.CurRoom = null;
+        unit.CharacterInfo.isEquiped = false;
+        unit.DestroyUnit();
     }
 
     private void StageClear(int stage)

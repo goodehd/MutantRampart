@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TempleBuffCondition : BaseCondition
 {
+    private Coroutine _co;
+
     private float _upgradeValue_1 { get; set; }
     private float _upgradeValue_2 { get; set; }
     private float _upgradeValue_3 { get; set; }
@@ -52,11 +54,15 @@ public class TempleBuffCondition : BaseCondition
     }
     public void StartEffect(int starge)
     {
-        Owner.StartCoroutine(ConditionEffect(_upgradeValue_1, _upgradeValue_2));
+        _co = Owner.StartCoroutine(ConditionEffect(_upgradeValue_1, _upgradeValue_2));
     }
     public void ClearEffect(int starge)
     {
-        Owner.StopCoroutine(ConditionEffect(_upgradeValue_1, _upgradeValue_2));
+        if(_co != null)
+        {
+            Owner.StopCoroutine(_co);
+            _co = null;
+        }
         Owner.Status.GetStat<Vital>(EstatType.Hp).RemoveAllModifier(this);
         Owner.Status.GetStat<Stat>(EstatType.Defense).RemoveAllModifier(this);
         Owner.Status.GetStat<Stat>(EstatType.Damage).RemoveAllModifier(this);
