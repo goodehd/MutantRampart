@@ -54,10 +54,7 @@ public class StageManager : IManagers
         _tileManager = Main.Get<TileManager>();
 
         StageMonsterInfo stage = new StageMonsterInfo(1000);
-        stage.AddMonster("BigBull", 2);
-        stage.AddMonster("Slime", 3);
-        stage.AddMonster("Snail", 1);
-        stage.AddMonster("PlantBuger", 1);
+        stage.AddMonster("BigBull", 1);
         stageMonsterInfoList.Add(stage);
 
         stage = new StageMonsterInfo(2000);

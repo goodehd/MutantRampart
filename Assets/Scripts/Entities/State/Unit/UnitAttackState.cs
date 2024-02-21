@@ -15,8 +15,7 @@ public class UnitAttackState : BaseState
 
     public override void Init()
     {
-        //Owner.Status.GetStat<Vital>(EstatType.Mp).OnValueMax -= SkillActive;
-        //Owner.Status.GetStat<Vital>(EstatType.Mp).OnValueMax += SkillActive;
+
     }
 
     public override void EnterState()
@@ -53,6 +52,8 @@ public class UnitAttackState : BaseState
     {
         while (true)
         {
+            yield return new WaitForSeconds(0.2f);
+
             CharacterBehaviour target = SetTartget();
 
             if (target == null)
@@ -90,10 +91,5 @@ public class UnitAttackState : BaseState
             }
         }
         return null;
-    }
-
-    private void SkillActive()
-    {
-        Owner.StateMachine.ChangeState(EState.Skill);
     }
 }

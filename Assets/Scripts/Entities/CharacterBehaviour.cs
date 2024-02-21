@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CharacterBehaviour : MonoBehaviour
 {
+    private UIManager _ui;
     public Animator Animator { get; private set; }
     public SpriteRenderer Renderer { get; private set; }
     public Character CharacterInfo { get; private set; }
@@ -24,6 +25,7 @@ public class CharacterBehaviour : MonoBehaviour
         if (_initialize)
             return;
 
+        _ui = Main.Get<UIManager>();
         this.Animator = GetComponentInChildren<Animator>();
         this.Renderer = GetComponentInChildren<SpriteRenderer>();
 
@@ -67,8 +69,8 @@ public class CharacterBehaviour : MonoBehaviour
         CharacterInfo.IsDead = false;
         Status.GetStat<Vital>(EstatType.Hp).SetCurValueMax();
         Status.GetStat<Vital>(EstatType.Mp).CurValue = 0;
-        this.Renderer.color = Color.white;
         StateMachine.ChangeState(EState.Idle);
+        this.Renderer.color = Color.white;
     }
 
     public Vector3 GetWorldPos()
@@ -84,6 +86,7 @@ public class CharacterBehaviour : MonoBehaviour
             finalDamage = 1;
         }
         Status.GetStat<Vital>(EstatType.Hp).CurValue -= finalDamage;
+        CreateDamageText(finalDamage);
     }
 
     private void OnDestroy()
@@ -91,5 +94,19 @@ public class CharacterBehaviour : MonoBehaviour
         ConditionMachine.ClearConditions();
         if(CharacterInfo != null && CharacterInfo.Status != null)
             CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero -= Die;
+    }
+
+    private void CreateDamageText(float value)
+    {
+        DamageTextUI damageUI = _ui.CreateSubitem<DamageTextUI>();
+        damageUI.SetText(value);
+        if (!Renderer.flipX)
+        {
+            damageUI.SetPos(GetWorldPos(), GetWorldPos() + new Vector3(-1f, 0f, 0f));
+        }
+        else
+        {
+            damageUI.SetPos(GetWorldPos(), GetWorldPos() + new Vector3(1f, 0f, 0f));
+        }
     }
 }
