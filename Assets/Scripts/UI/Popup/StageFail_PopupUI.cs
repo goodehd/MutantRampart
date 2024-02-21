@@ -39,7 +39,8 @@ public class StageFail_PopupUI : BaseUI
         // 시작 Scene 으로 이동
         //Main.Get<UIManager>().CloseAllPopup();
         Main.Get<UIManager>().ClosePopup();
-        Main.Get<SceneManager>().ChangeScene<StartScene>();
+        Main.Get<SaveDataManager>().DeleteData();
+        Main.Get<SceneManager>().ChangeScene<SelectScene>();
     }
 
     private void ClickRetryBtn(PointerEventData data)
