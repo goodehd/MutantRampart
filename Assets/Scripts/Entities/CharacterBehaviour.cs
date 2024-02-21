@@ -14,6 +14,7 @@ public class CharacterBehaviour : MonoBehaviour
     public CharacterStatus Status { get { return CharacterInfo.Status; } }
     public int CurPosX { get { return CharacterInfo.CurPosX ; } set { CharacterInfo.CurPosX = value; } }
     public int CurPosY { get { return CharacterInfo.CurPosY; } set { CharacterInfo.CurPosY = value; } }
+    public int CurIndex { get { return CharacterInfo.CurIndex; } set { CharacterInfo.CurIndex = value; } }
     public RoomBehavior CurRoom { get { return CharacterInfo.CurRoom; } set { CharacterInfo.CurRoom = value; } }
 
     private bool _initialize = false;
@@ -63,8 +64,6 @@ public class CharacterBehaviour : MonoBehaviour
 
     public virtual void ResetCharacter()
     {
-        CurPosX = -1;
-        CurPosY = -1;
         CharacterInfo.IsDead = false;
         Status.GetStat<Vital>(EstatType.Hp).SetCurValueMax();
         Status.GetStat<Vital>(EstatType.Mp).CurValue = 0;

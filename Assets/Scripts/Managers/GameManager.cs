@@ -1,21 +1,24 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class GameManager : IManagers
 {
     private TileManager _tile;
     public int PlayerMoney { get; set; }
-    public Vital PlayerHP { get; private set; }
+    public Vital PlayerHP { get; set; }
 
     public bool isHomeSet = false;
     public RoomBehavior HomeRoom { get; set; }
+    public string PlayerName { get; set; }
 
-    public int CurStage;
+    public int CurStage = 0;
 
-    public List<Character> playerUnits { get; private set; } = new List<Character>();   // 플레이어가 보유한 유닛 리스트
-    public List<Room> PlayerRooms { get; private set; } = new List<Room>();     // 플레이어가 보유한 Room 리스트
-    public List<Item> PlayerItems { get; private set; } = new List<Item>();             // 플레이어가 보유한 아이템 리스트
+    public List<Character> playerUnits { get; set; } = new List<Character>();   // 플레이어가 보유한 유닛 리스트
+    public List<Room> PlayerRooms { get; set; } = new List<Room>();     // 플레이어가 보유한 Room 리스트
+    public List<Item> PlayerItems { get; set; } = new List<Item>();             // 플레이어가 보유한 아이템 리스트
+    
     public event Action<int> OnChangeMoney;
 
     public bool Init()
@@ -23,22 +26,20 @@ public class GameManager : IManagers
         _tile = Main.Get<TileManager>();
 
         //PlayerRooms.Add(Main.Get<DataManager>().Room["Home"]);
-        Room room = new Room();
-        room.Init(Main.Get<DataManager>().Room["Home"]);
-        PlayerRooms.Add(room);
 
-        Room room2 = new Room();
+        
+
+        /*Room room2 = new Room();
         room2.Init(Main.Get<DataManager>().Room["Temple"]);
         PlayerRooms.Add(room2);
 
-        playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
-        /* 
-
-         
+         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
          playerUnits.Add(new Character(Main.Get<DataManager>().Character["Jotem"]));
 
 
-        
+         Item item1 = new Item();
+         item1.Init(Main.Get<DataManager>().Item["Meat"]);
+         PlayerItems.Add(item1);
 
          Item item2 = new Item();
          item2.Init(Main.Get<DataManager>().Item["BlueBook"]);
@@ -103,9 +104,33 @@ public class GameManager : IManagers
 
     public void SaveData()
     {
-        Main.Get<SaveDataManager>().Player.Curstage = CurStage;
-        Main.Get<SaveDataManager>().Player.PlayerMoney = PlayerMoney;
-        Main.Get<SaveDataManager>().SaveData();
+        SaveDataManager saveDataManager = Main.Get<SaveDataManager>();
+        saveDataManager.ClearData();
+        saveDataManager.Player.Name = PlayerName;
+        saveDataManager.Player.Curstage = CurStage;
+        saveDataManager.Player.PlayerMoney = PlayerMoney;
+        saveDataManager.Player.PlayerHP = PlayerHP.CurValue;
+        Main.Get<TileManager>().GetMapSize(out saveDataManager.Player.MapSizeX, out saveDataManager.Player.MapSizeY);
+        for (int i = 0; i< playerUnits.Count; i++)
+        {
+            saveDataManager.Player.PlayerUnitsSaveData.Add(playerUnits[i].CreateSavableUnitData());
+        }
+        for (int i = 0; i< PlayerRooms.Count; i++)
+        {
+            saveDataManager.Player.PlayerRoomsSaveData.Add(PlayerRooms[i].CreateSavableRoomData());
+        }
+        for (int i = 0; i< PlayerItems.Count; i++)
+        {
+            saveDataManager.Player.PlayerItemsSaveData.Add(PlayerItems[i].CreateSavableItemData());
+        }
+        for (int i = 0; i < saveDataManager.Player.MapSizeX; i++)
+        {
+            for (int j = 0; j < saveDataManager.Player.MapSizeY; j++)
+            {
+                saveDataManager.Player.PlayerRoomsDirSaveData.Add(Main.Get<TileManager>()._roomObjList[i][j].CreateRoomDirSavableData());
+            }
+        }
+        saveDataManager.SaveData();
     }
 
     public void SetHomeRoom(RoomBehavior home)
@@ -122,9 +147,26 @@ public class GameManager : IManagers
         }
     }
 
+    public void AddHometoInventory()
+    {
+        Room room = new Room();
+        room.Init(Main.Get<DataManager>().Room["Home"]);
+        PlayerRooms.Add(room);
+    }
+
+    public void ExitGame()
+    {
+        SaveData();
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit(); 
+#endif
+    }
     // todo : Item 뺄 때 해야하는 것들 함수로 작동시키기 !
     //public void RemoveItem(Item item) // item -- 인벤토리에서 삭제, 장착되어있는 것에서 해제
     //{
 
     //}
+
 }

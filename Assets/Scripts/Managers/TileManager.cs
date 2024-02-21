@@ -7,9 +7,10 @@ using UnityEngine.Experimental.GlobalIllumination;
 public class TileManager : IManagers
 {
     private ResourceManager resource;
-    private List<List<RoomBehavior>> _roomObjList = new List<List<RoomBehavior>>();
-    private GameObject _gridObject;
+    
+    public GameObject GridObject;
     public NavigationTile _navigation;
+    public List<List<RoomBehavior>> _roomObjList = new List<List<RoomBehavior>>();
 
     public SpawnTile SpawnTile { get; private set; }
     public BatPoint BatSlot { get; set; }
@@ -20,10 +21,10 @@ public class TileManager : IManagers
 
     public void GenerateMap(int x, int y)
     {
-        _gridObject = new GameObject("Tile");
+        GridObject = new GameObject("Tile");
 
         // 그리드를 생성하고 Grid 컴포넌트를 추가
-        Grid gridComponent = _gridObject.AddComponent<Grid>();
+        Grid gridComponent = GridObject.AddComponent<Grid>();
 
         // Cell Size 및 Cell Gap 설정
         gridComponent.cellSize = new Vector3(1, 0.5f, 1); // x = 1, y = 0.5, z = 1
@@ -52,11 +53,11 @@ public class TileManager : IManagers
             }
         }
 
-        GameObject spawn = resource.Instantiate("Prefabs/Room/SpawnTile", _gridObject.transform);
+        GameObject spawn = resource.Instantiate("Prefabs/Room/SpawnTile", GridObject.transform);
         spawn.transform.position = new Vector3(-6f, 0, 0);
         SpawnTile = spawn.GetComponent<SpawnTile>();
 
-        BatSlot = resource.Instantiate("Prefabs/Room/BatPoint", _gridObject.transform).GetComponent<BatPoint>();
+        BatSlot = resource.Instantiate("Prefabs/Room/BatPoint", GridObject.transform).GetComponent<BatPoint>();
 
         _navigation.CreateNavigation(_roomObjList);
     }
@@ -111,14 +112,15 @@ public class TileManager : IManagers
 
     public RoomBehavior ChangeRoom(Room changeRoom)
     {
-        GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom($"{changeRoom.Data.PrefabName}");
+        GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom(changeRoom.Data.PrefabName);
         obj.transform.position = SelectRoom.transform.position;
-        obj.transform.parent = _gridObject.transform;
+        obj.transform.parent = GridObject.transform;
 
         RoomBehavior room = obj.GetComponent<RoomBehavior>();
         room.SetData(changeRoom);
         room.IndexX = SelectRoom.IndexX;
         room.IndexY = SelectRoom.IndexY;
+        room.Pos = SelectRoom.Pos;
         room.RoomInfo.EquipedRoom();
 
         _roomObjList[SelectRoom.IndexX][SelectRoom.IndexY] = room;
@@ -262,10 +264,12 @@ public class TileManager : IManagers
     {
         GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom("Default");
         obj.transform.position = pos;
-        obj.transform.parent = _gridObject.transform;
+        obj.transform.parent = GridObject.transform;
         RoomBehavior room = obj.GetComponent<RoomBehavior>();
         room.IndexX = x;
         room.IndexY = y;
+        room.Pos = pos;
+        room.Pos = obj.transform.position;
 
         return room;
     }
@@ -276,5 +280,16 @@ public class TileManager : IManagers
         _roomObjList[room.IndexX][room.IndexY].OnDestroyRoom();
         resource.Destroy(_roomObjList[room.IndexX][room.IndexY].gameObject);
         _roomObjList[room.IndexX][room.IndexY] = newRoom;
+    }
+
+    public void DestroyRoom(int x, int y)
+    {
+        resource.Destroy(_roomObjList[x][y].gameObject);
+    }
+
+    public void SetRoomDir(int x, int y, ERoomDir roomDir)
+    {
+        _roomObjList[x][y].RoomDir = roomDir;
+        SetCheckWall(_roomObjList[x][y]);
     }
 }

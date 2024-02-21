@@ -105,6 +105,8 @@ public class DayMain_SceneUI : BaseUI
         stageManager.OnStageClearEvent += UpdateDayCount;
 
         tileManager.OnSlectRoomEvent += TileBat;
+
+        UpdateHpUI(0);
     }
 
     #region UiBind
@@ -375,7 +377,6 @@ public class DayMain_SceneUI : BaseUI
     {
         maincamera.Rock = true;
         Main.Get<UIManager>().OpenPopup<Setting_PopupUI>();
-        Main.Get<GameManager>().SaveData();
     }
 
     private void OpenPoketBlock(bool isUint)

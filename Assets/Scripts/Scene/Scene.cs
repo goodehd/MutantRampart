@@ -15,6 +15,10 @@ public class Scene : MonoBehaviour
         Init();
     }
 
+    protected virtual void OnApplicationQuit()
+    {
+    }
+
     protected virtual void Init()
     {
         Main.Get<SceneManager>().Scene = this;

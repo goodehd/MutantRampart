@@ -52,7 +52,7 @@ public class GachaResult_PopupUI : BaseUI
                 SaveItemInInventory(GachaItemData[i]);
             }
         }
-
+        Main.Get<GameManager>().SaveData();
         Main.Get<UIManager>().ClosePopup();
     }
 

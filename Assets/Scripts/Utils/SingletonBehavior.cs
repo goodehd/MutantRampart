@@ -56,4 +56,5 @@ public abstract class SingletonBehavior<T> : MonoBehaviour where T : MonoBehavio
             _isDisabled = true;
         }
     }
+    
 }

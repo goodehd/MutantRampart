@@ -20,4 +20,11 @@ public class Enemy : CharacterBehaviour
             base.Die();
         }
     }
+
+    public override void ResetCharacter()
+    {
+        base.ResetCharacter();
+        CurPosX = -1;
+        CurPosY = -1;
+    }
 }
