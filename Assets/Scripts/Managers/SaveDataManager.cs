@@ -152,11 +152,15 @@ public class SaveDataManager : IManagers
     public void LoadMyData()
     {
         GameManager _gameManager = Main.Get<GameManager>();
+        SoundManager _soundManager = Main.Get<SoundManager>();
 
         _gameManager.PlayerName = Player.Name;
         _gameManager.PlayerMoney = Player.PlayerMoney;
         _gameManager.CurStage = Player.Curstage;
         _gameManager.PlayerHP.CurValue = Player.PlayerHP;
+        _soundManager.BGMValue = Player.BGMValue;
+        _soundManager.EffectValue = Player.EffectValue;
+        _soundManager.UIValue = Player.UIValue;
 
         if (Player.PlayerUnitsSaveData.Count > 0)
         {

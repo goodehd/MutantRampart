@@ -10,6 +10,7 @@ public class GameManager : IManagers
     public Vital PlayerHP { get; set; }
 
     public bool isHomeSet = false;
+    public bool isPlayerDead = false;
     public RoomBehavior HomeRoom { get; set; }
     public string PlayerName { get; set; }
 
@@ -93,6 +94,7 @@ public class GameManager : IManagers
     public void GameOver()
     {
         Time.timeScale = 0.0f;
+        isPlayerDead = true;
         StageFail_PopupUI ui = Main.Get<UIManager>().OpenPopup<StageFail_PopupUI>("StageFail_PopupUI");
         ui._curStage = CurStage;
 
@@ -134,6 +136,9 @@ public class GameManager : IManagers
         saveDataManager.Player.Curstage = CurStage;
         saveDataManager.Player.PlayerMoney = PlayerMoney;
         saveDataManager.Player.PlayerHP = PlayerHP.CurValue;
+        saveDataManager.Player.BGMValue = Main.Get<SoundManager>().BGMValue;
+        saveDataManager.Player.EffectValue = Main.Get<SoundManager>().EffectValue;
+        saveDataManager.Player.UIValue = Main.Get<SoundManager>().UIValue;
         Main.Get<TileManager>().GetMapSize(out saveDataManager.Player.MapSizeX, out saveDataManager.Player.MapSizeY);
         for (int i = 0; i < playerUnits.Count; i++)
         {
