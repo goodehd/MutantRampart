@@ -84,7 +84,7 @@ public class UnitSelectImageUIPanel : BaseUI
 
         if (_game.isTutorial) // 튜토리얼 중이라면
         {
-            if (_game.playerUnits[0].CurRoom != null) // 유닛이 장착중이라면
+            if (_game.PlayerUnits[0].CurRoom != null) // 유닛이 장착중이라면
             {
                 Main.Get<UIManager>().CloseAllPopup(); // 튜토리얼 창과 포켓팝업UI 끄기.
                 Owner.Owner.backButton.gameObject.SetActive(true); // 뒤로가기 버튼 활성화

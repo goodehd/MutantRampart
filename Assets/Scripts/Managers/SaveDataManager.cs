@@ -69,7 +69,7 @@ public class SaveDataManager : IManagers
                 item.EquipItem(character);
             }
         }
-        Main.Get<GameManager>().playerUnits.Add(character);
+        Main.Get<GameManager>().PlayerUnits.Add(character);
     }
 
     public void ApplyDataToRoom(RoomSavableData savedata)
@@ -103,7 +103,7 @@ public class SaveDataManager : IManagers
     public void GenerateSaveMap()
     {
         List<Room> playerRooms = Main.Get<GameManager>().PlayerRooms;
-        List<Character> playerUnits = Main.Get<GameManager>().playerUnits;
+        List<Character> playerUnits = Main.Get<GameManager>().PlayerUnits;
 
         Main.Get<TileManager>().GenerateMap(Player.MapSizeX, Player.MapSizeY);
         LoadRoomDirSaveData();
@@ -152,11 +152,18 @@ public class SaveDataManager : IManagers
     public void LoadMyData()
     {
         GameManager _gameManager = Main.Get<GameManager>();
+        SoundManager _soundManager = Main.Get<SoundManager>();
 
         _gameManager.PlayerName = Player.Name;
         _gameManager.PlayerMoney = Player.PlayerMoney;
         _gameManager.CurStage = Player.Curstage;
         _gameManager.PlayerHP.CurValue = Player.PlayerHP;
+        _soundManager.BGMValue = Player.BGMValue;
+        _soundManager.EffectValue = Player.EffectValue;
+        _soundManager.UIValue = Player.UIValue;
+        Main.Get<SoundManager>().SetVolume(ESoundType.BGM, _soundManager.BGMValue);
+        Main.Get<SoundManager>().SetVolume(ESoundType.Effect, _soundManager.EffectValue);
+        Main.Get<SoundManager>().SetVolume(ESoundType.UI, _soundManager.UIValue);
 
         if (Player.PlayerUnitsSaveData.Count > 0)
         {

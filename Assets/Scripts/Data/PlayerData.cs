@@ -12,6 +12,9 @@ public class PlayerData
     public float PlayerHP;
     public int MapSizeX;
     public int MapSizeY;
+    public float BGMValue;
+    public float EffectValue;
+    public float UIValue;
     public List<CharacterSavableData> PlayerUnitsSaveData = new List<CharacterSavableData>();
     public List<RoomSavableData> PlayerRoomsSaveData = new List<RoomSavableData>();
     public List<ItemSavableData> PlayerItemsSaveData = new List<ItemSavableData>();

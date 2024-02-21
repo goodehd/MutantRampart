@@ -84,14 +84,14 @@ public class BatRoom : RoomBehavior
                     Character characterInfo = unit.CharacterInfo;
 
                     // CharacterInfo가 playerUnits에 있는지 확인
-                    int indexInPlayerUnits = Main.Get<GameManager>().playerUnits.IndexOf(characterInfo);
+                    int indexInPlayerUnits = Main.Get<GameManager>().PlayerUnits.IndexOf(characterInfo);
                     int index = Array.IndexOf(Units, unit);
                     if (indexInPlayerUnits != -1)
                     {
                         // 해당 CharacterInfo가 playerUnits에 존재하면 해당 데이터를 인덱스 위치로 옮김
-                        Character playerUnit = Main.Get<GameManager>().playerUnits[indexInPlayerUnits];
-                        Main.Get<GameManager>().playerUnits.RemoveAt(indexInPlayerUnits);
-                        Main.Get<GameManager>().playerUnits.Insert(index, playerUnit);
+                        Character playerUnit = Main.Get<GameManager>().PlayerUnits[indexInPlayerUnits];
+                        Main.Get<GameManager>().PlayerUnits.RemoveAt(indexInPlayerUnits);
+                        Main.Get<GameManager>().PlayerUnits.Insert(index, playerUnit);
                     }
                 }
             }

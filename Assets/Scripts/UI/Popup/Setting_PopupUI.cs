@@ -70,6 +70,10 @@ public class Setting_PopupUI : BaseUI
         _effectSlider.onValueChanged.AddListener(Effectbar);
         _uiSlider.onValueChanged.AddListener(UIbar);
 
+        UpdateBGMBar(Main.Get<SoundManager>().BGMValue);
+        UpdateEffectBar(Main.Get<SoundManager>().EffectValue);
+        UpdateUIBar(Main.Get<SoundManager>().UIValue);
+
     }
 
     // todo : slider들(사운드 관련) value 값 조절
@@ -91,6 +95,9 @@ public class Setting_PopupUI : BaseUI
     {
         Main.Get<UIManager>().ClosePopup();
         Camera.main.GetComponent<CameraMovement>().Rock = false;
+        Main.Get<SoundManager>().BGMValue = _bgmSlider.value;
+        Main.Get<SoundManager>().EffectValue = _effectSlider.value; 
+        Main.Get<SoundManager>().UIValue = _uiSlider.value;
     }
 
     private void ClickBGMMuteBtn(PointerEventData EventData)
@@ -122,6 +129,19 @@ public class Setting_PopupUI : BaseUI
     private void ClickUIMaxBtn(PointerEventData EventData)
     {
         _uiSlider.value = 1f;
+    }
+
+    private void UpdateBGMBar(float value)
+    {
+        _bgmSlider.value = value;
+    }
+    private void UpdateEffectBar(float value)
+    {
+        _effectSlider.value = value;
+    }
+    private void UpdateUIBar(float value)
+    {
+        _uiSlider.value = value;
     }
 
     private void ClickLanguageBtn(PointerEventData EventData)

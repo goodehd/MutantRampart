@@ -175,7 +175,7 @@ public class InventUpgrade_PopupUI : BaseUI
                 }
 
                 // 합성 후 새롭게 능력 부여된 아이템 제공 - NextKey 통해.
-                Main.Get<GameManager>().playerUnits.Add(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
+                Main.Get<GameManager>().PlayerUnits.Add(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
                 Owner.SetUnitInventory();
 
                 Array.Clear(UpgradeUnitSlots, 0, UpgradeUnitSlots.Length);
@@ -255,7 +255,7 @@ public class InventUpgrade_PopupUI : BaseUI
 
         if (gameManager.isTutorial) // 튜토리얼 중이라면
         {
-            if (gameManager.playerUnits.Count == 1 && gameManager.PlayerRooms.Count == 2) // 유닛, 룸 업그레이드 완료하면 (보유 유닛 수는 1, 룸은 2(Home 포함).)
+            if (gameManager.PlayerUnits.Count == 1 && gameManager.PlayerRooms.Count == 2) // 유닛, 룸 업그레이드 완료하면 (보유 유닛 수는 1, 룸은 2(Home 포함).)
             {
                 Owner.closeButton.gameObject.SetActive(true); // 인벤토리 닫기 버튼 활성화
                 Owner.inventArrowImg.gameObject.SetActive(true);

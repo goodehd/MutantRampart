@@ -22,6 +22,10 @@ public class HongTestScene : Scene
         {
             Main.Get<GameManager>().SaveData();
         }
+        if (Main.Get<GameManager>().isPlayerDead)
+        {
+            Main.Get<SaveDataManager>().DeleteData();
+        }
     }
 
     public void CreateEnemy()

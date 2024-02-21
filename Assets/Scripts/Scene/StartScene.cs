@@ -8,5 +8,4 @@ public class StartScene : Scene
     {
         Main.Get<UIManager>().OpenSceneUI<StartScene_SceneUI>();
     }
-
 }
