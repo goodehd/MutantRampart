@@ -36,6 +36,7 @@ public class StageManager : IManagers
 
     public void StartStage()
     {
+        _curStage = Main.Get<GameManager>().CurStage;
         if (_curStage >= _stages.Count)
             return;
 

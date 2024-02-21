@@ -31,10 +31,12 @@ public class Character
 
     public int CurPosX { get; set; }
     public int CurPosY { get; set; }
+    public int CurIndex { get; set; }
     public bool IsDead { get; set; }
+    public bool isEquiped { get; set; }
 
     public CharacterBehaviour Owner { get; set; }
-    public CharacterData Data { get; private set; }
+    public CharacterData Data { get; set; }
     public CharacterStatus Status { get; private set; }
 
     public Item[] Item { get; set; } = new Item[3];
@@ -48,9 +50,11 @@ public class Character
         Status = new CharacterStatus(data);
 
         IsDead = false;
+        isEquiped = false;
 
         CurPosX = -1;
         CurPosY = -1;
+        CurIndex = -1;
     }
 
 
@@ -67,5 +71,10 @@ public class Character
     public void InvokeAttackAction(CharacterBehaviour target)
     {
         OnAttackState?.Invoke(target);
+    }
+
+    public CharacterSavableData CreateSavableUnitData()
+    {
+        return new CharacterSavableData(this);
     }
 }

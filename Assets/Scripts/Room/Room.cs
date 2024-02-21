@@ -10,6 +10,7 @@ public class Room
 
     public int IndexX { get; set; }
     public int IndexY { get; set; }
+    public Vector2 Pos { get; set; }
     public bool IsEquiped { get; set; }
     public RoomBehavior Owner { get; set; }
     public RoomData Data { get; private set; }
@@ -51,5 +52,10 @@ public class Room
             Main.Get<GameManager>().SetHomeRoom(null);
         }
         OnUnEquipedEvent?.Invoke();
+    }
+
+    public RoomSavableData CreateSavableRoomData()
+    {
+        return new RoomSavableData(this);
     }
 }

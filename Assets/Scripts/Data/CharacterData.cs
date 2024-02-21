@@ -1,4 +1,6 @@
+using System;
 
+[Serializable]
 public class CharacterData : Data, INextKey
 {
     public float Hp { get; set; }

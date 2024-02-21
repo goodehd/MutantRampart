@@ -197,8 +197,8 @@ public class InventUnitDescri_PopupUI : BaseUI
         _equipSlotsImgs[i].sprite = null; //이미지도 빼버리고
         _equipSlotsImgs[i].enabled = false; // image 컴포넌트 체크 해제.
         SetInfo();
+        inventSubItems[UnitData.itemnumbers[i]].UnEquiped();
         inventSubItems[UnitData.itemnumbers[i]].SetInfo();
-        
     }
 
     public bool ItemEquip(MyItemsImgBtnUI Imagedata)

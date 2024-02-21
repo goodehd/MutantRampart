@@ -27,6 +27,7 @@ public class SelectScene_SceneUI : BaseUI
     protected override void Init()
     {
         _saveDataManager = Main.Get<SaveDataManager>();
+        _gameManager = Main.Get<GameManager>();
 
         SetUI<Button>();
         SetUI<Image>();
@@ -77,8 +78,9 @@ public class SelectScene_SceneUI : BaseUI
         // 1. 저장된 데이터가 있을때
         if (_saveFile)
         {
+            Main.Get<SaveDataManager>().isSaveFileExist = true;
             _saveDataManager.LoadData();
-            SetGameData();
+            _saveDataManager.LoadMyData();
             Main.Get<SceneManager>().ChangeScene<HongTestScene>();
         }
         else
@@ -90,20 +92,14 @@ public class SelectScene_SceneUI : BaseUI
     private void ClickSetPlayerNameCheckBtn(PointerEventData data)
     {
         if (_inputFieldTxt == null) return;
+        Main.Get<SaveDataManager>().isSaveFileExist = false;
         _saveDataManager.DeleteData();
         _saveDataManager.Player.Name = _inputFieldTxt.text;
-        _saveDataManager.Player.PlayerMoney = 15000;
-        _saveDataManager.Player.Curstage = 0;
-        SetGameData();
+        Main.Get<GameManager>().PlayerName = _saveDataManager.Player.Name;
         _saveDataManager.SaveData();
         Debug.Log($"{_saveDataManager.Player.Name}");
+        Main.Get<GameManager>().AddHometoInventory();
         Main.Get<SceneManager>().ChangeScene<HongTestScene>();
-    }
-
-    private void SetGameData()
-    {
-        Main.Get<GameManager>().PlayerMoney = _saveDataManager.Player.PlayerMoney;
-        Main.Get<GameManager>().CurStage = _saveDataManager.Player.Curstage;
     }
 }
 

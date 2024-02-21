@@ -105,6 +105,8 @@ public class DayMain_SceneUI : BaseUI
         stageManager.OnStageClearEvent += UpdateDayCount;
 
         tileManager.OnSlectRoomEvent += TileBat;
+
+        UpdateHpUI(0);
     }
 
     #region UiBind

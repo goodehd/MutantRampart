@@ -31,6 +31,7 @@ public class RoomBehavior : MonoBehaviour
 
     public int IndexX { get { return RoomInfo.IndexX; } set { RoomInfo.IndexX = value;} }
     public int IndexY { get { return RoomInfo.IndexY; } set { RoomInfo.IndexY = value;} }
+    public Vector2 Pos { get { return RoomInfo.Pos; } set { RoomInfo.Pos = value; } }
     public LinkedList<CharacterBehaviour> Enemys { get { return RoomInfo.Enemys; } set { RoomInfo.Enemys = value; } }
 
     private bool _initialize = false;
@@ -239,5 +240,10 @@ public class RoomBehavior : MonoBehaviour
         {
             CloseDoor(direction);
         }
+    }
+
+    public RoomDirSavableData CreateRoomDirSavableData()
+    {
+        return new RoomDirSavableData(this);
     }
 }

@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,9 +10,15 @@ public class HongTestScene : Scene
     protected override void Init()
     {
         base.Init();
-        Main.Get<TileManager>().GenerateMap(3, 3);
         Main.Get<UIManager>().OpenSceneUI<DayMain_SceneUI>();
-        
+        if (Main.Get<SaveDataManager>().isSaveFileExist)
+        {
+            Main.Get<SaveDataManager>().GenerateSaveMap();
+        }
+        else
+        {
+            Main.Get<TileManager>().GenerateMap(3, 3);
+        }
     }
 
     public void CreateEnemy()
