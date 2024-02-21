@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 public class UnitSelectImageUIPanel : BaseUI
 {
     private TileManager _tile;
+    private GameManager _game;
 
     private BatRoom _batRoom;
 
@@ -21,7 +23,8 @@ public class UnitSelectImageUIPanel : BaseUI
     
     protected override void Init()
     {
-        _tile = Main.Get<TileManager>();   
+        _tile = Main.Get<TileManager>();
+        _game = Main.Get<GameManager>();
 
         SetUI<Image>();
         SetUI<Button>();
@@ -77,6 +80,26 @@ public class UnitSelectImageUIPanel : BaseUI
                 _batRoom.SortCharacter();
             }
 
+        }
+
+        if (_game.isTutorial) // 튜토리얼 중이라면
+        {
+            if (_game.playerUnits[0].CurRoom != null) // 유닛이 장착중이라면
+            {
+                Main.Get<UIManager>().CloseAllPopup(); // 튜토리얼 창과 포켓팝업UI 끄기.
+                Owner.Owner.backButton.gameObject.SetActive(true); // 뒤로가기 버튼 활성화
+                if (Owner.Owner.tweener.IsActive()) 
+                {
+                    Owner.Owner.tweener.Kill();
+                }
+
+                Owner.Owner.dayArrowTransform.anchoredPosition = new Vector3(-720f, 453f, 0f); // 뒤로가기 버튼 향하는 화살표
+                Owner.Owner.tweener = Owner.Owner.dayArrowTransform.DOAnchorPosX(-750f, Owner.Owner.animationDuration).SetLoops(-1, LoopType.Yoyo); // DOTween
+                TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 튜토리얼 팝업창
+                ui.curTutorialText = "배치를 완료했으니\n<color=#E9D038><b>메인화면</b></color>으로 돌아갑시다!";
+
+                _game.isPlacingTutorialClear = true;
+            }
         }
     }
 

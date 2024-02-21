@@ -27,6 +27,9 @@ public class PocketBlock_PopupUI : BaseUI
 
     public bool IsUnit { get; set; }
 
+    public DayMain_SceneUI Owner { get; set; }
+
+
     protected override void Init()
     {
         base.Init();

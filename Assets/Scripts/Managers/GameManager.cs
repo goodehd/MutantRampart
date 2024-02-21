@@ -14,6 +14,13 @@ public class GameManager : IManagers
     public int CurStage;
 
     public bool isTutorial = true;
+    
+    public bool isPlacingTutorialClear = false; // 배치모드 튜토리얼 클리어했는지 체크.
+
+    public int tutorialIndexX = 1;
+
+    public int tutorialIndexY = 1;
+
 
     public List<Character> playerUnits { get; private set; } = new List<Character>();   // 플레이어가 보유한 유닛 리스트
     public List<Room> PlayerRooms { get; private set; } = new List<Room>();     // 플레이어가 보유한 Room 리스트
@@ -29,11 +36,12 @@ public class GameManager : IManagers
         room.Init(Main.Get<DataManager>().Room["Home"]);
         PlayerRooms.Add(room);
 
-        Room room2 = new Room();
-        room2.Init(Main.Get<DataManager>().Room["Igloo"]);
-        PlayerRooms.Add(room2);
 
-        playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
+        //Room room2 = new Room();
+        //room2.Init(Main.Get<DataManager>().Room["Igloo"]);
+        //PlayerRooms.Add(room2);
+
+        //playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
         /* 
 
          
@@ -109,12 +117,6 @@ public class GameManager : IManagers
         }
         PlayerRooms.Remove(room); // 인벤토리에서 지우고
     }
-
-    // todo : Item 뺄 때 해야하는 것들 함수로 작동시키기 !
-    //public void RemoveItem(Item item) // item -- 인벤토리에서 삭제, 장착되어있는 것에서 해제
-    //{
-
-    //}
 
     public void SaveData()
     {

@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,8 +28,8 @@ public class RoomBehavior : MonoBehaviour
     public bool isEndPoint { get; set; }
     public bool isFlashing { get; set; } = false;
 
-    public int IndexX { get { return RoomInfo.IndexX; } set { RoomInfo.IndexX = value;} }
-    public int IndexY { get { return RoomInfo.IndexY; } set { RoomInfo.IndexY = value;} }
+    public int IndexX { get { return RoomInfo.IndexX; } set { RoomInfo.IndexX = value; } }
+    public int IndexY { get { return RoomInfo.IndexY; } set { RoomInfo.IndexY = value; } }
     public LinkedList<CharacterBehaviour> Enemys { get { return RoomInfo.Enemys; } set { RoomInfo.Enemys = value; } }
 
     private bool _initialize = false;
@@ -65,7 +64,7 @@ public class RoomBehavior : MonoBehaviour
     public virtual void EnterRoom(Enemy enemy)
     {
         RoomBehavior prevRoom = _tile.GetRoom(enemy.CurPosX, enemy.CurPosY);
-        if(prevRoom != null)
+        if (prevRoom != null)
         {
             prevRoom.RemoveEnemy(enemy);
         }
@@ -85,6 +84,26 @@ public class RoomBehavior : MonoBehaviour
     protected virtual void OnMouseEnter()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
+
+        if (Main.Get<GameManager>().isTutorial) // 튜토리얼 중이라면 (마우스 호버)
+        {
+            if (Main.Get<GameManager>().isPlacingTutorialClear) return; // 배치모드 튜토리얼 클리어 했다면 타일 호버 안 되도록.
+
+            if (Main.Get<GameManager>().isHomeSet)
+            {
+                Main.Get<GameManager>().tutorialIndexY = 0; // 1,0
+            }
+
+            if (IndexX == Main.Get<GameManager>().tutorialIndexX && IndexY == Main.Get<GameManager>().tutorialIndexY) // 1, 0
+            {
+
+            }
+            else
+            {
+                return;
+            }
+        }
+
         for (int i = 0; i < 2; i++)
         {
             tilemap[i].color = Color.green;
@@ -107,7 +126,21 @@ public class RoomBehavior : MonoBehaviour
             return;
         }
 
-        if(_tile.SelectRoom != this)
+        if (Main.Get<GameManager>().isTutorial) // 튜토리얼 중이라면 (마우스 클릭)
+        {
+            if (Main.Get<GameManager>().isPlacingTutorialClear) return; // 배치모드 튜토리얼 클리어 했다면 타일 클릭 안 되도록.
+
+            if (IndexX == Main.Get<GameManager>().tutorialIndexX && IndexY == Main.Get<GameManager>().tutorialIndexY) // 1, 0
+            {
+
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        if (_tile.SelectRoom != this)
         {
             if (_tile.SelectRoom != null)
                 _tile.SelectRoom.StopFlashing();
@@ -146,7 +179,7 @@ public class RoomBehavior : MonoBehaviour
 
             yield return new WaitForSeconds(blinkDuration);
         }
-        
+
     }
 
     public void StartFlashing()

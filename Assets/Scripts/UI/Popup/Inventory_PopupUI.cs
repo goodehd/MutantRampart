@@ -168,25 +168,25 @@ public class Inventory_PopupUI : BaseUI
         Owner.isInventOpen = false;
         Camera.main.GetComponent<CameraMovement>().Rock = false;
 
-        if (gameManager.isTutorial) // todo : 인벤토리 닫기 버튼 눌렀을 때
+        if (gameManager.isTutorial) // 인벤토리 닫기 버튼 눌렀을 때
         {
             tweener.Kill(); // 인벤토리 닫기 버튼 가리키던 dotween kill 하고
             inventArrowImg.gameObject.SetActive(false); // 인벤토리 내 화살표 inactive 하고
             Owner.placingButton.gameObject.SetActive(true); // 배치모드 버튼 활성화하고.
             Owner._dayArrowImg.gameObject.SetActive(true); // daymain 의 화살표 활성화.
-            Owner._dayArrowTransform.anchoredPosition = new Vector3(-500f, -276f, 0f); // daymain 의 화살표가 배치모드 향하게 하고
-            Owner._dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo); // daymain 화살표 dotween 걸어주고
+            Owner.dayArrowTransform.anchoredPosition = new Vector3(-500f, -276f, 0f); // daymain 의 화살표가 배치모드 향하게 하고
+            Owner.tweener = Owner.dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo); // daymain 화살표 dotween 걸어주고
 
             TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // tutorialpopup - 배치모드 관련해서 튜토리얼팝업 만들어주고
-            ui.curTutorialText = "자, 이제 <color=#E9D038><b>배치모드</b></color>에서 Unit 과 Room 을 배치해봅시다!";
+            ui.curTutorialText = "자, 이제 마지막으로 <color=#E9D038><b>배치모드</b></color>에서\nUnit 과 Room 을 배치해봅시다!";
         }
     }
 
     private void ClickUpgradeBtn(PointerEventData EventData)
     {
-        if (gameManager.isTutorial && tutorialMsg_PopupUI != null) // todo : 튜토리얼메세지팝업이 떠있을때만 closepopup해주기 , 튜토리얼 중이라면.
+        if (gameManager.isTutorial && tutorialMsg_PopupUI != null) // 튜토리얼 중이라면
         {
-            Main.Get<UIManager>().ClosePopup(); // 튜토리얼msg 팝업 끄기
+            Main.Get<UIManager>().ClosePopup(); // 튜토리얼msg 팝업 끄기 - 튜토리얼메세지팝업이 떠있을때만 closepopup해주기 , 
             tweener.Kill(); // 인벤토리 업그레이드 버튼 가리키는 화살표 kill.
             inventArrowImg.gameObject.SetActive(false);
         }
@@ -205,8 +205,11 @@ public class Inventory_PopupUI : BaseUI
             inventRoomDescri_PopupUI = null;
         }
 
-        InventUpgrade_PopupUI ui = Main.Get<UIManager>().OpenPopup<InventUpgrade_PopupUI>("InventUpgrade_PopupUI");
-        ui.Owner = this;
+        if (inventUpgrade_PopupUI == null) // Upgrade 팝업창이 null 일 때만 업그레이드 버튼 누르면 Upgrade 팝업창 뜨도록.
+        {
+            InventUpgrade_PopupUI ui = Main.Get<UIManager>().OpenPopup<InventUpgrade_PopupUI>("InventUpgrade_PopupUI");
+            ui.Owner = this;
+        }
     }
 }
 

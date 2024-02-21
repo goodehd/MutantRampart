@@ -32,9 +32,9 @@ public class Shop_PopupUI : BaseUI
     private TMP_Text _groundRowPriceText;
     private TMP_Text _groundColPriceText;
 
-    private Image _shopArrowImg;
+    public Image shopArrowImg { get; set; }
 
-    public RectTransform _shopArrowTransform { get; set; }
+    public RectTransform shopArrowTransform { get; set; }
 
     public Tweener tweener { get; set; }
 
@@ -110,9 +110,9 @@ public class Shop_PopupUI : BaseUI
         _groundColPriceText = GetUI<TMP_Text>("GroundColPriceTxt");
         _groundColPriceText.text = Main.Get<DataManager>().Item["ExpandMapCol"].Price.ToString();
 
-        _shopArrowImg = GetUI<Image>("ShopArrowImg");
+        shopArrowImg = GetUI<Image>("ShopArrowImg");
 
-        _shopArrowTransform = _shopArrowImg.GetComponent<RectTransform>();
+        shopArrowTransform = shopArrowImg.GetComponent<RectTransform>();
 
         Main.Get<GameManager>().OnChangeMoney += UpdateMoneyText;
 
@@ -167,16 +167,9 @@ public class Shop_PopupUI : BaseUI
             backButton.gameObject.SetActive(false);
             _groundButton.gameObject.SetActive(false);
             _itemButton.gameObject.SetActive(false);
-
-            if (isShopTutorialClear)
-            {
-                backButton.gameObject.SetActive(true);
-                return; // 상점 튜토리얼 클리어 했으면 상점 내에서 강조하는 화살표 안 뜨도록.
-            }
-
-            _shopArrowImg.gameObject.SetActive(true);
-            _shopArrowTransform.anchoredPosition = new Vector3(-688f, 368f, 0f); // 상점 내 카테고리 가리키는 화살표.
-            tweener = _shopArrowTransform.DOAnchorPosY(338f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+            shopArrowImg.gameObject.SetActive(true);
+            shopArrowTransform.anchoredPosition = new Vector3(-752f, 368f, 0f); // 상점 내 unit 카테고리 가리키는 화살표.
+            tweener = shopArrowTransform.DOAnchorPosY(338f, animationDuration).SetLoops(-1, LoopType.Yoyo);
         }
     }
 
@@ -191,7 +184,7 @@ public class Shop_PopupUI : BaseUI
 
         if (gameManager.isTutorial)
         {
-            tweener.Kill(); // 상점 화살표 kill.
+            tweener.Kill(); // 상점 뒤로가기 버튼 가리키는 화살표 Kill.
 
             Owner.tutorialMsg_PopupUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
             Owner.tutorialMsg_PopupUI.curTutorialText = "<color=#E9D038><b>인벤토리</b></color>에서는\n보유하고 있는 Unit 과 Room 에 대한 정보를 확인할 수 있어요.";
@@ -203,6 +196,19 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickUnitBtn(PointerEventData eventData) // Unit Box 활성화
     {
+        if (gameManager.isTutorial)
+        {
+            if (gameManager.playerUnits.Count >= 3)
+            {
+                return;
+            }
+            if (gameManager.playerUnits.Count == 0)
+            {
+
+                tweener.Kill(); // unit 가리키던 화살표 Kill.
+            }
+            shopArrowImg.gameObject.SetActive(false);
+        }
         _unitBtnBox.gameObject.SetActive(true);
         _roomBtnBox.gameObject.SetActive(false);
         _groundBtnBox.gameObject.SetActive(false);
@@ -211,6 +217,20 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickRoomBtn(PointerEventData eventData) // Room Box 활성화
     {
+        if (gameManager.isTutorial) // 튜토리얼 중이라면 
+        {
+            if (gameManager.playerUnits.Count < 3 || gameManager.PlayerRooms.Count >= 4) return;
+            //if (gameManager.PlayerRooms.Count >= 4) return;
+            if (gameManager.playerUnits.Count >= 3) // 먼저 유닛 3회뽑기 완료했을 때만 Room 버튼 작동되도록.
+            {
+                //tweener.Kill(); // room 가리키던 화살표 Kill.
+                shopArrowImg.gameObject.SetActive(false);
+                _unitBtnBox.gameObject.SetActive(false);
+                _roomBtnBox.gameObject.SetActive(true);
+                return;
+            }
+        }
+
         _unitBtnBox.gameObject.SetActive(false);
         _roomBtnBox.gameObject.SetActive(true);
         _groundBtnBox.gameObject.SetActive(false);
@@ -235,22 +255,70 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickUnit1Btn(PointerEventData eventData)
     {
-        ClickGachaUnit(1);
+        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        {
+            if (gameManager.playerUnits.Count >= 3)
+            {
+                return;
+            }
+
+            ClickGachaUnit(1);
+        }
+        else
+        {
+            ClickGachaUnit(1);
+        }
     }
 
     private void ClickUnit3Btn(PointerEventData eventData)
     {
-        ClickGachaUnit(3);
+        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        {
+            if (gameManager.playerUnits.Count >= 1)
+            {
+                return;
+            }
+
+            ClickGachaUnit(3);
+        }
+        else
+        {
+            ClickGachaUnit(3);
+        }
     }
 
     private void ClickRoom1Btn(PointerEventData eventData)
     {
-        ClickGachaRoom(1);
+        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        {
+            if (gameManager.PlayerRooms.Count >= 4)
+            {
+                return;
+            }
+
+            ClickGachaRoom(1);
+        }
+        else
+        {
+            ClickGachaRoom(1);
+        }
     }
 
     private void ClickRoom3Btn(PointerEventData eventData)
     {
-        ClickGachaRoom(3);
+        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        {
+            if (gameManager.PlayerRooms.Count >= 2)
+            {
+                return;
+            }
+
+            ClickGachaRoom(3);
+        }
+        else
+        {
+            ClickGachaRoom(3);
+        }
     }
 
     private void ClickExpandRowBtn(PointerEventData eventData)

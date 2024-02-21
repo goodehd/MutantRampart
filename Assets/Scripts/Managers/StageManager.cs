@@ -53,6 +53,16 @@ public class StageManager : IManagers
     public void StageClear()
     {
         StageClear_PopupUI ui = Main.Get<UIManager>().OpenPopup<StageClear_PopupUI>("StageClear_PopupUI");
+
+        if (Main.Get<GameManager>().isTutorial) // 튜토리얼 중이라면
+        {
+            TutorialMsg_PopupUI tutorialUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 마지막 튜토리얼 팝업
+            tutorialUI.curTutorialText = "아주 좋아요!\n이런 방식으로 침입하는 적으로부터 Home 을 지켜내세요!\n무운을 빌어요!";
+            tutorialUI.isBackgroundActive = true;
+            tutorialUI.isCloseBtnActive = true;
+            Main.Get<GameManager>().isTutorial = false; // 튜토리얼 이제 끝 !
+        }
+
         ui._curStage = _curStage + 1;
         Main.Get<GameManager>().CurStage = ui._curStage;
         ui._rewardsGold = _stages[_curStage].SpwanCount * 1000 + _addPlusClearGold;

@@ -1,7 +1,5 @@
 using DG.Tweening;
-using System;
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -65,23 +63,42 @@ public class GachaResult_PopupUI : BaseUI
             }
         }
 
+        Main.Get<UIManager>().ClosePopup();
+
         if (gameManager.isTutorial)
         {
-            if (gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 3)
+            if (gameManager.playerUnits.Count >= 3)
             {
-                Owner.isShopTutorialClear = true;
-                Owner.backButton.gameObject.SetActive(true);
-                Owner.tweener.Kill(); // 상점 카테고리 가리키고 있던 화살표 kill.
-                Owner._shopArrowTransform.anchoredPosition = new Vector3(-770f, 484f, 0f); // 상점 뒤로가기 버튼 가리키는 화살표.
-                if (!isArrowRotated)
+                if (Owner.tweener.IsActive())
                 {
-                    Owner._shopArrowTransform.Rotate(0f, 0f, -90f);
+                    Owner.tweener.Kill(); // room 가리키는 화살표 Kill.
                 }
-                Owner.tweener = Owner._shopArrowTransform.DOAnchorPosX(-800f, 0.3f).SetLoops(-1, LoopType.Yoyo);
+
+                if (gameManager.PlayerRooms.Count == 1)
+                {
+                    TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
+                    ui.curTutorialText = "잘하셨어요!\n<color=#E9D038><b>Room</b></color> 을 클릭해서\n 동일하게 <color=#E9D038><b>3회 뽑기</b></color>를 진행해주세요!\n\n튜토리얼이 끝나면 Room 을 배치하는 Ground 와\n유닛의 능력치를 올려주는 Item 도 구매할 수 있어요!";
+                    ui.isCloseBtnActive = true;
+                    ui.isBackgroundActive = true;
+
+                    Owner.shopArrowImg.gameObject.SetActive(true);
+                    Owner.shopArrowTransform.anchoredPosition = new Vector3(-628f, 368f, 0f); // 상점 내 Room 카테고리 가리키는 화살표.
+                    Owner.tweener = Owner.shopArrowTransform.DOAnchorPosY(338f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
+                }
+            }
+
+            if (gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 4)
+            {
+                Owner.backButton.gameObject.SetActive(true);
+                Owner.shopArrowImg.gameObject.SetActive(true);
+
+                Owner.shopArrowTransform.anchoredPosition = new Vector3(-770f, 484f, 0f); // 상점 뒤로가기 버튼 가리키는 화살표.
+                Owner.shopArrowTransform.Rotate(0f, 0f, -90f);
+                Owner.tweener = Owner.shopArrowTransform.DOAnchorPosX(-800f, 0.3f).SetLoops(-1, LoopType.Yoyo);
             }
         }
 
-        Main.Get<UIManager>().ClosePopup();
+
     }
 
     private void SetResultImgUInfo()
