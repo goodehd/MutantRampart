@@ -114,7 +114,6 @@ public class SelectScene_SceneUI : BaseUI
         Debug.Log($"{_saveDataManager.Player.Name}");
         Main.Get<GameManager>().AddHometoInventory();
         Main.Get<SceneManager>().ChangeScene<HongTestScene>();
-        Main.Get<GameManager>().isTutorial = true;
     }
 
     private void ClickCloseBtn(PointerEventData data)

@@ -130,6 +130,8 @@ public class StageManager : IManagers
             tutorialUI.isBackgroundActive = true;
             tutorialUI.isCloseBtnActive = true;
             Main.Get<GameManager>().isTutorial = false; // 튜토리얼 이제 끝 !
+            PlayerPrefs.SetInt("Tutorial", 1);
+            PlayerPrefs.Save();
         }
 
         ui._curStage = _curStage + 1;

@@ -38,55 +38,19 @@ public class GameManager : IManagers
         PlayerRooms = new List<Room>();
         PlayerItems = new List<Item>();
         CurStage = 0;
-
-        //PlayerRooms.Add(Main.Get<DataManager>().Room["Home"]);
-
-
-        //Room room2 = new Room();
-        //room2.Init(Main.Get<DataManager>().Room["Igloo"]);
-        //PlayerRooms.Add(room2);
-
-        //playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
-        /* 
-
-         
-        
-
-        /*Room room2 = new Room();
-        room2.Init(Main.Get<DataManager>().Room["Temple"]);
-        PlayerRooms.Add(room2);
-
-         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Gun"]));
-         playerUnits.Add(new Character(Main.Get<DataManager>().Character["Jotem"]));
-
-
-         Item item1 = new Item();
-         item1.Init(Main.Get<DataManager>().Item["Meat"]);
-         PlayerItems.Add(item1);
-
-         Item item2 = new Item();
-         item2.Init(Main.Get<DataManager>().Item["BlueBook"]);
-         PlayerItems.Add(item2);
-         Item item3 = new Item();
-         item3.Init(Main.Get<DataManager>().Item["RedBook"]);
-         PlayerItems.Add(item3);
-
-         Item item4 = new Item();
-         item4.Init(Main.Get<DataManager>().Item["SilverCoin"]);
-         PlayerItems.Add(item4);*/
-
         PlayerHP = new Vital(EstatType.Hp, 5);
         PlayerHP.OnValueZero += GameOver;
 
-        if (isTutorial)
+        bool tutorial = PlayerPrefs.HasKey("Tutorial");
+        if (!tutorial)
         {
-            PlayerMoney = 40000;
+            isTutorial = true;
         }
         else
         {
-            PlayerMoney = 20000;
+            isTutorial = PlayerPrefs.GetInt("Tutorial") == 1 ? false : true;
         }
-
+        PlayerMoney = 20000;
         return true;
     }
 
