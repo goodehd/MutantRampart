@@ -34,7 +34,6 @@ public class SaveDataManager : IManagers
     {
         string data = File.ReadAllText(path);
         Player = JsonUtility.FromJson<PlayerData>(data);
-        Debug.Log(Player.Name);
     }
 
     public void ClearData()
@@ -116,7 +115,6 @@ public class SaveDataManager : IManagers
                 int x = playerRooms[i].IndexX;
                 int y = playerRooms[i].IndexY;
                 RoomBehavior originRoom = Main.Get<TileManager>()._roomObjList[x][y];
-                Debug.Log($"{Main.Get<TileManager>()._roomObjList[x][y].RoomInfo.IndexX},{Main.Get<TileManager>()._roomObjList[x][y].RoomInfo.IndexY}");
                 originRoom.RoomInfo.UnEquipedRoom();
                 originRoom.OnDestroyRoom();
                 ERoomDir roomDir = originRoom.RoomDir;

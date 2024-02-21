@@ -124,10 +124,10 @@ public class InventUnitDescri_PopupUI : BaseUI
         }
 
         _unitDescription.text =
-            $"Hp : {UnitData.Status[EstatType.Hp].Value}({UnitData.Status[EstatType.Hp].Value - UnitData.Data.Hp})\n" +
-            $"Damage : {UnitData.Status[EstatType.Damage].Value}({UnitData.Status[EstatType.Damage].Value - UnitData.Data.Damage})\n" +
-            $"Defense : {UnitData.Status[EstatType.Defense].Value}({UnitData.Status[EstatType.Defense].Value - UnitData.Data.Defense})\n" +
-            $"ATK Speed : {UnitData.Status[EstatType.AttackSpeed].Value}({UnitData.Status[EstatType.AttackSpeed].Value - UnitData.Data.AttackSpeed})";
+            $"Hp : {UnitData.Status[EstatType.Hp].Value}({UnitData.Status[EstatType.Hp].Value - UnitData.Data.Hp}F2)\n" +
+            $"Damage : {UnitData.Status[EstatType.Damage].Value}({UnitData.Status[EstatType.Damage].Value - UnitData.Data.Damage}F2)\n" +
+            $"Defense : {UnitData.Status[EstatType.Defense].Value}({UnitData.Status[EstatType.Defense].Value - UnitData.Data.Defense}F2)\n" +
+            $"ATK Speed : {UnitData.Status[EstatType.AttackSpeed].Value}({UnitData.Status[EstatType.AttackSpeed].Value - UnitData.Data.AttackSpeed}F2)";
 
         if(UnitData.SkillData != null)
         {

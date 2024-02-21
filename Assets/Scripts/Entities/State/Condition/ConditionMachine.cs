@@ -26,7 +26,6 @@ public class ConditionMachine
     {
         basecondition.StopCoroutine();
         _curConditionList[(int)basecondition.ConditionName].Remove(basecondition);
-        Debug.Log($"{basecondition.ConditionName}");
     }
     
     public void ClearConditions()

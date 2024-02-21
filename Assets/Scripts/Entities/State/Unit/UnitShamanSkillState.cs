@@ -20,7 +20,6 @@ public class UnitShamanSkillState : BaseState
     {
         Owner.Animator.SetTrigger(Literals.Skill);
         Main.Get<SoundManager>().SoundPlay($"{Owner.CharacterInfo.Data.PrefabName}SkillStart", ESoundType.Effect);
-
         Owner.Status.GetStat<Vital>(EstatType.Mp).CurValue = 0;
         _targets = ((BatRoom)Owner.CharacterInfo.CurRoom).Enemys;
 
@@ -52,7 +51,6 @@ public class UnitShamanSkillState : BaseState
                 target.TakeDamage(damage);
             }
             Main.Get<SoundManager>().SoundPlay($"{Owner.CharacterInfo.Data.PrefabName}SkillEnd", ESoundType.Effect);
-
             Owner.StateMachine.ChangeState(EState.Attack);
         }
     }

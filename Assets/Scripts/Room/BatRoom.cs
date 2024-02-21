@@ -184,18 +184,15 @@ public class BatRoom : RoomBehavior
         {
             case EBatType.Forest:
                 character.ConditionMachine.AddCondition(new HealingCondition(character, RoomInfo.Data));
-                Debug.Log("힐링버프 부여");
                 break;
             case EBatType.Igloo:
                 character.ConditionMachine.AddCondition(new FreezingAttackCondition(character, RoomInfo.Data));
-                Debug.Log("이글루 버프 부여");
                 break;
             case EBatType.LivingRoom:
 
                 break;
             case EBatType.Temple:
                 character.ConditionMachine.AddCondition(new TempleBuffCondition(character, RoomInfo.Data));
-                Debug.Log("사원 버프 부여");
                 break;
             default:
                 break;
