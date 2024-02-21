@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class GameManager : IManagers
@@ -153,10 +154,19 @@ public class GameManager : IManagers
         PlayerRooms.Add(room);
     }
 
+    public void ExitGame()
+    {
+        SaveData();
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit(); 
+#endif
+    }
     // todo : Item 뺄 때 해야하는 것들 함수로 작동시키기 !
     //public void RemoveItem(Item item) // item -- 인벤토리에서 삭제, 장착되어있는 것에서 해제
     //{
 
     //}
-    
+
 }

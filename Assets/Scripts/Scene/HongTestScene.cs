@@ -20,6 +20,10 @@ public class HongTestScene : Scene
             Main.Get<TileManager>().GenerateMap(3, 3);
         }
     }
+    protected override void OnApplicationQuit()
+    {
+        Main.Get<GameManager>().SaveData();
+    }
 
     public void CreateEnemy()
     {

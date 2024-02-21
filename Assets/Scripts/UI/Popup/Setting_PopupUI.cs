@@ -16,6 +16,7 @@ public class Setting_PopupUI : BaseUI
     private Button _languageBtn;
     private Button _guideBtn;
     private Button _usBtn;
+    private Button _exitBtn;
 
     private Slider _bgmSlider; // slider 는 UnityEngine.UI
     private Slider _effectSlider;
@@ -41,6 +42,7 @@ public class Setting_PopupUI : BaseUI
         _languageBtn = GetUI<Button>("LangBtn");
         _guideBtn = GetUI<Button>("GuideBtn");
         _usBtn = GetUI<Button>("UsBtn");
+        _exitBtn = GetUI<Button>("ExitBtn");
 
         SetUICallback(_settingCloseBtn.gameObject, EUIEventState.Click, ClickCloseBtn);
         SetUICallback(_bgmMuteBtn.gameObject, EUIEventState.Click, ClickBGMMuteBtn);
@@ -52,6 +54,7 @@ public class Setting_PopupUI : BaseUI
         SetUICallback(_languageBtn.gameObject, EUIEventState.Click, ClickLanguageBtn);
         SetUICallback(_guideBtn.gameObject, EUIEventState.Click, ClickGuideBtn);
         SetUICallback(_usBtn.gameObject, EUIEventState.Click, ClickUsBtn);
+        SetUICallback(_exitBtn.gameObject, EUIEventState.Click, ClickExitBtn);
     }
 
     private void SetSlider()
@@ -115,6 +118,11 @@ public class Setting_PopupUI : BaseUI
     private void ClickUsBtn(PointerEventData EventData)
     {
 
+    }
+
+    private void ClickExitBtn(PointerEventData EventData)
+    {
+        Main.Get<GameManager>().ExitGame();
     }
 
 }

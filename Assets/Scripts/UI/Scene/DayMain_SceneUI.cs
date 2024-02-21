@@ -377,7 +377,6 @@ public class DayMain_SceneUI : BaseUI
     {
         maincamera.Rock = true;
         Main.Get<UIManager>().OpenPopup<Setting_PopupUI>();
-        Main.Get<GameManager>().SaveData();
     }
 
     private void OpenPoketBlock(bool isUint)
