@@ -45,6 +45,7 @@ public class SaveDataManager : IManagers
     public void DeleteData()
     {
         File.Delete(path);
+        isSaveFileExist = false;
     }
 
     public void ApplyDataToCharacter(CharacterSavableData savedata)
