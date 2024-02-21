@@ -109,7 +109,7 @@ public class Inventory_PopupUI : BaseUI
     public void SetUnitInventory()
     {
         // unit
-        List<Character> playerUnits = Main.Get<GameManager>().playerUnits;
+        List<Character> playerUnits = Main.Get<GameManager>().PlayerUnits;
         foreach (Transform item in _inventUnitContent.transform)
         {
             Destroy(item.gameObject);
@@ -162,7 +162,7 @@ public class Inventory_PopupUI : BaseUI
         {
             if (gameManager.PlayerRooms.Count > 2) return; // room 업그레이드 전에 유닛 버튼 작동 안 되게끔.
 
-            if (gameManager.PlayerRooms.Count == 2 && gameManager.playerUnits.Count == 1) return;
+            if (gameManager.PlayerRooms.Count == 2 && gameManager.PlayerUnits.Count == 1) return;
 
             _upgradeButton.gameObject.SetActive(true);
             if (tweener.IsActive())

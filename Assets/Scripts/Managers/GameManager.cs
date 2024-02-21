@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -14,9 +15,9 @@ public class GameManager : IManagers
     public RoomBehavior HomeRoom { get; set; }
     public string PlayerName { get; set; }
 
-    public int CurStage = 0;
+    public int CurStage { get; set; }
 
-    public bool isTutorial = false;
+    public bool isTutorial { get; set; }
 
     public bool isPlacingTutorialClear = false; // 배치모드 튜토리얼 클리어했는지 체크.
 
@@ -25,14 +26,18 @@ public class GameManager : IManagers
     public int tutorialIndexY = 1;
 
 
-    public List<Character> playerUnits { get; private set; } = new List<Character>();   // 플레이어가 보유한 유닛 리스트
-    public List<Room> PlayerRooms { get; private set; } = new List<Room>();     // 플레이어가 보유한 Room 리스트
-    public List<Item> PlayerItems { get; private set; } = new List<Item>();             // 플레이어가 보유한 아이템 리스트
+    public List<Character> PlayerUnits { get; private set; }   // 플레이어가 보유한 유닛 리스트
+    public List<Room> PlayerRooms { get; private set; }    // 플레이어가 보유한 Room 리스트
+    public List<Item> PlayerItems { get; private set; }     // 플레이어가 보유한 아이템 리스트
     public event Action<int> OnChangeMoney;
 
     public bool Init()
     {
         _tile = Main.Get<TileManager>();
+        PlayerUnits = new List<Character>();
+        PlayerRooms = new List<Room>();
+        PlayerItems = new List<Item>();
+        CurStage = 0;
 
         //PlayerRooms.Add(Main.Get<DataManager>().Room["Home"]);
 
@@ -106,7 +111,7 @@ public class GameManager : IManagers
         {
             ((BatRoom)unit.CurRoom).DeleteUnit(unit); // 배치되어있는 유닛 빼면서
         }
-        playerUnits.Remove(unit); // 인벤토리에서도 지우고 
+        PlayerUnits.Remove(unit); // 인벤토리에서도 지우고 
         Item[] items = unit.Item; // 아이템 장착되어있는 것도 빼주고
         for (int i = 0; i < items.Length; i++)
         {
@@ -140,9 +145,9 @@ public class GameManager : IManagers
         saveDataManager.Player.EffectValue = Main.Get<SoundManager>().EffectValue;
         saveDataManager.Player.UIValue = Main.Get<SoundManager>().UIValue;
         Main.Get<TileManager>().GetMapSize(out saveDataManager.Player.MapSizeX, out saveDataManager.Player.MapSizeY);
-        for (int i = 0; i < playerUnits.Count; i++)
+        for (int i = 0; i < PlayerUnits.Count; i++)
         {
-            saveDataManager.Player.PlayerUnitsSaveData.Add(playerUnits[i].CreateSavableUnitData());
+            saveDataManager.Player.PlayerUnitsSaveData.Add(PlayerUnits[i].CreateSavableUnitData());
         }
         for (int i = 0; i < PlayerRooms.Count; i++)
         {

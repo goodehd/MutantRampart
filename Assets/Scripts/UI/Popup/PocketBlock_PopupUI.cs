@@ -60,7 +60,7 @@ public class PocketBlock_PopupUI : BaseUI
         _roomType = GetUI<TextMeshProUGUI>("RoomTypeTxt");
         _roomDescript = GetUI<TextMeshProUGUI>("RoomDescriptionTxt");
 
-        List<Character> playerUnits = player.playerUnits;
+        List<Character> playerUnits = player.PlayerUnits;
         List<Room> playerRooms = player.PlayerRooms;
 
         for(int i = 0; i < playerUnits.Count; i++)

@@ -198,11 +198,11 @@ public class Shop_PopupUI : BaseUI
     {
         if (gameManager.isTutorial)
         {
-            if (gameManager.playerUnits.Count >= 3)
+            if (gameManager.PlayerUnits.Count >= 3)
             {
                 return;
             }
-            if (gameManager.playerUnits.Count == 0)
+            if (gameManager.PlayerUnits.Count == 0)
             {
 
                 tweener.Kill(); // unit 가리키던 화살표 Kill.
@@ -219,9 +219,9 @@ public class Shop_PopupUI : BaseUI
     {
         if (gameManager.isTutorial) // 튜토리얼 중이라면 
         {
-            if (gameManager.playerUnits.Count < 3 || gameManager.PlayerRooms.Count >= 4) return;
+            if (gameManager.PlayerUnits.Count < 3 || gameManager.PlayerRooms.Count >= 4) return;
 
-            if (gameManager.playerUnits.Count >= 3) // 먼저 유닛 3회뽑기 완료했을 때만 Room 버튼 작동되도록.
+            if (gameManager.PlayerUnits.Count >= 3) // 먼저 유닛 3회뽑기 완료했을 때만 Room 버튼 작동되도록.
             {
                 shopArrowImg.gameObject.SetActive(false);
                 _unitBtnBox.gameObject.SetActive(false);
@@ -256,7 +256,7 @@ public class Shop_PopupUI : BaseUI
     {
         if (gameManager.isTutorial) // 튜토리얼 중이라면
         {
-            if (gameManager.playerUnits.Count >= 3)
+            if (gameManager.PlayerUnits.Count >= 3)
             {
                 return;
             }
@@ -273,7 +273,7 @@ public class Shop_PopupUI : BaseUI
     {
         if (gameManager.isTutorial) // 튜토리얼 중이라면
         {
-            if (gameManager.playerUnits.Count >= 1)
+            if (gameManager.PlayerUnits.Count >= 1)
             {
                 return;
             }

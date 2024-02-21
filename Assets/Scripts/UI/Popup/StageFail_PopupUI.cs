@@ -40,6 +40,7 @@ public class StageFail_PopupUI : BaseUI
         //Main.Get<UIManager>().CloseAllPopup();
         Main.Get<UIManager>().ClosePopup();
         Main.Get<SaveDataManager>().DeleteData();
+        Main.Get<GameManager>().Init();
         Main.Get<SceneManager>().ChangeScene<SelectScene>();
     }
 

@@ -65,7 +65,7 @@ public class GachaResult_PopupUI : BaseUI
 
         if (gameManager.isTutorial)
         {
-            if (gameManager.playerUnits.Count >= 3)
+            if (gameManager.PlayerUnits.Count >= 3)
             {
                 if (Owner.tweener.IsActive())
                 {
@@ -85,7 +85,7 @@ public class GachaResult_PopupUI : BaseUI
                 }
             }
 
-            if (gameManager.playerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 4)
+            if (gameManager.PlayerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 4)
             {
                 Owner.backButton.gameObject.SetActive(true);
                 Owner.shopArrowImg.gameObject.SetActive(true);
@@ -130,7 +130,7 @@ public class GachaResult_PopupUI : BaseUI
     private void SaveUnitInInventory(CharacterData data)
     {
         Character newChar = new Character(data);
-        Main.Get<GameManager>().playerUnits.Add(newChar);
+        Main.Get<GameManager>().PlayerUnits.Add(newChar);
     }
 
     private void SaveRoomInInventory(RoomData data)

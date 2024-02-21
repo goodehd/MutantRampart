@@ -69,7 +69,7 @@ public class SaveDataManager : IManagers
                 item.EquipItem(character);
             }
         }
-        Main.Get<GameManager>().playerUnits.Add(character);
+        Main.Get<GameManager>().PlayerUnits.Add(character);
     }
 
     public void ApplyDataToRoom(RoomSavableData savedata)
@@ -103,7 +103,7 @@ public class SaveDataManager : IManagers
     public void GenerateSaveMap()
     {
         List<Room> playerRooms = Main.Get<GameManager>().PlayerRooms;
-        List<Character> playerUnits = Main.Get<GameManager>().playerUnits;
+        List<Character> playerUnits = Main.Get<GameManager>().PlayerUnits;
 
         Main.Get<TileManager>().GenerateMap(Player.MapSizeX, Player.MapSizeY);
         LoadRoomDirSaveData();
