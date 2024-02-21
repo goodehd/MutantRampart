@@ -16,6 +16,7 @@ public class Enemy : CharacterBehaviour
         if (!CharacterInfo.IsDead)
         {
             Main.Get<StageManager>().CheckClear();
+            CharacterInfo.CurRoom.RemoveEnemy(this);
             base.Die();
         }
     }

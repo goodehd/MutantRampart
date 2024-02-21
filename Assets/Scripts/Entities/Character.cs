@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Character
@@ -36,7 +37,8 @@ public class Character
     public bool isEquiped { get; set; }
 
     public CharacterBehaviour Owner { get; set; }
-    public CharacterData Data { get; set; }
+    public CharacterData Data { get; private set; }
+    public SkillData SkillData { get; private set; }
     public CharacterStatus Status { get; private set; }
 
     public Item[] Item { get; set; } = new Item[3];
@@ -47,6 +49,8 @@ public class Character
     public Character(CharacterData data)
     {
         Data = data;
+        SkillData = Main.Get<DataManager>().GetSkill(data.Key);
+
         Status = new CharacterStatus(data);
 
         IsDead = false;
@@ -57,20 +61,15 @@ public class Character
         CurIndex = -1;
     }
 
-
-    public void Init(CharacterData data)
-    {
-        Data = data;
-        Status = new CharacterStatus(data);
-        
-        IsDead = false;
-
-        CurPosX = -1;
-        CurPosY = -1;
-    }
     public void InvokeAttackAction(CharacterBehaviour target)
     {
         OnAttackState?.Invoke(target);
+    }
+
+    public float CalculateSkillValue()
+    {
+        return SkillData.BaseValue + Status[EstatType.Damage].Value * SkillData.AttakcCoefficient +
+            Status[EstatType.Defense].Value * SkillData.DefenseCoefficient + Status[EstatType.AttackSpeed].Value * SkillData.AttackSpeedCoefficient;
     }
 
     public CharacterSavableData CreateSavableUnitData()

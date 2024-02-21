@@ -17,6 +17,7 @@ public class InventUnitDescri_PopupUI : BaseUI
 
     private TMP_Text _unitName;
     private TMP_Text _unitDescription;
+    private TMP_Text _unitSkillDescription;
 
     private Image _unitImg;
     private Image[] _equipSlotsImgs = new Image[3];
@@ -73,6 +74,7 @@ public class InventUnitDescri_PopupUI : BaseUI
 
         _unitName = GetUI<TMP_Text>("InventUnitNameTxt");
         _unitDescription = GetUI<TMP_Text>("InventUnitDescriTxt");
+        _unitSkillDescription = GetUI<TMP_Text>("InventUnitSkillDescriTxt");
 
         _unitImg = GetUI<Image>("InventUnitImg");
 
@@ -103,7 +105,7 @@ public class InventUnitDescri_PopupUI : BaseUI
     
     public void SetInfo()
     {
-        _unitName.text = UnitData.Data.Key;
+        _unitName.text = UnitData.Data.PrefabName;
         _unitImg.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{UnitData.Data.Key}");
 
         for (int i = 0; i < _equipSlots.Length; i++)
@@ -126,6 +128,15 @@ public class InventUnitDescri_PopupUI : BaseUI
             $"Damage : {UnitData.Status[EstatType.Damage].Value}({UnitData.Status[EstatType.Damage].Value - UnitData.Data.Damage})\n" +
             $"Defense : {UnitData.Status[EstatType.Defense].Value}({UnitData.Status[EstatType.Defense].Value - UnitData.Data.Defense})\n" +
             $"ATK Speed : {UnitData.Status[EstatType.AttackSpeed].Value}({UnitData.Status[EstatType.AttackSpeed].Value - UnitData.Data.AttackSpeed})";
+
+        if(UnitData.SkillData != null)
+        {
+            _unitSkillDescription.text = $"Skill : {UnitData.SkillData.Description}";
+        }
+        else
+        {
+            _unitSkillDescription.text = "Skill : None";
+        }
     }
 
     private void ClickInventUnitCloseBtn(PointerEventData EventData)

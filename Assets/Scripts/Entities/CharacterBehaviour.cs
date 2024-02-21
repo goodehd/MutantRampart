@@ -28,11 +28,8 @@ public class CharacterBehaviour : MonoBehaviour
         this.Renderer = GetComponentInChildren<SpriteRenderer>();
 
         CharacterInfo = new Character(data);
-        CharacterInfo.Init(data);
-
 
         StateMachine = new StateMachine();
-
         StateMachine.AddState(EState.Idle, new IdleState(this));
         StateMachine.AddState(EState.Move, new MoveState(this));
         StateMachine.ChangeState(EState.Idle);
@@ -42,8 +39,6 @@ public class CharacterBehaviour : MonoBehaviour
         CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += Die;
 
         _initialize = true;
-
-
     }
 
     public void SetData(Character data)
@@ -71,14 +66,20 @@ public class CharacterBehaviour : MonoBehaviour
     {
         CharacterInfo.IsDead = false;
         Status.GetStat<Vital>(EstatType.Hp).SetCurValueMax();
+        Status.GetStat<Vital>(EstatType.Mp).CurValue = 0;
+        this.Renderer.color = Color.white;
         StateMachine.ChangeState(EState.Idle);
+    }
+
+    public Vector3 GetWorldPos()
+    {
+        return transform.position + transform.GetChild(0).localPosition;
     }
 
     private void OnDestroy()
     {
-        Debug.Log("사라짐 뿅");
         ConditionMachine.ClearConditions();
-        CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero -= Die;
+        if(CharacterInfo != null && CharacterInfo.Status != null)
+            CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero -= Die;
     }
-
 }

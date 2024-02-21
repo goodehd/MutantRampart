@@ -48,6 +48,13 @@ public class BatRoom : RoomBehavior
                 {
                     continue;
                 }
+
+                if(unit.StateMachine.CurrentStateName == EState.Attack ||
+                    unit.StateMachine.CurrentStateName == EState.Skill)
+                {
+                    return;
+                }
+
                 unit.StateMachine.ChangeState(EState.Attack);
             }
         }
@@ -105,6 +112,7 @@ public class BatRoom : RoomBehavior
 
         Units[index] = Main.Get<SceneManager>().Scene.CreateCharacter(data.Data.PrefabName);
         Units[index].SetData(data);
+        Units[index].StateMachine.InitState();
         Units[index].CurRoom = this;
         Units[index].CurPosX = IndexX;
         Units[index].CurPosY = IndexY;
