@@ -92,6 +92,16 @@ public class CharacterBehaviour : MonoBehaviour
         }
     }
 
+    public void TakeDmageNoneDefense(float damage)
+    {
+        Status.GetStat<Vital>(EstatType.Hp).CurValue -= damage;
+        CreateDamageText(damage);
+        if (Status.GetStat<Vital>(EstatType.Hp).CurValue <= 0)
+        {
+            Die();
+        }
+    }
+
     private void CreateDamageText(float value)
     {
         DamageTextUI damageUI = _ui.CreateSubitem<DamageTextUI>();
