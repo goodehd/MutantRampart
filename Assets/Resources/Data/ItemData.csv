@@ -1,14 +1,14 @@
 Key,Type,HpAdd,DefenseAdd,AttackAdd,SpeedAdd,Instruction,Price,UpgradeValue_1,UpgradeValue_2,UpgradeValue_3
-Feather,Weapon,0,0,1,1,간질간질 깃털 30% 확률로 추가 공격을 한다.,0,30,0,0
-TrainingEgg,Armor,10,1,0,0,수련용 계란 피격될때 1% 확률로 장비의 능력치가 1씩 상승한다.,0,10,1,0
-FrozenTuna,Weapon,0,0,5,0,전통의 강호 냉동참치 적에게 5초 동안 동상을 부여한다.,0,5,0,0
-RedBook,Weapon,-10,0,3,2,눈높이 교육 빨간펜,0,0,0,0
-BlueBook,Armor,10,10,0,0,파란책! 배에 차면 방어력을 높게 올려준다,0,0,0,0
-GoldenCoin,Armor,0,0,0,0,지니고 있으면 획득 골드량이 늘어난다.,0,10,0,0
-SilverCoin,Weapon,0,0,20,5,공격할 때 마다 골드를 소모하는 저주받은 동전....,0,10,0,0
-StrangeCandy,Consume,0,0,0,0,레벨을 올려주는 이상한사탕,0,1,0,0
-Meat,Consume,100,0,100,100,흠 뭐하지,0,0,0,0
-SilverBar,Armor,10,5,0,0,처음맞는 5회의 공격을 피해없이 방어한다,0,5,0,0
-GoldBar,Weapon,0,0,10,3,처음 때리는 5회의 공격에 100%의 피해를 준다.,0,5,10,0
-ExpandMapRow,ExpandMap,0,0,0,0,기본타일을 행으로 확장시킨다,5000,0,0,0
-ExpandMapCol,ExpandMap,0,0,0,0,기본타일을 열로 확장시킨다,5000,0,0,0
+Feather,Weapon,0,0,1,0.2,간질간질 깃털 30% 확률로 추가 공격을 한다.,100,30,0,0
+TrainingEgg,Armor,100,1,0,0,수련용 계란 깨질것 같다.,100,10,1,0
+FrozenTuna,Weapon,0,0,5,0,전통의 강호 냉동참치 적에게 5초 동안 동상을 부여한다.,100,50,0,0
+RedBook,Weapon,-100,-10,3,0.5,빨간책 체력이 깎이지만 공격력을 올려준다.,100,0,0,0
+BlueBook,Armor,100,10,0,0,파란책! 배에 차면 방어력을 높게 올려준다.,100,0,0,0
+GoldenCoin,Armor,0,0,0,0,지니고 있으면 획득 골드량이 늘어난다.,100,10,0,0
+SilverCoin,Weapon,0,0,20,1,공격할 때 마다 골드를 소모하는 저주받은 동전,100,10,0,0
+SilverBar,Armor,200,5,0,0,실버바 지니면 방어력이 올라간다.,100,5,0,0
+GoldBar,Weapon,0,0,10,0.3,처음 때리는 5회의 공격에 100%의 피해를 준다.,100,5,10,0
+StrangeCandy,Consume,0,0,0,0,레벨을 올려주는 이상한사탕.,100,1,0,0
+Meat,Consume,0,0,0,0,맛있는 고기,100,0,0,0
+ExpandMapRow,ExpandMap,0,0,0,0,기본타일을 행으로 확장시킨다.,5000,0,0,0
+ExpandMapCol,ExpandMap,0,0,0,0,기본타일을 열로 확장시킨다.,5000,0,0,0
