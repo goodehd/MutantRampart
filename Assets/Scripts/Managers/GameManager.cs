@@ -50,20 +50,22 @@ public class GameManager : IManagers
         else
         {
             isTutorial = PlayerPrefs.GetInt("Tutorial") == 1 ? false : true;
-            PlayerMoney = isTutorial ? 9000 : 3000;
-            if (!isTutorial)
+            PlayerMoney = isTutorial ? 9000 : 4000; //뒤에거는 1스테이지 클리어한 금액을 더해줘야함 ex 3000 + 1000(1스테 클리어돈)
+            if (!isTutorial && !Main.Get<SaveDataManager>().isSaveFileExist)
             {
                 Character newChar = new Character(Main.Get<DataManager>().Character["Warriorr"]);
                 PlayerUnits.Add(newChar);
 
                 Room newRoom = new Room(Main.Get<DataManager>().Room["Forest +1"]);
                 PlayerRooms.Add(newRoom);
+
+                CurStage = 1;
             }
         }
 
         //Room test = new Room(Main.Get<DataManager>().Room["Temple"]);
         //PlayerRooms.Add(test);
-
+        isHomeSet = false;
         return true;
     }
 

@@ -16,7 +16,7 @@ public class SaveDataManager : IManagers
 
     public bool Init()
     {
-        isSaveFileExist = false;
+        isSaveFileExist = PlayerPrefs.GetInt("Tutorial") == 1 ? true : false;
         path = Application.persistentDataPath + "/save";
       
         return true;
