@@ -9,6 +9,7 @@ public class TempleBuffCondition : BaseCondition
     private float _upgradeValue_1 { get; set; }
     private float _upgradeValue_2 { get; set; }
     private float _upgradeValue_3 { get; set; }
+
     public TempleBuffCondition(CharacterBehaviour owner, RoomData data) : base(owner, data)
     {
         OwnerData = data;
@@ -19,6 +20,7 @@ public class TempleBuffCondition : BaseCondition
         ConditionName = ECondition.TempleBuff;
         Owner.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += ExitCondition;
     }
+
     public override void EnterCondition()
     {
         Owner.StartCoroutine(ConditionDuration(Duration));
@@ -52,10 +54,12 @@ public class TempleBuffCondition : BaseCondition
     {
         
     }
+
     public void StartEffect(int starge)
     {
         _co = Owner.StartCoroutine(ConditionEffect(_upgradeValue_1, _upgradeValue_2));
     }
+
     public void ClearEffect(int starge)
     {
         if(_co != null)
@@ -67,7 +71,11 @@ public class TempleBuffCondition : BaseCondition
         Owner.Status.GetStat<Stat>(EstatType.Defense).RemoveAllModifier(this);
         Owner.Status.GetStat<Stat>(EstatType.Damage).RemoveAllModifier(this);
         Owner.Status.GetStat<Stat>(EstatType.AttackSpeed).RemoveAllModifier(this);
+
+        if (!Main.Get<StageManager>().GetIsStageStart())
+            Owner.ResetCharacter();
     }
+
     public IEnumerator ConditionEffect(float DataValue, float DataValue2)
     {
 

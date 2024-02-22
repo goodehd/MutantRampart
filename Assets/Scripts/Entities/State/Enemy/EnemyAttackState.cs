@@ -58,7 +58,7 @@ public class EnemyAttackState : BaseState
 
             if (target == null)
             {
-                if (tileManager.GetRoom(Owner.CurPosX, Owner.CurPosY).GetComponent<RoomBehavior>().isEndPoint)
+                if (tileManager.GetRoom(Owner.CurPosX, Owner.CurPosY).isEndPoint)
                 {
                     Owner.StateMachine.ChangeState(EState.Dead);
                     Main.Get<GameManager>().PlayerHP.CurValue--;

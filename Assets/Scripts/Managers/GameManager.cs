@@ -45,12 +45,25 @@ public class GameManager : IManagers
         if (!tutorial)
         {
             isTutorial = true;
+            PlayerMoney = 9000;
         }
         else
         {
             isTutorial = PlayerPrefs.GetInt("Tutorial") == 1 ? false : true;
+            PlayerMoney = isTutorial ? 9000 : 3000;
+            if (!isTutorial)
+            {
+                Character newChar = new Character(Main.Get<DataManager>().Character["Warriorr"]);
+                PlayerUnits.Add(newChar);
+
+                Room newRoom = new Room(Main.Get<DataManager>().Room["Forest +1"]);
+                PlayerRooms.Add(newRoom);
+            }
         }
-        PlayerMoney = 20000;
+
+        //Room test = new Room(Main.Get<DataManager>().Room["Temple"]);
+        //PlayerRooms.Add(test);
+
         return true;
     }
 
@@ -164,10 +177,4 @@ public class GameManager : IManagers
         Application.Quit(); 
 #endif
     }
-    // todo : Item 뺄 때 해야하는 것들 함수로 작동시키기 !
-    //public void RemoveItem(Item item) // item -- 인벤토리에서 삭제, 장착되어있는 것에서 해제
-    //{
-
-    //}
-
 }
