@@ -52,7 +52,7 @@ public class BatRoom : RoomBehavior
                 if(unit.StateMachine.CurrentStateName == EState.Attack ||
                     unit.StateMachine.CurrentStateName == EState.Skill)
                 {
-                    return;
+                    continue;
                 }
 
                 unit.StateMachine.ChangeState(EState.Attack);

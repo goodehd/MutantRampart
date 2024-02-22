@@ -67,13 +67,14 @@ public class UnitAttackState : BaseState
                 yield break;
             }
 
-            Owner.CharacterInfo.InvokeAttackAction(target);
             Owner.Status.GetStat<Vital>(EstatType.Mp).CurValue += Owner.CharacterInfo.Data.HitRecoveryMp;
             if (Owner.Status.GetStat<Vital>(EstatType.Mp).CurValue >= Owner.Status.GetStat<Vital>(EstatType.Mp).Value)
             {
                 Owner.StateMachine.ChangeState(EState.Skill);
                 yield break;
             }
+
+            Owner.CharacterInfo.InvokeAttackAction(target);
             Owner.Animator.SetTrigger(Literals.Attack);
             Main.Get<SoundManager>().SoundPlay($"{Owner.CharacterInfo.Data.PrefabName}Attack", ESoundType.Effect);
             target.TakeDamage(Owner.Status[EstatType.Damage].Value);
