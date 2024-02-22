@@ -44,7 +44,7 @@ public class BatRoom : RoomBehavior
 
             foreach (CharacterBehaviour unit in Units)
             {
-                if(unit == null)
+                if(unit == null || unit.CharacterInfo.IsDead)
                 {
                     continue;
                 }
