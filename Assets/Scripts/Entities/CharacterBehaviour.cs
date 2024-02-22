@@ -18,18 +18,20 @@ public class CharacterBehaviour : MonoBehaviour
     public int CurIndex { get { return CharacterInfo.CurIndex; } set { CharacterInfo.CurIndex = value; } }
     public RoomBehavior CurRoom { get { return CharacterInfo.CurRoom; } set { CharacterInfo.CurRoom = value; } }
 
+    public event Action OnChangeCharcterInfoEvent;
+
     private bool _initialize = false;
 
     public virtual void Init(CharacterData data)
     {
+        SetData(new Character(data));
+
         if (_initialize)
             return;
 
         _ui = Main.Get<UIManager>();
         this.Animator = GetComponentInChildren<Animator>();
         this.Renderer = GetComponentInChildren<SpriteRenderer>();
-
-        CharacterInfo = new Character(data);
 
         StateMachine = new StateMachine();
         StateMachine.AddState(EState.Idle, new IdleState(this));
@@ -45,6 +47,7 @@ public class CharacterBehaviour : MonoBehaviour
     {
         CharacterInfo = data;
         data.Owner = this;
+        OnChangeCharcterInfoEvent?.Invoke();
     }
 
     private void Update()
@@ -58,6 +61,7 @@ public class CharacterBehaviour : MonoBehaviour
         {
             CharacterInfo.IsDead = true;
             StateMachine.ChangeState(EState.Dead);
+            ConditionMachine.ClearConditions();
         }
     }
 

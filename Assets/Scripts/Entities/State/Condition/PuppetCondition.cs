@@ -9,13 +9,6 @@ public class PuppetCondition : BaseCondition //TODO : 아군으로 바뀌는 로
         ConditionName = ECondition.Puppet;
     }
 
-    public override IEnumerator ConditionDuration(float duration)
-    {
-        if (Duration >= 999) yield break;
-        yield return new WaitForSeconds(duration);
-        StopCoroutine();
-    }
-
     public override void EnterCondition()
     {
         
@@ -23,18 +16,6 @@ public class PuppetCondition : BaseCondition //TODO : 아군으로 바뀌는 로
 
     public override void ExitCondition()
     {
-        StopCoroutine();
-        InvokeEndCondition();
-    }
-
-    public override void StopCoroutine()
-    {
-        
-    }
-
-    public override void UpdateCondition()
-    {
-        
     }
 
     public IEnumerator ConditionEffect(float DataValue)

@@ -5,9 +5,12 @@ using UnityEngine;
 
 public class HealingCondition : BaseCondition
 {
+    private Coroutine _co;
+
     private float _upgradeValue_1 { get; set; }
     private float _upgradeValue_2 { get; set; }
     private float _upgradeValue_3 { get; set; }
+
     public HealingCondition(CharacterBehaviour owner, RoomData data) : base(owner, data)
     {
         OwnerData = data;
@@ -16,7 +19,6 @@ public class HealingCondition : BaseCondition
         _upgradeValue_2 = data.UpgradeValue_2;
         _upgradeValue_3 = data.UpgradeValue_3;
         ConditionName = ECondition.Healing;
-        Owner.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += ExitCondition;
     }
 
     public HealingCondition(CharacterBehaviour owner, CharacterData data) : base(owner, data)
@@ -31,32 +33,16 @@ public class HealingCondition : BaseCondition
     
     public override void EnterCondition()
     {
-        Owner.StartCoroutine(ConditionDuration(Duration));
-        Owner.StartCoroutine(ConditionEffect(_upgradeValue_1));
-    }
-
-    public override void UpdateCondition()
-    {
-        
+        _co = Owner.StartCoroutine(ConditionEffect(_upgradeValue_1));
     }
 
     public override void ExitCondition()
     {
-        StopCoroutine();
-        InvokeEndCondition();
-    }
-
-    public override void StopCoroutine()
-    {
-        if (Owner == null) return;
-        Owner.StopCoroutine(ConditionEffect(_upgradeValue_1));
-    }
-
-    public override IEnumerator ConditionDuration(float duration)
-    {
-        if (Duration >= 999) yield break;
-        yield return new WaitForSeconds(duration);
-        ExitCondition();
+        if(_co != null)
+        {
+            Owner.StopCoroutine(_co);
+            _co = null;
+        }
     }
 
     public IEnumerator ConditionEffect(float DataValue)

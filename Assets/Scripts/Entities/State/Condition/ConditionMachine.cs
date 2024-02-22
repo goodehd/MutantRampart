@@ -14,20 +14,18 @@ public class ConditionMachine
         }
     }
 
-
     public void AddCondition(BaseCondition basecondition)
     {
         _curConditionList[(int)basecondition.ConditionName].Add(basecondition);
         basecondition.EnterCondition();
-        basecondition.OnEndCondition += RemoveCondition;
     }
     
     public void RemoveCondition(BaseCondition basecondition)
     {
-        basecondition.StopCoroutine();
         _curConditionList[(int)basecondition.ConditionName].Remove(basecondition);
+        basecondition.ExitCondition();
     }
-    
+
     public void ClearConditions()
     {
         for (int i = 0; i < (int)ECondition.Max; i++)
@@ -43,6 +41,4 @@ public class ConditionMachine
     {
         return _curConditionList[(int)eCondition].Count > 0;
     }
-
-
 }

@@ -17,8 +17,6 @@ public abstract class BaseCondition
 
     protected EConditionpersonality Conditionpersonality;
     public ECondition ConditionName { get; set; }
-
-    public event Action<BaseCondition> OnEndCondition;
     
     public BaseCondition(CharacterBehaviour owner, Data data)
     {
@@ -32,15 +30,5 @@ public abstract class BaseCondition
     }
 
     public abstract void EnterCondition();
-    public abstract void UpdateCondition();
     public abstract void ExitCondition();
-    public abstract void StopCoroutine();
-
-    public abstract IEnumerator ConditionDuration(float duration);
-
-    public void InvokeEndCondition()
-    {
-        OnEndCondition?.Invoke(this);
-    }
-
 }

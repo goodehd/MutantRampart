@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TempleBuffCondition : BaseCondition
 {
-    private Coroutine _co;
+    private Coroutine _mainRoutine;
 
     private float _upgradeValue_1 { get; set; }
     private float _upgradeValue_2 { get; set; }
@@ -18,54 +18,31 @@ public class TempleBuffCondition : BaseCondition
         _upgradeValue_2 = data.UpgradeValue_2;
         _upgradeValue_3 = data.UpgradeValue_3;
         ConditionName = ECondition.TempleBuff;
-        Owner.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += ExitCondition;
     }
 
     public override void EnterCondition()
     {
-        Owner.StartCoroutine(ConditionDuration(Duration));
         Main.Get<StageManager>().OnStageStartEvent += StartEffect;
         Main.Get<StageManager>().OnStageClearEvent += ClearEffect;
-
-    }
-
-    public override IEnumerator ConditionDuration(float duration)
-    {
-        if (Duration >= 999) yield break;
-        yield return new WaitForSeconds(duration);
-        ExitCondition();
     }
 
     public override void ExitCondition()
     {
-        StopCoroutine();
-        InvokeEndCondition();
-    }
-
-    public override void StopCoroutine()
-    {
-        if (Owner == null) return;
-        ClearEffect(1);
         Main.Get<StageManager>().OnStageStartEvent -= StartEffect;
         Main.Get<StageManager>().OnStageClearEvent -= ClearEffect;
     }
 
-    public override void UpdateCondition()
-    {
-        
-    }
-
     public void StartEffect(int starge)
     {
-        _co = Owner.StartCoroutine(ConditionEffect(_upgradeValue_1, _upgradeValue_2));
+        _mainRoutine = Owner.StartCoroutine(ConditionEffect(_upgradeValue_1, _upgradeValue_2));
     }
 
     public void ClearEffect(int starge)
     {
-        if(_co != null)
+        if(_mainRoutine != null)
         {
-            Owner.StopCoroutine(_co);
-            _co = null;
+            Owner.StopCoroutine(_mainRoutine);
+            _mainRoutine = null;
         }
         Owner.Status.GetStat<Vital>(EstatType.Hp).RemoveAllModifier(this);
         Owner.Status.GetStat<Stat>(EstatType.Defense).RemoveAllModifier(this);
@@ -73,7 +50,9 @@ public class TempleBuffCondition : BaseCondition
         Owner.Status.GetStat<Stat>(EstatType.AttackSpeed).RemoveAllModifier(this);
 
         if (!Main.Get<StageManager>().GetIsStageStart())
+        {
             Owner.ResetCharacter();
+        }
     }
 
     public IEnumerator ConditionEffect(float DataValue, float DataValue2)
@@ -99,7 +78,5 @@ public class TempleBuffCondition : BaseCondition
             Owner.Status.GetStat<Stat>(EstatType.AttackSpeed).AddModifier(Increaseat);
             yield return new WaitForSeconds(3f);
         }
-
     }
-
 }
