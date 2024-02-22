@@ -63,24 +63,6 @@ public class GameManager : IManagers
             }
         }
 
-        Room netewRoom = new Room(Main.Get<DataManager>().Room["Lava +2"]);
-        PlayerRooms.Add(netewRoom);
-
-        netewRoom = new Room(Main.Get<DataManager>().Room["Lava +2"]);
-        PlayerRooms.Add(netewRoom);
-
-        netewRoom = new Room(Main.Get<DataManager>().Room["Lava +2"]);
-        PlayerRooms.Add(netewRoom);
-
-        netewRoom = new Room(Main.Get<DataManager>().Room["Lava +2"]);
-        PlayerRooms.Add(netewRoom);
-
-        netewRoom = new Room(Main.Get<DataManager>().Room["Lava +2"]);
-        PlayerRooms.Add(netewRoom);
-
-        netewRoom = new Room(Main.Get<DataManager>().Room["Lava +2"]);
-        PlayerRooms.Add(netewRoom);
-
         isHomeSet = false;
         return true;
     }
