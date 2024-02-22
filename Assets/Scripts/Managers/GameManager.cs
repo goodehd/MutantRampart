@@ -53,10 +53,10 @@ public class GameManager : IManagers
             PlayerMoney = isTutorial ? 9000 : 4000; //뒤에거는 1스테이지 클리어한 금액을 더해줘야함 ex 3000 + 1000(1스테 클리어돈)
             if (!isTutorial && !Main.Get<SaveDataManager>().isSaveFileExist)
             {
-                Character newChar = new Character(Main.Get<DataManager>().Character["Warriorr"]);
+                Character newChar = new Character(Main.Get<DataManager>().Character["Warrior2"]);
                 PlayerUnits.Add(newChar);
 
-                Room newRoom = new Room(Main.Get<DataManager>().Room["Forest +1"]);
+                Room newRoom = new Room(Main.Get<DataManager>().Room["Forest2"]);
                 PlayerRooms.Add(newRoom);
 
                 CurStage = 1;
@@ -158,10 +158,172 @@ public class GameManager : IManagers
         }
     }
 
+    // true 이면 오름차순
+    public void SortUnitName(bool IsAscend)
+    {
+        if (IsAscend)
+        {
+            PlayerUnits.Sort((scr, dest) =>
+            {
+                int comparison = string.Compare(dest.Data.PrefabName, scr.Data.PrefabName);
+                if (comparison != 0)
+                {
+                    return comparison;
+                }
+                else
+                {
+                    int scrLevel = int.Parse(scr.Data.Key[scr.Data.Key.Length - 1].ToString());
+                    int destLevel = int.Parse(dest.Data.Key[dest.Data.Key.Length - 1].ToString());
+
+                    return destLevel.CompareTo(scrLevel);
+                }
+            });
+        }
+        else
+        {
+            PlayerUnits.Sort((scr, dest) =>
+            {
+                int comparison = string.Compare(scr.Data.PrefabName, dest.Data.PrefabName);
+                if (comparison != 0)
+                {
+                    return comparison;
+                }
+                else
+                {
+                    int scrLevel = int.Parse(scr.Data.Key[scr.Data.Key.Length - 1].ToString());
+                    int destLevel = int.Parse(dest.Data.Key[dest.Data.Key.Length - 1].ToString());
+
+                    return destLevel.CompareTo(scrLevel);
+                }
+            });
+        }
+    }
+
+    public void SortUnitLevel(bool IsAscend)
+    {
+        if (IsAscend)
+        {
+            PlayerUnits.Sort((scr, dest) =>
+            {
+                int scrLevel = int.Parse(scr.Data.Key[scr.Data.Key.Length - 1].ToString());
+                int destLevel = int.Parse(dest.Data.Key[dest.Data.Key.Length - 1].ToString());
+
+                if (scrLevel != destLevel)
+                {
+                    return scrLevel.CompareTo(destLevel);
+                }
+                else
+                {
+                    return scr.Data.Key.CompareTo(dest.Data.Key);
+                }
+            });
+        }
+        else
+        {
+            PlayerUnits.Sort((scr, dest) =>
+            {
+                int scrLevel = int.Parse(scr.Data.Key[scr.Data.Key.Length - 1].ToString());
+                int destLevel = int.Parse(dest.Data.Key[dest.Data.Key.Length - 1].ToString());
+
+                if (scrLevel != destLevel)
+                {
+                    return destLevel.CompareTo(scrLevel);
+                }
+                else
+                {
+                    return scr.Data.Key.CompareTo(dest.Data.Key);
+                }
+            });
+        }
+    }
+
+    public void SortRoomName(bool IsAscend)
+    {
+        if (IsAscend)
+        {
+            PlayerRooms.Sort((scr, dest) =>
+            {
+                int comparison = string.Compare(dest.Data.PrefabName, scr.Data.PrefabName);
+                if (comparison != 0)
+                {
+                    return comparison;
+                }
+                else
+                {
+                    int scrLevel = int.Parse(scr.Data.Key[scr.Data.Key.Length - 1].ToString());
+                    int destLevel = int.Parse(dest.Data.Key[dest.Data.Key.Length - 1].ToString());
+
+                    return destLevel.CompareTo(scrLevel);
+                }
+            });
+        }
+        else
+        {
+            PlayerRooms.Sort((scr, dest) =>
+            {
+                int comparison = string.Compare(scr.Data.PrefabName, dest.Data.PrefabName);
+                if (comparison != 0)
+                {
+                    return comparison;
+                }
+                else
+                {
+                    int scrLevel = int.Parse(scr.Data.Key[scr.Data.Key.Length - 1].ToString());
+                    int destLevel = int.Parse(dest.Data.Key[dest.Data.Key.Length - 1].ToString());
+
+                    return destLevel.CompareTo(scrLevel);
+                }
+            });
+        }
+    }
+
+    public void SortRoomLevel(bool IsAscend)
+    {
+        if (IsAscend)
+        {
+            PlayerRooms.Sort((scr, dest) =>
+            {
+                int scrLevel = int.Parse(scr.Data.Key[scr.Data.Key.Length - 1].ToString());
+                int destLevel = int.Parse(dest.Data.Key[dest.Data.Key.Length - 1].ToString());
+
+                if (scrLevel != destLevel)
+                {
+                    return scrLevel.CompareTo(destLevel);
+                }
+                else
+                {
+                    return scr.Data.Key.CompareTo(dest.Data.Key);
+                }
+            });
+        }
+        else
+        {
+            PlayerRooms.Sort((scr, dest) =>
+            {
+                int scrLevel = int.Parse(scr.Data.Key[scr.Data.Key.Length - 1].ToString());
+                int destLevel = int.Parse(dest.Data.Key[dest.Data.Key.Length - 1].ToString());
+
+                if (scrLevel != destLevel)
+                {
+                    return destLevel.CompareTo(scrLevel);
+                }
+                else
+                {
+                    return scr.Data.Key.CompareTo(dest.Data.Key);
+                }
+            });
+        }
+    }
+
+    public void SortRooms()
+    {
+
+    }
+
     public void AddHometoInventory()
     {
         Room room = new Room();
-        room.Init(Main.Get<DataManager>().Room["Home"]);
+        room.Init(Main.Get<DataManager>().Room["Home1"]);
         PlayerRooms.Add(room);
     }
 

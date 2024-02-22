@@ -119,27 +119,27 @@ public class Shop_PopupUI : BaseUI
         // 가챠 판매 아이템 추가
         if (gameManager.isTutorial) // 튜토리얼 중이라면.
         {
-            GachaUnitItems.Add(Main.Get<DataManager>().Character["Warrior"]);
-            GachaRoomItems.Add(Main.Get<DataManager>().Room["Forest"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Warrior1"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Forest1"]);
         }
         else
         {
-            GachaUnitItems.Add(Main.Get<DataManager>().Character["Gun"]);
-            GachaUnitItems.Add(Main.Get<DataManager>().Character["Jotem"]);
-            GachaUnitItems.Add(Main.Get<DataManager>().Character["Warrior"]);
-            GachaUnitItems.Add(Main.Get<DataManager>().Character["Cleric"]);
-            GachaUnitItems.Add(Main.Get<DataManager>().Character["Knight"]);
-            GachaUnitItems.Add(Main.Get<DataManager>().Character["Kunoichi"]);
-            GachaUnitItems.Add(Main.Get<DataManager>().Character["Priest"]);
-            GachaUnitItems.Add(Main.Get<DataManager>().Character["Shaman"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Gun1"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Jotem1"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Warrior1"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Cleric1"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Knight1"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Kunoichi1"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Priest1"]);
+            GachaUnitItems.Add(Main.Get<DataManager>().Character["Shaman1"]);
 
-            GachaRoomItems.Add(Main.Get<DataManager>().Room["Forest"]);
-            GachaRoomItems.Add(Main.Get<DataManager>().Room["Igloo"]);
-            GachaRoomItems.Add(Main.Get<DataManager>().Room["Lava"]);
-            GachaRoomItems.Add(Main.Get<DataManager>().Room["Livingroom"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Forest1"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Igloo1"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Lava1"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Livingroom1"]);
             //GachaRoomItems.Add(Main.Get<DataManager>().Room["Molar"]);
-            GachaRoomItems.Add(Main.Get<DataManager>().Room["Snow"]);
-            GachaRoomItems.Add(Main.Get<DataManager>().Room["Temple"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Snow1"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Temple1"]);
 
             GachaItemItems.Add(Main.Get<DataManager>().Item["Feather"]);
             GachaItemItems.Add(Main.Get<DataManager>().Item["TrainingEgg"]);

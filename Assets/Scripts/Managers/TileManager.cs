@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class TileManager : IManagers
 {
@@ -112,7 +111,7 @@ public class TileManager : IManagers
 
     public RoomBehavior ChangeRoom(Room changeRoom)
     {
-        GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom(changeRoom.Data.PrefabName);
+        GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom(changeRoom.Data.Key);
         obj.transform.position = SelectRoom.transform.position;
         obj.transform.parent = GridObject.transform;
 

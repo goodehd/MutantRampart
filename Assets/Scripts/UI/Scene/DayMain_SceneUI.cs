@@ -829,11 +829,6 @@ public class DayMain_SceneUI : BaseUI
         yield return sec;
         isUIAnimating = false;
     }
-    //private IEnumerator ClosePopupUI()
-    //{
-    //    yield return new WaitForSeconds(5f);
-
-    //    _ui.ClosePopup();
-    //}
+   
     #endregion
 }

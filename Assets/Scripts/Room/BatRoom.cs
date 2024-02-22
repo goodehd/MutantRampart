@@ -110,7 +110,7 @@ public class BatRoom : RoomBehavior
                 break;
         }
 
-        Units[index] = Main.Get<SceneManager>().Scene.CreateCharacter(data.Data.PrefabName);
+        Units[index] = Main.Get<SceneManager>().Scene.CreateCharacter(data.Data.Key);
         Units[index].SetData(data);
         Units[index].StateMachine.InitState();
         Units[index].CurRoom = this;

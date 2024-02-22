@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -15,6 +16,12 @@ public class Inventory_PopupUI : BaseUI
     public Button closeButton { get; set; }
     private Button _upgradeButton;
 
+    private Button _sortNameButton;
+    private Button _sortLeveButton;
+
+    private TextMeshProUGUI _sortNameText;
+    private TextMeshProUGUI _sortLevelText;
+
     private ScrollRect _inventRoomScrollView;
     private ScrollRect _inventUnitScrollView;
 
@@ -28,21 +35,19 @@ public class Inventory_PopupUI : BaseUI
     public float animationDuration = 0.3f;
 
     public Tweener tweener { get; set; }
-
     public DayMain_SceneUI Owner { get; set; }
-
     public InventRoomDescri_PopupUI inventRoomDescri_PopupUI;
-
     public InventUnitDescri_PopupUI inventUnitDescri_PopupUI;
-
     public InventUpgrade_PopupUI inventUpgrade_PopupUI;
-
     public TutorialMsg_PopupUI tutorialMsg_PopupUI;
+
+    private bool _nameAscend;
+    private bool _levelAscend;
 
     protected override void Init()
     {
         SetUI<Button>();
-        SetUI<TMP_Text>();
+        SetUI<TextMeshProUGUI>();
         SetUI<Transform>();
         SetUI<ScrollRect>();
         SetUI<Image>();
@@ -54,12 +59,20 @@ public class Inventory_PopupUI : BaseUI
         _unitButton = GetUI<Button>("InventUnitBtn");
         closeButton = GetUI<Button>("InventoryCloseBtn");
         _upgradeButton = GetUI<Button>("InventoryUpgradeBtn");
+        _sortNameButton = GetUI<Button>("SortNameBtn");
+        _sortLeveButton = GetUI<Button>("SortLevelBtn");
+
+        _sortNameText = GetUI<TextMeshProUGUI>("SortNameText");
+        _sortLevelText = GetUI<TextMeshProUGUI>("SortLevelText");
 
         //SetUICallback(_backButton.gameObject, EUIEventState.Click, ClickBackBtn);
         SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
         SetUICallback(closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
         SetUICallback(_upgradeButton.gameObject, EUIEventState.Click, ClickUpgradeBtn);
+        SetUICallback(_sortNameButton.gameObject, EUIEventState.Click, ClickSortNameBtn);
+        SetUICallback(_sortLeveButton.gameObject, EUIEventState.Click, ClickSortLevelBtn);
+
 
         _inventRoomScrollView = GetUI<ScrollRect>("InventRoom_Scroll View");
         _inventUnitScrollView = GetUI<ScrollRect>("InventUnit_Scroll View");
@@ -87,6 +100,75 @@ public class Inventory_PopupUI : BaseUI
             tweener = inventArrowTransform.DOAnchorPosY(-330f, animationDuration).SetLoops(-1, LoopType.Yoyo); // 인벤토리 업그레이드 버튼 가리키는 화살표 DOTween.
 
             closeButton.gameObject.SetActive(false); // 일단 인벤토리 닫기 버튼 inactive 해두고, 룸, 유닛 업그레이드 완료하면 active 해주기
+        }
+
+        _nameAscend = false;
+        _levelAscend = false;
+    }
+
+    private void ClickSortLevelBtn(PointerEventData data)
+    {
+        if (_inventUnitScrollView.gameObject.activeSelf)
+        {
+            Main.Get<GameManager>().SortUnitLevel(_levelAscend);
+            _levelAscend = !_levelAscend;
+            if (_levelAscend)
+            {
+                _sortLevelText.text = "등급순▼";
+            }
+            else
+            {
+                _sortLevelText.text = "등급순▲";
+            }
+            SetUnitInventory();
+        }
+
+        if (_inventRoomScrollView.gameObject.activeSelf)
+        {
+            Main.Get<GameManager>().SortRoomLevel(_levelAscend);
+            _levelAscend = !_levelAscend;
+            if (_levelAscend)
+            {
+                _sortLevelText.text = "등급순▼";
+            }
+            else
+            {
+                _sortLevelText.text = "등급순▲";
+            }
+            SetRoomInventory();
+        }
+    }
+
+    private void ClickSortNameBtn(PointerEventData data)
+    {
+        if (_inventUnitScrollView.gameObject.activeSelf)
+        {
+            Main.Get<GameManager>().SortUnitName(_nameAscend);
+            _nameAscend = !_nameAscend;
+            if (_nameAscend)
+            {
+                _sortNameText.text = "이름순▼";
+            }
+            else
+            {
+                _sortNameText.text = "이름순▲";
+            }
+            SetUnitInventory();
+        }
+
+        if (_inventRoomScrollView.gameObject.activeSelf)
+        {
+            Main.Get<GameManager>().SortRoomName(_levelAscend);
+            _levelAscend = !_levelAscend;
+            if (_levelAscend)
+            {
+                _sortNameText.text = "이름순▼";
+            }
+            else
+            {
+                _sortNameText.text = "이름순▲";
+            }
+            SetRoomInventory();
         }
     }
 

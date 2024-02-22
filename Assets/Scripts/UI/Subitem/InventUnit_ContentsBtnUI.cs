@@ -1,12 +1,16 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 public class InventUnit_ContentsBtnUI : BaseUI
 {
     private Image _unitContentsImg;
     private Button _unitContentsBtn;
     public Image _selectCheckImg { get; private set; }
+
+    private TextMeshProUGUI _equipText;
 
     public Character UnitData { get; set; }
 
@@ -16,10 +20,13 @@ public class InventUnit_ContentsBtnUI : BaseUI
     {
         SetUI<Image>();
         SetUI<Button>();
+        SetUI<TextMeshProUGUI>();
 
         _unitContentsImg = GetUI<Image>("InventUnit_ContentsBtnUI");
         _unitContentsBtn = GetUI<Button>("InventUnit_ContentsBtnUI");
         _selectCheckImg = GetUI<Image>("InventUnitEquipCheckImg");
+
+        _equipText = GetUI<TextMeshProUGUI>("EquipText");
 
         SetUICallback(_unitContentsBtn.gameObject, EUIEventState.Click, ClickUnitContentBtn);
         SetUICallback(_unitContentsBtn.gameObject, EUIEventState.Hovered, HoveredUnitContentBtn);
@@ -31,6 +38,7 @@ public class InventUnit_ContentsBtnUI : BaseUI
     private void SetInfo()
     {
         _unitContentsImg.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{UnitData.Data.Key}");
+        _equipText.gameObject.SetActive(UnitData.CurRoom != null);
     }
 
     private void ClickUnitContentBtn(PointerEventData data)
@@ -73,11 +81,22 @@ public class InventUnit_ContentsBtnUI : BaseUI
 
     private void HoveredUnitContentBtn(PointerEventData data)
     {
+        if(UnitData.Owner != null)
+        {
+            Vector2 pos = UnitData.CurRoom.transform.position + Literals.BatPos[UnitData.CurIndex];
+            pos.x += 0.1f;
+            pos.y += 0.7f;
+            ((HongTestScene)Main.Get<SceneManager>().Scene).ActiveUnitArrow(pos);
+        }
         _unitContentsImg.color = Color.cyan;
     }
 
     private void ExitUnitContentBtn(PointerEventData data)
     {
+        if (UnitData.Owner != null)
+        {
+            ((HongTestScene)Main.Get<SceneManager>().Scene).InActiveUnitArrow();
+        }
         _unitContentsImg.color = Color.white;
     }
 }

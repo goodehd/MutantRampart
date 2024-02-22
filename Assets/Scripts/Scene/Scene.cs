@@ -26,14 +26,6 @@ public class Scene : MonoBehaviour
         _data = Main.Get<DataManager>();
         _ui = Main.Get<UIManager>();
         _pool = Main.Get<PoolManager>();
-        SettingPool();
-    }
-
-    private void SettingPool()
-    {
-        _pool.CreatePool($"{Literals.UNIT_PREFABS_PATH}Slime");
-        _pool.CreatePool($"{Literals.FX_PATH}ShamanFx1");
-        _pool.CreatePool($"{Literals.FX_PATH}ShamanFx2");
     }
 
     public CharacterBehaviour CreateCharacter(string key)
@@ -47,9 +39,10 @@ public class Scene : MonoBehaviour
 
     public GameObject CreateRoom(string key)
     {
-        GameObject obj = _resource.Instantiate($"{Literals.ROOM_PREFABS_PATH}{key}");
+        RoomData data = _data.Room[key];
+        GameObject obj = _resource.Instantiate($"{Literals.ROOM_PREFABS_PATH}{data.PrefabName}");
         RoomBehavior room = Utility.GetAddComponent<RoomBehavior>(obj);
-        room.Init(_data.Room[key]);
+        room.Init(data);
 
         return obj;
     }
