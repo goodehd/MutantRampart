@@ -106,9 +106,8 @@ public class Shop_PopupUI : BaseUI
         _playerMoneyText.text = Main.Get<GameManager>().PlayerMoney.ToString();
 
         _groundRowPriceText = GetUI<TMP_Text>("GroundRowPriceTxt");
-        _groundRowPriceText.text = Main.Get<DataManager>().Item["ExpandMapRow"].Price.ToString();
         _groundColPriceText = GetUI<TMP_Text>("GroundColPriceTxt");
-        _groundColPriceText.text = Main.Get<DataManager>().Item["ExpandMapCol"].Price.ToString();
+        UpdateGroundPriceText();
 
         shopArrowImg = GetUI<Image>("ShopArrowImg");
 
@@ -171,6 +170,17 @@ public class Shop_PopupUI : BaseUI
             shopArrowTransform.anchoredPosition = new Vector3(-752f, 368f, 0f); // 상점 내 unit 카테고리 가리키는 화살표.
             tweener = shopArrowTransform.DOAnchorPosY(338f, animationDuration).SetLoops(-1, LoopType.Yoyo);
         }
+    }
+
+    public void UpdateGroundPriceText()
+    {
+        int x;
+        int y;
+        Main.Get<TileManager>().GetMapSize(out x, out y);
+        int RowPrice = (Main.Get<DataManager>().Item["ExpandMapRow"].Price) * (x - 2);
+        int ColPrice = (Main.Get<DataManager>().Item["ExpandMapCol"].Price) * (y - 2);
+        _groundRowPriceText.text = RowPrice.ToString();
+        _groundColPriceText.text = ColPrice.ToString();
     }
 
     private void UpdateMoneyText(int amount)
@@ -325,6 +335,7 @@ public class Shop_PopupUI : BaseUI
         YesNo_PopupUI ui = Main.Get<UIManager>().OpenPopup<YesNo_PopupUI>("YesNo_PopupUI");
         ui.curAskingText = "구매하시겠습니까 ?";
         ui.ShopGroundItemData = ShopGroundItems[0]; // 0 이 ExpandMapRow
+        ui.Shop_PopupUI = this;
     }
 
     private void ClickExpandColBtn(PointerEventData eventData)
@@ -332,6 +343,7 @@ public class Shop_PopupUI : BaseUI
         YesNo_PopupUI ui = Main.Get<UIManager>().OpenPopup<YesNo_PopupUI>("YesNo_PopupUI");
         ui.curAskingText = "구매하시겠습니까 ?";
         ui.ShopGroundItemData = ShopGroundItems[1]; // 1 이 ExpandMapCol
+        ui.Shop_PopupUI= this;
     }
 
     private void ClickItem1Btn(PointerEventData eventData)
@@ -440,4 +452,5 @@ public class Shop_PopupUI : BaseUI
     {
         return GachaItemItems[Random.Range(0, GachaItemItems.Count)];
     }
+
 }

@@ -17,6 +17,7 @@ public class YesNo_PopupUI : BaseUI
     public ItemData ShopGroundItemData { get; set; }
 
     public string curAskingText { get; set; }
+    public Shop_PopupUI Shop_PopupUI { get; set; }
 
     protected override void Init()
     {
@@ -54,7 +55,7 @@ public class YesNo_PopupUI : BaseUI
         }
 
         Main.Get<UIManager>().ClosePopup();
-
+        Shop_PopupUI.UpdateGroundPriceText();
     }
 
     private void ClickNoBtn(PointerEventData eventData)
