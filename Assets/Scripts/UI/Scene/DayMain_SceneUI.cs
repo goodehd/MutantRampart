@@ -256,6 +256,12 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickStageStartBtn(PointerEventData eventData)
     {
+        if (Main.Get<GameManager>().CurStage >= 30)
+        {
+            Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
+            ui.curErrorText = "개발중입니다.";
+            return;
+        }
         if (gameManager.isHomeSet)
         {
             if (gameManager.isTutorial) // 튜토리얼 중이라면
@@ -298,6 +304,8 @@ public class DayMain_SceneUI : BaseUI
             Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
             ui.curErrorText = "홈타입의 방을 설치해 주세요.";
         }
+
+        
     }
 
     private void ClickUnitBtn(PointerEventData eventData)
