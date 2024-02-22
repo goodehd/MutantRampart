@@ -11,9 +11,9 @@ public class CharacterBehaviour : MonoBehaviour
     public Character CharacterInfo { get; private set; }
     public StateMachine StateMachine { get; private set; }
     public ConditionMachine ConditionMachine { get; private set; }
-
     public CharacterStatus Status { get { return CharacterInfo.Status; } }
-    public int CurPosX { get { return CharacterInfo.CurPosX ; } set { CharacterInfo.CurPosX = value; } }
+
+    public int CurPosX { get { return CharacterInfo.CurPosX; } set { CharacterInfo.CurPosX = value; } }
     public int CurPosY { get { return CharacterInfo.CurPosY; } set { CharacterInfo.CurPosY = value; } }
     public int CurIndex { get { return CharacterInfo.CurIndex; } set { CharacterInfo.CurIndex = value; } }
     public RoomBehavior CurRoom { get { return CharacterInfo.CurRoom; } set { CharacterInfo.CurRoom = value; } }
@@ -21,11 +21,9 @@ public class CharacterBehaviour : MonoBehaviour
     public event Action OnChangeCharcterInfoEvent;
 
     private bool _initialize = false;
-
     public virtual void Init(CharacterData data)
     {
         SetData(new Character(data));
-
         if (_initialize)
             return;
 
@@ -82,13 +80,13 @@ public class CharacterBehaviour : MonoBehaviour
     public void TakeDamage(float damage)
     {
         float finalDamage = damage - Status[EstatType.Defense].Value;
-        if(finalDamage <= 0)
+        if (finalDamage <= 0)
         {
             finalDamage = 1;
         }
         Status.GetStat<Vital>(EstatType.Hp).CurValue -= finalDamage;
         CreateDamageText(finalDamage);
-        if(Status.GetStat<Vital>(EstatType.Hp).CurValue <= 0)
+        if (Status.GetStat<Vital>(EstatType.Hp).CurValue <= 0)
         {
             Die();
         }

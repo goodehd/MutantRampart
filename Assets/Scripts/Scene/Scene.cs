@@ -42,7 +42,6 @@ public class Scene : MonoBehaviour
         GameObject obj = _resource.Instantiate($"{Literals.UNIT_PREFABS_PATH}{info.PrefabName}");
         CharacterBehaviour character = Utility.GetAddComponent<CharacterBehaviour>(obj);
         character.Init(info);
-
         return character;
     }
 

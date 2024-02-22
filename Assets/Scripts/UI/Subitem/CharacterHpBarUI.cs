@@ -10,7 +10,6 @@ public class CharacterHpBarUI : BaseUI
     private Image _hpBarImage;
     private Image _hpBaseBarImage;
     private Image _mpBarImage;
-
     private TextMeshProUGUI _curHpText;
     private TextMeshProUGUI _maxHpText;
 
@@ -27,7 +26,6 @@ public class CharacterHpBarUI : BaseUI
         _hpBarImage = GetUI<Image>("HpBar");
         _hpBaseBarImage = GetUI<Image>("HpBaseBar");
         _mpBarImage = GetUI<Image>("MpBar");
-
         _curHpText = GetUI<TextMeshProUGUI>("CurHPText");
         _maxHpText = GetUI<TextMeshProUGUI>("MaxHPText");
 
@@ -106,3 +104,4 @@ public class CharacterHpBarUI : BaseUI
         }
     }
 }
+

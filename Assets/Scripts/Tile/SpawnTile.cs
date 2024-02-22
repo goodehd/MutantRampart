@@ -1,12 +1,10 @@
 using System.Collections;
 using UnityEngine;
-
 public class SpawnTile : MonoBehaviour
 {
     private Scene _curScene;
     private float _spawnRatio;
     private Vector3 _spawnPos = Vector3.zero;
-
     public void Start()
     {
         _curScene = Main.Get<SceneManager>().Scene;
@@ -15,17 +13,15 @@ public class SpawnTile : MonoBehaviour
         _spawnPos.z = 3f;
         _spawnRatio = 1.0f;
     }
-
     public void StartStage(StageMonsterInfo info)
     {
         StartCoroutine(SpawnEnemy(info));
     }
-
     private IEnumerator SpawnEnemy(StageMonsterInfo info)
     {
         foreach (Monster monsyerInfo in info.Monsters)
         {
-            for(int i = 0; i < monsyerInfo.Count; i++)
+            for (int i = 0; i < monsyerInfo.Count; i++)
             {
                 CharacterBehaviour enemy = _curScene.CreateCharacter(monsyerInfo.Name);
                 enemy.transform.position = _spawnPos;

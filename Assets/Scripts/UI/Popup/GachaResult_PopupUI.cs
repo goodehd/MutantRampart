@@ -80,8 +80,8 @@ public class GachaResult_PopupUI : BaseUI
                     ui.isBackgroundActive = true;
 
                     Owner.shopArrowImg.gameObject.SetActive(true);
-                    Owner.shopArrowTransform.anchoredPosition = new Vector3(-628f, 368f, 0f); // 상점 내 Room 카테고리 가리키는 화살표.
-                    Owner.tweener = Owner.shopArrowTransform.DOAnchorPosY(338f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
+                    Owner.shopArrowTransform.anchoredPosition = new Vector3(369f, 376f, 0f); // 상점 내 Room 카테고리 가리키는 화살표.
+                    Owner.tweener = Owner.shopArrowTransform.DOAnchorPosY(346f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
                 }
             }
 
