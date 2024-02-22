@@ -42,7 +42,7 @@ public class StageManager : IManagers
     public int StageEnemyCount { get; set; }
 
     private TileManager _tileManager;
-    private List<StageMonsterInfo> stageMonsterInfoList = new List<StageMonsterInfo>();
+    private DataManager _dataManager;
 
     private bool _isStageStart = false;
     private int _curStage = 0;
@@ -52,38 +52,24 @@ public class StageManager : IManagers
     public bool Init()
     {
         _tileManager = Main.Get<TileManager>();
-
-        StageMonsterInfo stage = new StageMonsterInfo(1000);
-        stage.AddMonster("Slime", 1);
-        stageMonsterInfoList.Add(stage);
-
-        stage = new StageMonsterInfo(1000);
-        stage.AddMonster("Slime", 3);
-        stageMonsterInfoList.Add(stage);
-
-        stage = new StageMonsterInfo(1000);
-        stage.AddMonster("Slime", 3);
-        stage.AddMonster("Snail", 2);
-        stageMonsterInfoList.Add(stage);
-
-
-
-
-
+        _dataManager = Main.Get<DataManager>();
+        _isStageStart = false;
+        OnStageStartEvent = null;
+        OnStageClearEvent = null;
         return true;
     }
 
     public void StartStage()
     {
         _curStage = Main.Get<GameManager>().CurStage;
-        if (_curStage >= stageMonsterInfoList.Count)
+        if (_curStage >= _dataManager.stageMonsterInfoList.Count)
             return;
 
         if (_isStageStart)
             return;
 
-        StageEnemyCount = stageMonsterInfoList[_curStage].Count;
-        _tileManager.SpawnTile.StartStage(stageMonsterInfoList[_curStage]);
+        StageEnemyCount = _dataManager.stageMonsterInfoList[_curStage].Count;
+        _tileManager.SpawnTile.StartStage(_dataManager.stageMonsterInfoList[_curStage]);
         _isStageStart = true;
 
         OnStageStartEvent?.Invoke(_curStage);
@@ -107,9 +93,9 @@ public class StageManager : IManagers
 
         ui._curStage = _curStage + 1;
         Main.Get<GameManager>().CurStage = ui._curStage;
-        ui._rewardsGold = stageMonsterInfoList[_curStage].RewardsGold;
+        ui._rewardsGold = _dataManager.stageMonsterInfoList[_curStage].RewardsGold;
 
-        Main.Get<GameManager>().ChangeMoney(stageMonsterInfoList[_curStage].RewardsGold);
+        Main.Get<GameManager>().ChangeMoney(_dataManager.stageMonsterInfoList[_curStage].RewardsGold);
         _isStageStart = false;
         OnStageClearEvent?.Invoke(++_curStage);
         Main.Get<SoundManager>().SoundPlay($"DayBGM", ESoundType.BGM);

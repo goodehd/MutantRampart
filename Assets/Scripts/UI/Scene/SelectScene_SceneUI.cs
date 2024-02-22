@@ -133,6 +133,8 @@ public class SelectScene_SceneUI : BaseUI
 
     private void ClickTutorialSkipYesBtn(PointerEventData data)
     {
+        PlayerPrefs.SetInt("Tutorial", 1);
+        Main.Get<GameManager>().Init();
         SetTutorial();
     }
     private void ClickTutorialSkipNoBtn(PointerEventData data)

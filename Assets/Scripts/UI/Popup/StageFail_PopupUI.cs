@@ -40,6 +40,7 @@ public class StageFail_PopupUI : BaseUI
         Main.Get<SaveDataManager>().DeleteData();
         Main.Get<GameManager>().Init();
         Main.Get<UIManager>().Init();
+        Main.Get<StageManager>().Init();
         Main.Get<SoundManager>().SoundStop(ESoundType.BGM);
         Time.timeScale = 1.0f;
         Main.Get<SceneManager>().ChangeScene<SelectScene>();

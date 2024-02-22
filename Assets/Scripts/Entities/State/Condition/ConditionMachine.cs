@@ -14,7 +14,6 @@ public class ConditionMachine
         }
     }
 
-
     public void AddCondition(BaseCondition basecondition)
     {
         _curConditionList[(int)basecondition.ConditionName].Add(basecondition);
@@ -43,6 +42,4 @@ public class ConditionMachine
     {
         return _curConditionList[(int)eCondition].Count > 0;
     }
-
-
 }
