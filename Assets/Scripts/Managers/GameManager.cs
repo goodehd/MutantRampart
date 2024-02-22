@@ -63,8 +63,6 @@ public class GameManager : IManagers
             }
         }
 
-        //Room test = new Room(Main.Get<DataManager>().Room["Temple"]);
-        //PlayerRooms.Add(test);
         isHomeSet = false;
         return true;
     }

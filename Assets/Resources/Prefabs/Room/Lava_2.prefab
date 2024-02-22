@@ -100,9 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b00058ba0a46254c8089acf91c4e00a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildAvailable: {fileID: 2100000, guid: 6312956a193c58b4a8a2c43bb7596cba, type: 2}
-  _buildNotAvailable: {fileID: 2100000, guid: 5d0d5465d6d70c748adb74eb7f6e5f2f, type: 2}
-  isEquipedRoom: 0
+  tilemap:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &6812764479593656371
 GameObject:
   m_ObjectHideFlags: 0
