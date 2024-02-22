@@ -428,7 +428,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1934351371030498198
 RectTransform:
   m_ObjectHideFlags: 0
@@ -873,7 +873,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Stage 01
+  m_text: day 01
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6c5bd75a1bb2b0b4593be30c6e1c4e8a, type: 2}
   m_sharedMaterial: {fileID: 919464689362892429, guid: 6c5bd75a1bb2b0b4593be30c6e1c4e8a, type: 2}
@@ -906,7 +906,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1008,7 +1008,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: STAGE Failed...
+  m_text: day Failed...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b34dfacb3b3946243924645114ec0995, type: 2}
   m_sharedMaterial: {fileID: 4319605689355944804, guid: b34dfacb3b3946243924645114ec0995, type: 2}

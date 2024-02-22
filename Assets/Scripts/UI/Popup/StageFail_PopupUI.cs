@@ -30,7 +30,7 @@ public class StageFail_PopupUI : BaseUI
         SetUICallback(_mainMenuBtn.gameObject, EUIEventState.Click, ClickMainMenuBtn);
         //SetUICallback(_retryBtn.gameObject, EUIEventState.Click, ClickRetryBtn);
 
-        _stageText.text = $"Stage {_curStage}";
+        _stageText.text = $"Day {_curStage}";
         //_rewardsText.text = ;
     }
 

@@ -130,7 +130,7 @@ public class DayMain_SceneUI : BaseUI
 
             TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
             ui.curTutorialText =
-                "적의 침입으로부터 메인 거점인 Home 을 지켜내야 해요!\n지키기 위해서는 침입을 막아줄 Unit 과 Room 이 필요해요.\n\n그럼, <color=#E9D038><b>상점</b></color>에서 제공해드린 재화로\nUnit 과 Room 을 구매해봅시다!";
+                "<b>[튜토리얼]</b>\n\n적의 침입으로부터 메인 거점인 Home 을 지켜내야 해요!\n지키기 위해서는 침입을 막아줄 Unit 과 Room 이 필요해요.\n\n그럼, <color=#E9D038><b>상점</b></color>에서 제공해드린 재화로\nUnit 과 Room 을 구매해봅시다!";
             _dayArrowImg.gameObject.SetActive(true);
             dayArrowTransform.anchoredPosition = new Vector3(-770f, -276f, 0f); // 상점 가리키는 화살표.
             tweener = dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo);
@@ -363,7 +363,7 @@ public class DayMain_SceneUI : BaseUI
                 tweener = dayArrowTransform.DOAnchorPosX(810f, animationDuration).SetLoops(-1, LoopType.Yoyo);
 
                 TutorialMsg_PopupUI ui1 = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                ui1.curTutorialText = "Room 의 종류로는 앞서 설명드린 Home 외에,\n유닛을 배치할 수 있는 <color=#E9D038><b>Bat</b></color> 타입과, \n유닛 배치는 불가능하지만,\n들어온 적에게 함정효과가 발동되는 <color=#E9D038><b>Trap</b></color> 타입이 있어요.\n남은 Room 을 클릭해 배치해봅시다!";
+                ui1.curTutorialText = "Room 의 종류로는 앞서 설명드린 Home 외에,\n유닛을 배치할 수 있는 <color=#E9D038><b>Bat</b></color> 타입과, \n유닛 배치는 불가능하지만,\n들어온 적에게 함정효과가 발동되는 <color=#E9D038><b>Trap</b></color> 타입이 있어요.\n\n남은 Room 을 클릭해 배치해봅시다!";
             }
         }
         else
@@ -397,7 +397,7 @@ public class DayMain_SceneUI : BaseUI
                         dayArrowTransform.Rotate(0f, 0f, 90f); // 90 도 돌리고
 
                         TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 튜토리얼 팝업
-                        ui.curTutorialText = "이제 모든 준비가 완료됐으니\n적들의 침입을 막으러 가봅시다!\n<color=#E9D038><b>Battle 버튼</b></color>을 눌러주세요!";
+                        ui.curTutorialText = "이제 모든 준비가 완료됐으니\n적들의 침입을 막으러 가봅시다!\n<color=#E9D038><b>BATTLE 버튼</b></color>을 눌러주세요!";
 
                     }
                 }
@@ -421,7 +421,7 @@ public class DayMain_SceneUI : BaseUI
 
             backButton.gameObject.SetActive(false);
             TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 가운데 Ground 눌러
-            ui.curTutorialText = "<color=#E9D038><b>가운데 Ground</b></color> 를 클릭해주세요!";
+            ui.curTutorialText = "<color=#E9D038><b>중앙에 위치한 Ground</b></color> 를 클릭해주세요!";
             ui.isCloseBtnActive = true;
             ui.isBackgroundActive = true;
         }
@@ -449,7 +449,7 @@ public class DayMain_SceneUI : BaseUI
             shopButton.gameObject.SetActive(false); // 상점 튜토리얼 완료하면 상점 버튼 inactive.
             _inventoryButton.gameObject.SetActive(true); // 상점 튜토리얼 다음 순서인 인벤토리 버튼 active.
             _dayArrowImg.gameObject.SetActive(true);
-            dayArrowTransform.anchoredPosition = new Vector3(-230f, -276f, 0f); // 인벤토리 가리키는 화살표.
+            dayArrowTransform.anchoredPosition = new Vector3(-241f, -276f, 0f); // 인벤토리 가리키는 화살표.
             tweener = dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo);
         }
     }
@@ -691,7 +691,7 @@ public class DayMain_SceneUI : BaseUI
             if (!gameManager.isHomeSet)
             {
                 TutorialMsg_PopupUI ui = _ui.OpenPopup<TutorialMsg_PopupUI>();
-                ui.curTutorialText = "먼저, Room 을 배치해볼게요. Room 버튼을 눌러주세요.";
+                ui.curTutorialText = "먼저, Room 을 배치해볼게요. <color=#E9D038><b>Room 버튼</b></color>을 눌러주세요.";
                 backButton.gameObject.SetActive(false);
                 _dayArrowImg.gameObject.SetActive(true);
                 dayArrowTransform.anchoredPosition = new Vector3(860f, 230f, 0f); // Room 버튼 가리키는 화살표

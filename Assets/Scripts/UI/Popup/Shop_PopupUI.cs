@@ -168,8 +168,8 @@ public class Shop_PopupUI : BaseUI
             _groundButton.gameObject.SetActive(false);
             _itemButton.gameObject.SetActive(false);
             shopArrowImg.gameObject.SetActive(true);
-            shopArrowTransform.anchoredPosition = new Vector3(-752f, 368f, 0f); // 상점 내 unit 카테고리 가리키는 화살표.
-            tweener = shopArrowTransform.DOAnchorPosY(338f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+            shopArrowTransform.anchoredPosition = new Vector3(244f, 376f, 0f); // 상점 내 unit 카테고리 가리키는 화살표.
+            tweener = shopArrowTransform.DOAnchorPosY(346f, animationDuration).SetLoops(-1, LoopType.Yoyo);
         }
     }
 
