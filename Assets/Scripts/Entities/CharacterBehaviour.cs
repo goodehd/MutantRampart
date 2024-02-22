@@ -79,7 +79,7 @@ public class CharacterBehaviour : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        float finalDamage = damage - Status[EstatType.Defense].Value;
+        float finalDamage = damage - (damage * Status[EstatType.Defense].Value / (Status[EstatType.Defense].Value+100));
         if (finalDamage <= 0)
         {
             finalDamage = 1;
