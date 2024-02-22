@@ -136,7 +136,7 @@ public class Shop_PopupUI : BaseUI
             GachaRoomItems.Add(Main.Get<DataManager>().Room["Forest"]);
             GachaRoomItems.Add(Main.Get<DataManager>().Room["Igloo"]);
             GachaRoomItems.Add(Main.Get<DataManager>().Room["Lava"]);
-            GachaRoomItems.Add(Main.Get<DataManager>().Room["LivingRoom"]);
+            GachaRoomItems.Add(Main.Get<DataManager>().Room["Livingroom"]);
             //GachaRoomItems.Add(Main.Get<DataManager>().Room["Molar"]);
             GachaRoomItems.Add(Main.Get<DataManager>().Room["Snow"]);
             GachaRoomItems.Add(Main.Get<DataManager>().Room["Temple"]);

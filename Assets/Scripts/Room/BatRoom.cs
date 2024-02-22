@@ -11,7 +11,7 @@ public class BatRoom : RoomBehavior
     {
         Forest,
         Igloo,
-        LivingRoom,
+        Livingroom,
         Temple,
         Count
     }
@@ -195,7 +195,7 @@ public class BatRoom : RoomBehavior
             case EBatType.Igloo:
                 character.ConditionMachine.AddCondition(new FreezingAttackCondition(character, RoomInfo.Data));
                 break;
-            case EBatType.LivingRoom:
+            case EBatType.Livingroom:
 
                 break;
             case EBatType.Temple:
