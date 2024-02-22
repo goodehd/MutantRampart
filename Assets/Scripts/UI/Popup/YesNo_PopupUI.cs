@@ -49,12 +49,13 @@ public class YesNo_PopupUI : BaseUI
         //{
         //    BuyItemItem(ShopItemData);
         //}
+        Main.Get<UIManager>().ClosePopup();
+
         if (ShopGroundItemData != null) // 구분 - 구매하려는 데이터가 Ground 일 때
         {
             BuyGroundItem(ShopGroundItemData);
         }
 
-        Main.Get<UIManager>().ClosePopup();
         Shop_PopupUI.UpdateGroundPriceText();
     }
 
