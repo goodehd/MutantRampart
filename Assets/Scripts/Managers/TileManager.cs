@@ -72,7 +72,7 @@ public class TileManager : IManagers
         for (int i = 0; i < y; i++)
         {
             offset.Set(3f * i, 1.5f * i);
-            RoomBehavior room = CreateDefaultRoom(y, i, pos + offset);
+            RoomBehavior room = CreateDefaultRoom(x, i, pos + offset);
             _roomObjList[_roomObjList.Count - 1].Add(room);
         }
         _navigation.ExpandNodeRow();

@@ -57,7 +57,6 @@ public class TempleBuffCondition : BaseCondition
 
     public IEnumerator ConditionEffect(float DataValue, float DataValue2)
     {
-
         StatModifier Reduction = new StatModifier((100 - DataValue) * 0.01f, EStatModType.Multip, 1, this);
 
         Owner.Status.GetStat<Vital>(EstatType.Hp).AddModifier(Reduction);
