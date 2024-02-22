@@ -7,14 +7,17 @@ using System.IO;
 
 public class SelectScene_SceneUI : BaseUI
 {
-    private Image _setPlayerNameImage;
-    private Image _playerInfoImage;
+    private Image _setPlayerImage;
+    private Image _tutorialSkipImage;
 
     private Button _startNewGameBtn;
     private Button _continueGameBtn;
+    private Button _tutorialSkipYesBtn;
+    private Button _tutorialSkipNoBtn;
     private Button _upgradeBtn;
     private Button _setPlayerNameCheckBtn;
-    private Button _closeBtn;
+    private Button _setPlayerCloseBtn;
+    private Button _tutorialSkipCloseBtn;
 
     private TextMeshProUGUI _playerNameTxt;
     private TextMeshProUGUI _playerDayTxt;
@@ -33,14 +36,17 @@ public class SelectScene_SceneUI : BaseUI
         SetUI<Image>();
         SetUI<TextMeshProUGUI>();
 
-        _setPlayerNameImage = GetUI<Image>("SetPlayerNameImg");
-        _playerInfoImage = GetUI<Image>("PlayerInfoImg");
+        _setPlayerImage = GetUI<Image>("SetPlayerImg");
+        _tutorialSkipImage = GetUI<Image>("TutorialSkipImg");
 
         _startNewGameBtn = GetUI<Button>("StartNewBtn");
         _continueGameBtn = GetUI<Button>("ContinueBtn");
         _upgradeBtn = GetUI<Button>("UpgradeBtn");
         _setPlayerNameCheckBtn = GetUI<Button>("SetPlayerNameCheckBtn");
-        _closeBtn = GetUI<Button>("CloseBtn");
+        _setPlayerCloseBtn = GetUI<Button>("SetPlayerCloseBtn");
+        _tutorialSkipYesBtn = GetUI<Button>("TutorialSkipYesBtn");
+        _tutorialSkipNoBtn = GetUI<Button>("TutorialSkipNoBtn");
+        _tutorialSkipCloseBtn = GetUI<Button>("TutorialSkipCloseBtn");
 
         _playerNameTxt = GetUI<TextMeshProUGUI>("PlayerNameTxt");
         _playerDayTxt = GetUI<TextMeshProUGUI>("PlayerDayTxt");
@@ -50,7 +56,10 @@ public class SelectScene_SceneUI : BaseUI
         SetUICallback(_startNewGameBtn.gameObject, EUIEventState.Click, ClickStartNewBtn);
         SetUICallback(_continueGameBtn.gameObject, EUIEventState.Click, ClickContinueBtn);
         SetUICallback(_setPlayerNameCheckBtn.gameObject, EUIEventState.Click, ClickSetPlayerNameCheckBtn);
-        SetUICallback(_closeBtn.gameObject, EUIEventState.Click, ClickCloseBtn);
+        SetUICallback(_setPlayerCloseBtn.gameObject, EUIEventState.Click, ClickSetPlayerCloseBtn);
+        SetUICallback(_tutorialSkipYesBtn.gameObject, EUIEventState.Click, ClickTutorialSkipYesBtn);
+        SetUICallback(_tutorialSkipNoBtn.gameObject, EUIEventState.Click, ClickTutorialSkipNoBtn);
+        SetUICallback(_tutorialSkipCloseBtn.gameObject, EUIEventState.Click, ClickTutorialSkipCloseBtn);
 
 
         if (File.Exists(_saveDataManager.path) && !_gameManager.isTutorial)
@@ -78,7 +87,7 @@ public class SelectScene_SceneUI : BaseUI
 
     private void ClickStartNewBtn(PointerEventData data)
     {
-        _setPlayerNameImage.gameObject.SetActive(true);
+        _setPlayerImage.gameObject.SetActive(true);
         
     }
 
@@ -111,15 +120,44 @@ public class SelectScene_SceneUI : BaseUI
         _saveDataManager.Player.Name = _inputFieldTxt.text;
         Main.Get<GameManager>().PlayerName = _saveDataManager.Player.Name;
         _saveDataManager.SaveData();
-        Debug.Log($"{_saveDataManager.Player.Name}");
+        if (!Main.Get<GameManager>().isTutorial)
+        {
+            _setPlayerImage.gameObject.SetActive(false);
+            _tutorialSkipImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            SetTutorial();
+        }
+    }
+
+    private void ClickTutorialSkipYesBtn(PointerEventData data)
+    {
+        SetTutorial();
+    }
+    private void ClickTutorialSkipNoBtn(PointerEventData data)
+    {
+        PlayerPrefs.SetInt("Tutorial", 0);
+        Main.Get<GameManager>().Init();
+        SetTutorial();
+    }
+    private void ClickTutorialSkipCloseBtn(PointerEventData data)
+    {
+        _tutorialSkipImage.gameObject.SetActive(false);
+    }
+
+    private void ClickSetPlayerCloseBtn(PointerEventData data)
+    {
+        _setPlayerImage.gameObject.SetActive(false);
+    }
+
+    private void SetTutorial()
+    {
+        _setPlayerImage.gameObject.SetActive(false);
         Main.Get<GameManager>().AddHometoInventory();
         Main.Get<SceneManager>().ChangeScene<HongTestScene>();
     }
 
-    private void ClickCloseBtn(PointerEventData data)
-    {
-        _setPlayerNameImage.gameObject.SetActive(false);
-    }
 }
 
 

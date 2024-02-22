@@ -19,6 +19,8 @@ public class CharacterHpBarUI : BaseUI
 
     protected override void Init()
     {
+        base.Init();
+
         SetUI<Image>();
         SetUI<TextMeshProUGUI>();
 
@@ -33,6 +35,9 @@ public class CharacterHpBarUI : BaseUI
 
         if (_owner != null && _owner.Status != null)
         {
+            _owner.Status.GetStat<Vital>(EstatType.Hp).OnValueChanged -= SetMaxHpInfo;
+            _owner.Status.GetStat<Vital>(EstatType.Hp).OnCurValueChanged -= SetHpInfo;
+            _owner.Status.GetStat<Vital>(EstatType.Mp).OnCurValueChanged -= SetMpInfo;
             _owner.Status.GetStat<Vital>(EstatType.Hp).OnValueChanged += SetMaxHpInfo;
             _owner.Status.GetStat<Vital>(EstatType.Hp).OnCurValueChanged += SetHpInfo;
             _owner.Status.GetStat<Vital>(EstatType.Mp).OnCurValueChanged += SetMpInfo;
@@ -60,7 +65,7 @@ public class CharacterHpBarUI : BaseUI
             StopCoroutine(_coroutine);
 
         if(gameObject.activeSelf)
-            StartCoroutine(BaseBarAnimation());
+            _coroutine = StartCoroutine(BaseBarAnimation());
     }
 
     private void SetMaxHpInfo(float hp)
@@ -82,14 +87,5 @@ public class CharacterHpBarUI : BaseUI
     {
         float ratio = _owner.Status.GetStat<Vital>(EstatType.Mp).Normalized();
         _mpBarImage.fillAmount = ratio;
-    }
-
-    private void OnDestroy()
-    {
-        if(_owner != null)
-        {
-            _owner.Status.GetStat<Vital>(EstatType.Hp).OnCurValueChanged -= SetHpInfo;
-            _owner.Status.GetStat<Vital>(EstatType.Mp).OnCurValueChanged -= SetMpInfo;
-        }
     }
 }

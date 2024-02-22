@@ -37,8 +37,6 @@ public class CharacterBehaviour : MonoBehaviour
         StateMachine.ChangeState(EState.Idle);
 
         ConditionMachine = new ConditionMachine();
-        
-        CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += Die;
 
         _initialize = true;
     }
@@ -47,7 +45,6 @@ public class CharacterBehaviour : MonoBehaviour
     {
         CharacterInfo = data;
         data.Owner = this;
-        CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero += Die;
     }
 
     private void Update()
@@ -87,6 +84,10 @@ public class CharacterBehaviour : MonoBehaviour
         }
         Status.GetStat<Vital>(EstatType.Hp).CurValue -= finalDamage;
         CreateDamageText(finalDamage);
+        if(Status.GetStat<Vital>(EstatType.Hp).CurValue <= 0)
+        {
+            Die();
+        }
     }
 
     private void CreateDamageText(float value)
@@ -105,7 +106,6 @@ public class CharacterBehaviour : MonoBehaviour
 
     public void DestroyUnit()
     {
-        CharacterInfo.Status.GetStat<Vital>(EstatType.Hp).OnValueZero -= Die;
         ConditionMachine.ClearConditions();
     }
 }
