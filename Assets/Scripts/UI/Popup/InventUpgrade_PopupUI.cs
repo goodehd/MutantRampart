@@ -69,22 +69,6 @@ public class InventUpgrade_PopupUI : BaseUI
     {
         _upgradeSlotsImgs[index].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{UpgradeUnitSlots[index].Data.Key}");
         _upgradeSlotsImgs[index].enabled = true;
-
-        //if (UpgradeUnitSlots.Length > 3) // 3개 가득 찬 경우 예외처리 해주기
-        //{
-        //    Debug.Log("슬롯이 가득 찼어유~");
-        //    return;
-        //}
-
-        //for (int i = 0; i < UpgradeUnitSlots.Length; i++)
-        //{
-        //    if (_upgradeSlotsImgs[i].sprite == null) // 기존 슬롯에 이미 데이터가 들어가있으면 다음 슬롯으로 들어가게끔 !
-        //    {
-        //        _upgradeSlotsImgs[i].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{unitData.Data.Key}");
-        //        _upgradeSlotsImgs[i].enabled = true; // image 컴포넌트 체크 설정.
-
-        //    }
-        //}
     }
 
     public void SetRoomInfo(int index) // Room
@@ -93,60 +77,9 @@ public class InventUpgrade_PopupUI : BaseUI
         _upgradeSlotsImgs[index].enabled = true;
     }
 
-    //public void SetUnitInfo(Character unitData)
-    //{
-    //    // UnitData
-
-    //    _upgradeSlotsImgs[0].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{unitData.Data.Key}");
-    //    _upgradeSlotsImgs[0].enabled = true; // image 컴포넌트 체크 설정.
-
-    //}
-
-    //public void AddUnitToSlot(Character unitData)
-    //{
-
-    //    for (int i = 0; i < _upgradeSlots.Length; i++) // 첫 번째 빈 슬롯을 찾아 아이템을 추가
-    //    {
-    //        if (UpgradeUnitSlots.Count <= i)
-    //        {
-    //            UpgradeUnitSlots.Add(unitData); // 아이템 추가
-    //            _upgradeSlotsImgs[i].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{unitData.Data.Key}");
-    //            _upgradeSlotsImgs[i].enabled = true; // image 컴포넌트 체크 설정.
-    //            return;
-    //        }
-    //        else if (UpgradeUnitSlots[i] == null)
-    //        {
-    //            slots[i] = item; // 아이템 추가
-    //            Debug.Log("Added item to slot " + (i + 1));
-    //            return;
-    //        }
-    //    }
-    //    Debug.Log("All slots are full.");
-
-
-    //    //for (int i = 0; i < 3; i++) // 슬롯 List 를 반복해서 첫 번째 빈 슬롯을 찾기
-    //    //{
-    //    //    // 슬롯에 데이터가 없는 경우
-    //    //    if (UpgradeUnitSlots[i] == null)
-    //    //    {
-    //    //        UpgradeUnitSlots.Add(unitData); // 슬롯에 유닛 추가
-    //    //        _upgradeSlotsImgs[i].sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.UNIT_SPRITE_PATH}{unitData.Data.Key}");
-    //    //        _upgradeSlotsImgs[i].enabled = true; // image 컴포넌트 체크 설정.
-
-    //    //        return;
-    //    //    }
-    //    //}
-    //    //Debug.Log("All slots are full.");
-    //}
-
     private void ClickCloseBtn(PointerEventData data)
     {
-        //Array.Clear(UpgradeUnitSlots, 0, UpgradeUnitSlots.Length); // unit slot 배열 초기화
-        //Array.Clear(UpgradeRoomSlots, 0, UpgradeRoomSlots.Length); // room slot 배열 초기화
-        //Count = 0;
-
         Main.Get<UIManager>().ClosePopup();
-        //Owner.inventUnitDescri_PopupUI.Owner._selectCheckImg.gameObject.SetActive(false);
     }
 
     private void ClickUpgradeBtn(PointerEventData data)
@@ -187,13 +120,6 @@ public class InventUpgrade_PopupUI : BaseUI
                 ui.curErrorText = "동일한 종류,\n레벨의 유닛을 넣어주세요!";
                 Debug.Log("동일한 유닛을 넣어주세요!");
             }
-            // slot 에 있는 데이터는 다 지워주고 새롭게 능력이 부여된 아이템 획득
-            // slot[i] == null 이면 return; 해주기
-            //_upgradeSlotsImgs[i].sprite = null; // slot image 빼버리고
-            //_upgradeSlotsImgs[i].enabled = false; // image 컴포넌트 체크 해제.
-            //// 새롭게 능력이 부여된 아이템 획득
-            //Character newChar = new Character(data);
-            //Main.Get<GameManager>().playerUnits.Add(newChar);
         }
 
         if (UpgradeRoomSlots[0] != null && UpgradeRoomSlots[1] != null && UpgradeRoomSlots[2] != null) // Room slot 구분
@@ -383,9 +309,4 @@ public class InventUpgrade_PopupUI : BaseUI
         SetRoomInfo(index);
         Count++;
     }
-
-    // todo : public void AddUpgradeItemSlot()
-    //{
-
-    //}
 }

@@ -45,8 +45,10 @@ public class InventUnit_ContentsBtnUI : BaseUI
                 return;
             }
 
-            Owner.inventUpgrade_PopupUI.AddUpgradeUnitSlot(UnitData);
-            //Owner.inventUpgrade_PopupUI.SetUnitInfo(UnitData);
+            if (UnitData.Data.NextKey != "")
+            {
+                Owner.inventUpgrade_PopupUI.AddUpgradeUnitSlot(UnitData);
+            }
         }
         else if (Owner.inventUnitDescri_PopupUI == null) // 설명창이 안 열려 있다면
         {
