@@ -52,27 +52,36 @@ public class EnemyAttackState : BaseState
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.2f);
+            float attackSpeed = Owner.Status[EstatType.AttackSpeed].Value;
 
-            CharacterBehaviour target = SetAttackTartget();
-
-            if (target == null)
+            if (attackSpeed > 0) // attackSpeed가 0보다 클 때만 루프 실행
             {
-                if (tileManager.GetRoom(Owner.CurPosX, Owner.CurPosY).isEndPoint)
-                {
-                    Owner.StateMachine.ChangeState(EState.Dead);
-                    Main.Get<GameManager>().PlayerHP.CurValue--;
-                }
-                else
-                {
-                    Owner.StateMachine.ChangeState(EState.Move);
-                }
-                yield break;
-            }
+                yield return new WaitForSeconds(0.2f);
 
-            Owner.Animator.SetTrigger(Literals.Attack);
-            target.TakeDamage(Owner.Status[EstatType.Damage].Value);
-            yield return new WaitForSeconds(1 / Owner.Status[EstatType.AttackSpeed].Value);
+                CharacterBehaviour target = SetAttackTartget();
+
+                if (target == null)
+                {
+                    if (tileManager.GetRoom(Owner.CurPosX, Owner.CurPosY).isEndPoint)
+                    {
+                        Owner.StateMachine.ChangeState(EState.Dead);
+                        Main.Get<GameManager>().PlayerHP.CurValue--;
+                    }
+                    else
+                    {
+                        Owner.StateMachine.ChangeState(EState.Move);
+                    }
+                    yield break;
+                }
+
+                Owner.Animator.SetTrigger(Literals.Attack);
+                target.TakeDamage(Owner.Status[EstatType.Damage].Value);
+                yield return new WaitForSeconds(1 / attackSpeed);
+            }
+            else
+            {
+                yield return null;
+            }
         }
     }
 
