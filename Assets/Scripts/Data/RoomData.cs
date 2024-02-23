@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class RoomData : Data, INextKey
 {
     public EStatusformat Type { get; set; }
