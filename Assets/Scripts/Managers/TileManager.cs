@@ -277,8 +277,16 @@ public class TileManager : IManagers
     {
         RoomBehavior newRoom = CreateDefaultRoom(room.IndexX, room.IndexY, _roomObjList[room.IndexX][room.IndexY].transform.position);
         _roomObjList[room.IndexX][room.IndexY].OnDestroyRoom();
+
+        if(room.Owner != null)
+        {
+            newRoom.RoomDir = room.Owner.RoomDir;
+        }
+
         resource.Destroy(_roomObjList[room.IndexX][room.IndexY].gameObject);
         _roomObjList[room.IndexX][room.IndexY] = newRoom;
+
+        SetCheckWall(newRoom);
     }
 
     public void DestroyRoom(int x, int y)

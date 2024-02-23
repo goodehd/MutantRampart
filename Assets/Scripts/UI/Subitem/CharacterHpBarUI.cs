@@ -69,7 +69,7 @@ public class CharacterHpBarUI : BaseUI
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
-        if (gameObject.activeSelf)
+        if (gameObject.activeInHierarchy)
             _coroutine = StartCoroutine(BaseBarAnimation());
     }
 
