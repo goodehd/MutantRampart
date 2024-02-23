@@ -140,7 +140,7 @@ public class GoldenCoin : Item
 
     public override void IdentityEffect(int stage)
     {
-        Main.Get<GameManager>().ChangeMoney(+1000);
+        Main.Get<GameManager>().ChangeMoney(+250);
     }
 
 }
