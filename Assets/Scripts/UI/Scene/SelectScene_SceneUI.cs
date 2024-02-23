@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.IO;
+using System;
 
 public class SelectScene_SceneUI : BaseUI
 {
@@ -18,6 +19,7 @@ public class SelectScene_SceneUI : BaseUI
     private Button _setPlayerNameCheckBtn;
     private Button _setPlayerCloseBtn;
     private Button _tutorialSkipCloseBtn;
+    private Button _exitBtn;
 
     private TextMeshProUGUI _playerNameTxt;
     private TextMeshProUGUI _playerDayTxt;
@@ -47,6 +49,7 @@ public class SelectScene_SceneUI : BaseUI
         _tutorialSkipYesBtn = GetUI<Button>("TutorialSkipYesBtn");
         _tutorialSkipNoBtn = GetUI<Button>("TutorialSkipNoBtn");
         _tutorialSkipCloseBtn = GetUI<Button>("TutorialSkipCloseBtn");
+        _exitBtn = GetUI<Button>("ExitBtn");
 
         _playerNameTxt = GetUI<TextMeshProUGUI>("PlayerNameTxt");
         _playerDayTxt = GetUI<TextMeshProUGUI>("PlayerDayTxt");
@@ -60,6 +63,7 @@ public class SelectScene_SceneUI : BaseUI
         SetUICallback(_tutorialSkipYesBtn.gameObject, EUIEventState.Click, ClickTutorialSkipYesBtn);
         SetUICallback(_tutorialSkipNoBtn.gameObject, EUIEventState.Click, ClickTutorialSkipNoBtn);
         SetUICallback(_tutorialSkipCloseBtn.gameObject, EUIEventState.Click, ClickTutorialSkipCloseBtn);
+        SetUICallback(_exitBtn.gameObject, EUIEventState.Click, ClickExitBtn);
 
 
         if (File.Exists(_saveDataManager.path) && !_gameManager.isTutorial)
@@ -74,6 +78,11 @@ public class SelectScene_SceneUI : BaseUI
         {
             _saveFile = false;
         }
+    }
+
+    private void ClickExitBtn(PointerEventData data)
+    {
+        Application.Quit();
     }
 
     private bool HasValidCharacters(string text)

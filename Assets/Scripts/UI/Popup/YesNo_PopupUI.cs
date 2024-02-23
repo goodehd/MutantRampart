@@ -42,9 +42,9 @@ public class YesNo_PopupUI : BaseUI
         if (ShopGroundItemData != null) // 구분 - 구매하려는 데이터가 Ground 일 때
         {
             BuyGroundItem(ShopGroundItemData);
+            Shop_PopupUI.UpdateGroundPriceText();
         }
 
-        Shop_PopupUI.UpdateGroundPriceText();
     }
 
     private void ClickNoBtn(PointerEventData eventData)

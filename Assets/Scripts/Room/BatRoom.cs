@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.TextCore.Text;
 
 public class BatRoom : RoomBehavior
@@ -63,6 +64,10 @@ public class BatRoom : RoomBehavior
     protected override void OnMouseDown()
     {
         base.OnMouseDown();
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         SortCharacter();
     }
 
