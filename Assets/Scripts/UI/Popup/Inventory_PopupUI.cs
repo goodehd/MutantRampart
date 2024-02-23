@@ -46,6 +46,8 @@ public class Inventory_PopupUI : BaseUI
 
     protected override void Init()
     {
+        base.Init();
+
         SetUI<Button>();
         SetUI<TextMeshProUGUI>();
         SetUI<Transform>();
@@ -108,6 +110,16 @@ public class Inventory_PopupUI : BaseUI
 
     private void ClickSortLevelBtn(PointerEventData data)
     {
+        if(inventUnitDescri_PopupUI != null)
+        {
+            _ui.ClosePopup();
+        }
+
+        if (inventRoomDescri_PopupUI != null)
+        {
+            _ui.ClosePopup();
+        }
+
         if (_inventUnitScrollView.gameObject.activeSelf)
         {
             Main.Get<GameManager>().SortUnitLevel(_levelAscend);
@@ -141,6 +153,16 @@ public class Inventory_PopupUI : BaseUI
 
     private void ClickSortNameBtn(PointerEventData data)
     {
+        if (inventUnitDescri_PopupUI != null)
+        {
+            _ui.ClosePopup();
+        }
+
+        if (inventRoomDescri_PopupUI != null)
+        {
+            _ui.ClosePopup();
+        }
+
         if (_inventUnitScrollView.gameObject.activeSelf)
         {
             Main.Get<GameManager>().SortUnitName(_nameAscend);

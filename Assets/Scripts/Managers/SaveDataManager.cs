@@ -119,7 +119,7 @@ public class SaveDataManager : IManagers
                 Main.Get<TileManager>().DestroyRoom(x,y);
                 
 
-                GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom(playerRooms[i].Data.PrefabName);
+                GameObject obj = Main.Get<SceneManager>().Scene.CreateRoom(playerRooms[i].Data.Key);
                 obj.transform.position = playerRooms[i].Pos;
                 obj.transform.parent = Main.Get<TileManager>().GridObject.transform;
 

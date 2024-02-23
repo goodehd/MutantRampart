@@ -40,7 +40,7 @@ public class UnitPriestSkillState : BaseState
 
             for (int i = 0; i < _units.Length; i++)
             {
-                if (_units[i] == null)
+                if (_units[i] == null || _units[i].CharacterInfo.IsDead)
                     continue;
 
                 float targetRatio = _units[i].Status.GetStat<Vital>(EstatType.Hp).Normalized();
