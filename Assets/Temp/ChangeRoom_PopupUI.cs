@@ -62,10 +62,6 @@ public class ChangeRoom_PopupUI : BaseUI
                 changeRoom.IsEquiped = true;
                 //SelectRoom = Main.Get<TileManager>().ChangeRoom(SelectRoom.IndexX, SelectRoom.IndexY, changeRoom);
             }
-            else
-            {
-                Debug.Log("이미 장착중인 Room 입니다.");
-            }
         }
         else
         {
@@ -73,10 +69,6 @@ public class ChangeRoom_PopupUI : BaseUI
             {
                 //SelectRoom = Main.Get<TileManager>().ChangeRoomToDefault(SelectRoom.IndexX, SelectRoom.IndexY);
                 changeRoom.IsEquiped = false;
-            }
-            else
-            {
-                Debug.Log("장착 해제 후에 다른 룸을 장착해주세요");
             }
         }
 

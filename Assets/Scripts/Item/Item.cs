@@ -70,12 +70,10 @@ public class Item
 
     public virtual void AttackEffect(CharacterBehaviour target)
     {
-        Debug.Log("엄마아아아악");
     }
 
     public virtual void IdentityEffect(int stage)
     {
-        Debug.Log("엄마");
     }
 
     public ItemSavableData CreateSavableItemData()

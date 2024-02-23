@@ -35,7 +35,6 @@ public class Main : SingletonBehavior<Main>
         T manager = new T();
 
         if (!manager.Init())
-            Debug.LogError($"Initialize Fail : {typeof(T).Name}");
 
         _managers.Add(typeof(T), manager);
     }

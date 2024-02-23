@@ -72,10 +72,6 @@ public class SelectScene_SceneUI : BaseUI
         }
         else
         {
-            Debug.Log("저장된 데이터가 없습니다.");
-            _playerNameTxt.text = null;
-            _playerDayTxt.text = null;
-            _playerGoldTxt.text = null;
             _saveFile = false;
         }
     }
@@ -104,7 +100,6 @@ public class SelectScene_SceneUI : BaseUI
         }
         else
         {
-            Debug.Log("저장된 데이터가 없습니다.");
         }
     }
 
@@ -113,7 +108,6 @@ public class SelectScene_SceneUI : BaseUI
         string text = _inputFieldTxt.text;
         if (text.Length == 1 || !HasValidCharacters(text))
         {
-            Debug.Log("입력된 값이 없습니다");
             return;
         }
         _saveDataManager.DeleteData();
