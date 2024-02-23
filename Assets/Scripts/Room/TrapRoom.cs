@@ -62,6 +62,7 @@ public class TrapRoom : RoomBehavior
         {
             enemy.StateMachine.ChangeState(EState.Move);
         }
+
     }
 }
 

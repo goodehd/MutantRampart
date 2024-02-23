@@ -111,6 +111,7 @@ public class DataManager : IManagers
         stage.AddMonster("Snail", 5);
         stage.AddMonster("BigBull2", 3);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(5000);
         stage.AddMonster("PlantBuger3", 1);
         stage.AddMonster("Snail3", 1);
@@ -119,28 +120,33 @@ public class DataManager : IManagers
         stage.AddMonster("Slime2", 5);
         stageMonsterInfoList.Add(stage);
         //10stage~------------------------------3성 하나, 둘 정도
-        stage = new StageMonsterInfo(4000);
+
+        stage = new StageMonsterInfo(4000); 
         stage.AddMonster("PlantBuger3", 1);
         stage.AddMonster("PlantBuger2", 5);
         stage.AddMonster("Slime3", 1);
         stage.AddMonster("Slime2", 5);
         stageMonsterInfoList.Add(stage);
-        stage = new StageMonsterInfo(4000);
+
+        stage = new StageMonsterInfo(4000); 
         stage.AddMonster("Snail3", 1);
         stage.AddMonster("Snail2", 5);
         stage.AddMonster("PlantBuger2", 5);
         stage.AddMonster("BigBull2", 5);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(4000);
         stage.AddMonster("Slime3", 3);
         stage.AddMonster("Snail2", 10);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(4000);
         stage.AddMonster("PlantBuger3", 2);
         stage.AddMonster("PlantBuger2", 5);
         stage.AddMonster("BigBull2", 5);
         stage.AddMonster("BigBull3", 1);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(7000);
         stage.AddMonster("Snail3", 3);
         stage.AddMonster("Slime3", 2);
@@ -148,28 +154,33 @@ public class DataManager : IManagers
         stage.AddMonster("BigBull3", 5);
         stageMonsterInfoList.Add(stage);
         // 15stage-----------------------------------3성이 1,2 거의 2성작(이상적인 배치가 가능해지는 시점)
+
         stage = new StageMonsterInfo(4000);
         stage.AddMonster("PlantBuger3", 5);
         stage.AddMonster("PlantBuger2", 3);
         stage.AddMonster("Slime3", 3);
         stage.AddMonster("Slime2", 2);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(4000);
         stage.AddMonster("Snail3", 5);
         stage.AddMonster("Slime3", 5);
         stage.AddMonster("BigBull3", 5);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(4000);
         stage.AddMonster("PlantBuger3", 5);
         stage.AddMonster("BigBull3", 5);
         stage.AddMonster("BigBull2", 5);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(4000);
         stage.AddMonster("PlantBuger3", 3);
         stage.AddMonster("PlantBuger2", 5);
         stage.AddMonster("BigBull3", 3);
         stage.AddMonster("Slime2", 5);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(10000);
         stage.AddMonster("PlantBuger3", 5);
         stage.AddMonster("Slime3", 5);
@@ -177,28 +188,33 @@ public class DataManager : IManagers
         stage.AddMonster("BigBull2", 10);
         stageMonsterInfoList.Add(stage);
         // 20stage----------------------------------- 여기 이후는 개힘들게 가자
+
         stage = new StageMonsterInfo(5000);
         stage.AddMonster("PlantBuger3", 10);
         stage.AddMonster("PlantBuger2", 5);
         stage.AddMonster("Slime3", 10);
         stage.AddMonster("Slime2", 5);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(5000);
         stage.AddMonster("Snail3", 10);
         stage.AddMonster("Slime3", 10);
         stage.AddMonster("BigBull3", 10);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(5000);
         stage.AddMonster("PlantBuger3", 10);
         stage.AddMonster("BigBull3", 10);
         stage.AddMonster("BigBull2", 10);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(5000);
         stage.AddMonster("PlantBuger3", 5);
         stage.AddMonster("PlantBuger2", 15);
         stage.AddMonster("BigBull3", 5);
         stage.AddMonster("Slime2", 15);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(15000);
         stage.AddMonster("PlantBuger3", 10);
         stage.AddMonster("Slime3", 10);
@@ -206,18 +222,23 @@ public class DataManager : IManagers
         stage.AddMonster("BigBull2", 20);
         stageMonsterInfoList.Add(stage);
         // 25stage----------------------------------- 여기까지 한계선 최적화 끝판왕
+
         stage = new StageMonsterInfo(7000);
         stage.AddMonster("Slime3", 30);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(7000);
         stage.AddMonster("Snail3", 30);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(7000);
         stage.AddMonster("PlantBuger3", 30);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(7000);
         stage.AddMonster("BigBull3", 30);
         stageMonsterInfoList.Add(stage);
+
         stage = new StageMonsterInfo(20000);
         stage.AddMonster("PlantBuger3", 20);
         stage.AddMonster("Snail3", 20);
