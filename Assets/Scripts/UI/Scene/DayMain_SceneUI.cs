@@ -545,7 +545,7 @@ public class DayMain_SceneUI : BaseUI
                 if (tutorialMsg_PopupUI == null)
                 {
                     tutorialMsg_PopupUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                    tutorialMsg_PopupUI.curTutorialText = "방금 배치한 Room 위에 Unit 도 배치해봅시다.";
+                    tutorialMsg_PopupUI.curTutorialText = "방금 배치한 Room 위에 Unit 도 배치해봅시다.\n\n<color=#FF8888><b>※ Unit은 왼쪽부터 배치가 되고 전투시 가장 왼쪽에 있는 Unit부터 공격대상이됩니다 ※</b></color>";
                 }
 
                 if (_roomButton.gameObject.activeSelf) // Room 버튼 활성화되어있다면 비활성화 진행.

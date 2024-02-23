@@ -177,8 +177,8 @@ public class Shop_PopupUI : BaseUI
         int x;
         int y;
         Main.Get<TileManager>().GetMapSize(out x, out y);
-        int RowPrice = (Main.Get<DataManager>().Item["ExpandMapRow"].Price) * (y - 2);
-        int ColPrice = (Main.Get<DataManager>().Item["ExpandMapCol"].Price) * (x - 2);
+        int RowPrice = (Main.Get<DataManager>().Item["ExpandMapRow"].Price) * (y - 2) * 3;
+        int ColPrice = (Main.Get<DataManager>().Item["ExpandMapCol"].Price) * (x - 2) * 3;
         _groundRowPriceText.text = RowPrice.ToString();
         _groundColPriceText.text = ColPrice.ToString();
     }

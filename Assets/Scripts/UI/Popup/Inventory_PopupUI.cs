@@ -102,6 +102,7 @@ public class Inventory_PopupUI : BaseUI
             tweener = inventArrowTransform.DOAnchorPosY(-330f, animationDuration).SetLoops(-1, LoopType.Yoyo); // 인벤토리 업그레이드 버튼 가리키는 화살표 DOTween.
 
             closeButton.gameObject.SetActive(false); // 일단 인벤토리 닫기 버튼 inactive 해두고, 룸, 유닛 업그레이드 완료하면 active 해주기
+            InActiveSortButton();
         }
 
         _nameAscend = false;
@@ -346,6 +347,12 @@ public class Inventory_PopupUI : BaseUI
                 _upgradeButton.gameObject.SetActive(false);
             }
         }
+    }
+
+    public void InActiveSortButton()
+    {
+        _sortLeveButton.gameObject.SetActive(false);
+        _sortNameButton.gameObject.SetActive(false);
     }
 }
 
