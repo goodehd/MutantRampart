@@ -42,6 +42,7 @@ public class SoundManager : IManagers
         AudioClip audioClip = LoadClip(path);
         if (audioClip == null)
         {
+            Debug.Log("None AudioClip");
             return;
         }
 
@@ -58,6 +59,7 @@ public class SoundManager : IManagers
                 source.PlayOneShot(audioClip);
                 break;
             default:
+                Debug.Log("Invalid Sound Type");
                 break;
         }
     }
