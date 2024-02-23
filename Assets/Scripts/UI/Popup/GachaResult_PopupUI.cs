@@ -144,6 +144,5 @@ public class GachaResult_PopupUI : BaseUI
         Item newItem = Main.Get<DataManager>().ItemCDO[data.Key].Clone();
         newItem.Init(data);
         Main.Get<GameManager>().PlayerItems.Add(newItem);
-        Debug.Log(newItem.GetType().Name);
     }
 }

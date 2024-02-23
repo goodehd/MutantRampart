@@ -65,14 +65,11 @@ public class YesNo_PopupUI : BaseUI
                 Main.Get<TileManager>().ExpandMapCol();
             }
             Main.Get<GameManager>().ChangeMoney(-data.Price);
-            Debug.Log("구매완료했습니다.");
-            Debug.Log($"잔액 : {Main.Get<GameManager>().PlayerMoney}");
         }
         else
         {
             Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
             ui.curErrorText = "돈이 부족해서 구매할 수 없습니다.";
-            Debug.Log("돈이 부족해서 구매할 수 없습니다.");
         }
     }
 }
