@@ -42,6 +42,7 @@ public class InventUnitDescri_PopupUI : BaseUI
 
     protected override void Init()
     {
+        base.Init();
         SetUI<Button>();
         SetUI<TMP_Text>();
         SetUI<Image>();
@@ -155,10 +156,9 @@ public class InventUnitDescri_PopupUI : BaseUI
 
     private void ClickInventUnitDeleteBtn(PointerEventData EventData)
     {
-        Main.Get<GameManager>().RemoveUnit(UnitData);
-        Main.Get<UIManager>().ClosePopup(); // 설명창 닫아주고
-
-        Owner.Owner.SetUnitInventory();// 인벤토리 리프레쉬
+        Sell_PopupUI sell_popupui = _ui.OpenPopup<Sell_PopupUI>();
+        sell_popupui.ShopUnitData = UnitData;
+        sell_popupui.Owner = Owner.Owner;
 
     }
 

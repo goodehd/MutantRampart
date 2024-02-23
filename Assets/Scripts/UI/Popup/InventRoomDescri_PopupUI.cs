@@ -23,6 +23,7 @@ public class InventRoomDescri_PopupUI : BaseUI
 
     protected override void Init()
     {
+        base.Init();
         SetUI<Button>();
         SetUI<TMP_Text>();
         SetUI<Image>();
@@ -71,16 +72,16 @@ public class InventRoomDescri_PopupUI : BaseUI
 
     private void ClickDeleteBtn(PointerEventData EventData)
     {
-        if (RoomData.Data.Key == "Home")
+        if (RoomData.Data.Type == EStatusformat.Home)
         {
             Error_PopupUI errorUI = Main.Get<UIManager>().OpenPopup<Error_PopupUI>();
-            errorUI.curErrorText = "Home 은 삭제할 수 없습니다.";
+            errorUI.curErrorText = "Home 은 판매할 수 없습니다.";
             return;
         }
 
-        Main.Get<GameManager>().RemoveRoom(RoomData);
-        Main.Get<UIManager>().ClosePopup(); // 설명창 닫아주고
-        Owner.Owner.SetRoomInventory(); // 인벤토리 리프레쉬
+        Sell_PopupUI sell_popupui = _ui.OpenPopup<Sell_PopupUI>();
+        sell_popupui.ShopRoomData = RoomData;
+        sell_popupui.Owner = Owner.Owner;
     }
 
     private void OnDestroy()

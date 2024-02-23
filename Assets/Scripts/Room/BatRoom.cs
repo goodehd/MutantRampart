@@ -61,6 +61,10 @@ public class BatRoom : RoomBehavior
     protected override void OnMouseDown()
     {
         base.OnMouseDown();
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         SortCharacter();
     }
 
