@@ -73,9 +73,6 @@ public class SelectScene_SceneUI : BaseUI
         else
         {
             Debug.Log("저장된 데이터가 없습니다.");
-            _playerNameTxt.text = null;
-            _playerDayTxt.text = null;
-            _playerGoldTxt.text = null;
             _saveFile = false;
         }
     }
