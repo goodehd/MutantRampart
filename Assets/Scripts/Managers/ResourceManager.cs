@@ -48,6 +48,7 @@ public class ResourceManager : IManagers
             resource = Load<T>(key);
             if(resource == null)
             {
+                Debug.LogError($"[ResourceManager] LoadResource({key}) : Failed to load resource.");
                 return null;
             }
         }
@@ -59,6 +60,7 @@ public class ResourceManager : IManagers
         GameObject prefab = LoadResource<GameObject>(key);
         if (prefab == null)
         {
+            Debug.LogError($"[ResourceManager] Instantiate({key}) : Failed to load resource_prefab.");
             return null;
         }
 
