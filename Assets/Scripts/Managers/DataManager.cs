@@ -249,10 +249,36 @@ public class DataManager : IManagers
         stageMonsterInfoList.Add(stage);
 
         stage = new StageMonsterInfo(30000);
-        stage.AddMonster("PlantBuger3", 10);
-        stage.AddMonster("Snail3", 10);
-        stage.AddMonster("Slime3", 10);
-        stage.AddMonster("BigBull3", 10);
+        stage.AddMonster("PlantBuger3", 20);
+        stage.AddMonster("Snail3", 20);
+        stage.AddMonster("Slime3", 20);
+        stage.AddMonster("BigBull3", 20);
         stageMonsterInfoList.Add(stage);
+
+        // 30stage----------------------------------- 여기까지 한계선 최적화 끝판왕
+
+        stage = new StageMonsterInfo(10000);
+        stage.AddMonster("Slime3", 100);
+        stageMonsterInfoList.Add(stage);
+
+        stage = new StageMonsterInfo(10000);
+        stage.AddMonster("Snail3", 100);
+        stageMonsterInfoList.Add(stage);
+
+        stage = new StageMonsterInfo(10000);
+        stage.AddMonster("PlantBuger3", 100);
+        stageMonsterInfoList.Add(stage);
+
+        stage = new StageMonsterInfo(10000);
+        stage.AddMonster("BigBull3", 100);
+        stageMonsterInfoList.Add(stage);
+
+        stage = new StageMonsterInfo(30000);
+        stage.AddMonster("PlantBuger3", 100);
+        stage.AddMonster("Snail3", 100);
+        stage.AddMonster("Slime3", 100);
+        stage.AddMonster("BigBull3", 100);
+        stageMonsterInfoList.Add(stage);
+        
     }
 }
