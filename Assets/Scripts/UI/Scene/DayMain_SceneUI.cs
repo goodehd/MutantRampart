@@ -256,7 +256,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickStageStartBtn(PointerEventData eventData)
     {
-        if (Main.Get<GameManager>().CurStage >= 30)
+        if (Main.Get<GameManager>().CurStage >= 35)
         {
             Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
             ui.curErrorText = "개발중입니다.";
