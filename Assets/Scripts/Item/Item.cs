@@ -275,7 +275,7 @@ public class Feather : Item
         float a = Random.Range(0, 100);
         if (a < 30)
         {
-            target.Status.GetStat<Vital>(EstatType.Hp).CurValue -= Owner.Status[EstatType.Damage].Value;
+            target.TakeDamage(Owner.Status[EstatType.Damage].Value);
         }
     }
 }
