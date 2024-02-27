@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class StateMachine
@@ -35,6 +36,15 @@ public class StateMachine
             CurrentStateName = stateName;
         }
         nextState?.EnterState();
+    }
+
+    public BaseState GetState(EState stateName)
+    {
+        if (_states.ContainsKey(stateName))
+        {
+            return _states[stateName];
+        }
+        return null;
     }
 
     public void UpdateState()
