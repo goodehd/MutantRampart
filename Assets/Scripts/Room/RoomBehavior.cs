@@ -76,8 +76,19 @@ public class RoomBehavior : MonoBehaviour
 
         enemy.CurPosX = IndexX;
         enemy.CurPosY = IndexY;
-        Enemys.AddLast(enemy);
         enemy.CurRoom = this;
+
+        Enemys.AddLast(enemy);
+
+        List<RoomBehavior> neighbors = _tile.GetNeighbors(enemy.CurPosX, enemy.CurPosY, false);
+
+        foreach (RoomBehavior neighbor in neighbors)
+        {
+            if(neighbor.RoomInfo.Data.Type == EStatusformat.Bat)
+            {
+                ((BatRoom)neighbor).RangedUnitChangeState(enemy);
+            }
+        }
     }
 
     public void SetData(Room data)

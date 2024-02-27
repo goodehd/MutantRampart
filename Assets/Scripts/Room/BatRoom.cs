@@ -43,19 +43,39 @@ public class BatRoom : RoomBehavior
 
             foreach (CharacterBehaviour unit in Units)
             {
-                if(unit == null || unit.CharacterInfo.IsDead)
-                {
-                    continue;
-                }
-
-                if(unit.StateMachine.CurrentStateName == EState.Attack ||
-                    unit.StateMachine.CurrentStateName == EState.Skill)
+                if(!CheckAttackAvailability(unit))
                 {
                     continue;
                 }
 
                 unit.StateMachine.ChangeState(EState.Attack);
             }
+        }
+    }
+
+    public void RangedUnitChangeState(Enemy enemy)
+    {
+        foreach (CharacterBehaviour unit in Units)
+        {
+            if (unit == null || unit.CharacterInfo.IsDead)
+            {
+                continue;
+            }
+
+            if (unit.CharacterInfo.Data.AttackType != EAttackType.RangedAttack)
+            {
+                continue;
+            }
+
+            ((Unit)unit).AddRagnedAttackTarget(enemy);
+
+            if (unit.StateMachine.CurrentStateName == EState.Attack ||
+            unit.StateMachine.CurrentStateName == EState.Skill)
+            {
+                continue;
+            }
+
+            unit.StateMachine.ChangeState(EState.Attack);
         }
     }
 
@@ -209,5 +229,19 @@ public class BatRoom : RoomBehavior
         }
     }
 
-    
+    private bool CheckAttackAvailability(CharacterBehaviour unit)
+    {
+        if (unit == null || unit.CharacterInfo.IsDead)
+        {
+            return false;
+        }
+
+        if (unit.StateMachine.CurrentStateName == EState.Attack ||
+            unit.StateMachine.CurrentStateName == EState.Skill)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }
