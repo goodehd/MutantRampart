@@ -70,6 +70,7 @@ public class CharacterBehaviour : MonoBehaviour
         Status.GetStat<Vital>(EstatType.Mp).CurValue = 0;
         StateMachine.ChangeState(EState.Idle);
         this.Renderer.color = Color.white;
+        this.Renderer.flipX = true;
     }
 
     public Vector3 GetWorldPos()

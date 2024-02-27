@@ -26,5 +26,6 @@ public class Enemy : CharacterBehaviour
         base.ResetCharacter();
         CurPosX = -1;
         CurPosY = -1;
+        CurRoom = null;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Unit : CharacterBehaviour
@@ -5,15 +6,15 @@ public class Unit : CharacterBehaviour
     public override void Init(CharacterData data) 
     {
         base.Init(data); 
-        StateMachine.AddState(EState.Attack, new UnitAttackState(this));
         StateMachine.AddState(EState.Dead, new UnitDeadState(this));
 
-        InitializeCharacter(data.PrefabName);
+        InitializeAttack(data);
+        InitializeSkill(data);
     }
 
-    private void InitializeCharacter(string prefabName)
+    private void InitializeSkill(CharacterData data)
     {
-        switch (prefabName)
+        switch (data.PrefabName)
         {
             case "Cleric":
                 StateMachine.AddState(EState.Skill, new UnitClericSkillState(this));
@@ -35,6 +36,21 @@ public class Unit : CharacterBehaviour
         }
     }
 
+    private void InitializeAttack(CharacterData data)
+    {
+        switch (data.AttackType)
+        {
+            case EAttackType.MeleeAttack:
+                StateMachine.AddState(EState.Attack, new UnitAttackState(this));
+                break;
+            case EAttackType.RangedAttack:
+                StateMachine.AddState(EState.Attack, new UnitRangedAttackState(this));
+                break;
+            default:
+                throw new ArgumentException($"Warning : Invalid attack type");
+        }
+    }
+
     public override void Die()
     {
         ((BatRoom)CharacterInfo.CurRoom).UnitCount--;
@@ -44,5 +60,16 @@ public class Unit : CharacterBehaviour
     public override void ResetCharacter()
     {
         base.ResetCharacter();
+    }
+
+    public void AddRagnedAttackTarget(Enemy enemy)
+    {
+        if(CharacterInfo.Data.AttackType != EAttackType.RangedAttack)
+        {
+            return;
+        }
+
+        UnitRangedAttackState state = (UnitRangedAttackState)StateMachine.GetState(EState.Attack);
+        state.AddNeighborTarget(enemy);
     }
 }
