@@ -50,7 +50,7 @@ public class CSVReader
                 PropertyInfo property = type.GetProperty(propertyheader[j]);
                 if (property == null)
                 {
-                    Debug.LogError($"[DataTransformer] ParseData<{type.Name}>(): Data parsing failed. Property '{propertyheader[i]}' not found.");
+                    Debug.LogError($"[DataTransformer] ParseData<{type.Name}>(): Data parsing failed. Property '{propertyheader[j]}' not found.");
                     return null;
                 }
                 property.SetValue(entry, ConvertValue(property.PropertyType, values[j]));

@@ -26,7 +26,8 @@ public class SpawnTile : MonoBehaviour
             for (int i = 0; i < monsterInfo.Count; i++)
             {
                 CharacterBehaviour enemy = _curScene.CreateCharacter(monsterInfo.Name);
-                ((Enemy)enemy).ClearVisited();
+                BaseState moveState = enemy.StateMachine.GetState(EState.Move);
+                moveState.Init();
                 enemy.transform.position = _spawnPos;
                 enemy.StateMachine.ChangeState(EState.Move);
                 yield return new WaitForSeconds(_spawnRatio);

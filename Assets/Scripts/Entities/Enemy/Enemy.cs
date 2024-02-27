@@ -26,11 +26,6 @@ public class Enemy : CharacterBehaviour
         base.ResetCharacter();
         CurPosX = -1;
         CurPosY = -1;
-    }
-
-    public void ClearVisited()
-    {
-        BaseState moveState = StateMachine.GetState(EState.Move);
-        ((MoveState)moveState).ClearVisited();
+        CurRoom = null;
     }
 }

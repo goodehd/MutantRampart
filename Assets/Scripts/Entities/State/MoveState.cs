@@ -17,19 +17,14 @@ public class MoveState : BaseState
         _pathObjStk = new Stack<RoomBehavior>();
         _pathPosStk = new Stack<Vector2>();
 
-        ClearVisited();
         Init();
     }
 
     public override void Init()
     {
-        SetStageStartMovePos();
-    }
-
-    public void ClearVisited()
-    {
         _tileMap.GetMapSize(out int x, out int y);
         _visited = new bool[x, y];
+        SetStageStartMovePos();
     }
 
     public override void EnterState()
