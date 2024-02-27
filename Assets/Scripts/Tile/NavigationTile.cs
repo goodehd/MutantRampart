@@ -177,7 +177,9 @@ public class NavigationTile
             curNode.NodeState = ENaveNodeState.Close;
 
             if (FindNode(curNode, endNode, stackPath))
+            {
                 break;
+            }
 
             if (_openNodeList.Count > 1)
             {

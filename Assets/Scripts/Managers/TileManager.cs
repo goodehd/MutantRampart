@@ -150,7 +150,7 @@ public class TileManager : IManagers
         }
     }
 
-    public List<RoomBehavior> GetNeighbors(int curPosX, int curPosY)
+    public List<RoomBehavior> GetNeighbors(int curPosX, int curPosY, bool isCheckDoorOpen = true)
     {
         List<RoomBehavior> outPut = new List<RoomBehavior>();
 
@@ -165,7 +165,7 @@ public class TileManager : IManagers
             }
 
             RoomBehavior room = _roomObjList[curPosX][curPosY];
-            if (!room.IsDoorOpen((ERoomDir)(1 << i)))
+            if (isCheckDoorOpen && !room.IsDoorOpen((ERoomDir)(1 << i)))
             {
                 continue;
             }

@@ -37,6 +37,15 @@ public class StateMachine
         nextState?.EnterState();
     }
 
+    public BaseState GetState(EState stateName)
+    {
+        if (_states.ContainsKey(stateName))
+        {
+            return _states[stateName];
+        }
+        return null;
+    }
+
     public void UpdateState()
     {
         _curState?.UpdateState();
