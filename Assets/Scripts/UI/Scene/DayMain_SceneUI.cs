@@ -405,8 +405,7 @@ public class DayMain_SceneUI : BaseUI
                         dayArrowTransform.Rotate(0f, 0f, 90f); // 90 도 돌리고
 
                         TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 튜토리얼 팝업
-                        ui.curTutorialText = "이제 모든 준비가 완료됐으니\n적들의 침입을 막으러 가봅시다!\n<color=#E9D038><b>BATTLE 버튼</b></color>을 눌러주세요!";
-
+                        ui.curTutorialText = "이제 모든 준비가 완료됐으니\n적들의 침입을 막으러 가봅시다!\n\n<color=#E9D038><b>BATTLE 버튼</b></color>을 눌러주세요!";
                     }
                 }
             }
@@ -545,7 +544,7 @@ public class DayMain_SceneUI : BaseUI
                 if (tutorialMsg_PopupUI == null)
                 {
                     tutorialMsg_PopupUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                    tutorialMsg_PopupUI.curTutorialText = "방금 배치한 Room 위에 Unit 도 배치해봅시다.\n\n<color=#FF8888><b>※ Unit은 왼쪽부터 배치가 되고 전투시 가장 왼쪽에 있는 Unit부터 공격대상이됩니다 ※</b></color>";
+                    tutorialMsg_PopupUI.curTutorialText = "방금 배치한 Room 위에 Unit 도 배치해봅시다.\n\n<color=#FF8888><b>※ Unit 은 왼쪽부터 배치가 되고 전투 시\n가장 왼쪽에 있는 Unit 부터 공격대상이 됩니다. ※</b></color>";
                 }
 
                 if (_roomButton.gameObject.activeSelf) // Room 버튼 활성화되어있다면 비활성화 진행.

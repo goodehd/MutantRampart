@@ -326,6 +326,13 @@ public class GameManager : IManagers
         PlayerRooms.Add(room);
     }
 
+    public void AddItemToInventory()
+    {
+        Item item = Main.Get<DataManager>().ItemCDO["TrainingEgg"].Clone();
+        item.Init(Main.Get<DataManager>().Item["TrainingEgg"]);
+        PlayerItems.Add(item);
+    }
+
     public void ExitGame()
     {
         if (!isTutorial)
