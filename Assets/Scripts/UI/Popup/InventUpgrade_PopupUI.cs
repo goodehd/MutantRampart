@@ -22,7 +22,6 @@ public class InventUpgrade_PopupUI : BaseUI
     // Upgrade Slot 관련
     private Character[] UpgradeUnitSlots = new Character[3];
     private Room[] UpgradeRoomSlots = new Room[3];
-    private Dictionary<string, int> countDictionary;
     public int Count { get; private set; } // slot 얼마나 찼는지 체크해주는 역할.
     public ItemData ItemData { get; set; }
 
@@ -63,19 +62,36 @@ public class InventUpgrade_PopupUI : BaseUI
         if (_gameManager.isTutorial)
         {
             _closeButton.gameObject.SetActive(false);
+            _autoButton.gameObject.SetActive(false);
         }
     }
 
     private void ClickAutoSelectBtn(PointerEventData data)
     {
-        List<Character> characters = FindCharacters();
-
-        for(int i = 0; i < characters.Count; i++)
+        if (Owner.GetCurUintInven())
         {
-            ClickSlot(i);
-            UpgradeUnitSlots[i] = characters[i];
-            SetUnitInfo(i);
-            Count++;
+            List<Character> characters = FindCharacters();
+
+            for (int i = 0; i < characters.Count; i++)
+            {
+                ClickSlot(i);
+                UpgradeUnitSlots[i] = characters[i];
+                SetUnitInfo(i);
+                Count++;
+            }
+        }
+
+        if (Owner.GetCurRoomInven())
+        {
+            List<Room> rooms = FindRooms();
+
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                ClickSlot(i);
+                UpgradeRoomSlots[i] = rooms[i];
+                SetRoomInfo(i);
+                Count++;
+            }
         }
     }
 
@@ -122,14 +138,48 @@ public class InventUpgrade_PopupUI : BaseUI
         return foundCharacters;
     }
 
-    //private List<T> FindThreeCount<T, K>(List<K> invenList) where K : Data
-    //{
-    //    Dictionary<string, int> countDictionary = new Dictionary<string, int>();
+    private List<Room> FindRooms()
+    {
+        Dictionary<string, int> countDictionary = new Dictionary<string, int>();
+        List<Room> foundCharacters = new List<Room>();
 
+        foreach (Room room in _gameManager.PlayerRooms)
+        {
+            if (room.Data.NextKey == "")
+            {
+                continue;
+            }
 
+            string key = $"{room.Data.Key}-{room.Data.Key[room.Data.Key.Length - 1]}";
+            if (!countDictionary.ContainsKey(key))
+            {
+                countDictionary[key] = 1;
+            }
+            else
+            {
+                countDictionary[key]++;
+            }
 
+            if (countDictionary[key] == 3)
+            {
+                foundCharacters.Clear();
+                foreach (Room chara in _gameManager.PlayerRooms)
+                {
+                    if (chara.Data.Key == room.Data.Key && chara.Data.Key[room.Data.Key.Length - 1] == room.Data.Key[room.Data.Key.Length - 1])
+                    {
+                        foundCharacters.Add(room);
 
-    //}
+                        if (foundCharacters.Count > 2)
+                        {
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        return foundCharacters;
+    }
 
     public void SetUnitInfo(int index) // Unit
     {
