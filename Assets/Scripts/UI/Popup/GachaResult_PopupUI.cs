@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,7 +9,7 @@ public class GachaResult_PopupUI : BaseUI
 {
     private Transform gachaResultContent;
     private Button closeButton;
-    private GameManager gameManager;
+    private Button retryButton;
 
     // Data
     public List<CharacterData> GachaUnitData { get; set; }
@@ -19,60 +20,47 @@ public class GachaResult_PopupUI : BaseUI
 
     protected override void Init()
     {
+        base.Init();
         SetUI<Transform>();
         SetUI<Button>();
 
-        gameManager = Main.Get<GameManager>();
-
         gachaResultContent = GetUI<Transform>("GachaResult_Content");
-
+        
         closeButton = GetUI<Button>("GachaResultCloseBtn");
+        retryButton = GetUI<Button>("GachaReTryBtn");
+
         SetUICallback(closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
+        SetUICallback(retryButton.gameObject, EUIEventState.Click, ClickRetryBtn);
 
         SetResultImgUInfo();
     }
 
+    private void ClickRetryBtn(PointerEventData data)
+    {
+        if (_gameManager.isTutorial)
+        {
+            return;
+        }
+        SaveData();
+        _ui.ClosePopup();
+        Owner.ReTryAction(data);
+    }
+
     private void ClickCloseBtn(PointerEventData eventData)
     {
-        if (GachaUnitData != null) //인벤토리로 옮기려는 데이터가 유닛 일 때
-        {
-            for (int i = 0; i < GachaUnitData.Count; i++)
-            {
-                SaveUnitInInventory(GachaUnitData[i]);
-            }
-        }
-        else if (GachaRoomData != null) // Room
-        {
-            for (int i = 0; i < GachaRoomData.Count; i++)
-            {
-                SaveRoomInInventory(GachaRoomData[i]);
-            }
-        }
-        else if (GachaItemData != null) // Item
-        {
-            for (int i = 0; i < GachaItemData.Count; i++)
-            {
-                SaveItemInInventory(GachaItemData[i]);
-            }
-        }
+        SaveData();
+        _ui.ClosePopup();
 
-        if (!Main.Get<GameManager>().isTutorial)
+        if (_gameManager.isTutorial)
         {
-            Main.Get<GameManager>().SaveData();
-        }
-
-        Main.Get<UIManager>().ClosePopup();
-
-        if (gameManager.isTutorial)
-        {
-            if (gameManager.PlayerUnits.Count >= 3)
+            if (_gameManager.PlayerUnits.Count >= 3)
             {
                 if (Owner.tweener.IsActive())
                 {
                     Owner.tweener.Kill(); // room 가리키는 화살표 Kill.
                 }
 
-                if (gameManager.PlayerRooms.Count == 1)
+                if (_gameManager.PlayerRooms.Count == 1)
                 {
                     TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
                     ui.curTutorialText = "잘하셨어요!\n<color=#E9D038><b>Room</b></color> 을 클릭해서\n동일하게 <color=#E9D038><b>3회 뽑기</b></color>를 진행해주세요.\n\n튜토리얼이 끝나면 Room 을 배치하는 Ground 와\n유닛의 능력치를 올려주는 Item 도 구매할 수 있어요!";
@@ -85,7 +73,7 @@ public class GachaResult_PopupUI : BaseUI
                 }
             }
 
-            if (gameManager.PlayerUnits.Count >= 3 && gameManager.PlayerRooms.Count >= 4)
+            if (_gameManager.PlayerUnits.Count >= 3 && _gameManager.PlayerRooms.Count >= 4)
             {
                 Owner.backButton.gameObject.SetActive(true);
                 Owner.shopArrowImg.gameObject.SetActive(true);
@@ -125,22 +113,52 @@ public class GachaResult_PopupUI : BaseUI
         }
     }
 
+    private void SaveData()
+    {
+        if (GachaUnitData != null) //인벤토리로 옮기려는 데이터가 유닛 일 때
+        {
+            for (int i = 0; i < GachaUnitData.Count; i++)
+            {
+                SaveUnitInInventory(GachaUnitData[i]);
+            }
+        }
+        else if (GachaRoomData != null) // Room
+        {
+            for (int i = 0; i < GachaRoomData.Count; i++)
+            {
+                SaveRoomInInventory(GachaRoomData[i]);
+            }
+        }
+        else if (GachaItemData != null) // Item
+        {
+            for (int i = 0; i < GachaItemData.Count; i++)
+            {
+                SaveItemInInventory(GachaItemData[i]);
+            }
+        }
+
+        if (!_gameManager.isTutorial)
+        {
+            _gameManager.SaveData();
+        }
+    }
+
     private void SaveUnitInInventory(CharacterData data)
     {
         Character newChar = new Character(data);
-        Main.Get<GameManager>().PlayerUnits.Add(newChar);
+        _gameManager.PlayerUnits.Add(newChar);
     }
 
     private void SaveRoomInInventory(RoomData data)
     {
         Room newRoom = new Room(data);
-        Main.Get<GameManager>().PlayerRooms.Add(newRoom);
+        _gameManager.PlayerRooms.Add(newRoom);
     }
 
     private void SaveItemInInventory(ItemData data)
     {
         Item newItem = Main.Get<DataManager>().ItemCDO[data.Key].Clone();
         newItem.Init(data);
-        Main.Get<GameManager>().PlayerItems.Add(newItem);
+        _gameManager.PlayerItems.Add(newItem);
     }
 }
