@@ -140,11 +140,11 @@ public class InventUnitDescri_PopupUI : BaseUI
             }
         }
 
-        _unitDescription.text =
-            $"Hp : {UnitData.Status[EstatType.Hp].Value}({UnitData.Status[EstatType.Hp].Value - UnitData.Data.Hp})\n" +
-            $"Damage : {UnitData.Status[EstatType.Damage].Value}({UnitData.Status[EstatType.Damage].Value - UnitData.Data.Damage})\n" +
-            $"Defense : {UnitData.Status[EstatType.Defense].Value}({UnitData.Status[EstatType.Defense].Value - UnitData.Data.Defense})\n" +
-            $"ATK Speed : {UnitData.Status[EstatType.AttackSpeed].Value}({UnitData.Status[EstatType.AttackSpeed].Value - UnitData.Data.AttackSpeed})";
+        _unitDescription.text = 
+            $"Hp : {string.Format("{0:0.#}", UnitData.Status[EstatType.Hp].Value)}({string.Format("{0:0.#}", UnitData.Status[EstatType.Hp].Value - UnitData.Data.Hp)})\n" +
+            $"Damage : {string.Format("{0:0.#}", UnitData.Status[EstatType.Damage].Value)}({string.Format("{0:0.#}", UnitData.Status[EstatType.Damage].Value - UnitData.Data.Damage)})\n" +
+            $"Defense : {string.Format("{0:0.#}", UnitData.Status[EstatType.Defense].Value)}({string.Format("{0:0.#}", UnitData.Status[EstatType.Defense].Value - UnitData.Data.Defense)})\n" +
+            $"ATK Speed : {string.Format("{0:0.#}", UnitData.Status[EstatType.AttackSpeed].Value)}({string.Format("{0:0.#}",UnitData.Status[EstatType.AttackSpeed].Value - UnitData.Data.AttackSpeed)})";
 
         if(UnitData.SkillData != null)
         {

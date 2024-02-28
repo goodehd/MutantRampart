@@ -64,6 +64,7 @@ public class Item
         data.Status.GetStat<Stat>(EstatType.Defense).RemoveAllModifier(this);
         data.Status.GetStat<Stat>(EstatType.Damage).RemoveAllModifier(this);
         data.Status.GetStat<Stat>(EstatType.AttackSpeed).RemoveAllModifier(this);
+        data.Status.GetStat<Vital>(EstatType.Hp).CurValue = data.Status.GetStat<Vital>(EstatType.Hp).Value;
         IsEquiped = false;
         data.OnAttackState -= AttackEffect;
     }

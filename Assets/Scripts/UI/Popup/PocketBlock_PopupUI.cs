@@ -90,10 +90,10 @@ public class PocketBlock_PopupUI : BaseUI
     public void SetUintInfo(Character data)
     {
         _unitName.text = $"{data.Data.PrefabName}";
-        _unitHP.text = $"HP : {data.Status[EstatType.Hp].Value}";
-        _unitATK.text = $"ATK : {data.Status[EstatType.Damage].Value}";
-        _unitDEF.text = $"DEF : {data.Status[EstatType.Defense].Value}";
-        _unitATKSpeed.text = $"ATKSpeed : {data.Status[EstatType.AttackSpeed].Value}";
+        _unitHP.text = $"HP : {string.Format("{0:0.#}", data.Status[EstatType.Hp].Value)}";
+        _unitATK.text = $"ATK : {string.Format("{0:0.#}", data.Status[EstatType.Damage].Value)}";
+        _unitDEF.text = $"DEF : {string.Format("{0:0.#}", data.Status[EstatType.Defense].Value)}";
+        _unitATKSpeed.text = $"ATKSpeed : {string.Format("{0:0.#}", data.Status[EstatType.AttackSpeed].Value)}";
 
         if(data.SkillData != null)
             _unitSkillDesc.text = $"Skill : {data.SkillData.Description}";
