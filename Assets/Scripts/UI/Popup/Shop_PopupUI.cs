@@ -1,9 +1,11 @@
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Shop_PopupUI : BaseUI
 {
@@ -44,6 +46,7 @@ public class Shop_PopupUI : BaseUI
 
     public bool isShopTutorialClear { get; set; } = false;
 
+    public Action<PointerEventData> ReTryAction;
 
     // 가챠 판매 아이템s
     public List<CharacterData> GachaUnitItems { get; private set; } = new List<CharacterData>();
@@ -276,6 +279,7 @@ public class Shop_PopupUI : BaseUI
         else
         {
             ClickGachaUnit(1);
+            ReTryAction = ClickUnit1Btn;
         }
     }
 
@@ -293,6 +297,7 @@ public class Shop_PopupUI : BaseUI
         else
         {
             ClickGachaUnit(3);
+            ReTryAction = ClickUnit3Btn;
         }
     }
 
@@ -310,6 +315,7 @@ public class Shop_PopupUI : BaseUI
         else
         {
             ClickGachaRoom(1);
+            ReTryAction = ClickRoom1Btn;
         }
     }
 
@@ -327,6 +333,7 @@ public class Shop_PopupUI : BaseUI
         else
         {
             ClickGachaRoom(3);
+            ReTryAction = ClickRoom3Btn;
         }
     }
 
@@ -349,11 +356,13 @@ public class Shop_PopupUI : BaseUI
     private void ClickItem1Btn(PointerEventData eventData)
     {
         ClickGachaItem(1);
+        ReTryAction = ClickItem1Btn;
     }
 
     private void ClickItem3Btn(PointerEventData eventData)
     {
         ClickGachaItem(3);
+        ReTryAction = ClickItem3Btn;
     }
 
     private void ClickGachaUnit(int count)
@@ -452,5 +461,4 @@ public class Shop_PopupUI : BaseUI
     {
         return GachaItemItems[Random.Range(0, GachaItemItems.Count)];
     }
-
 }

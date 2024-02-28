@@ -13,9 +13,6 @@ public class DataManager : IManagers
     private Dictionary<string, SkillData> _skill = new Dictionary<string, SkillData>();
     public List<StageMonsterInfo> stageMonsterInfoList = new List<StageMonsterInfo>();
 
-
-
-
     public CSVReader reader = new();
 
     public bool Init()
