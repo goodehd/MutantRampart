@@ -58,4 +58,6 @@ public static class Literals
     };
 
 
+    public const float MinDamageTextSizeValue = 1.0f;
+    public const float MaxDamageTextSizeValue = 600.0f;
 }

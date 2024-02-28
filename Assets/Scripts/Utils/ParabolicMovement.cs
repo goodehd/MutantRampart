@@ -26,7 +26,7 @@ public class ParabolicMovement : MonoBehaviour
         timer = 0;
         while (transform.position.y >= _startPos.y)
         {
-            timer += Time.deltaTime * 3f;
+            timer += Time.deltaTime * 1.5f;
             Vector3 tempPos = Parabola(_startPos, _endPos, 0.5f, timer);
             transform.position = tempPos;
             yield return new WaitForEndOfFrame();
