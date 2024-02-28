@@ -104,7 +104,23 @@ public class PocketBlock_PopupUI : BaseUI
     public void SetRoomInfo(Room room)
     {
         _roomName.text = $"{room.Data.Key}";
-        _roomType.text = $"{room.Data.Type}";
+        switch (room.Data.Type)
+        {
+            case EStatusformat.Bat:
+                _roomType.text = "유닛 배치 타입";
+                break;
+            case EStatusformat.Trap:
+                _roomType.text = "함정 타입";
+                break;
+            case EStatusformat.Home:
+                _roomType.text = "홈 타입";
+                break;
+            case EStatusformat.DefaultTile:
+                break;
+            case EStatusformat.Count:
+                break;
+        }
+        //_roomType.text = $"{room.Data.Type}";
         _roomDescript.text = $"{room.Data.Instruction}";
     }
 

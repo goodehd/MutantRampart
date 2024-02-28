@@ -53,7 +53,23 @@ public class InventRoomDescri_PopupUI : BaseUI
     public void SetInfo()
     {
         _roomName.text = RoomData.Data.Key;
-        _roomType.text = RoomData.Data.Type.ToString();
+        switch (RoomData.Data.Type)
+        {
+            case EStatusformat.Bat:
+                _roomType.text = "유닛 배치 타입";
+                break;
+            case EStatusformat.Trap:
+                _roomType.text = "함정 타입";
+                break;
+            case EStatusformat.Home:
+                _roomType.text = "홈 타입";
+                break;
+            case EStatusformat.DefaultTile:
+                break;
+            case EStatusformat.Count:
+                break;
+        }
+       // _roomType.text = RoomData.Data.Type.ToString();
         _roomDescription.text = RoomData.Data.Instruction;
         _inventRoomImg.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{RoomData.Data.Key}");
     }
