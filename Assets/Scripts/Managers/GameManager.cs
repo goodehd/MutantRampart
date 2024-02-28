@@ -15,7 +15,8 @@ public class GameManager : IManagers
     public string PlayerName { get; set; }
 
     public int CurStage { get; set; }
-
+    public int UpgradePoint { get; set; }
+    public int GoldUpgradeLevel { get; set; }
     public bool isTutorial { get; set; }
 
     public bool isPlacingTutorialClear = false; // 배치모드 튜토리얼 클리어했는지 체크.
@@ -39,6 +40,8 @@ public class GameManager : IManagers
         CurStage = 0;
         PlayerHP = new Vital(EstatType.Hp, 5);
         PlayerHP.OnValueZero += GameOver;
+        UpgradePoint = PlayerPrefs.GetInt("UpgradePoint");
+        GoldUpgradeLevel = PlayerPrefs.GetInt("GoldUpgradeLevel");
 
         bool tutorial = PlayerPrefs.HasKey("Tutorial");
         if (!tutorial)
@@ -111,6 +114,8 @@ public class GameManager : IManagers
 
     public void SaveData()
     {
+        PlayerPrefs.SetInt("UpgradePoint", UpgradePoint);
+        PlayerPrefs.SetInt("GoldUpgradeLevel", GoldUpgradeLevel);
         SaveDataManager saveDataManager = Main.Get<SaveDataManager>();
         saveDataManager.ClearData();
         saveDataManager.Player.Name = PlayerName;

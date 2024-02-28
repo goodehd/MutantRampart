@@ -58,7 +58,7 @@ public class SaveDataManager : IManagers
         {
             if (savedata.Item[i].IsEquiped)
             {
-                Item item = new Item();
+                Item item = Main.Get<DataManager>().ItemCDO[savedata.Item[i].ItemName].Clone();
                 item.Init(Main.Get<DataManager>().Item[savedata.Item[i].ItemName]);
                 item.ItemIndex = savedata.Item[i].ItemIndex;
                 item.IsEquiped = savedata.Item[i].IsEquiped;

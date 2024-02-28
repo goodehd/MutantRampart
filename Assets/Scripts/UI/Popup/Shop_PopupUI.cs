@@ -384,6 +384,7 @@ public class Shop_PopupUI : BaseUI
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
             ui.GachaUnitData = _myGachaUnits;
             ui.Owner = this;
+            Main.Get<GameManager>().SaveData();
         }
         else // 보유 금액 부족 시
         {
@@ -416,6 +417,7 @@ public class Shop_PopupUI : BaseUI
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
             ui.GachaRoomData = _myGachaRooms;
             ui.Owner = this;
+            Main.Get<GameManager>().SaveData();
         }
         else
         {
@@ -449,6 +451,7 @@ public class Shop_PopupUI : BaseUI
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
             ui.GachaItemData = _myGachaItems;
             ui.Owner = this;
+            Main.Get<GameManager>().SaveData();
         }
         else
         {
