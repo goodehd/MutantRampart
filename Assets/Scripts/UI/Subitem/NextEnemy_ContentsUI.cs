@@ -16,6 +16,7 @@ public class NextEnemy_ContentsUI : BaseUI
     {
         base.Init();
         SetUI<Image>();
+        SetUI<TextMeshProUGUI>();
         _monsterinfoImg = GetUI<Image>("NextEnemy_ContentsUI");
         _monsterCountText = GetUI<TextMeshProUGUI>("Enemy_CountText");
         SetInfo();

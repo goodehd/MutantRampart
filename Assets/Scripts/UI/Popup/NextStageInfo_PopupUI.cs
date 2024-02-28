@@ -11,14 +11,19 @@ public class NextStageInfo_PopupUI : BaseUI
     private int _maxStage;
     private ScrollRect _nextInfoScrollView;
     private Transform _nextInfoContent;
+    private Button _closeButton;
     protected override void Init()
     {
         base.Init();
         _dataManager = Main.Get<DataManager>();
         SetUI<Transform>();
         SetUI<ScrollRect>();
+        SetUI<Button>();
         _nextInfoScrollView = GetUI<ScrollRect>("NextStageEnemy_Scroll View");
         _nextInfoContent = GetUI<Transform>("NextStageEnemy_Content");
+        _closeButton = GetUI<Button>("NextStageInfoCloseBtn");
+
+        SetUICallback(_closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
 
         _curStage = _gameManager.CurStage;
         _maxStage = _dataManager.stageMonsterInfoList.Count;
@@ -37,9 +42,13 @@ public class NextStageInfo_PopupUI : BaseUI
             }
             for (int i = 0; i < nextStageInfo.Monsters.Count; i++)
             {
-                NextEnemy_ContentsUI inventUnitItems = Main.Get<UIManager>().CreateSubitem<NextEnemy_ContentsUI>("InventUnit_ContentsBtnUI", _nextInfoContent);
+                NextEnemy_ContentsUI inventUnitItems = Main.Get<UIManager>().CreateSubitem<NextEnemy_ContentsUI>("NextEnemy_ContentsUI", _nextInfoContent);
                 inventUnitItems.Monsterinfo = nextStageInfo.Monsters[i];
             }
         }
+    }
+    public void ClickCloseBtn(PointerEventData eventData)
+    {
+        _ui.CloseAllPopup();
     }
 }
