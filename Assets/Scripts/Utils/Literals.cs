@@ -18,6 +18,8 @@ public static class Literals
 
     public const string ITEM_SPRITE_PATH = "Sprites/Item/";
 
+    public const string ENEMY_SPRITE_PATH = "Sprites/Enemy/";
+
     public const string FX_PATH = "Prefabs/Fx/";
 
     public static readonly int Idle = Animator.StringToHash("IsIdle");

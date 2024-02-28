@@ -31,21 +31,27 @@ public class DayMain_SceneUI : BaseUI
     private Image _stageImage;
     private Image _playerMoneyImage;
     private Image _buttonsPanel;
+    private Image _startYesNoPanel;
     public Image _categoryPanel { get; set; }
     public Image _placingPanel { get; set; }
     private Image _hpPanel;
     public Image _dayArrowImg { get; set; }
+    
 
     public Button shopButton { get; set; }
     public Button placingButton { get; set; }
     private Button _inventoryButton;
     private Button _stageStartButton;
+    private Button _stageStartYesButton;
+    private Button _stageStartNoButton;
     private Button _settingButton;
     public Button backButton { get; set; }
     private Button _unitButton;
     private Button _roomButton;
     private Button _speed1Button;
     private Button _speed2Button;
+    private Button _speed3Button;
+    private Button _nextStageInfoButton;
     public Button rightTopButton { get; set; }
     public Button rightBottomButton { get; set; }
     public Button leftTopButton { get; set; }
@@ -154,25 +160,38 @@ public class DayMain_SceneUI : BaseUI
         _roomButton = GetUI<Button>("RoomBtn");
         _speed1Button = GetUI<Button>("PlayButton");
         _speed2Button = GetUI<Button>("X2SpeedButton");
+        _speed3Button = GetUI<Button>("X3SpeedButton");
         rightTopButton = GetUI<Button>("RightTop");
         rightBottomButton = GetUI<Button>("RightBottom");
         leftTopButton = GetUI<Button>("LeftTop");
         leftBottomButton = GetUI<Button>("LeftBottom");
+        _stageStartYesButton = GetUI<Button>("YesBtn");
+        _stageStartNoButton = GetUI<Button>("NoBtn");
+        _nextStageInfoButton = GetUI<Button>("NextStageInfoButton");
 
         SetUICallback(shopButton.gameObject, EUIEventState.Click, ClickShopBtn);
         SetUICallback(_inventoryButton.gameObject, EUIEventState.Click, ClickInventoryBtn);
         SetUICallback(_settingButton.gameObject, EUIEventState.Click, ClickSettingBtn);
-        SetUICallback(_stageStartButton.gameObject, EUIEventState.Click, ClickStageStartBtn);
+
+        SetUICallback(_stageStartButton.gameObject, EUIEventState.Click, ClickStageStartOpenBtn);
+        SetUICallback(_stageStartYesButton.gameObject, EUIEventState.Click, ClickStageStartBtn);
+        SetUICallback(_stageStartNoButton.gameObject, EUIEventState.Click, ClickStageStartNoBtn);
+
         SetUICallback(placingButton.gameObject, EUIEventState.Click, ClickPlacingBtn);
         SetUICallback(backButton.gameObject, EUIEventState.Click, ClickBackBtn);
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
-        SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
+        SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);      
+
         SetUICallback(_speed1Button.gameObject, EUIEventState.Click, ClickSpeed1Btn);
         SetUICallback(_speed2Button.gameObject, EUIEventState.Click, ClickSpeed2Btn);
+        SetUICallback(_speed3Button.gameObject, EUIEventState.Click, ClickSpeed3Btn);
+
         SetUICallback(rightTopButton.gameObject, EUIEventState.Click, ClickRightTopBtn);
         SetUICallback(rightBottomButton.gameObject, EUIEventState.Click, ClickRightBottomBtn);
         SetUICallback(leftTopButton.gameObject, EUIEventState.Click, ClickLeftTopBtn);
         SetUICallback(leftBottomButton.gameObject, EUIEventState.Click, ClickLeftBottomBtn);
+
+        SetUICallback(_nextStageInfoButton.gameObject, EUIEventState.Click, ClickNextStageInfoButtonBtn);
     }
 
     private void SetImage()
@@ -188,9 +207,11 @@ public class DayMain_SceneUI : BaseUI
         _placingPanel = GetUI<Image>("PlacingPanel");
         _hpPanel = GetUI<Image>("HPBlock");
         _dayArrowImg = GetUI<Image>("DayArrowImg");
+        _startYesNoPanel = GetUI<Image>("StartYesNoButton");
 
         _categoryPanel.gameObject.SetActive(false);
         _dayArrowImg.gameObject.SetActive(false);
+        _startYesNoPanel.gameObject.SetActive(false);
     }
 
     private void SetText()
@@ -213,6 +234,7 @@ public class DayMain_SceneUI : BaseUI
         _upMoveUIList.Add(_playerMoneyImage.GetComponent<RectTransform>());
         _upMoveUIList.Add(_settingButton.GetComponent<RectTransform>());
         _upMoveUIList.Add(_hpPanel.GetComponent<RectTransform>());
+        _upMoveUIList.Add(_nextStageInfoButton.GetComponent<RectTransform>());
 
         _categoryTransform = _categoryPanel.GetComponent<RectTransform>();
         _placingPanelTransform = _placingPanel.GetComponent<RectTransform>();
@@ -253,9 +275,18 @@ public class DayMain_SceneUI : BaseUI
     #endregion
 
     #region ButtonEvents
+    private void ClickStageStartOpenBtn(PointerEventData eventData)
+    {
+        _startYesNoPanel.gameObject.SetActive(true);
+    }
+    private void ClickStageStartNoBtn(PointerEventData eventData)
+    {
+        _startYesNoPanel.gameObject.SetActive(false);
+    }
 
     private void ClickStageStartBtn(PointerEventData eventData)
     {
+        _startYesNoPanel.gameObject.SetActive(false);
         if (Main.Get<GameManager>().CurStage >= 30)
         {
             Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
@@ -470,9 +501,15 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickSpeed2Btn(PointerEventData eventData)
     {
-        Time.timeScale = 1.0f;
-        _speed1Button.gameObject.SetActive(true);
+        Time.timeScale = 2.0f;
         _speed2Button.gameObject.SetActive(false);
+        _speed3Button.gameObject.SetActive(true);
+    }
+    private void ClickSpeed3Btn(PointerEventData eventData)
+    {
+        Time.timeScale = 1.0f;
+        _speed3Button.gameObject.SetActive(false);
+        _speed1Button.gameObject.SetActive(true);
     }
 
     private void ClickRightTopBtn(PointerEventData eventData)
@@ -533,6 +570,11 @@ public class DayMain_SceneUI : BaseUI
         tileManager.SetRoomDir(room, ERoomDir.LeftBottom, !room.IsDoorOpen(ERoomDir.LeftBottom));
     }
 
+    private void ClickNextStageInfoButtonBtn(PointerEventData eventData)
+    {
+        _ui.OpenPopup<NextStageInfo_PopupUI>("NextStageInfo_PopupUI");
+    }
+
     private void CheckBtnForTutorial()
     {
         if (gameManager.isTutorial)
@@ -565,9 +607,13 @@ public class DayMain_SceneUI : BaseUI
         {
             Time.timeScale = 1.0f;
         }
-        else
+        else if(_speed2Button.gameObject.activeSelf)
         {
             Time.timeScale = 1.5f;
+        }
+        else if (_speed3Button.gameObject.activeSelf)
+        {
+            Time.timeScale = 2.0f;
         }
     }
 
@@ -685,7 +731,7 @@ public class DayMain_SceneUI : BaseUI
         tileManager.SelectRoom.StartFlashing();
         tileManager.InactiveBatSlot();
         _ui.CloseAllPopup();
-        FocusCamera();
+        FocusCamera(); //방 클릭시 줌인하는 기능
 
         if (_btnActions.Peek().UIStagte != EUIstate.ChangeTileSelect)
         {
@@ -826,7 +872,7 @@ public class DayMain_SceneUI : BaseUI
         Vector3 pos = new Vector3(tileManager.SelectRoom.transform.position.x,
             tileManager.SelectRoom.transform.position.y + 1.8f, Camera.main.transform.position.z);
         Camera.main.transform.DOMove(pos, animationDuration);
-        Camera.main.DOOrthoSize(2.5f, animationDuration);
+        //Camera.main.DOOrthoSize(2.5f, animationDuration); //줌인기능
     }
 
     private IEnumerator ButtonRock()
