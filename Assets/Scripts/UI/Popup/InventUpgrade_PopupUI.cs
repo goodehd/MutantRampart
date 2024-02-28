@@ -1,16 +1,17 @@
 using DG.Tweening;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class InventUpgrade_PopupUI : BaseUI
 {
-    private GameManager gameManager;
-
     private Button _closeButton;
     private Button[] _upgradeSlots = new Button[3];
     private Button _upgradeButton;
+    private Button _autoButton;
 
     private Image _itemImg;
     private Image[] _upgradeSlotsImgs = new Image[3];
@@ -21,17 +22,14 @@ public class InventUpgrade_PopupUI : BaseUI
     // Upgrade Slot 관련
     private Character[] UpgradeUnitSlots = new Character[3];
     private Room[] UpgradeRoomSlots = new Room[3];
-
     public int Count { get; private set; } // slot 얼마나 찼는지 체크해주는 역할.
-
     public ItemData ItemData { get; set; }
 
     protected override void Init()
     {
+        base.Init();
         SetUI<Button>();
         SetUI<Image>();
-
-        gameManager = Main.Get<GameManager>();
 
         _closeButton = GetUI<Button>("InventUpgradeCloseBtn");
 
@@ -43,9 +41,11 @@ public class InventUpgrade_PopupUI : BaseUI
         }
 
         _upgradeButton = GetUI<Button>("UpgradeBtn");
+        _autoButton = GetUI<Button>("AutoSelectBtn"); 
 
         SetUICallback(_closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
         SetUICallback(_upgradeButton.gameObject, EUIEventState.Click, ClickUpgradeBtn);
+        SetUICallback(_autoButton.gameObject, EUIEventState.Click, ClickAutoSelectBtn);
         SetUICallback(_upgradeSlots[0].gameObject, EUIEventState.Click, ClickFirstSlot);
         SetUICallback(_upgradeSlots[1].gameObject, EUIEventState.Click, ClickSecondSlot);
         SetUICallback(_upgradeSlots[2].gameObject, EUIEventState.Click, ClickThirdSlot);
@@ -59,10 +59,126 @@ public class InventUpgrade_PopupUI : BaseUI
         Owner.inventUpgrade_PopupUI = this;
         Count = 0;
 
-        if (gameManager.isTutorial)
+        if (_gameManager.isTutorial)
         {
             _closeButton.gameObject.SetActive(false);
+            _autoButton.gameObject.SetActive(false);
         }
+    }
+
+    private void ClickAutoSelectBtn(PointerEventData data)
+    {
+        if (Owner.GetCurUintInven())
+        {
+            List<Character> characters = FindCharacters();
+
+            for (int i = 0; i < characters.Count; i++)
+            {
+                ClickSlot(i);
+                UpgradeUnitSlots[i] = characters[i];
+                SetUnitInfo(i);
+                Count++;
+            }
+        }
+
+        if (Owner.GetCurRoomInven())
+        {
+            List<Room> rooms = FindRooms();
+
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                ClickSlot(i);
+                UpgradeRoomSlots[i] = rooms[i];
+                SetRoomInfo(i);
+                Count++;
+            }
+        }
+    }
+
+    private List<Character> FindCharacters()
+    {
+        Dictionary<string, int> countDictionary = new Dictionary<string, int>();
+        List<Character> foundCharacters = new List<Character>();
+
+        foreach (Character character in _gameManager.PlayerUnits)
+        {
+            if(character.Data.NextKey == "")
+            {
+                continue;
+            }
+
+            string key = $"{character.Data.Key}-{character.Data.Key[character.Data.Key.Length - 1]}";
+            if (!countDictionary.ContainsKey(key))
+            {
+                countDictionary[key] = 1;
+            }
+            else
+            {
+                countDictionary[key]++;
+            }
+
+            if (countDictionary[key] == 3)
+            {
+                foundCharacters.Clear();
+                foreach (Character chara in _gameManager.PlayerUnits)
+                {
+                    if (chara.Data.Key == character.Data.Key && chara.Data.Key[character.Data.Key.Length - 1] == character.Data.Key[character.Data.Key.Length - 1])
+                    {
+                        foundCharacters.Add(chara);
+                        
+                        if(foundCharacters.Count > 2)
+                        {
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        return foundCharacters;
+    }
+
+    private List<Room> FindRooms()
+    {
+        Dictionary<string, int> countDictionary = new Dictionary<string, int>();
+        List<Room> foundCharacters = new List<Room>();
+
+        foreach (Room room in _gameManager.PlayerRooms)
+        {
+            if (room.Data.NextKey == "")
+            {
+                continue;
+            }
+
+            string key = $"{room.Data.Key}-{room.Data.Key[room.Data.Key.Length - 1]}";
+            if (!countDictionary.ContainsKey(key))
+            {
+                countDictionary[key] = 1;
+            }
+            else
+            {
+                countDictionary[key]++;
+            }
+
+            if (countDictionary[key] == 3)
+            {
+                foundCharacters.Clear();
+                foreach (Room chara in _gameManager.PlayerRooms)
+                {
+                    if (chara.Data.Key == room.Data.Key && chara.Data.Key[room.Data.Key.Length - 1] == room.Data.Key[room.Data.Key.Length - 1])
+                    {
+                        foundCharacters.Add(room);
+
+                        if (foundCharacters.Count > 2)
+                        {
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        return foundCharacters;
     }
 
     public void SetUnitInfo(int index) // Unit
@@ -79,7 +195,7 @@ public class InventUpgrade_PopupUI : BaseUI
 
     private void ClickCloseBtn(PointerEventData data)
     {
-        Main.Get<UIManager>().ClosePopup();
+        _ui.ClosePopup();
     }
 
     private void ClickUpgradeBtn(PointerEventData data)
@@ -87,7 +203,7 @@ public class InventUpgrade_PopupUI : BaseUI
         // slot 이 null 인 경우 예외처리할 것
         if (_upgradeSlotsImgs[0].sprite == null || _upgradeSlotsImgs[1].sprite == null || _upgradeSlotsImgs[2].sprite == null)
         {
-            Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
+            Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>("Error_PopupUI");
             ui.curErrorText = "슬롯이 비어있습니다!";
             return;
         }
@@ -102,17 +218,17 @@ public class InventUpgrade_PopupUI : BaseUI
                     _upgradeSlotsImgs[i].sprite = null; // slot image 빼기.
                     _upgradeSlotsImgs[i].enabled = false; // image 컴포넌트 체크 해제.
 
-                    Main.Get<GameManager>().RemoveUnit(UpgradeUnitSlots[i]);
+                    _gameManager.RemoveUnit(UpgradeUnitSlots[i]);
                     Owner.SetUnitInventory();
                 }
 
                 // 합성 후 새롭게 능력 부여된 아이템 제공 - NextKey 통해.
-                Main.Get<GameManager>().PlayerUnits.Add(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
+                _gameManager.PlayerUnits.Add(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
                 Owner.SetUnitInventory();
 
-                if (gameManager.isTutorial) // 튜토리얼 중이라면
+                if (_gameManager.isTutorial) // 튜토리얼 중이라면
                 {                    
-                    if (gameManager.PlayerUnits.Count == 1 && gameManager.PlayerRooms.Count == 2) // 유닛 업그레이드 했다면
+                    if (_gameManager.PlayerUnits.Count == 1 && _gameManager.PlayerRooms.Count == 2) // 유닛 업그레이드 했다면
                     {
                         if (Owner.tweener.IsActive())
                         {
@@ -150,17 +266,17 @@ public class InventUpgrade_PopupUI : BaseUI
                     _upgradeSlotsImgs[i].sprite = null; // slot image 빼기.
                     _upgradeSlotsImgs[i].enabled = false; // image 컴포넌트 체크 해제.
 
-                    Main.Get<GameManager>().RemoveRoom(UpgradeRoomSlots[i]);
+                    _gameManager.RemoveRoom(UpgradeRoomSlots[i]);
                     Owner.SetRoomInventory();
                 }
 
                 // 합성 후 새롭게 능력 부여된 아이템 제공 - NextKey 통해.
-                Main.Get<GameManager>().PlayerRooms.Add(new Room(Main.Get<DataManager>().Room[UpgradeRoomSlots[0].Data.NextKey]));
+                _gameManager.PlayerRooms.Add(new Room(Main.Get<DataManager>().Room[UpgradeRoomSlots[0].Data.NextKey]));
                 Owner.SetRoomInventory();
                 
-                if (gameManager.isTutorial) // 튜토리얼 중이라면
+                if (_gameManager.isTutorial) // 튜토리얼 중이라면
                 {
-                    if (gameManager.PlayerRooms.Count == 4)
+                    if (_gameManager.PlayerRooms.Count == 4)
                     {
                         if (Owner.tweener.IsActive())
                         {
@@ -169,7 +285,7 @@ public class InventUpgrade_PopupUI : BaseUI
                         Owner.inventArrowImg.gameObject.SetActive(false);
 
                     }
-                    if (gameManager.PlayerRooms.Count == 2)
+                    if (_gameManager.PlayerRooms.Count == 2)
                     {
                         if (Owner.tweener.IsActive())
                         {
@@ -308,6 +424,7 @@ public class InventUpgrade_PopupUI : BaseUI
         {
             return;
         }
+
         UpgradeRoomSlots[index] = room;
         SetRoomInfo(index);
         Count++;

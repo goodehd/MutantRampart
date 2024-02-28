@@ -355,6 +355,16 @@ public class Inventory_PopupUI : BaseUI
         _sortLeveButton.gameObject.SetActive(false);
         _sortNameButton.gameObject.SetActive(false);
     }
+
+    public bool GetCurUintInven()
+    {
+        return _inventUnitScrollView.gameObject.activeSelf;
+    }
+
+    public bool GetCurRoomInven()
+    {
+        return _inventRoomScrollView.gameObject.activeSelf;
+    }
 }
 
 
