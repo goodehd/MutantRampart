@@ -160,6 +160,7 @@ public class SelectScene_SceneUI : BaseUI
     {
         _setPlayerImage.gameObject.SetActive(false);
         Main.Get<GameManager>().AddHometoInventory();
+        Main.Get<GameManager>().AddItemToInventory();
         Main.Get<SceneManager>().ChangeScene<HongTestScene>();
     }
 

@@ -89,7 +89,6 @@ public class InventUpgrade_PopupUI : BaseUI
         {
             Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
             ui.curErrorText = "슬롯이 비어있습니다!";
-            Debug.Log("슬롯이 비어있습니다!");
             return;
         }
 
@@ -111,6 +110,26 @@ public class InventUpgrade_PopupUI : BaseUI
                 Main.Get<GameManager>().PlayerUnits.Add(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
                 Owner.SetUnitInventory();
 
+                if (gameManager.isTutorial) // 튜토리얼 중이라면
+                {                    
+                    if (gameManager.PlayerUnits.Count == 1 && gameManager.PlayerRooms.Count == 2) // 유닛 업그레이드 했다면
+                    {
+                        if (Owner.tweener.IsActive())
+                        {
+                            Owner.tweener.Kill();
+                        }
+
+                        Owner.inventArrowImg.gameObject.SetActive(true);
+                        Owner.inventArrowTransform.anchoredPosition = new Vector3(526f, 90f, 0f); // 보유 unit img 화살표
+                        Owner.tweener = Owner.inventArrowTransform.DOAnchorPosY(120f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
+
+                        TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
+                        ui.curTutorialText = "잘하셨어요!\n이번에는 <color=#E9D038><b>아이템 장착</b></color>에 대해 설명드릴게요.\n\n아이템을 장착하려면\n먼저 보유한 <color=#E9D038><b>Unit</b></color>을 클릭한 뒤,\n보유한 아이템 목록에서 <color=#E9D038><b>아이템</b></color>을 클릭하시면 돼요."; // <color=#E9D038><b>
+                        ui.isBackgroundActive = true;
+                        ui.isCloseBtnActive = true;
+                    }
+                }
+
                 Array.Clear(UpgradeUnitSlots, 0, UpgradeUnitSlots.Length);
                 Count = 0;
             }
@@ -118,7 +137,6 @@ public class InventUpgrade_PopupUI : BaseUI
             {
                 Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
                 ui.curErrorText = "동일한 종류,\n레벨의 유닛을 넣어주세요!";
-                Debug.Log("동일한 유닛을 넣어주세요!");
             }
         }
 
@@ -175,22 +193,8 @@ public class InventUpgrade_PopupUI : BaseUI
             {
                 Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
                 ui.curErrorText = "동일한 종류,\n레벨의 룸을 넣어주세요!";
-                Debug.Log("동일한 룸을 넣어주세요!");
             }
         }
-
-        if (gameManager.isTutorial) // 튜토리얼 중이라면
-        {
-            if (gameManager.PlayerUnits.Count == 1 && gameManager.PlayerRooms.Count == 2) // 유닛, 룸 업그레이드 완료하면 (보유 유닛 수는 1, 룸은 2(Home 포함).)
-            {
-                Owner.closeButton.gameObject.SetActive(true); // 인벤토리 닫기 버튼 활성화
-                Owner.inventArrowImg.gameObject.SetActive(true);
-                Owner.inventArrowTransform.anchoredPosition = new Vector3(662f, -400f, 0f); // 인벤토리 닫기 버튼 가리키는 화살표.
-                Owner.inventArrowTransform.Rotate(0f, 0f, 180f);
-                Owner.tweener = Owner.inventArrowTransform.DOAnchorPosY(-430f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
-            }
-        }
-
     }
 
     private void ClickFirstSlot(PointerEventData data)
@@ -266,7 +270,6 @@ public class InventUpgrade_PopupUI : BaseUI
             if (UpgradeUnitSlots[i] == null && index == -1)
             {
                 index = i;
-
             }
 
             if (UpgradeUnitSlots[i] == unit) // 똑같은 친구가 있으면 return.

@@ -14,7 +14,7 @@ public class Inventory_PopupUI : BaseUI
     private Button _roomButton;
     private Button _unitButton;
     public Button closeButton { get; set; }
-    private Button _upgradeButton;
+    public Button upgradeButton { get; set; }
 
     private Button _sortNameButton;
     private Button _sortLeveButton;
@@ -60,7 +60,7 @@ public class Inventory_PopupUI : BaseUI
         _roomButton = GetUI<Button>("InventRoomBtn");
         _unitButton = GetUI<Button>("InventUnitBtn");
         closeButton = GetUI<Button>("InventoryCloseBtn");
-        _upgradeButton = GetUI<Button>("InventoryUpgradeBtn");
+        upgradeButton = GetUI<Button>("InventoryUpgradeBtn");
         _sortNameButton = GetUI<Button>("SortNameBtn");
         _sortLeveButton = GetUI<Button>("SortLevelBtn");
 
@@ -71,7 +71,7 @@ public class Inventory_PopupUI : BaseUI
         SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
         SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
         SetUICallback(closeButton.gameObject, EUIEventState.Click, ClickCloseBtn);
-        SetUICallback(_upgradeButton.gameObject, EUIEventState.Click, ClickUpgradeBtn);
+        SetUICallback(upgradeButton.gameObject, EUIEventState.Click, ClickUpgradeBtn);
         SetUICallback(_sortNameButton.gameObject, EUIEventState.Click, ClickSortNameBtn);
         SetUICallback(_sortLeveButton.gameObject, EUIEventState.Click, ClickSortLevelBtn);
 
@@ -91,9 +91,9 @@ public class Inventory_PopupUI : BaseUI
         SetRoomInventory();
         SetUnitInventory();
 
-        if (!_upgradeButton.gameObject.activeSelf)
+        if (!upgradeButton.gameObject.activeSelf)
         {
-            _upgradeButton.gameObject.SetActive(true);
+            upgradeButton.gameObject.SetActive(true);
         }
 
         if (gameManager.isTutorial)
@@ -123,7 +123,7 @@ public class Inventory_PopupUI : BaseUI
 
         if (_inventUnitScrollView.gameObject.activeSelf)
         {
-            Main.Get<GameManager>().SortUnitLevel(_levelAscend);
+            gameManager.SortUnitLevel(_levelAscend);
             _levelAscend = !_levelAscend;
             if (_levelAscend)
             {
@@ -138,7 +138,7 @@ public class Inventory_PopupUI : BaseUI
 
         if (_inventRoomScrollView.gameObject.activeSelf)
         {
-            Main.Get<GameManager>().SortRoomLevel(_levelAscend);
+            gameManager.SortRoomLevel(_levelAscend);
             _levelAscend = !_levelAscend;
             if (_levelAscend)
             {
@@ -166,7 +166,7 @@ public class Inventory_PopupUI : BaseUI
 
         if (_inventUnitScrollView.gameObject.activeSelf)
         {
-            Main.Get<GameManager>().SortUnitName(_nameAscend);
+            gameManager.SortUnitName(_nameAscend);
             _nameAscend = !_nameAscend;
             if (_nameAscend)
             {
@@ -181,7 +181,7 @@ public class Inventory_PopupUI : BaseUI
 
         if (_inventRoomScrollView.gameObject.activeSelf)
         {
-            Main.Get<GameManager>().SortRoomName(_levelAscend);
+            gameManager.SortRoomName(_levelAscend);
             _levelAscend = !_levelAscend;
             if (_levelAscend)
             {
@@ -198,7 +198,7 @@ public class Inventory_PopupUI : BaseUI
     public void SetRoomInventory()
     {
         // room
-        List<Room> playerRooms = Main.Get<GameManager>().PlayerRooms;
+        List<Room> playerRooms = gameManager.PlayerRooms;
         foreach (Transform item in _inventRoomContent.transform) // 초기화 관련 ?
         {
             Destroy(item.gameObject);
@@ -214,7 +214,7 @@ public class Inventory_PopupUI : BaseUI
     public void SetUnitInventory()
     {
         // unit
-        List<Character> playerUnits = Main.Get<GameManager>().PlayerUnits;
+        List<Character> playerUnits = gameManager.PlayerUnits;
         foreach (Transform item in _inventUnitContent.transform)
         {
             Destroy(item.gameObject);
@@ -269,7 +269,7 @@ public class Inventory_PopupUI : BaseUI
 
             if (gameManager.PlayerRooms.Count == 2 && gameManager.PlayerUnits.Count == 1) return;
 
-            _upgradeButton.gameObject.SetActive(true);
+            upgradeButton.gameObject.SetActive(true);
             if (tweener.IsActive())
             {
                 tweener.Kill();
@@ -304,6 +304,7 @@ public class Inventory_PopupUI : BaseUI
         {
             tweener.Kill(); // 인벤토리 닫기 버튼 가리키던 dotween kill 하고
             inventArrowImg.gameObject.SetActive(false); // 인벤토리 내 화살표 inactive 하고
+            upgradeButton.gameObject.SetActive(true); // 인벤토리 내 업그레이드 버튼 활성화.
             Owner.placingButton.gameObject.SetActive(true); // 배치모드 버튼 활성화하고.
             Owner._dayArrowImg.gameObject.SetActive(true); // daymain 의 화살표 활성화.
             Owner.dayArrowTransform.anchoredPosition = new Vector3(-500f, -276f, 0f); // daymain 의 화살표가 배치모드 향하게 하고
@@ -338,13 +339,13 @@ public class Inventory_PopupUI : BaseUI
 
         if (gameManager.isTutorial) // 튜토리얼 중이라면
         {
-            if (Main.Get<GameManager>().PlayerRooms.Count == 4) // Rooom 에서 Upgrade 버튼 비활성화 할 때
+            if (gameManager.PlayerRooms.Count == 4) // Rooom 에서 Upgrade 버튼 비활성화 할 때
             {
                 tweener.Kill(); // 인벤토리 업그레이드 버튼 가리키는 화살표 kill.
                 inventArrowTransform.anchoredPosition = new Vector3(660f, -30f, 0f); // 보유 Room 가리키는 화살표
                 inventArrowTransform.Rotate(0f, 0f, 180f);
                 tweener = inventArrowTransform.DOAnchorPosY(0f, animationDuration).SetLoops(-1, LoopType.Yoyo);
-                _upgradeButton.gameObject.SetActive(false);
+                upgradeButton.gameObject.SetActive(false);
             }
         }
     }
