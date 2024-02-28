@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,6 +8,8 @@ using UnityEngine.UI;
 
 public class InventUnitDescri_PopupUI : BaseUI
 {
+    private GameManager gameManager;
+
     private Button _closeBtn;
     private Button _deleteBtn;
     private Button[] _equipSlots = new Button[3];
@@ -31,11 +34,15 @@ public class InventUnitDescri_PopupUI : BaseUI
 
     private Transform _myItemsContent;
 
+    public Image arrowImg { get; set; }
+    public RectTransform arrowTransform { get; set; }
+    public Tweener tweener { get; set; }
+
+    public float animationDuration = 0.3f;
+
     public Character UnitData { get; set; }
 
     private List<MyItemsImgBtnUI> inventSubItems = new List<MyItemsImgBtnUI>();
-    
-    //public Inventory_PopupUI inventoryPopupUIOwner { get; set; }
     
     public InventUnit_ContentsBtnUI Owner { get; set; }
 
@@ -48,6 +55,8 @@ public class InventUnitDescri_PopupUI : BaseUI
         SetUI<Image>();
         SetUI<ScrollRect>();
         SetUI<Transform>();
+
+        gameManager = Main.Get<GameManager>();
 
         _closeBtn = GetUI<Button>("InventUnitCloseBtn");
         _deleteBtn = GetUI<Button>("InventUnitDeleteBtn");
@@ -78,16 +87,14 @@ public class InventUnitDescri_PopupUI : BaseUI
         _unitSkillDescription = GetUI<TMP_Text>("InventUnitSkillDescriTxt");
 
         _unitImg = GetUI<Image>("InventUnitImg");
+        arrowImg = GetUI<Image>("UnitDescriArrowImg");
+        arrowTransform = arrowImg.GetComponent<RectTransform>();
 
         _myItemsScrollView = GetUI<ScrollRect>("MyItems_Scroll View");
 
         _myItemsContent = GetUI<Transform>("MyItems_Content");
 
-        // 아이템 (유닛 능력 올려주는, '서브아이템'이라고 하겠음.)
-        // 1. 게임매니저에 구매한 서브아이템 담을 list 만들어서 연결하기
-        // 2. MyItems_Content 자식으로 List.Count 만큼 생성하기
-
-        List<Item> playerSubItems = Main.Get<GameManager>().PlayerItems;
+        List<Item> playerSubItems = gameManager.PlayerItems;
         foreach (Transform item in _myItemsContent.transform) // 초기화 관련 ?
         {
             Destroy(item.gameObject);
@@ -102,9 +109,13 @@ public class InventUnitDescri_PopupUI : BaseUI
         }
         SetInfo();
 
-        if (Main.Get<GameManager>().isTutorial) // 튜토리얼 진행 중일 때 삭제버튼 비활성화.
+        if (gameManager.isTutorial) // 튜토리얼 진행 중일 때 삭제버튼, 닫기버튼 비활성화.
         {
             _deleteBtn.gameObject.SetActive(false);
+            _closeBtn.gameObject.SetActive(false);
+
+            arrowImg.gameObject.SetActive(true); // Description 에서 아이템 가리키는 화살표
+            tweener = arrowTransform.DOAnchorPosY(110f, animationDuration).SetLoops(-1, LoopType.Yoyo);
         }
     }
     
@@ -149,9 +160,6 @@ public class InventUnitDescri_PopupUI : BaseUI
     {
         Main.Get<UIManager>().ClosePopup();
         Owner._selectCheckImg.gameObject.SetActive(false);
-
-        //Owner.isUnitContentPressed = false;
-
     }
 
     private void ClickInventUnitDeleteBtn(PointerEventData EventData)
@@ -159,39 +167,45 @@ public class InventUnitDescri_PopupUI : BaseUI
         Sell_PopupUI sell_popupui = _ui.OpenPopup<Sell_PopupUI>();
         sell_popupui.ShopUnitData = UnitData;
         sell_popupui.Owner = Owner.Owner;
-
     }
 
     private void HoveredFirstSlot(PointerEventData EventData)
     {
+        if (gameManager.isTutorial) return;
         _equipCancelImgs[0].gameObject.SetActive(true);
     }
     private void ExitFirstSlot(PointerEventData EventData)
     {
+        if (gameManager.isTutorial) return;
         _equipCancelImgs[0].gameObject.SetActive(false);
     }
 
     private void HoveredSecondSlot(PointerEventData EventData)
     {
+        if (gameManager.isTutorial) return;
         _equipCancelImgs[1].gameObject.SetActive(true);
     }
     private void ExitSecondSlot(PointerEventData EventData)
     {
+        if (gameManager.isTutorial) return;
         _equipCancelImgs[1].gameObject.SetActive(false);
     }
 
     private void HoveredThirdSlot(PointerEventData EventData)
     {
+        if (gameManager.isTutorial) return;
         _equipCancelImgs[2].gameObject.SetActive(true);
     }
     private void ExitThirdSlot(PointerEventData EventData)
     {
+        if (gameManager.isTutorial) return;
         _equipCancelImgs[2].gameObject.SetActive(false);
     }
 
     // TODO : 아 매우 불편한 함수 구조... 이건 언젠가 바꾸고 만다 중간발표 이후에 ㅋㅋ 버튼3개
     private void ClickFirstSlot(PointerEventData EventData)
     {
+        if (gameManager.isTutorial) return;
         SlotUnEquip(0);
     }
 

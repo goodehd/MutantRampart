@@ -24,7 +24,6 @@ public class MoveState : BaseState
     {
         _tileMap.GetMapSize(out int x, out int y);
         _visited = new bool[x, y];
-
         SetStageStartMovePos();
     }
 

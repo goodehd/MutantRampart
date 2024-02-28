@@ -48,12 +48,14 @@ public enum EStatusformat
     DefaultTile,
     Count
 }
+
 public enum ENaveNodeState
 {
     Noen,
     Open,
     Close
 }
+
 public enum ECondition
 {
     Healing,
@@ -63,5 +65,12 @@ public enum ECondition
     FreezingAttack,
     TempleBuff,
     Max
+}
+
+public enum EAttackType
+{
+    MeleeAttack,
+    RangedAttack,
+    AreaAttack
 }
 
