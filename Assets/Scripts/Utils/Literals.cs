@@ -32,9 +32,9 @@ public static class Literals
 
     public static readonly List<Vector3> BatPos = new List<Vector3>
     {
-        new Vector3(-0.1f, 2.3f, 3.0f),
-        new Vector3(0.4f, 2.05f, 3.0f),
-        new Vector3(0.9f, 1.8f, 3.0f)
+        new Vector3(-0.1f, 2.3f, 0.0f),
+        new Vector3(0.4f, 2.05f, 0.0f),
+        new Vector3(0.9f, 1.8f, 0.0f)
     };
 
     public static readonly List<Vector3> EnemyPos = new List<Vector3>

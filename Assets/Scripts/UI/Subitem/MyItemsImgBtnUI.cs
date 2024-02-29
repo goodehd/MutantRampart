@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MyItemsImgBtnUI : BaseUI
 {
     private GameManager gameManager;
+    private StageManager stageManager;
 
     private Image _itemImg;
     private Button _itemImgBtn;
@@ -23,6 +24,7 @@ public class MyItemsImgBtnUI : BaseUI
         SetUI<Button>();
 
         gameManager = Main.Get<GameManager>();
+        stageManager = Main.Get<StageManager>();
 
         _itemImg = GetUI<Image>("MyItemsImgBtnUI");
         _itemImgBtn = GetUI<Button>("MyItemsImgBtnUI");
@@ -57,8 +59,30 @@ public class MyItemsImgBtnUI : BaseUI
 
     private void ClickUItemImgBtn(PointerEventData data)
     {
-        if (_isIEquiped) return;
-        if (!Owner.ItemEquip(this)) return;
+        if (stageManager.GetIsStageStart())
+        {
+            return;
+        }
+
+        if (_isIEquiped)
+        {
+            if (ItemData.Owner == Owner.UnitData)
+            {
+                Owner.SlotUnEquip(ItemData.SlotIndex);
+            }
+            else
+            {
+                UnEquipItem();
+            }
+            _equipCheckImg.gameObject.SetActive(false);
+            _isIEquiped = false;
+            return;
+        }
+        else if (!Owner.ItemEquip(this))
+        {
+            return;
+        }
+
         _equipCheckImg.gameObject.SetActive(true);
         _isIEquiped = true;
 
@@ -85,6 +109,13 @@ public class MyItemsImgBtnUI : BaseUI
             }
         }
     }
+
+    private void UnEquipItem()
+    {
+        ItemData.Owner.Item[ItemData.SlotIndex] = null;
+        ItemData.UnEquipItem(ItemData.Owner);
+    }
+
     private void HoveredUnitContentBtn(PointerEventData data)
     {
         _itemImg.color = Color.cyan;

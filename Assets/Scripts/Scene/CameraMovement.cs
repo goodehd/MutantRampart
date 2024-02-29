@@ -6,10 +6,19 @@ using DG.Tweening;
 
 public class CameraMovement : MonoBehaviour
 {
+    private UIManager uI;
     private Vector3 Origin;
     private Vector3 Diference;
+    private bool isOver = false;
     private bool Drag = false;
     public bool Rock { get; set; } = false;
+    private Unit _onMouesUnit;
+    private Vector3 targetPosition = Vector3.zero;
+
+    private void Start()
+    {
+        uI = Main.Get<UIManager>();
+    }
 
     void LateUpdate()
     {
@@ -19,6 +28,41 @@ public class CameraMovement : MonoBehaviour
             return;
         }
         */
+
+        Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, 5f, LayerMask.GetMask("Unit"));
+
+        if (hit)
+        {
+            if (!isOver)
+            {
+                _onMouesUnit = hit.collider.GetComponent<Unit>();
+                _onMouesUnit.DrawOutline();
+                isOver = true;
+            }
+
+            if(isOver && _onMouesUnit != hit.collider.GetComponent<Unit>())
+            {
+                _onMouesUnit.UndrawOutline();
+                _onMouesUnit = hit.collider.GetComponent<Unit>();
+                _onMouesUnit.DrawOutline();
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                ((DayMain_SceneUI)uI.SceneUI).CreateClickUnitUI(_onMouesUnit.CharacterInfo);
+            }
+        }
+        else
+        {
+            if (isOver)
+            {
+                _onMouesUnit.UndrawOutline();
+                _onMouesUnit = null;
+                isOver = false;
+            }
+        }
+
         if (Input.GetMouseButton(1))
         {
             Diference = (Camera.main.ScreenToWorldPoint(Input.mousePosition)) - Camera.main.transform.position;
@@ -28,6 +72,7 @@ public class CameraMovement : MonoBehaviour
                 Origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
         }
+
         else
         {
             Drag = false;
@@ -37,15 +82,14 @@ public class CameraMovement : MonoBehaviour
         {
             Camera.main.transform.position = Origin - Diference;
         }
-
-
-
     }
+
     public void OnMove(InputAction.CallbackContext value)
     {
         Vector2 input = value.ReadValue<Vector2>();
         Camera.main.transform.position += new Vector3(input.x, input.y, 0f);
     }
+
     public void OnScroll(InputAction.CallbackContext value)
     {
         float input = value.ReadValue<float>();

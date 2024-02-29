@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Unit : CharacterBehaviour
 {
+    private SpriteOutline _outline;
+
     public override void Init(CharacterData data) 
     {
         base.Init(data); 
@@ -10,6 +12,8 @@ public class Unit : CharacterBehaviour
 
         InitializeAttack(data);
         InitializeSkill(data);
+
+        _outline = GetComponentInChildren<SpriteOutline>();
     }
 
     private void InitializeSkill(CharacterData data)
@@ -71,5 +75,15 @@ public class Unit : CharacterBehaviour
 
         UnitRangedAttackState state = (UnitRangedAttackState)StateMachine.GetState(EState.Attack);
         state.AddNeighborTarget(enemy);
+    }
+
+    public void DrawOutline()
+    {
+        _outline.DrawOutline();
+    }
+
+    public void UndrawOutline()
+    {
+        _outline.UndrawOutline();
     }
 }
