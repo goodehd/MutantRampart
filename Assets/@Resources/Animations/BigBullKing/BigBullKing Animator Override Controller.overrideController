@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BigBullKing Animator Override Controller
+  m_Controller: {fileID: 9100000, guid: dc8d03b2d1e674d43951cf3f85879358, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: b2be902d14f2f07458ff374325be7f81, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 928eab1fab50c94438204ee098d16eb3, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 5bc7252ec499aa141856c4d2f3b4f58f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9cd9e3d5c75f9924dacd97f7f8fc7ff2, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ff88af8be72aa1646897ea1de3464406, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: dfa4dca3dbff85d47801b4b99e081455, type: 2}
