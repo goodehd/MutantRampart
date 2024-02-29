@@ -36,7 +36,7 @@ public class DayMain_SceneUI : BaseUI
     public Image _placingPanel { get; set; }
     private Image _hpPanel;
     public Image _dayArrowImg { get; set; }
-    
+
 
     public Button shopButton { get; set; }
     public Button placingButton { get; set; }
@@ -46,8 +46,8 @@ public class DayMain_SceneUI : BaseUI
     private Button _stageStartNoButton;
     private Button _settingButton;
     public Button backButton { get; set; }
-    private Button _unitButton;
-    private Button _roomButton;
+    public Button unitButton { get; set; }
+    public Button roomButton { get; set; }
     private Button _speed1Button;
     private Button _speed2Button;
     private Button _speed3Button;
@@ -67,7 +67,7 @@ public class DayMain_SceneUI : BaseUI
     private RectTransform _nightTransform;
     public RectTransform dayArrowTransform { get; set; }
 
-    private RoomDirBtnsUI _roomDirBtsnUI;
+    public RoomDirBtnsUI roomDirBtsnUI { get; set; }
 
     private Error_PopupUI _errorPopupUI;
 
@@ -122,7 +122,7 @@ public class DayMain_SceneUI : BaseUI
         if (gameManager.isTutorial) // 튜토리얼 중이라면
         {
             placingButton.gameObject.SetActive(false); // 배치모드 버튼 비활성화.
-            _unitButton.gameObject.SetActive(false); // 배치모드의 unit 버튼 비활성화.
+            unitButton.gameObject.SetActive(false); // 배치모드의 unit 버튼 비활성화.
             backButton.gameObject.SetActive(false); // 배치모드 뒤로가기 버튼 비활성화.
             _inventoryButton.gameObject.SetActive(false); // 인벤토리 버튼 비활성화.
             _stageStartButton.gameObject.SetActive(false); // Battle 버튼 비활성화.
@@ -133,8 +133,9 @@ public class DayMain_SceneUI : BaseUI
             dayArrowTransform.anchoredPosition = new Vector3(-770f, -276f, 0f); // 상점 가리키는 화살표.
             tweener = dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo);
         }
-        _roomDirBtsnUI = _ui.CreateSubitem<RoomDirBtnsUI>();
-        _roomDirBtsnUI.gameObject.SetActive(false);
+        roomDirBtsnUI = _ui.CreateSubitem<RoomDirBtnsUI>();
+        roomDirBtsnUI.Owner = this;
+        roomDirBtsnUI.gameObject.SetActive(false);
         UpdateHpUI(0);
     }
 
@@ -150,8 +151,8 @@ public class DayMain_SceneUI : BaseUI
         _settingButton = GetUI<Button>("SettingButton");
         _stageStartButton = GetUI<Button>("StageStartButton");
         backButton = GetUI<Button>("BackButton");
-        _unitButton = GetUI<Button>("UnitBtn");
-        _roomButton = GetUI<Button>("RoomBtn");
+        unitButton = GetUI<Button>("UnitBtn");
+        roomButton = GetUI<Button>("RoomBtn");
         _speed1Button = GetUI<Button>("PlayButton");
         _speed2Button = GetUI<Button>("X2SpeedButton");
         _speed3Button = GetUI<Button>("X3SpeedButton");
@@ -169,8 +170,8 @@ public class DayMain_SceneUI : BaseUI
 
         SetUICallback(placingButton.gameObject, EUIEventState.Click, ClickPlacingBtn);
         SetUICallback(backButton.gameObject, EUIEventState.Click, ClickBackBtn);
-        SetUICallback(_unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
-        SetUICallback(_roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);      
+        SetUICallback(unitButton.gameObject, EUIEventState.Click, ClickUnitBtn);
+        SetUICallback(roomButton.gameObject, EUIEventState.Click, ClickRoomBtn);
 
         SetUICallback(_speed1Button.gameObject, EUIEventState.Click, ClickSpeed1Btn);
         SetUICallback(_speed2Button.gameObject, EUIEventState.Click, ClickSpeed2Btn);
@@ -262,7 +263,28 @@ public class DayMain_SceneUI : BaseUI
     private void ClickStageStartOpenBtn(PointerEventData eventData)
     {
         _startYesNoPanel.gameObject.SetActive(true);
+
+        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        {
+            Main.Get<UIManager>().ClosePopup(); // 튜토리얼 팝업창 닫기
+            if (tweener.IsActive())
+            {
+                tweener.Kill(); // Battle 버튼 가리키던 화살표 Kill.
+            }
+            _dayArrowImg.gameObject.SetActive(false); // day 화살표 비활성화
+            shopButton.gameObject.SetActive(true);
+            placingButton.gameObject.SetActive(true);
+            _inventoryButton.gameObject.SetActive(true);
+            roomButton.gameObject.SetActive(true);
+            unitButton.gameObject.SetActive(true);
+
+            roomDirBtsnUI.RightTopButton.gameObject.SetActive(true); // 열기닫기 버튼 SetActive 건드려놨던거 원상복구 시키기.
+            roomDirBtsnUI.RightBottomButton.gameObject.SetActive(true);
+            roomDirBtsnUI.LeftTopButton.gameObject.SetActive(true);
+            roomDirBtsnUI.LeftBottomButton.gameObject.SetActive(true);
+        }
     }
+
     private void ClickStageStartNoBtn(PointerEventData eventData)
     {
         _startYesNoPanel.gameObject.SetActive(false);
@@ -271,30 +293,16 @@ public class DayMain_SceneUI : BaseUI
     private void ClickStageStartBtn(PointerEventData eventData)
     {
         _startYesNoPanel.gameObject.SetActive(false);
+
         if (Main.Get<GameManager>().CurStage >= 35)
         {
             Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
             ui.curErrorText = "개발중입니다.";
             return;
         }
+
         if (gameManager.isHomeSet)
         {
-            if (gameManager.isTutorial) // 튜토리얼 중이라면
-            {
-                Main.Get<UIManager>().ClosePopup(); // 튜토리얼 팝업창 닫기
-                if (tweener.IsActive())
-                {
-                    tweener.Kill(); // Battle 버튼 가리키던 화살표 Kill.
-                }
-                _dayArrowImg.gameObject.SetActive(false); // day 화살표 비활성화
-                shopButton.gameObject.SetActive(true);
-                placingButton.gameObject.SetActive(true);
-                _inventoryButton.gameObject.SetActive(true);
-                _roomButton.gameObject.SetActive(true);
-                _unitButton.gameObject.SetActive(true);
-                // todo : _roomDirBtsnUI.gameObject.SetActive(false); 상황보고 이거 적용할지 고민 !
-            }
-
             Stack<Vector2> newPath;
             Vector2 startPos = tileManager.GetRoom(1, 0).transform.position;
             startPos.y += 1.5f;
@@ -316,8 +324,6 @@ public class DayMain_SceneUI : BaseUI
             Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
             ui.curErrorText = "홈타입의 방을 설치해 주세요.";
         }
-
-        
     }
 
     private void ClickUnitBtn(PointerEventData eventData)
@@ -325,7 +331,7 @@ public class DayMain_SceneUI : BaseUI
 
         if (gameManager.isTutorial)
         {
-            _unitButton.gameObject.SetActive(false);
+            unitButton.gameObject.SetActive(false);
             OpenPoketBlock(true);
 
             if (tweener.IsActive())
@@ -346,7 +352,7 @@ public class DayMain_SceneUI : BaseUI
     {
         if (gameManager.isTutorial) // 튜토리얼 중이라면
         {
-            _roomButton.gameObject.SetActive(false);
+            roomButton.gameObject.SetActive(false);
 
             if (tileManager.SelectRoom == tileManager.GetRoom(1, 1))
             {
@@ -436,7 +442,6 @@ public class DayMain_SceneUI : BaseUI
             tweener.Kill(); // 배치모드 가리키고 있던 화살표 kill.
             _dayArrowImg.gameObject.SetActive(false);
             tileManager.GetRoom(1, 1).StartFlashing();
-            //_dayArrowTransform.anchoredPosition = new Vector3(); // 가운데 Ground 강조 위치 (근데 유저가 화면을 움직일 수 있어서 애매하네)
 
             backButton.gameObject.SetActive(false);
             TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 가운데 Ground 눌러
@@ -497,39 +502,13 @@ public class DayMain_SceneUI : BaseUI
         _ui.OpenPopup<NextStageInfo_PopupUI>("NextStageInfo_PopupUI");
     }
 
-    private void CheckBtnForTutorial()
-    {
-        if (gameManager.isTutorial)
-        {
-            Main.Get<UIManager>().CloseAllPopup(); // 먼저 떠 있던 튜토리얼 팝업창 및 PocketBlock 닫기
-
-            if (gameManager.PlayerRooms[0].IsEquiped && gameManager.PlayerRooms[1].IsEquiped) // 보유한 Room 모두 장착 중일 때
-            {
-                if (tutorialMsg_PopupUI == null)
-                {
-                    tutorialMsg_PopupUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                    tutorialMsg_PopupUI.curTutorialText = Main.Get<DataManager>().Tutorial["T15"].Description;
-                }
-
-                if (_roomButton.gameObject.activeSelf) // Room 버튼 활성화되어있다면 비활성화 진행.
-                {
-                    _roomButton.gameObject.SetActive(false);
-                }
-                if (!_unitButton.gameObject.activeSelf) // Unit 버튼 비활성화 되어있다면 활성화 진행.
-                {
-                    _unitButton.gameObject.SetActive(true);
-                }
-            }
-        }
-    }
-
     private void SetTimeScale(int stage)
     {
         if (_speed1Button.gameObject.activeSelf)
         {
             Time.timeScale = 1.0f;
         }
-        else if(_speed2Button.gameObject.activeSelf)
+        else if (_speed2Button.gameObject.activeSelf)
         {
             Time.timeScale = 1.5f;
         }
@@ -653,7 +632,7 @@ public class DayMain_SceneUI : BaseUI
         tileManager.SelectRoom.StartFlashing();
         tileManager.InactiveBatSlot();
         _ui.CloseAllPopup();
-        _roomDirBtsnUI.SetPosition(tileManager.SelectRoom.transform.position);
+        roomDirBtsnUI.SetPosition(tileManager.SelectRoom.transform.position);
         FocusCamera(); //방 클릭시 줌인하는 기능
 
         if (_btnActions.Peek().UIStagte != EUIstate.ChangeTileSelect)
@@ -675,7 +654,7 @@ public class DayMain_SceneUI : BaseUI
             }
             else
             {
-                _roomButton.gameObject.SetActive(true);
+                roomButton.gameObject.SetActive(true);
                 if (tweener.IsActive())
                 {
                     tweener.Kill();
@@ -684,10 +663,7 @@ public class DayMain_SceneUI : BaseUI
                 dayArrowTransform.anchoredPosition = new Vector3(860f, 230f, 0f); // Room 버튼 가리키는 화살표
                 tweener = dayArrowTransform.DOAnchorPosY(200f, animationDuration).SetLoops(-1, LoopType.Yoyo);
             }
-
         }
-
-
     }
 
     public void SetTileBatUI()
@@ -701,7 +677,15 @@ public class DayMain_SceneUI : BaseUI
         {
             if (_btnActions.Peek().UIStagte == EUIstate.ChangeTileSelect)
             {
-                _roomDirBtsnUI.gameObject.SetActive(true);
+                if (gameManager.isTutorial && !gameManager.PlayerRooms[1].IsEquiped) // 튜토리얼 중인데 배치룸 배치 안 했으면
+                {
+                    roomDirBtsnUI.gameObject.SetActive(false);
+
+                }
+                else if (!gameManager.isTutorial)                                   // 튜토리얼이 아니라면
+                {
+                    roomDirBtsnUI.gameObject.SetActive(true);
+                }
             }
         });
 
@@ -713,7 +697,7 @@ public class DayMain_SceneUI : BaseUI
             _ui.CloseAllPopup();
             Camera.main.DOOrthoSize(5.0f, animationDuration);
             maincamera.Rock = false;
-            _roomDirBtsnUI.gameObject.SetActive(false);
+            roomDirBtsnUI.gameObject.SetActive(false);
         }
     }
 
@@ -805,6 +789,6 @@ public class DayMain_SceneUI : BaseUI
         yield return sec;
         isUIAnimating = false;
     }
-   
+
     #endregion
 }

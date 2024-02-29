@@ -84,12 +84,15 @@ public class RoomSelectImageUI : BaseUI
                 {
                     Owner.Owner.tweener.Kill();
                 }
+                Owner.Owner.roomDirBtsnUI.gameObject.SetActive(true); // 열기닫기 버튼 UI 활성화.
                 Owner.Owner.dayArrowTransform.anchoredPosition = new Vector3(-177f, 250f, 0f); // 열기닫기 버튼 가리키는 화살표.
                 Owner.Owner.tweener = Owner.Owner.dayArrowTransform.DOAnchorPosX(-207f, Owner.Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
 
                 Main.Get<UIManager>().ClosePopup();
                 TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
                 ui.curTutorialText = Main.Get<DataManager>().Tutorial["T14"].Description;
+                ui.isBackgroundActive = true;
+                ui.isCloseBtnActive = true;
             }
             return;
         }
