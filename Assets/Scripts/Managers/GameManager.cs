@@ -87,7 +87,6 @@ public class GameManager : IManagers
         {
             ((BatRoom)unit.CurRoom).DeleteUnit(unit); // 배치되어있는 유닛 빼면서
         }
-        PlayerUnits.Remove(unit); // 인벤토리에서도 지우고 
         Item[] items = unit.Item; // 아이템 장착되어있는 것도 빼주고
         for (int i = 0; i < items.Length; i++)
         {
@@ -97,6 +96,7 @@ public class GameManager : IManagers
                 items[i].Owner = null;
             }
         }
+        PlayerUnits.Remove(unit); // 인벤토리에서도 지우고 
     }
 
     public void RemoveRoom(Room room) // room

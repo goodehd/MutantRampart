@@ -26,7 +26,7 @@ public class Inventory_PopupUI : BaseUI
     private ScrollRect _inventUnitScrollView;
 
     private Transform _inventRoomContent;
-    private Transform _inventUnitContent;
+    public Transform inventUnitContent { get; set; }
 
     public Image inventArrowImg { get; set; }
 
@@ -80,7 +80,7 @@ public class Inventory_PopupUI : BaseUI
         _inventUnitScrollView = GetUI<ScrollRect>("InventUnit_Scroll View");
 
         _inventRoomContent = GetUI<Transform>("InventRoom_Content");
-        _inventUnitContent = GetUI<Transform>("InventUnit_Content");
+        inventUnitContent = GetUI<Transform>("InventUnit_Content");
 
         inventArrowImg = GetUI<Image>("InventArrowImg");
 
@@ -215,13 +215,13 @@ public class Inventory_PopupUI : BaseUI
     {
         // unit
         List<Character> playerUnits = gameManager.PlayerUnits;
-        foreach (Transform item in _inventUnitContent.transform)
+        foreach (Transform item in inventUnitContent.transform)
         {
             Destroy(item.gameObject);
         }
         for (int i = 0; i < playerUnits.Count; i++)
         {
-            InventUnit_ContentsBtnUI inventUnitItems = Main.Get<UIManager>().CreateSubitem<InventUnit_ContentsBtnUI>("InventUnit_ContentsBtnUI", _inventUnitContent);
+            InventUnit_ContentsBtnUI inventUnitItems = Main.Get<UIManager>().CreateSubitem<InventUnit_ContentsBtnUI>("InventUnit_ContentsBtnUI", inventUnitContent);
             inventUnitItems.UnitData = playerUnits[i];
             inventUnitItems.Owner = this;
         }
@@ -277,6 +277,11 @@ public class Inventory_PopupUI : BaseUI
             inventArrowImg.gameObject.SetActive(false);
         }
 
+        ClickUnitBtnAction();
+    }
+
+    public void ClickUnitBtnAction()
+    {
         _inventRoomScrollView.gameObject.SetActive(false);
         _inventUnitScrollView.gameObject.SetActive(true);
 

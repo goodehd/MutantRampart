@@ -17,6 +17,7 @@ public class Item
     public bool IsEquiped { get; set; }
 
     public int ItemIndex;
+    public int SlotIndex;
 
     public Character Owner;
 
@@ -66,6 +67,7 @@ public class Item
         data.Status.GetStat<Stat>(EstatType.AttackSpeed).RemoveAllModifier(this);
         data.Status.GetStat<Vital>(EstatType.Hp).CurValue = data.Status.GetStat<Vital>(EstatType.Hp).Value;
         IsEquiped = false;
+        Owner = null;
         data.OnAttackState -= AttackEffect;
     }
 

@@ -36,7 +36,6 @@ public class DayMain_SceneUI : BaseUI
     public Image _placingPanel { get; set; }
     private Image _hpPanel;
     public Image _dayArrowImg { get; set; }
-    
 
     public Button shopButton { get; set; }
     public Button placingButton { get; set; }
@@ -84,6 +83,7 @@ public class DayMain_SceneUI : BaseUI
     public CameraMovement maincamera;
 
     public Shop_PopupUI shop_PopupUI { get; set; }
+    private InventUnitDescri_PopupUI _clickUnitUI;
 
     public bool isInventOpen { get; set; } = false;
     public bool isUIAnimating { get; set; } = false;
@@ -137,6 +137,45 @@ public class DayMain_SceneUI : BaseUI
         _roomDirBtsnUI = _ui.CreateSubitem<RoomDirBtnsUI>();
         _roomDirBtsnUI.gameObject.SetActive(false);
         UpdateHpUI(0);
+    }
+
+    public void CreateClickUnitUI(Character unit)
+    {
+        if(inventory_PopupUI != null)
+        {
+            if (inventory_PopupUI.GetCurRoomInven())
+            {
+                inventory_PopupUI.ClickUnitBtnAction();
+            }
+
+            foreach(Transform obj in inventory_PopupUI.inventUnitContent.transform)
+            {
+                InventUnit_ContentsBtnUI unitUI = obj.GetComponent<InventUnit_ContentsBtnUI>();
+                if (unitUI.UnitData == unit)
+                {
+                    unitUI.Initialized();
+                    unitUI.ImageClick();
+                }
+            }
+        }
+        else
+        {
+            ReMoveUnitUI();
+
+            _clickUnitUI = _ui.CreateSubitem<InventUnitDescri_PopupUI>("InventUnitDescri_PopupUI", null, Literals.UI_POPUP_PATH);
+            _ui.SetCanvasInfo(_clickUnitUI.gameObject, true);
+            unit.Status.OnStatusChange += _clickUnitUI.SetInfo;
+            _clickUnitUI.UnitData = unit;
+        }
+    }
+
+    public void ReMoveUnitUI()
+    {
+        if (_clickUnitUI != null)
+        {
+            _clickUnitUI.UnitData.Status.OnStatusChange -= _clickUnitUI.SetInfo;
+            _ui.DestroySubItem(_clickUnitUI.gameObject);
+        }
     }
 
     #region UiBind
@@ -262,6 +301,7 @@ public class DayMain_SceneUI : BaseUI
     #region ButtonEvents
     private void ClickStageStartOpenBtn(PointerEventData eventData)
     {
+        ReMoveUnitUI();
         _startYesNoPanel.gameObject.SetActive(true);
     }
     private void ClickStageStartNoBtn(PointerEventData eventData)
@@ -278,6 +318,7 @@ public class DayMain_SceneUI : BaseUI
             ui.curErrorText = "개발중입니다.";
             return;
         }
+
         if (gameManager.isHomeSet)
         {
             if (gameManager.isTutorial) // 튜토리얼 중이라면
@@ -316,8 +357,6 @@ public class DayMain_SceneUI : BaseUI
             Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
             ui.curErrorText = "홈타입의 방을 설치해 주세요.";
         }
-
-        
     }
 
     private void ClickUnitBtn(PointerEventData eventData)
@@ -394,6 +433,8 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickBackBtn(PointerEventData eventData)
     {
+        ReMoveUnitUI();
+
         if (_btnActions.Count >= 1 && !isUIAnimating)
         {
             _btnActions.Pop().BtnActions.Invoke();
@@ -426,6 +467,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickPlacingBtn(PointerEventData eventData)
     {
+        ReMoveUnitUI();
         _ui.CloseAllPopup();
 
         ClickPlacing();
@@ -448,6 +490,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickShopBtn(PointerEventData eventData)
     {
+        ReMoveUnitUI();
         _ui.CloseAllPopup();
 
         maincamera.Rock = true;
@@ -564,7 +607,7 @@ public class DayMain_SceneUI : BaseUI
 
         if (gameManager.isTutorial) // 튜토리얼 중이라면.
         {
-            Main.Get<UIManager>().ClosePopup(); // 열려있던 튜토리얼msg 팝업 먼저 끄기.
+            _ui.ClosePopup(); // 열려있던 튜토리얼msg 팝업 먼저 끄기.
         }
 
         if (inventory_PopupUI == null) // 유니티 play 하고 Hierarchy 창을 클릭한 후에 게임Scene 에서 타일을 누르면 인벤토리가 없어지고, 인벤토리 버튼 누르면 인벤토리가 다시 안 뜨는 이슈해결을 위해.
@@ -578,6 +621,8 @@ public class DayMain_SceneUI : BaseUI
         }
         else if (!isInventOpen)
         {
+            ReMoveUnitUI();
+            _ui.CloseAllPopup();
             inventory_PopupUI = _ui.OpenPopup<Inventory_PopupUI>("Inventory_PopupUI");
             inventory_PopupUI.Owner = this;
             isInventOpen = true;

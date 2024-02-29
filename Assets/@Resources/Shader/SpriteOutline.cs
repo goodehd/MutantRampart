@@ -1,44 +1,42 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 
 [ExecuteInEditMode]
 public class SpriteOutline : MonoBehaviour
 {
-    public Color color = Color.white;
 
     [Range(0, 16)]
-    public int outlineSize = 1;
+    private int outlineSize = 1;
+    private Color color = Color.green;
+    private bool IsDraw = false;
 
     private SpriteRenderer spriteRenderer;
-    private TilemapRenderer tilemapRenderer;
+    private Coroutine coroutine;
 
     void OnEnable()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        tilemapRenderer = GetComponent<TilemapRenderer>();
-
-        UpdateOutline(true);
+        //UpdateOutline(true);
     }
 
-    void OnDisable()
-    {
-        UpdateOutline(false);
-    }
+    //void OnDisable()
+    //{
+    //    UpdateOutline(false);
+    //}
 
-    void Update()
-    {
-        UpdateOutline(true);
-    }
+    //void Update()
+    //{
+    //    UpdateOutline(true);
+    //}
 
     void UpdateOutline(bool outline)
     {
         MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-        if(spriteRenderer != null)
+        if (spriteRenderer != null)
             spriteRenderer.GetPropertyBlock(mpb);
-
-        if(tilemapRenderer != null)
-            tilemapRenderer.GetPropertyBlock(mpb);
 
         mpb.SetFloat("_Outline", outline ? 1f : 0);
         mpb.SetColor("_OutlineColor", color);
@@ -46,8 +44,34 @@ public class SpriteOutline : MonoBehaviour
 
         if (spriteRenderer != null)
             spriteRenderer.SetPropertyBlock(mpb);
+    }
 
-        if (tilemapRenderer != null)
-            tilemapRenderer.SetPropertyBlock(mpb);
+    public void DrawOutline()
+    {
+        if (!IsDraw)
+        {
+            coroutine = StartCoroutine(UpdateOutline());
+            IsDraw = true;
+        }
+    }
+
+    public void UndrawOutline()
+    {
+        if(coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            UpdateOutline(false);
+            coroutine = null;
+            IsDraw = false;
+        }
+    }
+
+    public IEnumerator UpdateOutline()
+    {
+        while (true)
+        {
+            UpdateOutline(true);
+            yield return null;
+        }
     }
 }

@@ -158,8 +158,16 @@ public class InventUnitDescri_PopupUI : BaseUI
 
     private void ClickInventUnitCloseBtn(PointerEventData EventData)
     {
-        Main.Get<UIManager>().ClosePopup();
-        Owner._selectCheckImg.gameObject.SetActive(false);
+        if(Owner != null)
+        {
+            Owner._selectCheckImg.gameObject.SetActive(false);
+            _ui.ClosePopup();
+        }
+
+        if (Owner == null)
+        {
+            ((DayMain_SceneUI)_ui.SceneUI).ReMoveUnitUI();
+        }
     }
 
     private void ClickInventUnitDeleteBtn(PointerEventData EventData)
@@ -219,7 +227,7 @@ public class InventUnitDescri_PopupUI : BaseUI
         SlotUnEquip(2);
     }
 
-    private void SlotUnEquip(int i)
+    public void SlotUnEquip(int i)
     {
         if (UnitData.Item[i] == null) return;
         UnitData.Item[i].UnEquipItem(UnitData); //능력치를 빼고
@@ -242,6 +250,7 @@ public class InventUnitDescri_PopupUI : BaseUI
                 UnitData.Item[i] = Imagedata.ItemData;
                 UnitData.Item[i].EquipItem(UnitData);
                 UnitData.itemnumbers[i] = Imagedata.ItemData.ItemIndex;
+                Imagedata.ItemData.SlotIndex = i;
                 break;
             }
 
@@ -256,6 +265,9 @@ public class InventUnitDescri_PopupUI : BaseUI
 
     private void OnDestroy()
     {
-        Owner.Owner.inventUnitDescri_PopupUI = null; // null 처리 !
+        if(Owner != null)
+        {
+            Owner.Owner.inventUnitDescri_PopupUI = null;
+        }
     }
 }
