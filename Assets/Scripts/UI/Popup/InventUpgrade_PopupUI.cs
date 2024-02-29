@@ -167,7 +167,7 @@ public class InventUpgrade_PopupUI : BaseUI
                 {
                     if (chara.Data.Key == room.Data.Key && chara.Data.Key[room.Data.Key.Length - 1] == room.Data.Key[room.Data.Key.Length - 1])
                     {
-                        foundCharacters.Add(room);
+                        foundCharacters.Add(chara);
 
                         if (foundCharacters.Count > 2)
                         {

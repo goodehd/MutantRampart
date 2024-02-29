@@ -50,6 +50,9 @@ public class Unit : CharacterBehaviour
             case EAttackType.RangedAttack:
                 StateMachine.AddState(EState.Attack, new UnitRangedAttackState(this));
                 break;
+            case EAttackType.AreaAttack:
+                StateMachine.AddState(EState.Attack, new UnitAreaAttackState(this));
+                break;
             default:
                 throw new ArgumentException($"Warning : Invalid attack type");
         }
