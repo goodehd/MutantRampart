@@ -56,7 +56,7 @@ public class DataManager : IManagers
         return null;
     }
 
-    private void CreateStageInfo()
+    public void CreateStageInfo()
     {
         StageMonsterInfo stage = new StageMonsterInfo(1000);
         stage.AddMonster("Slime2", 3);
