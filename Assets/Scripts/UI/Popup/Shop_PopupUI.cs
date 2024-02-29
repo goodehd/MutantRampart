@@ -35,6 +35,8 @@ public class Shop_PopupUI : BaseUI
     private TMP_Text _groundRowPriceText;
     private TMP_Text _groundColPriceText;
 
+    public int RowPrice { get; set; }
+    public int ColPrice { get; set; }
     public Image shopArrowImg { get; set; }
 
     public RectTransform shopArrowTransform { get; set; }
@@ -184,8 +186,8 @@ public class Shop_PopupUI : BaseUI
         int x;
         int y;
         Main.Get<TileManager>().GetMapSize(out x, out y);
-        int RowPrice = (Main.Get<DataManager>().Item["ExpandMapRow"].Price) * (y - 2) * 3;
-        int ColPrice = (Main.Get<DataManager>().Item["ExpandMapCol"].Price) * (x - 2) * 3;
+        RowPrice = (Main.Get<DataManager>().Item["ExpandMapRow"].Price) * (y - 2) * 3;
+        ColPrice = (Main.Get<DataManager>().Item["ExpandMapCol"].Price) * (x - 2) * 3;
         _groundRowPriceText.text = RowPrice.ToString();
         _groundColPriceText.text = ColPrice.ToString();
     }
@@ -388,6 +390,7 @@ public class Shop_PopupUI : BaseUI
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
             ui.GachaUnitData = _myGachaUnits;
             ui.Owner = this;
+            Main.Get<GameManager>().SaveData();
         }
         else // 보유 금액 부족 시
         {
@@ -420,6 +423,7 @@ public class Shop_PopupUI : BaseUI
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
             ui.GachaRoomData = _myGachaRooms;
             ui.Owner = this;
+            Main.Get<GameManager>().SaveData();
         }
         else
         {
@@ -453,6 +457,7 @@ public class Shop_PopupUI : BaseUI
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
             ui.GachaItemData = _myGachaItems;
             ui.Owner = this;
+            Main.Get<GameManager>().SaveData();
         }
         else
         {

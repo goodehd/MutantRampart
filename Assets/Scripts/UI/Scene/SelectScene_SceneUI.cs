@@ -64,6 +64,7 @@ public class SelectScene_SceneUI : BaseUI
         SetUICallback(_tutorialSkipNoBtn.gameObject, EUIEventState.Click, ClickTutorialSkipNoBtn);
         SetUICallback(_tutorialSkipCloseBtn.gameObject, EUIEventState.Click, ClickTutorialSkipCloseBtn);
         SetUICallback(_exitBtn.gameObject, EUIEventState.Click, ClickExitBtn);
+        SetUICallback(_upgradeBtn.gameObject, EUIEventState.Click, ClickUpgradeBtn);
 
 
         if (File.Exists(_saveDataManager.path) && !_gameManager.isTutorial)
@@ -78,6 +79,11 @@ public class SelectScene_SceneUI : BaseUI
         {
             _saveFile = false;
         }
+    }
+
+    private void ClickUpgradeBtn(PointerEventData data)
+    {
+        Main.Get<UIManager>().OpenPopup<PlayerUpgrade_PopupUI>();
     }
 
     private void ClickExitBtn(PointerEventData data)
@@ -109,6 +115,7 @@ public class SelectScene_SceneUI : BaseUI
         }
         else
         {
+            return;
         }
     }
 

@@ -25,7 +25,7 @@ public class StageMonsterInfo
     {
         Count = 0;
         Monsters = new List<Monster>();
-        RewardsGold = rewardsGold;
+        RewardsGold = rewardsGold + (int)(rewardsGold * Main.Get<UpgradeManager>().UpgradeGoldPercent);
     }
 
     public void AddMonster(string name, int count)
