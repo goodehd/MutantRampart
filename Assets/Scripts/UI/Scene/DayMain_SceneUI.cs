@@ -142,6 +142,8 @@ public class DayMain_SceneUI : BaseUI
 
     public void CreateClickUnitUI(Character unit)
     {
+        if (gameManager.isTutorial) return;
+
         if(inventory_PopupUI != null)
         {
             if (inventory_PopupUI.GetCurRoomInven())

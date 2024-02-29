@@ -59,6 +59,8 @@ public class MyItemsImgBtnUI : BaseUI
 
     private void ClickUItemImgBtn(PointerEventData data)
     {
+        if (gameManager.isTutorial && gameManager.PlayerItems[0].IsEquiped) return;
+
         if (stageManager.GetIsStageStart())
         {
             return;
