@@ -15,7 +15,7 @@ public class GameManager : IManagers
     public string PlayerName { get; set; }
 
     public int CurStage { get; set; }
-
+   
     public bool isTutorial { get; set; }
 
     public bool isPlacingTutorialClear = false; // 배치모드 튜토리얼 클리어했는지 체크.
@@ -39,6 +39,7 @@ public class GameManager : IManagers
         CurStage = 0;
         PlayerHP = new Vital(EstatType.Hp, 5);
         PlayerHP.OnValueZero += GameOver;
+        
 
         bool tutorial = PlayerPrefs.HasKey("Tutorial");
         if (!tutorial)
@@ -78,7 +79,18 @@ public class GameManager : IManagers
         isPlayerDead = true;
         StageFail_PopupUI ui = Main.Get<UIManager>().OpenPopup<StageFail_PopupUI>("StageFail_PopupUI");
         ui._curStage = CurStage;
-
+        if(CurStage > 0)
+        {
+            ui.UpgradePoint += 1;
+        }
+        else if(CurStage > 30)
+        {
+            ui.UpgradePoint += 2;
+        }
+        else if(CurStage > 50)
+        {
+            ui.UpgradePoint += 3;
+        }
     }
 
     public void RemoveUnit(Character unit) // unit
