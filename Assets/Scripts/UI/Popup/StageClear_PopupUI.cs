@@ -26,7 +26,7 @@ public class StageClear_PopupUI : BaseUI
         SetUICallback(_nextBtn.gameObject, EUIEventState.Click, ClickNextBtn);
 
         _stageText.text = $"Day {_curStage}";
-        _RewardsText.text = $"+ {_rewardsGold}";
+        _RewardsText.text = $"{_rewardsGold}gold";
     }
 
     private void ClickNextBtn(PointerEventData EventData)

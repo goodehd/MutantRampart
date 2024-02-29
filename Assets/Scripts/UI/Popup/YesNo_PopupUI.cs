@@ -54,17 +54,21 @@ public class YesNo_PopupUI : BaseUI
     //Ground구매
     private void BuyGroundItem(ItemData data)
     {
-        if (Main.Get<GameManager>().PlayerMoney >= data.Price)
+        if(data.Key == "ExpandMapRow")
         {
-            if(data.Key == "ExpandMapRow")
+            if (Main.Get<GameManager>().PlayerMoney >= Shop_PopupUI.RowPrice)
             {
                 Main.Get<TileManager>().ExpandMapRow();
+                Main.Get<GameManager>().ChangeMoney(-Shop_PopupUI.RowPrice);
             }
-            else if(data.Key == "ExpandMapCol")
+        }
+        else if(data.Key == "ExpandMapCol")
+        {
+            if (Main.Get<GameManager>().PlayerMoney >= Shop_PopupUI.ColPrice)
             {
                 Main.Get<TileManager>().ExpandMapCol();
+                Main.Get<GameManager>().ChangeMoney(-Shop_PopupUI.ColPrice);
             }
-            Main.Get<GameManager>().ChangeMoney(-data.Price);
         }
         else
         {

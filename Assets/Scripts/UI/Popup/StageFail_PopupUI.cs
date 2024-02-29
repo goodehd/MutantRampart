@@ -10,20 +10,25 @@ public class StageFail_PopupUI : BaseUI
 {
     private TextMeshProUGUI _stageText;
     private TextMeshProUGUI _rewardsText;
+    private TextMeshProUGUI _upgradePointTxt;
     private Button _mainMenuBtn;
     private Button _retryBtn;
 
     public int _curStage { get; set; }
+    public int UpgradePoint { get; set; }
 
     //public int _rewardsGold { get; set; }
 
     protected override void Init()
     {
+        UpgradePoint = Main.Get<UpgradeManager>().UpgradePoint;
+
         SetUI<TextMeshProUGUI>();
         SetUI<Button>();
 
         _stageText = GetUI<TextMeshProUGUI>("StageFailLevelText");
         _rewardsText = GetUI<TextMeshProUGUI>("FailRewardMoneyText");
+        _upgradePointTxt = GetUI<TextMeshProUGUI>("UpgradePointTxt");
         _mainMenuBtn = GetUI<Button>("StageFailMainMenuBtn");
         _retryBtn = GetUI<Button>("StageFailRetryBtn");
 
@@ -31,17 +36,24 @@ public class StageFail_PopupUI : BaseUI
         //SetUICallback(_retryBtn.gameObject, EUIEventState.Click, ClickRetryBtn);
 
         _stageText.text = $"Day {_curStage}";
+        if(_curStage > 0)
+        {
+            UpgradePoint += 1;
+            _upgradePointTxt.text = $"+ {UpgradePoint}";
+        }
         //_rewardsText.text = ;
     }
 
     private void ClickMainMenuBtn(PointerEventData data)
     {
+        PlayerPrefs.SetInt("UpgradePoint", UpgradePoint);
         // 시작 Scene 으로 이동
         Main.Get<SaveDataManager>().DeleteData();
         Main.Get<GameManager>().Init();
         Main.Get<UIManager>().Init();
         Main.Get<StageManager>().Init();
         Main.Get<PoolManager>().Init();
+        Main.Get<UpgradeManager>().Init();
         Main.Get<SoundManager>().SoundStop(ESoundType.BGM);
         Time.timeScale = 1.0f;
         Main.Get<SceneManager>().ChangeScene<SelectScene>();
