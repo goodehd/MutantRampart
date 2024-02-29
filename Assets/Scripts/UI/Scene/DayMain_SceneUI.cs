@@ -52,10 +52,6 @@ public class DayMain_SceneUI : BaseUI
     private Button _speed2Button;
     private Button _speed3Button;
     private Button _nextStageInfoButton;
-    public Button rightTopButton { get; set; }
-    public Button rightBottomButton { get; set; }
-    public Button leftTopButton { get; set; }
-    public Button leftBottomButton { get; set; }
 
     private TextMeshProUGUI _playerMoneyText;
     private TextMeshProUGUI _stageText;
@@ -69,8 +65,9 @@ public class DayMain_SceneUI : BaseUI
     private RectTransform _placingPanelTransform;
     private RectTransform _backBtnTransform;
     private RectTransform _nightTransform;
-    private RectTransform _roomDirTransform;
     public RectTransform dayArrowTransform { get; set; }
+
+    private RoomDirBtnsUI _roomDirBtsnUI;
 
     private Error_PopupUI _errorPopupUI;
 
@@ -127,20 +124,18 @@ public class DayMain_SceneUI : BaseUI
             placingButton.gameObject.SetActive(false); // 배치모드 버튼 비활성화.
             _unitButton.gameObject.SetActive(false); // 배치모드의 unit 버튼 비활성화.
             backButton.gameObject.SetActive(false); // 배치모드 뒤로가기 버튼 비활성화.
-            rightBottomButton.gameObject.SetActive(false); // 배치모드의 열기닫기 버튼 비활성화.
-            rightTopButton.gameObject.SetActive(false);
-            leftBottomButton.gameObject.SetActive(false);
-            leftTopButton.gameObject.SetActive(false);
             _inventoryButton.gameObject.SetActive(false); // 인벤토리 버튼 비활성화.
             _stageStartButton.gameObject.SetActive(false); // Battle 버튼 비활성화.
 
-            TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
+            TutorialMsg_PopupUI ui = _ui.OpenPopup<TutorialMsg_PopupUI>();
             ui.curTutorialText =
                 "<b>[튜토리얼]</b>\n\n적의 침입으로부터 메인 거점인 Home 을 지켜내야 해요!\n지키기 위해서는 침입을 막아줄 Unit 과 Room 이 필요해요.\n\n그럼, <color=#E9D038><b>상점</b></color>에서 제공해드린 재화로\nUnit 과 Room 을 구매해봅시다!";
             _dayArrowImg.gameObject.SetActive(true);
             dayArrowTransform.anchoredPosition = new Vector3(-770f, -276f, 0f); // 상점 가리키는 화살표.
             tweener = dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo);
         }
+        _roomDirBtsnUI = _ui.CreateSubitem<RoomDirBtnsUI>();
+        _roomDirBtsnUI.gameObject.SetActive(false);
         UpdateHpUI(0);
     }
 
@@ -161,10 +156,6 @@ public class DayMain_SceneUI : BaseUI
         _speed1Button = GetUI<Button>("PlayButton");
         _speed2Button = GetUI<Button>("X2SpeedButton");
         _speed3Button = GetUI<Button>("X3SpeedButton");
-        rightTopButton = GetUI<Button>("RightTop");
-        rightBottomButton = GetUI<Button>("RightBottom");
-        leftTopButton = GetUI<Button>("LeftTop");
-        leftBottomButton = GetUI<Button>("LeftBottom");
         _stageStartYesButton = GetUI<Button>("YesBtn");
         _stageStartNoButton = GetUI<Button>("NoBtn");
         _nextStageInfoButton = GetUI<Button>("NextStageInfoButton");
@@ -185,11 +176,6 @@ public class DayMain_SceneUI : BaseUI
         SetUICallback(_speed1Button.gameObject, EUIEventState.Click, ClickSpeed1Btn);
         SetUICallback(_speed2Button.gameObject, EUIEventState.Click, ClickSpeed2Btn);
         SetUICallback(_speed3Button.gameObject, EUIEventState.Click, ClickSpeed3Btn);
-
-        SetUICallback(rightTopButton.gameObject, EUIEventState.Click, ClickRightTopBtn);
-        SetUICallback(rightBottomButton.gameObject, EUIEventState.Click, ClickRightBottomBtn);
-        SetUICallback(leftTopButton.gameObject, EUIEventState.Click, ClickLeftTopBtn);
-        SetUICallback(leftBottomButton.gameObject, EUIEventState.Click, ClickLeftBottomBtn);
 
         SetUICallback(_nextStageInfoButton.gameObject, EUIEventState.Click, ClickNextStageInfoButtonBtn);
     }
@@ -240,7 +226,6 @@ public class DayMain_SceneUI : BaseUI
         _placingPanelTransform = _placingPanel.GetComponent<RectTransform>();
         _backBtnTransform = backButton.GetComponent<RectTransform>();
         _nightTransform = _speed1Button.transform.parent.GetComponent<RectTransform>();
-        _roomDirTransform = rightTopButton.transform.parent.GetComponent<RectTransform>();
         dayArrowTransform = _dayArrowImg.GetComponent<RectTransform>();
     }
 
@@ -308,10 +293,6 @@ public class DayMain_SceneUI : BaseUI
                 _inventoryButton.gameObject.SetActive(true);
                 _roomButton.gameObject.SetActive(true);
                 _unitButton.gameObject.SetActive(true);
-                rightTopButton.gameObject.SetActive(true);
-                rightBottomButton.gameObject.SetActive(true);
-                leftTopButton.gameObject.SetActive(true);
-                leftBottomButton.gameObject.SetActive(true);
             }
 
             Stack<Vector2> newPath;
@@ -512,64 +493,6 @@ public class DayMain_SceneUI : BaseUI
         _speed1Button.gameObject.SetActive(true);
     }
 
-    private void ClickRightTopBtn(PointerEventData eventData)
-    {
-        if (gameManager.isTutorial)
-        {
-            return;
-        }
-
-        RoomBehavior room = tileManager.SelectRoom;
-        tileManager.SetRoomDir(room, ERoomDir.RightTop, !room.IsDoorOpen(ERoomDir.RightTop));
-    }
-
-    private void ClickLeftTopBtn(PointerEventData eventData)
-    {
-        RoomBehavior room = tileManager.SelectRoom;
-        tileManager.SetRoomDir(room, ERoomDir.LeftTop, !room.IsDoorOpen(ERoomDir.LeftTop));
-
-        if (gameManager.isTutorial)
-        {
-            CheckBtnForTutorial();
-
-            rightTopButton.gameObject.SetActive(false);
-            rightBottomButton.gameObject.SetActive(false);
-            leftTopButton.gameObject.SetActive(false);
-            leftBottomButton.gameObject.SetActive(false);
-
-            if (tweener.IsActive())
-            {
-                tweener.Kill(); // 열기닫기 가리키는 화살표 kill.
-            }
-            dayArrowTransform.anchoredPosition = new Vector3(860f, 60f, 0f); // unit 버튼 가리키는 화살표
-            dayArrowTransform.Rotate(0f, 0f, 90f);
-            tweener = dayArrowTransform.DOAnchorPosY(30f, animationDuration).SetLoops(-1, LoopType.Yoyo);
-        }
-
-    }
-
-    private void ClickRightBottomBtn(PointerEventData eventData)
-    {
-        if (gameManager.isTutorial)
-        {
-            return;
-        }
-
-        RoomBehavior room = tileManager.SelectRoom;
-        tileManager.SetRoomDir(room, ERoomDir.RightBottom, !room.IsDoorOpen(ERoomDir.RightBottom));
-    }
-
-    private void ClickLeftBottomBtn(PointerEventData eventData)
-    {
-        if (gameManager.isTutorial)
-        {
-            return;
-        }
-
-        RoomBehavior room = tileManager.SelectRoom;
-        tileManager.SetRoomDir(room, ERoomDir.LeftBottom, !room.IsDoorOpen(ERoomDir.LeftBottom));
-    }
-
     private void ClickNextStageInfoButtonBtn(PointerEventData eventData)
     {
         _ui.OpenPopup<NextStageInfo_PopupUI>("NextStageInfo_PopupUI");
@@ -731,6 +654,7 @@ public class DayMain_SceneUI : BaseUI
         tileManager.SelectRoom.StartFlashing();
         tileManager.InactiveBatSlot();
         _ui.CloseAllPopup();
+        _roomDirBtsnUI.SetPosition(tileManager.SelectRoom.transform.position);
         FocusCamera(); //방 클릭시 줌인하는 기능
 
         if (_btnActions.Peek().UIStagte != EUIstate.ChangeTileSelect)
@@ -778,7 +702,7 @@ public class DayMain_SceneUI : BaseUI
         {
             if (_btnActions.Peek().UIStagte == EUIstate.ChangeTileSelect)
             {
-                _roomDirTransform.gameObject.SetActive(true);
+                _roomDirBtsnUI.gameObject.SetActive(true);
             }
         });
 
@@ -790,7 +714,7 @@ public class DayMain_SceneUI : BaseUI
             _ui.CloseAllPopup();
             Camera.main.DOOrthoSize(5.0f, animationDuration);
             maincamera.Rock = false;
-            _roomDirTransform.gameObject.SetActive(false);
+            _roomDirBtsnUI.gameObject.SetActive(false);
         }
     }
 
