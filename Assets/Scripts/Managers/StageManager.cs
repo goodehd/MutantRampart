@@ -83,7 +83,7 @@ public class StageManager : IManagers
         if (Main.Get<GameManager>().isTutorial) // 튜토리얼 중이라면
         {
             TutorialMsg_PopupUI tutorialUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 마지막 튜토리얼 팝업
-            tutorialUI.curTutorialText = "아주 좋아요!\n이런 방식으로 침입하는 적으로부터 Home 을 지켜내세요!\n\n<color=#FF8888><b>※ 게임 오버 시 플레이 데이터가 초기화됩니다!! ※</b></color>";
+            tutorialUI.curTutorialText = Main.Get<DataManager>().Tutorial["T18"].Description;
             tutorialUI.isBackgroundActive = true;
             tutorialUI.isCloseBtnActive = true;
             Main.Get<GameManager>().isTutorial = false; // 튜토리얼 이제 끝 !

@@ -63,7 +63,7 @@ public class GachaResult_PopupUI : BaseUI
                 if (_gameManager.PlayerRooms.Count == 1)
                 {
                     TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                    ui.curTutorialText = "잘하셨어요!\n<color=#E9D038><b>Room</b></color> 을 클릭해서\n동일하게 <color=#E9D038><b>3회 뽑기</b></color>를 진행해주세요.\n\n튜토리얼이 끝나면 Room 을 배치하는 Ground 와\n유닛의 능력치를 올려주는 Item 도 구매할 수 있어요!";
+                    ui.curTutorialText = Main.Get<DataManager>().Tutorial["T2"].Description;
                     ui.isCloseBtnActive = true;
                     ui.isBackgroundActive = true;
 

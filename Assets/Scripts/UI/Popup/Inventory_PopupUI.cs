@@ -311,7 +311,7 @@ public class Inventory_PopupUI : BaseUI
             Owner.tweener = Owner.dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo); // daymain 화살표 dotween 걸어주고
 
             TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // tutorialpopup - 배치모드 관련해서 튜토리얼팝업 만들어주고
-            ui.curTutorialText = "자, 이제 마지막으로 <color=#E9D038><b>배치모드</b></color>에서\nUnit 과 Room 을 배치해봅시다!";
+            ui.curTutorialText = Main.Get<DataManager>().Tutorial["T8"].Description;
         }
     }
 

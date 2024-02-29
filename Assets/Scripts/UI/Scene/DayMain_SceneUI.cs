@@ -128,8 +128,7 @@ public class DayMain_SceneUI : BaseUI
             _stageStartButton.gameObject.SetActive(false); // Battle 버튼 비활성화.
 
             TutorialMsg_PopupUI ui = _ui.OpenPopup<TutorialMsg_PopupUI>();
-            ui.curTutorialText =
-                "<b>[튜토리얼]</b>\n\n적의 침입으로부터 메인 거점인 Home 을 지켜내야 해요!\n지키기 위해서는 침입을 막아줄 Unit 과 Room 이 필요해요.\n\n그럼, <color=#E9D038><b>상점</b></color>에서 제공해드린 재화로\nUnit 과 Room 을 구매해봅시다!";
+            ui.curTutorialText = Main.Get<DataManager>().Tutorial["T0"].Description;
             _dayArrowImg.gameObject.SetActive(true);
             dayArrowTransform.anchoredPosition = new Vector3(-770f, -276f, 0f); // 상점 가리키는 화살표.
             tweener = dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo);
@@ -293,6 +292,7 @@ public class DayMain_SceneUI : BaseUI
                 _inventoryButton.gameObject.SetActive(true);
                 _roomButton.gameObject.SetActive(true);
                 _unitButton.gameObject.SetActive(true);
+                // todo : _roomDirBtsnUI.gameObject.SetActive(false); 상황보고 이거 적용할지 고민 !
             }
 
             Stack<Vector2> newPath;
@@ -354,7 +354,7 @@ public class DayMain_SceneUI : BaseUI
                 {
                     Main.Get<UIManager>().ClosePopup();
                     TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                    ui.curTutorialText = "Room 의 종류는 크게 Home, Bat, Trap 으로 나뉘어져있어요.\n\n우선 맨 위에 있는 <color=#E9D038><b>Home</b></color> 은\n적으로부터 지켜야 할 제일 중요한 Room 이에요.\n그리고 Home 이 배치가 되어있어야 Battle 을 시작할 수 있어요.\n<color=#E9D038><b>클릭해서 배치해봅시다!</b></color>";
+                    ui.curTutorialText = Main.Get<DataManager>().Tutorial["T11"].Description;
 
                     if (_pocketBlock == null)
                     {
@@ -383,7 +383,7 @@ public class DayMain_SceneUI : BaseUI
                 tweener = dayArrowTransform.DOAnchorPosX(810f, animationDuration).SetLoops(-1, LoopType.Yoyo);
 
                 TutorialMsg_PopupUI ui1 = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                ui1.curTutorialText = "Room 의 종류로는 앞서 설명드린 Home 외에,\n유닛을 배치할 수 있는 <color=#E9D038><b>Bat</b></color> 타입과, \n유닛 배치는 불가능하지만,\n들어온 적에게 함정효과가 발동되는 <color=#E9D038><b>Trap</b></color> 타입이 있어요.\n\n남은 Room 을 클릭해 배치해봅시다!";
+                ui1.curTutorialText = Main.Get<DataManager>().Tutorial["T13"].Description;
             }
         }
         else
@@ -417,7 +417,7 @@ public class DayMain_SceneUI : BaseUI
                         dayArrowTransform.Rotate(0f, 0f, 90f); // 90 도 돌리고
 
                         TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 튜토리얼 팝업
-                        ui.curTutorialText = "이제 모든 준비가 완료됐으니\n적들의 침입을 막으러 가봅시다!\n\n<color=#E9D038><b>BATTLE 버튼</b></color>을 눌러주세요!";
+                        ui.curTutorialText = Main.Get<DataManager>().Tutorial["T17"].Description;
                     }
                 }
             }
@@ -440,7 +440,7 @@ public class DayMain_SceneUI : BaseUI
 
             backButton.gameObject.SetActive(false);
             TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 가운데 Ground 눌러
-            ui.curTutorialText = "<color=#E9D038><b>중앙에 위치한 Ground</b></color> 를 클릭해주세요!";
+            ui.curTutorialText = Main.Get<DataManager>().Tutorial["T9"].Description;
             ui.isCloseBtnActive = true;
             ui.isBackgroundActive = true;
         }
@@ -460,10 +460,9 @@ public class DayMain_SceneUI : BaseUI
             _dayArrowImg.gameObject.SetActive(false);
 
             TutorialMsg_PopupUI tutorialUI = _ui.OpenPopup<TutorialMsg_PopupUI>();
-            tutorialUI.curTutorialText = "먼저,\n카테고리에서 <color=#E9D038><b>Unit</b></color> 을 클릭해\n<color=#E9D038><b>3회 뽑기</b></color>를 진행해주세요!";
+            tutorialUI.curTutorialText = Main.Get<DataManager>().Tutorial["T1"].Description;
             tutorialUI.isCloseBtnActive = true;
             tutorialUI.isBackgroundActive = true;
-            //StartCoroutine(ClosePopupUI());
 
             shopButton.gameObject.SetActive(false); // 상점 튜토리얼 완료하면 상점 버튼 inactive.
             _inventoryButton.gameObject.SetActive(true); // 상점 튜토리얼 다음 순서인 인벤토리 버튼 active.
@@ -509,7 +508,7 @@ public class DayMain_SceneUI : BaseUI
                 if (tutorialMsg_PopupUI == null)
                 {
                     tutorialMsg_PopupUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                    tutorialMsg_PopupUI.curTutorialText = "방금 배치한 Room 위에 Unit 도 배치해봅시다.\n\n<color=#FF8888><b>※ Unit 은 왼쪽부터 배치가 되고 전투 시\n가장 왼쪽에 있는 Unit 부터 공격대상이 됩니다. ※</b></color>";
+                    tutorialMsg_PopupUI.curTutorialText = Main.Get<DataManager>().Tutorial["T15"].Description;
                 }
 
                 if (_roomButton.gameObject.activeSelf) // Room 버튼 활성화되어있다면 비활성화 진행.
@@ -591,7 +590,7 @@ public class DayMain_SceneUI : BaseUI
             _dayArrowImg.gameObject.SetActive(false);
 
             TutorialMsg_PopupUI tutorialUI = _ui.OpenPopup<TutorialMsg_PopupUI>();
-            tutorialUI.curTutorialText = "그리고 동일한 종류와 레벨의 Unit 이나 Room 이 3개 있으면\n다음 레벨로 업그레이드를 진행할 수도 있어요.\n\n먼저, <color=#E9D038><b>업그레이드 버튼</b></color>을 누른 다음,\n보유한 <color=#E9D038><b>Room</b></color> 을 클릭해서\n업그레이드를 진행해주세요!";
+            tutorialUI.curTutorialText = Main.Get<DataManager>().Tutorial["T4"].Description;
             inventory_PopupUI.tutorialMsg_PopupUI = tutorialUI;
             tutorialUI.isBackgroundActive = true;
             tutorialUI.isCloseBtnActive = true;
@@ -668,7 +667,7 @@ public class DayMain_SceneUI : BaseUI
             if (!gameManager.isHomeSet)
             {
                 TutorialMsg_PopupUI ui = _ui.OpenPopup<TutorialMsg_PopupUI>();
-                ui.curTutorialText = "먼저, Room 을 배치해볼게요. <color=#E9D038><b>Room 버튼</b></color>을 눌러주세요.";
+                ui.curTutorialText = Main.Get<DataManager>().Tutorial["T10"].Description;
                 backButton.gameObject.SetActive(false);
                 _dayArrowImg.gameObject.SetActive(true);
                 dayArrowTransform.anchoredPosition = new Vector3(860f, 230f, 0f); // Room 버튼 가리키는 화살표

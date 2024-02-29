@@ -204,7 +204,7 @@ public class Shop_PopupUI : BaseUI
             tweener.Kill(); // 상점 뒤로가기 버튼 가리키는 화살표 Kill.
 
             Owner.tutorialMsg_PopupUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-            Owner.tutorialMsg_PopupUI.curTutorialText = "<color=#E9D038><b>인벤토리</b></color>에서는\n보유하고 있는 Unit 과 Room 에 대한 정보를 확인할 수 있어요.";
+            Owner.tutorialMsg_PopupUI.curTutorialText = Main.Get<DataManager>().Tutorial["T3"].Description;
         }
 
         Camera.main.GetComponent<CameraMovement>().Rock = false;

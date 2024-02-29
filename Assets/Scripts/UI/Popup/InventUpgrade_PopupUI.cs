@@ -240,7 +240,7 @@ public class InventUpgrade_PopupUI : BaseUI
                         Owner.tweener = Owner.inventArrowTransform.DOAnchorPosY(120f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
 
                         TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                        ui.curTutorialText = "잘하셨어요!\n이번에는 <color=#E9D038><b>아이템 장착</b></color>에 대해 설명드릴게요.\n\n아이템을 장착하려면\n먼저 보유한 <color=#E9D038><b>Unit</b></color>을 클릭한 뒤,\n보유한 아이템 목록에서 <color=#E9D038><b>아이템</b></color>을 클릭하시면 돼요."; // <color=#E9D038><b>
+                        ui.curTutorialText = Main.Get<DataManager>().Tutorial["T6"].Description;
                         ui.isBackgroundActive = true;
                         ui.isCloseBtnActive = true;
                     }
@@ -295,8 +295,8 @@ public class InventUpgrade_PopupUI : BaseUI
                         Owner.inventArrowTransform.anchoredPosition = new Vector3(592f, 270f, 0f); // unit 버튼 화살표
                         Owner.tweener = Owner.inventArrowTransform.DOAnchorPosY(300f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
 
-                        TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); //
-                        ui.curTutorialText = "같은 방식으로\n보유한 <color=#E9D038><b>Unit</b></color> 도 업그레이드를 진행해주세요!"; // <color=#E9D038><b>
+                        TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
+                        ui.curTutorialText = Main.Get<DataManager>().Tutorial["T5"].Description;
                         ui.isBackgroundActive = true;
                         ui.isCloseBtnActive= true;
                     }

@@ -12,6 +12,7 @@ public class DataManager : IManagers
     public Dictionary<string, Item> ItemCDO = new Dictionary<string, Item>();
     private Dictionary<string, SkillData> _skill = new Dictionary<string, SkillData>();
     public List<StageMonsterInfo> stageMonsterInfoList = new List<StageMonsterInfo>();
+    public Dictionary<string, TutorialData> Tutorial = new Dictionary<string, TutorialData>();
 
     public CSVReader reader = new();
 
@@ -21,6 +22,7 @@ public class DataManager : IManagers
         Room = reader.LoadToCSVData<RoomData>();
         Item = reader.LoadToCSVData<ItemData>();
         _skill = reader.LoadToCSVData<SkillData>();
+        Tutorial = reader.LoadToCSVData<TutorialData>();
         CreateItemCOD();
         CreateStageInfo();
         return true;

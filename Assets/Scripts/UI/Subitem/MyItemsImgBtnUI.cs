@@ -71,7 +71,7 @@ public class MyItemsImgBtnUI : BaseUI
             Owner.arrowImg.gameObject.SetActive(false); // 아이템 강조하던 화살표 inactive.
 
             TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-            ui.curTutorialText = "아이템 장착까지 완벽하군요!\n\n<color=#E9D038><b>닫기버튼</b></color>을 눌러 인벤토리를 닫아주세요.";
+            ui.curTutorialText = Main.Get<DataManager>().Tutorial["T7"].Description;
             ui.isBackgroundActive = true;
             ui.isCloseBtnActive = true;
 
