@@ -24,6 +24,7 @@ public class Shop_PopupUI : BaseUI
     private Button _groundColButton;
     private Button _gachaItem1Button;
     private Button _gachaItem3Button;
+    private Button _infoButton;
 
     private Transform _unitBtnBox;
     private Transform _roomBtnBox;
@@ -92,6 +93,7 @@ public class Shop_PopupUI : BaseUI
         _groundColButton = GetUI<Button>("GroundColBtn");
         _gachaItem1Button = GetUI<Button>("GachaItem1Btn");
         _gachaItem3Button = GetUI<Button>("GachaItem3Btn");
+        _infoButton = GetUI<Button>("DetailInfoBtn");
 
         SetUICallback(_gachaUnit1Button.gameObject, EUIEventState.Click, ClickUnit1Btn);
         SetUICallback(_gachaUnit3Button.gameObject, EUIEventState.Click, ClickUnit3Btn);
@@ -101,6 +103,7 @@ public class Shop_PopupUI : BaseUI
         SetUICallback(_groundColButton.gameObject, EUIEventState.Click, ClickExpandColBtn);
         SetUICallback(_gachaItem1Button.gameObject, EUIEventState.Click, ClickItem1Btn);
         SetUICallback(_gachaItem3Button.gameObject, EUIEventState.Click, ClickItem3Btn);
+        SetUICallback(_infoButton.gameObject, EUIEventState.Click, ClickInfoBtn);
 
         _unitBtnBox = GetUI<Transform>("GachaUnitBtnBox");
         _roomBtnBox = GetUI<Transform>("GachaRoomBtnBox");
@@ -169,6 +172,7 @@ public class Shop_PopupUI : BaseUI
         if (gameManager.isTutorial) // 튜토리얼 중이라면.
         {
             backButton.gameObject.SetActive(false);
+            _infoButton.gameObject.SetActive(false);
             _groundButton.gameObject.SetActive(false);
             _itemButton.gameObject.SetActive(false);
             shopArrowImg.gameObject.SetActive(true);
@@ -465,5 +469,10 @@ public class Shop_PopupUI : BaseUI
     private ItemData RandomPickItem()
     {
         return GachaItemItems[Random.Range(0, GachaItemItems.Count)];
+    }
+
+    private void ClickInfoBtn(PointerEventData eventData)
+    {
+        Main.Get<UIManager>().OpenPopup<ShopInfo_PopupUI>();
     }
 }

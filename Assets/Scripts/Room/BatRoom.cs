@@ -197,9 +197,9 @@ public class BatRoom : RoomBehavior
             {
                 if (!Units[i].gameObject.activeSelf)
                 {
-                    Units[i].gameObject.SetActive(true);
                     ConditionAdd(Units[i]);
                 }
+                Units[i].gameObject.SetActive(true);
                 Units[i].ResetCharacter();
                 count++;
             }
