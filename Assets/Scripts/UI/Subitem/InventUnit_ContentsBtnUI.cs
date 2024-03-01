@@ -78,12 +78,9 @@ public class InventUnit_ContentsBtnUI : BaseUI
                 Owner.inventUnitDescri_PopupUI.Owner = this; // owner 설정해주고
 
                 _selectCheckImg.gameObject.SetActive(true);
-                
-                if (Owner.tweener.IsActive())
-                {
-                    Owner.tweener.Kill();
-                }
-                Owner.inventArrowImg.gameObject.SetActive(false);
+
+                _tutorialManager.KillDOTween(Owner.tweener);
+                _tutorialManager.SetArrowActive(Owner.inventArrowImg, false);
                 Owner.upgradeButton.gameObject.SetActive(false);                
             }            
         }

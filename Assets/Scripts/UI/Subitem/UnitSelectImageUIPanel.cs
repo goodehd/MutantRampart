@@ -8,6 +8,7 @@ public class UnitSelectImageUIPanel : BaseUI
 {
     private TileManager _tile;
     private GameManager _game;
+    private TutorialManager _tuManager;
 
     private BatRoom _batRoom;
 
@@ -25,6 +26,7 @@ public class UnitSelectImageUIPanel : BaseUI
     {
         _tile = Main.Get<TileManager>();
         _game = Main.Get<GameManager>();
+        _tuManager = Main.Get<TutorialManager>();
 
         SetUI<Image>();
         SetUI<Button>();
@@ -88,15 +90,12 @@ public class UnitSelectImageUIPanel : BaseUI
             {
                 Main.Get<UIManager>().CloseAllPopup(); // 튜토리얼 창과 포켓팝업UI 끄기.
                 Owner.Owner.backButton.gameObject.SetActive(true); // 뒤로가기 버튼 활성화
-                if (Owner.Owner.tweener.IsActive()) 
-                {
-                    Owner.Owner.tweener.Kill();
-                }
+                _tuManager.KillDOTween(Owner.Owner.tweener);
 
-                Owner.Owner.dayArrowTransform.anchoredPosition = new Vector3(-720f, 453f, 0f); // 뒤로가기 버튼 향하는 화살표
-                Owner.Owner.tweener = Owner.Owner.dayArrowTransform.DOAnchorPosX(-750f, Owner.Owner.animationDuration).SetLoops(-1, LoopType.Yoyo); // DOTween
-                TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 튜토리얼 팝업창
-                ui.curTutorialText = Main.Get<DataManager>().Tutorial["T16"].Description;
+                _tuManager.SetArrowPosition(Owner.Owner.dayArrowTransform, -720f, 453f); // 뒤로가기 버튼 향하는 화살표
+                _tuManager.RotateArrow(Owner.Owner.dayArrowTransform, -180f);
+                Owner.Owner.tweener = _tuManager.SetDOTweenX(Owner.Owner.dayArrowTransform, -750f);
+                _tuManager.CreateTutorialPopup("T16");
 
                 _game.isPlacingTutorialClear = true;
             }

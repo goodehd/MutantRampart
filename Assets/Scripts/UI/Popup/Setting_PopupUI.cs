@@ -141,8 +141,6 @@ public class Setting_PopupUI : BaseUI
         UpdateUIBar(soundManager.GetVolume(ESoundType.UI));
     }
 
-    // todo : slider들(사운드 관련) value 값 조절
-
     private void BGMbar(float value)
     {
         soundManager.SetVolume(ESoundType.BGM, value);

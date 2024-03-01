@@ -38,8 +38,6 @@ public class InventUnitDescri_PopupUI : BaseUI
     public RectTransform arrowTransform { get; set; }
     public Tweener tweener { get; set; }
 
-    public float animationDuration = 0.3f;
-
     public Character UnitData { get; set; }
 
     private List<MyItemsImgBtnUI> inventSubItems = new List<MyItemsImgBtnUI>();
@@ -114,8 +112,8 @@ public class InventUnitDescri_PopupUI : BaseUI
             _deleteBtn.gameObject.SetActive(false);
             _closeBtn.gameObject.SetActive(false);
 
-            arrowImg.gameObject.SetActive(true); // Description 에서 아이템 가리키는 화살표
-            tweener = arrowTransform.DOAnchorPosY(110f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+            _tutorialManager.SetArrowActive(arrowImg, true); // Description 에서 아이템 가리키는 화살표
+            tweener = _tutorialManager.SetDOTweenY(arrowTransform, 110f);
         }
     }
     

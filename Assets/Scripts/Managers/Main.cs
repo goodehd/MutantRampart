@@ -29,6 +29,7 @@ public class Main : SingletonBehavior<Main>
         CreateManager<TileManager>();
         CreateManager<GameManager>();
         CreateManager<StageManager>();
+        CreateManager<TutorialManager>();
     }
 
     private void CreateManager<T>() where T : IManagers, new()

@@ -31,6 +31,7 @@ public class DayMain_SceneUI : BaseUI
     private Image _stageImage;
     private Image _playerMoneyImage;
     private Image _buttonsPanel;
+    private Image _startYesNoPanelBackground;
     private Image _startYesNoPanel;
     public Image _categoryPanel { get; set; }
     public Image _placingPanel { get; set; }
@@ -89,8 +90,6 @@ public class DayMain_SceneUI : BaseUI
     public bool isInventOpen { get; set; } = false;
     public bool isUIAnimating { get; set; } = false;
     public float animationDuration = 0.3f;
-
-
     #endregion
 
     protected override void Init()
@@ -128,11 +127,10 @@ public class DayMain_SceneUI : BaseUI
             _inventoryButton.gameObject.SetActive(false); // 인벤토리 버튼 비활성화.
             _stageStartButton.gameObject.SetActive(false); // Battle 버튼 비활성화.
 
-            TutorialMsg_PopupUI ui = _ui.OpenPopup<TutorialMsg_PopupUI>();
-            ui.curTutorialText = Main.Get<DataManager>().Tutorial["T0"].Description;
-            _dayArrowImg.gameObject.SetActive(true);
-            dayArrowTransform.anchoredPosition = new Vector3(-770f, -276f, 0f); // 상점 가리키는 화살표.
-            tweener = dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+            _tutorialManager.CreateTutorialPopup("T0");
+            _tutorialManager.SetArrowActive(_dayArrowImg, true);
+            _tutorialManager.SetArrowPosition(dayArrowTransform, -770f, -276f); // 상점 가리키는 화살표.
+            tweener = _tutorialManager.SetDOTweenY(dayArrowTransform, -306f);
         }
         roomDirBtsnUI = _ui.CreateSubitem<RoomDirBtnsUI>();
         roomDirBtsnUI.Owner = this;
@@ -144,14 +142,14 @@ public class DayMain_SceneUI : BaseUI
     {
         if (gameManager.isTutorial) return;
 
-        if(inventory_PopupUI != null)
+        if (inventory_PopupUI != null)
         {
             if (inventory_PopupUI.GetCurRoomInven())
             {
                 inventory_PopupUI.ClickUnitBtnAction();
             }
 
-            foreach(Transform obj in inventory_PopupUI.inventUnitContent.transform)
+            foreach (Transform obj in inventory_PopupUI.inventUnitContent.transform)
             {
                 InventUnit_ContentsBtnUI unitUI = obj.GetComponent<InventUnit_ContentsBtnUI>();
                 if (unitUI.UnitData == unit)
@@ -235,11 +233,12 @@ public class DayMain_SceneUI : BaseUI
         _placingPanel = GetUI<Image>("PlacingPanel");
         _hpPanel = GetUI<Image>("HPBlock");
         _dayArrowImg = GetUI<Image>("DayArrowImg");
+        _startYesNoPanelBackground = GetUI<Image>("StartYesNoBtnBG");
         _startYesNoPanel = GetUI<Image>("StartYesNoButton");
 
         _categoryPanel.gameObject.SetActive(false);
         _dayArrowImg.gameObject.SetActive(false);
-        _startYesNoPanel.gameObject.SetActive(false);
+        _startYesNoPanelBackground.gameObject.SetActive(false);
     }
 
     private void SetText()
@@ -307,7 +306,7 @@ public class DayMain_SceneUI : BaseUI
         ReMoveUnitUI();
         if (PlayerSetting.BattleStartOption)
         {
-            _startYesNoPanel.gameObject.SetActive(true);
+            _startYesNoPanelBackground.gameObject.SetActive(true);
         }
         else
         {
@@ -317,11 +316,10 @@ public class DayMain_SceneUI : BaseUI
         if (gameManager.isTutorial) // 튜토리얼 중이라면
         {
             Main.Get<UIManager>().ClosePopup(); // 튜토리얼 팝업창 닫기
-            if (tweener.IsActive())
-            {
-                tweener.Kill(); // Battle 버튼 가리키던 화살표 Kill.
-            }
-            _dayArrowImg.gameObject.SetActive(false); // day 화살표 비활성화
+
+            _tutorialManager.KillDOTween(tweener); // Battle 버튼 가리키던 화살표 Kill.
+
+            _tutorialManager.SetArrowActive(_dayArrowImg, false); // day 화살표 비활성화
             shopButton.gameObject.SetActive(true);
             placingButton.gameObject.SetActive(true);
             _inventoryButton.gameObject.SetActive(true);
@@ -337,12 +335,19 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickStageStartNoBtn(PointerEventData eventData)
     {
-        _startYesNoPanel.gameObject.SetActive(false);
+        if (gameManager.isTutorial)
+        {
+            Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
+            ui.curErrorText = "원활한 튜토리얼 진행을 위해\nYES 버튼을 눌러주세요.";
+            return;
+        }
+
+        _startYesNoPanelBackground.gameObject.SetActive(false);
     }
 
     private void ClickStageStartBtn(PointerEventData eventData)
     {
-        _startYesNoPanel.gameObject.SetActive(false);
+        _startYesNoPanelBackground.gameObject.SetActive(false);
 
         if (Main.Get<GameManager>().CurStage >= 35)
         {
@@ -384,13 +389,11 @@ public class DayMain_SceneUI : BaseUI
             unitButton.gameObject.SetActive(false);
             OpenPoketBlock(true);
 
-            if (tweener.IsActive())
-            {
-                tweener.Kill(); // unit 버튼 가리키는 화살표 Kill.
-            }
-            dayArrowTransform.anchoredPosition = new Vector3(840f, 351f, 0f); // 보유 unit 가리키는 화살표.
-            dayArrowTransform.Rotate(0f, 0f, -90f);
-            tweener = dayArrowTransform.DOAnchorPosX(810f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+            _tutorialManager.KillDOTween(tweener); // unit 버튼 가리키는 화살표 Kill.
+
+            _tutorialManager.SetArrowPosition(dayArrowTransform, 392f, 385f); // 보유 unit 가리키는 화살표.
+            _tutorialManager.RotateArrow(dayArrowTransform, 90f);
+            tweener = _tutorialManager.SetDOTweenX(dayArrowTransform, 422f);
         }
         else
         {
@@ -409,37 +412,30 @@ public class DayMain_SceneUI : BaseUI
                 if (!gameManager.isHomeSet)
                 {
                     Main.Get<UIManager>().ClosePopup();
-                    TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                    ui.curTutorialText = Main.Get<DataManager>().Tutorial["T11"].Description;
+                    _tutorialManager.CreateTutorialPopup("T11");
 
                     if (_pocketBlock == null)
                     {
                         OpenPoketBlock(false);
-                        if (tweener.IsActive())
-                        {
-                            tweener.Kill(); // Room 가리키던 화살표 Kill.
-                        }
-                        dayArrowTransform.anchoredPosition = new Vector3(840f, 387f, 0f); // Home Room 가리키는 화살표
-                        tweener = dayArrowTransform.DOAnchorPosX(810f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+                        _tutorialManager.KillDOTween(tweener); // Room 가리키던 화살표 Kill.
 
-                        dayArrowTransform.Rotate(0f, 0f, -90f);
+                        _tutorialManager.SetArrowPosition(dayArrowTransform, 392f, 382f); // Home Room 가리키는 화살표
+                        tweener = _tutorialManager.SetDOTweenX(dayArrowTransform, 422f);
+                        _tutorialManager.RotateArrow(dayArrowTransform, 90f);
                     }
                 }
             }
             else if (tileManager.SelectRoom == tileManager.GetRoom(1, 0))
             {
                 OpenPoketBlock(false);
-                if (tweener.IsActive())
-                {
-                    tweener.Kill(); // Room 가리키던 화살표 Kill.
-                }
-                _dayArrowImg.gameObject.SetActive(true);
-                dayArrowTransform.anchoredPosition = new Vector3(840f, 265f, 0f);// Room[1] 요소 가리키는 화살표
-                dayArrowTransform.Rotate(0f, 0f, -90f);
-                tweener = dayArrowTransform.DOAnchorPosX(810f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+                _tutorialManager.KillDOTween(tweener); // Room 가리키던 화살표 Kill.
 
-                TutorialMsg_PopupUI ui1 = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                ui1.curTutorialText = Main.Get<DataManager>().Tutorial["T13"].Description;
+                _tutorialManager.SetArrowActive(_dayArrowImg, true);
+                _tutorialManager.SetArrowPosition(dayArrowTransform, 392f, 382f); // Room[1] 요소 가리키는 화살표
+                _tutorialManager.RotateArrow(dayArrowTransform, 90f);
+                tweener = _tutorialManager.SetDOTweenX(dayArrowTransform, 422f);
+
+                _tutorialManager.CreateTutorialPopup("T13");
             }
         }
         else
@@ -466,17 +462,13 @@ public class DayMain_SceneUI : BaseUI
 
                 if (_btnActions.Count == 0) // 끝까지 뒤로갔을 때
                 {
-                    if (tweener.IsActive())
-                    {
-                        tweener.Kill(); // 배치모드 뒤로가기 버튼 가리키던 화살표 Kill
+                    _tutorialManager.KillDOTween(tweener); // 배치모드 뒤로가기 버튼 가리키던 화살표 Kill
 
-                        dayArrowTransform.anchoredPosition = new Vector3(730f, -245f, 0f); // Battle 버튼 위치잡고
-                        tweener = dayArrowTransform.DOAnchorPosY(-275f, animationDuration).SetLoops(-1, LoopType.Yoyo); // Battle 버튼 DOTween 만들기
-                        dayArrowTransform.Rotate(0f, 0f, 90f); // 90 도 돌리고
+                    _tutorialManager.SetArrowPosition(dayArrowTransform, 730f, -245f); // Battle 버튼 위치잡고
+                    tweener = _tutorialManager.SetDOTweenY(dayArrowTransform, -275f); // Battle 버튼 DOTween 만들기
+                    _tutorialManager.RotateArrow(dayArrowTransform, 90f); // 90 도 돌리고
 
-                        TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 튜토리얼 팝업
-                        ui.curTutorialText = Main.Get<DataManager>().Tutorial["T17"].Description;
-                    }
+                    _tutorialManager.CreateTutorialPopup("T17");
                 }
             }
         }
@@ -492,15 +484,12 @@ public class DayMain_SceneUI : BaseUI
 
         if (gameManager.isTutorial) // 튜토리얼 중이라면
         {
-            tweener.Kill(); // 배치모드 가리키고 있던 화살표 kill.
-            _dayArrowImg.gameObject.SetActive(false);
+            _tutorialManager.KillDOTween(tweener); // 배치모드 가리키고 있던 화살표 kill.
+            _tutorialManager.SetArrowActive(_dayArrowImg, false);
             tileManager.GetRoom(1, 1).StartFlashing();
 
             backButton.gameObject.SetActive(false);
-            TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 가운데 Ground 눌러
-            ui.curTutorialText = Main.Get<DataManager>().Tutorial["T9"].Description;
-            ui.isCloseBtnActive = true;
-            ui.isBackgroundActive = true;
+            _tutorialManager.CreateTutorialPopup("T9", true, true); // 가운데 Ground 눌러
         }
     }
 
@@ -515,19 +504,17 @@ public class DayMain_SceneUI : BaseUI
 
         if (gameManager.isTutorial) // 튜토리얼 중이라면
         {
-            tweener.Kill(); // 상점 가리키고 있던 화살표 kill.
-            _dayArrowImg.gameObject.SetActive(false);
+            _tutorialManager.KillDOTween(tweener); // 상점 가리키고 있던 화살표 kill.
+            _tutorialManager.SetArrowActive(_dayArrowImg, false);
 
-            TutorialMsg_PopupUI tutorialUI = _ui.OpenPopup<TutorialMsg_PopupUI>();
-            tutorialUI.curTutorialText = Main.Get<DataManager>().Tutorial["T1"].Description;
-            tutorialUI.isCloseBtnActive = true;
-            tutorialUI.isBackgroundActive = true;
+            _tutorialManager.CreateTutorialPopup("T1", true, true);
 
             shopButton.gameObject.SetActive(false); // 상점 튜토리얼 완료하면 상점 버튼 inactive.
             _inventoryButton.gameObject.SetActive(true); // 상점 튜토리얼 다음 순서인 인벤토리 버튼 active.
-            _dayArrowImg.gameObject.SetActive(true);
-            dayArrowTransform.anchoredPosition = new Vector3(-241f, -276f, 0f); // 인벤토리 가리키는 화살표.
-            tweener = dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+
+            _tutorialManager.SetArrowActive(_dayArrowImg, true);
+            _tutorialManager.SetArrowPosition(dayArrowTransform, -241f, -276f); // 인벤토리 가리키는 화살표.
+            tweener = _tutorialManager.SetDOTweenY(dayArrowTransform, -306f);
         }
     }
 
@@ -553,6 +540,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickNextStageInfoButtonBtn(PointerEventData eventData)
     {
+        if (gameManager.isTutorial) return;
         _ui.OpenPopup<NextStageInfo_PopupUI>("NextStageInfo_PopupUI");
     }
 
@@ -621,14 +609,10 @@ public class DayMain_SceneUI : BaseUI
         {
             _inventoryButton.gameObject.SetActive(false); // 인벤토리 버튼 비활성화
 
-            tweener.Kill(); // 인벤토리 버튼 가리키턴 화살표 kill.
-            _dayArrowImg.gameObject.SetActive(false);
+            _tutorialManager.KillDOTween(tweener); // 인벤토리 버튼 가리키턴 화살표 kill.
+            _tutorialManager.SetArrowActive(_dayArrowImg, false);
 
-            TutorialMsg_PopupUI tutorialUI = _ui.OpenPopup<TutorialMsg_PopupUI>();
-            tutorialUI.curTutorialText = Main.Get<DataManager>().Tutorial["T4"].Description;
-            inventory_PopupUI.tutorialMsg_PopupUI = tutorialUI;
-            tutorialUI.isBackgroundActive = true;
-            tutorialUI.isCloseBtnActive = true;
+            inventory_PopupUI.tutorialMsg_PopupUI = _tutorialManager.CreateTutorialPopup("T4", true, true);
         }
     }
 
@@ -701,23 +685,21 @@ public class DayMain_SceneUI : BaseUI
         {
             if (!gameManager.isHomeSet)
             {
-                TutorialMsg_PopupUI ui = _ui.OpenPopup<TutorialMsg_PopupUI>();
-                ui.curTutorialText = Main.Get<DataManager>().Tutorial["T10"].Description;
+                _tutorialManager.CreateTutorialPopup("T10");
+
                 backButton.gameObject.SetActive(false);
-                _dayArrowImg.gameObject.SetActive(true);
-                dayArrowTransform.anchoredPosition = new Vector3(860f, 230f, 0f); // Room 버튼 가리키는 화살표
-                tweener = dayArrowTransform.DOAnchorPosY(200f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+                _tutorialManager.SetArrowActive(_dayArrowImg, true);
+                _tutorialManager.SetArrowPosition(dayArrowTransform, 898f, 178f); // Room 버튼 가리키는 화살표
+                tweener = _tutorialManager.SetDOTweenY(dayArrowTransform, 148f);
             }
             else
             {
                 roomButton.gameObject.SetActive(true);
-                if (tweener.IsActive())
-                {
-                    tweener.Kill();
-                }
-                _dayArrowImg.gameObject.SetActive(true);
-                dayArrowTransform.anchoredPosition = new Vector3(860f, 230f, 0f); // Room 버튼 가리키는 화살표
-                tweener = dayArrowTransform.DOAnchorPosY(200f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+                _tutorialManager.KillDOTween(tweener);
+                _tutorialManager.SetArrowActive(_dayArrowImg, true);
+                _tutorialManager.SetArrowPosition(dayArrowTransform, 898f, 178f); // Room 버튼 가리키는 화살표
+                _tutorialManager.RotateArrow(dayArrowTransform, -90f);
+                tweener = _tutorialManager.SetDOTweenY(dayArrowTransform, 148f);
             }
         }
     }

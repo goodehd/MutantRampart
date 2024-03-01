@@ -32,8 +32,6 @@ public class Inventory_PopupUI : BaseUI
 
     public RectTransform inventArrowTransform { get; set; }
 
-    public float animationDuration = 0.3f;
-
     public Tweener tweener { get; set; }
     public DayMain_SceneUI Owner { get; set; }
     public InventRoomDescri_PopupUI inventRoomDescri_PopupUI;
@@ -98,8 +96,8 @@ public class Inventory_PopupUI : BaseUI
 
         if (gameManager.isTutorial)
         {
-            inventArrowImg.gameObject.SetActive(true);
-            tweener = inventArrowTransform.DOAnchorPosY(-330f, animationDuration).SetLoops(-1, LoopType.Yoyo); // 인벤토리 업그레이드 버튼 가리키는 화살표 DOTween.
+            _tutorialManager.SetArrowActive(inventArrowImg, true);
+            tweener = _tutorialManager.SetDOTweenY(inventArrowTransform, -330f); // 인벤토리 업그레이드 버튼 가리키는 화살표 DOTween.
 
             closeButton.gameObject.SetActive(false); // 일단 인벤토리 닫기 버튼 inactive 해두고, 룸, 유닛 업그레이드 완료하면 active 해주기
             InActiveSortButton();
@@ -270,11 +268,8 @@ public class Inventory_PopupUI : BaseUI
             if (gameManager.PlayerRooms.Count == 2 && gameManager.PlayerUnits.Count == 1) return;
 
             upgradeButton.gameObject.SetActive(true);
-            if (tweener.IsActive())
-            {
-                tweener.Kill();
-            }
-            inventArrowImg.gameObject.SetActive(false);
+            _tutorialManager.KillDOTween(tweener);
+            _tutorialManager.SetArrowActive(inventArrowImg, false);
         }
 
         ClickUnitBtnAction();
@@ -307,16 +302,15 @@ public class Inventory_PopupUI : BaseUI
 
         if (gameManager.isTutorial) // 인벤토리 닫기 버튼 눌렀을 때
         {
-            tweener.Kill(); // 인벤토리 닫기 버튼 가리키던 dotween kill 하고
-            inventArrowImg.gameObject.SetActive(false); // 인벤토리 내 화살표 inactive 하고
+            _tutorialManager.KillDOTween(tweener); // 인벤토리 닫기 버튼 가리키던 dotween kill 하고
+            _tutorialManager.SetArrowActive(inventArrowImg, false); // 인벤토리 내 화살표 inactive 하고
             upgradeButton.gameObject.SetActive(true); // 인벤토리 내 업그레이드 버튼 활성화.
             Owner.placingButton.gameObject.SetActive(true); // 배치모드 버튼 활성화하고.
-            Owner._dayArrowImg.gameObject.SetActive(true); // daymain 의 화살표 활성화.
-            Owner.dayArrowTransform.anchoredPosition = new Vector3(-500f, -276f, 0f); // daymain 의 화살표가 배치모드 향하게 하고
-            Owner.tweener = Owner.dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo); // daymain 화살표 dotween 걸어주고
+            _tutorialManager.SetArrowActive(Owner._dayArrowImg, true); // daymain 의 화살표 활성화.
+            _tutorialManager.SetArrowPosition(Owner.dayArrowTransform, -500f, -276f); // daymain 의 화살표가 배치모드 향하게 하고
+            Owner.tweener = _tutorialManager.SetDOTweenY(Owner.dayArrowTransform, -306f); // daymain 화살표 dotween 걸어주고
 
-            TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // tutorialpopup - 배치모드 관련해서 튜토리얼팝업 만들어주고
-            ui.curTutorialText = Main.Get<DataManager>().Tutorial["T8"].Description;
+            _tutorialManager.CreateTutorialPopup("T8");
         }
     }
 
@@ -346,10 +340,10 @@ public class Inventory_PopupUI : BaseUI
         {
             if (gameManager.PlayerRooms.Count == 4) // Rooom 에서 Upgrade 버튼 비활성화 할 때
             {
-                tweener.Kill(); // 인벤토리 업그레이드 버튼 가리키는 화살표 kill.
-                inventArrowTransform.anchoredPosition = new Vector3(660f, -30f, 0f); // 보유 Room 가리키는 화살표
-                inventArrowTransform.Rotate(0f, 0f, 180f);
-                tweener = inventArrowTransform.DOAnchorPosY(0f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+                _tutorialManager.KillDOTween(tweener); // 인벤토리 업그레이드 버튼 가리키는 화살표 kill.
+                _tutorialManager.SetArrowPosition(inventArrowTransform, 660f, -30f); // 보유 Room 가리키는 화살표
+                _tutorialManager.RotateArrow(inventArrowTransform, 180f);
+                tweener = _tutorialManager.SetDOTweenY(inventArrowTransform, 0f);
                 upgradeButton.gameObject.SetActive(false);
             }
         }
