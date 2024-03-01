@@ -223,7 +223,8 @@ public class InventUpgrade_PopupUI : BaseUI
                 }
 
                 // 합성 후 새롭게 능력 부여된 아이템 제공 - NextKey 통해.
-                _gameManager.PlayerUnits.Add(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
+                _gameManager.AddUnit(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
+                //_gameManager.PlayerUnits.Add(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
                 Owner.SetUnitInventory();
 
                 if (_gameManager.isTutorial) // 튜토리얼 중이라면
@@ -271,7 +272,8 @@ public class InventUpgrade_PopupUI : BaseUI
                 }
 
                 // 합성 후 새롭게 능력 부여된 아이템 제공 - NextKey 통해.
-                _gameManager.PlayerRooms.Add(new Room(Main.Get<DataManager>().Room[UpgradeRoomSlots[0].Data.NextKey]));
+                _gameManager.AddRoom(new Room(Main.Get<DataManager>().Room[UpgradeRoomSlots[0].Data.NextKey]));
+                //_gameManager.PlayerRooms.Add(new Room(Main.Get<DataManager>().Room[UpgradeRoomSlots[0].Data.NextKey]));
                 Owner.SetRoomInventory();
                 
                 if (_gameManager.isTutorial) // 튜토리얼 중이라면

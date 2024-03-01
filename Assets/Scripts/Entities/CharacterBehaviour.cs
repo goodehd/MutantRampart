@@ -86,7 +86,12 @@ public class CharacterBehaviour : MonoBehaviour
             finalDamage = 1;
         }
         Status.GetStat<Vital>(EstatType.Hp).CurValue -= finalDamage;
-        CreateDamageText(finalDamage);
+
+        if (PlayerSetting.DamageTextActive)
+        {
+            CreateDamageText(finalDamage);
+        }
+
         if (Status.GetStat<Vital>(EstatType.Hp).CurValue <= 0)
         {
             Die();

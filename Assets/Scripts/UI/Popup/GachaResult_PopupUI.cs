@@ -146,13 +146,15 @@ public class GachaResult_PopupUI : BaseUI
     private void SaveUnitInInventory(CharacterData data)
     {
         Character newChar = new Character(data);
-        _gameManager.PlayerUnits.Add(newChar);
+        //_gameManager.PlayerUnits.Add(newChar);
+        _gameManager.AddUnit(newChar);
     }
 
     private void SaveRoomInInventory(RoomData data)
     {
         Room newRoom = new Room(data);
-        _gameManager.PlayerRooms.Add(newRoom);
+        //_gameManager.PlayerRooms.Add(newRoom);
+        _gameManager.AddRoom(newRoom);
     }
 
     private void SaveItemInInventory(ItemData data)

@@ -155,12 +155,12 @@ public class SaveDataManager : IManagers
         _gameManager.PlayerMoney = Player.PlayerMoney;
         _gameManager.CurStage = Player.Curstage;
         _gameManager.PlayerHP.CurValue = Player.PlayerHP;
-        _soundManager.BGMValue = Player.BGMValue;
-        _soundManager.EffectValue = Player.EffectValue;
-        _soundManager.UIValue = Player.UIValue;
-        Main.Get<SoundManager>().SetVolume(ESoundType.BGM, _soundManager.BGMValue);
-        Main.Get<SoundManager>().SetVolume(ESoundType.Effect, _soundManager.EffectValue);
-        Main.Get<SoundManager>().SetVolume(ESoundType.UI, _soundManager.UIValue);
+        //_soundManager.BGMValue = Player.BGMValue;
+        //_soundManager.EffectValue = Player.EffectValue;
+        //_soundManager.UIValue = Player.UIValue;
+        //Main.Get<SoundManager>().SetVolume(ESoundType.BGM, _soundManager.BGMValue);
+        //Main.Get<SoundManager>().SetVolume(ESoundType.Effect, _soundManager.EffectValue);
+        //Main.Get<SoundManager>().SetVolume(ESoundType.UI, _soundManager.UIValue);
 
         if (Player.PlayerUnitsSaveData.Count > 0)
         {

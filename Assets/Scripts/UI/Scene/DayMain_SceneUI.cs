@@ -305,7 +305,14 @@ public class DayMain_SceneUI : BaseUI
     private void ClickStageStartOpenBtn(PointerEventData eventData)
     {
         ReMoveUnitUI();
-        _startYesNoPanel.gameObject.SetActive(true);
+        if (PlayerSetting.BattleStartOption)
+        {
+            _startYesNoPanel.gameObject.SetActive(true);
+        }
+        else
+        {
+            ClickStageStartBtn(eventData);
+        }
 
         if (gameManager.isTutorial) // 튜토리얼 중이라면
         {
