@@ -26,7 +26,7 @@ public class Inventory_PopupUI : BaseUI
     private ScrollRect _inventUnitScrollView;
 
     private Transform _inventRoomContent;
-    private Transform _inventUnitContent;
+    public Transform inventUnitContent { get; set; }
 
     public Image inventArrowImg { get; set; }
 
@@ -80,7 +80,7 @@ public class Inventory_PopupUI : BaseUI
         _inventUnitScrollView = GetUI<ScrollRect>("InventUnit_Scroll View");
 
         _inventRoomContent = GetUI<Transform>("InventRoom_Content");
-        _inventUnitContent = GetUI<Transform>("InventUnit_Content");
+        inventUnitContent = GetUI<Transform>("InventUnit_Content");
 
         inventArrowImg = GetUI<Image>("InventArrowImg");
 
@@ -215,13 +215,13 @@ public class Inventory_PopupUI : BaseUI
     {
         // unit
         List<Character> playerUnits = gameManager.PlayerUnits;
-        foreach (Transform item in _inventUnitContent.transform)
+        foreach (Transform item in inventUnitContent.transform)
         {
             Destroy(item.gameObject);
         }
         for (int i = 0; i < playerUnits.Count; i++)
         {
-            InventUnit_ContentsBtnUI inventUnitItems = Main.Get<UIManager>().CreateSubitem<InventUnit_ContentsBtnUI>("InventUnit_ContentsBtnUI", _inventUnitContent);
+            InventUnit_ContentsBtnUI inventUnitItems = Main.Get<UIManager>().CreateSubitem<InventUnit_ContentsBtnUI>("InventUnit_ContentsBtnUI", inventUnitContent);
             inventUnitItems.UnitData = playerUnits[i];
             inventUnitItems.Owner = this;
         }
@@ -277,6 +277,11 @@ public class Inventory_PopupUI : BaseUI
             inventArrowImg.gameObject.SetActive(false);
         }
 
+        ClickUnitBtnAction();
+    }
+
+    public void ClickUnitBtnAction()
+    {
         _inventRoomScrollView.gameObject.SetActive(false);
         _inventUnitScrollView.gameObject.SetActive(true);
 
@@ -311,7 +316,7 @@ public class Inventory_PopupUI : BaseUI
             Owner.tweener = Owner.dayArrowTransform.DOAnchorPosY(-306f, animationDuration).SetLoops(-1, LoopType.Yoyo); // daymain 화살표 dotween 걸어주고
 
             TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // tutorialpopup - 배치모드 관련해서 튜토리얼팝업 만들어주고
-            ui.curTutorialText = "자, 이제 마지막으로 <color=#E9D038><b>배치모드</b></color>에서\nUnit 과 Room 을 배치해봅시다!";
+            ui.curTutorialText = Main.Get<DataManager>().Tutorial["T8"].Description;
         }
     }
 

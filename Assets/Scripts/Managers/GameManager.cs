@@ -15,7 +15,7 @@ public class GameManager : IManagers
     public string PlayerName { get; set; }
 
     public int CurStage { get; set; }
-
+   
     public bool isTutorial { get; set; }
 
     public bool isPlacingTutorialClear = false; // 배치모드 튜토리얼 클리어했는지 체크.
@@ -39,6 +39,7 @@ public class GameManager : IManagers
         CurStage = 0;
         PlayerHP = new Vital(EstatType.Hp, 5);
         PlayerHP.OnValueZero += GameOver;
+        
 
         bool tutorial = PlayerPrefs.HasKey("Tutorial");
         if (!tutorial)
@@ -78,7 +79,18 @@ public class GameManager : IManagers
         isPlayerDead = true;
         StageFail_PopupUI ui = Main.Get<UIManager>().OpenPopup<StageFail_PopupUI>("StageFail_PopupUI");
         ui._curStage = CurStage;
-
+        if(CurStage > 0)
+        {
+            ui.UpgradePoint += 1;
+        }
+        else if(CurStage > 30)
+        {
+            ui.UpgradePoint += 2;
+        }
+        else if(CurStage > 50)
+        {
+            ui.UpgradePoint += 3;
+        }
     }
 
     public void RemoveUnit(Character unit) // unit
@@ -87,7 +99,6 @@ public class GameManager : IManagers
         {
             ((BatRoom)unit.CurRoom).DeleteUnit(unit); // 배치되어있는 유닛 빼면서
         }
-        PlayerUnits.Remove(unit); // 인벤토리에서도 지우고 
         Item[] items = unit.Item; // 아이템 장착되어있는 것도 빼주고
         for (int i = 0; i < items.Length; i++)
         {
@@ -97,6 +108,7 @@ public class GameManager : IManagers
                 items[i].Owner = null;
             }
         }
+        PlayerUnits.Remove(unit); // 인벤토리에서도 지우고 
     }
 
     public void RemoveRoom(Room room) // room

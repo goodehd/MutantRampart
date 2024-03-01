@@ -65,7 +65,7 @@ public class RoomSelectImageUI : BaseUI
 
                 Main.Get<UIManager>().ClosePopup();
                 TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // tutorialpopup - 배치모드 관련해서 튜토리얼팝업 만들어주고
-                ui.curTutorialText = "<color=#E9D038><b>왼쪽 하단의 Ground</b></color> 를 클릭하고\n남은 Room 을 배치해봅시다!";
+                ui.curTutorialText = Main.Get<DataManager>().Tutorial["T12"].Description;
                 Main.Get<TileManager>()._roomObjList[1][1].StopFlashing();
 
                 if (Owner.Owner.tweener.IsActive())
@@ -84,16 +84,15 @@ public class RoomSelectImageUI : BaseUI
                 {
                     Owner.Owner.tweener.Kill();
                 }
+                Owner.Owner.roomDirBtsnUI.gameObject.SetActive(true); // 열기닫기 버튼 UI 활성화.
                 Owner.Owner.dayArrowTransform.anchoredPosition = new Vector3(-177f, 250f, 0f); // 열기닫기 버튼 가리키는 화살표.
                 Owner.Owner.tweener = Owner.Owner.dayArrowTransform.DOAnchorPosX(-207f, Owner.Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
 
                 Main.Get<UIManager>().ClosePopup();
                 TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                ui.curTutorialText = "Room 을 배치하고 <color=#E9D038><b>열기/닫기 버튼</b></color>을 통해\nRoom 의 입구를 통제할 수도 있어요.\n\n만약, Home 으로 가는 길이 없다면\nBattle 을 시작할 수 없다는 점 참고해주세요!";
-                Owner.Owner.rightBottomButton.gameObject.SetActive(true);
-                Owner.Owner.rightTopButton.gameObject.SetActive(true);
-                Owner.Owner.leftBottomButton.gameObject.SetActive(true);
-                Owner.Owner.leftTopButton.gameObject.SetActive(true);
+                ui.curTutorialText = Main.Get<DataManager>().Tutorial["T14"].Description;
+                ui.isBackgroundActive = true;
+                ui.isCloseBtnActive = true;
             }
             return;
         }

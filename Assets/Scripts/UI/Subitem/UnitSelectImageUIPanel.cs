@@ -96,7 +96,7 @@ public class UnitSelectImageUIPanel : BaseUI
                 Owner.Owner.dayArrowTransform.anchoredPosition = new Vector3(-720f, 453f, 0f); // 뒤로가기 버튼 향하는 화살표
                 Owner.Owner.tweener = Owner.Owner.dayArrowTransform.DOAnchorPosX(-750f, Owner.Owner.animationDuration).SetLoops(-1, LoopType.Yoyo); // DOTween
                 TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 튜토리얼 팝업창
-                ui.curTutorialText = "배치를 완료했으니\n<color=#E9D038><b>메인화면</b></color>으로 돌아갑시다!";
+                ui.curTutorialText = Main.Get<DataManager>().Tutorial["T16"].Description;
 
                 _game.isPlacingTutorialClear = true;
             }

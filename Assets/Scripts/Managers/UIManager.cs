@@ -104,7 +104,7 @@ public class UIManager : IManagers
         return uiObj;
     }
 
-    private void SetCanvasInfo(GameObject uiObject, bool isPopup)
+    public void SetCanvasInfo(GameObject uiObject, bool isPopup)
     {
         Canvas canvas = uiObject.GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;

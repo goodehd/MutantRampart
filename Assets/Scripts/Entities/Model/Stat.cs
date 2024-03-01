@@ -11,6 +11,7 @@ public class Stat
     protected List<StatModifier> _Modifiers = new List<StatModifier>();
 
     public event Action<float> OnValueChanged;
+
     public float Value { get { return _value; } }
 
     public Stat(EstatType statType, float value)

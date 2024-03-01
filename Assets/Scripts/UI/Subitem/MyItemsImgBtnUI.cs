@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MyItemsImgBtnUI : BaseUI
 {
     private GameManager gameManager;
+    private StageManager stageManager;
 
     private Image _itemImg;
     private Button _itemImgBtn;
@@ -23,6 +24,7 @@ public class MyItemsImgBtnUI : BaseUI
         SetUI<Button>();
 
         gameManager = Main.Get<GameManager>();
+        stageManager = Main.Get<StageManager>();
 
         _itemImg = GetUI<Image>("MyItemsImgBtnUI");
         _itemImgBtn = GetUI<Button>("MyItemsImgBtnUI");
@@ -57,8 +59,32 @@ public class MyItemsImgBtnUI : BaseUI
 
     private void ClickUItemImgBtn(PointerEventData data)
     {
-        if (_isIEquiped) return;
-        if (!Owner.ItemEquip(this)) return;
+        if (gameManager.isTutorial && gameManager.PlayerItems[0].IsEquiped) return;
+
+        if (stageManager.GetIsStageStart())
+        {
+            return;
+        }
+
+        if (_isIEquiped)
+        {
+            if (ItemData.Owner == Owner.UnitData)
+            {
+                Owner.SlotUnEquip(ItemData.SlotIndex);
+            }
+            else
+            {
+                UnEquipItem();
+            }
+            _equipCheckImg.gameObject.SetActive(false);
+            _isIEquiped = false;
+            return;
+        }
+        else if (!Owner.ItemEquip(this))
+        {
+            return;
+        }
+
         _equipCheckImg.gameObject.SetActive(true);
         _isIEquiped = true;
 
@@ -71,7 +97,7 @@ public class MyItemsImgBtnUI : BaseUI
             Owner.arrowImg.gameObject.SetActive(false); // 아이템 강조하던 화살표 inactive.
 
             TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-            ui.curTutorialText = "아이템 장착까지 완벽하군요!\n\n<color=#E9D038><b>닫기버튼</b></color>을 눌러 인벤토리를 닫아주세요.";
+            ui.curTutorialText = Main.Get<DataManager>().Tutorial["T7"].Description;
             ui.isBackgroundActive = true;
             ui.isCloseBtnActive = true;
 
@@ -85,6 +111,13 @@ public class MyItemsImgBtnUI : BaseUI
             }
         }
     }
+
+    private void UnEquipItem()
+    {
+        ItemData.Owner.Item[ItemData.SlotIndex] = null;
+        ItemData.UnEquipItem(ItemData.Owner);
+    }
+
     private void HoveredUnitContentBtn(PointerEventData data)
     {
         _itemImg.color = Color.cyan;
