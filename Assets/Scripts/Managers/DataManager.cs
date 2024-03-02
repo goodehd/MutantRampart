@@ -65,9 +65,9 @@ public class DataManager : IManagers
         stageMonsterInfoList.Add(stage);
         stage = new StageMonsterInfo(3000);  //여기를 좀 올리고
         stage.AddMonster("Slime", 3);
-        stage.AddMonster("Snail", 3);
-        stage.AddMonster("PlantBuger", 3);
-        stage.AddMonster("BigBull", 2);
+        //stage.AddMonster("Snail", 3);
+        //stage.AddMonster("PlantBuger", 3);
+        //stage.AddMonster("BigBull", 2);
         stageMonsterInfoList.Add(stage);
         stage = new StageMonsterInfo(3000);  //여기를 좀 올리고
         stage.AddMonster("BigBull", 2);

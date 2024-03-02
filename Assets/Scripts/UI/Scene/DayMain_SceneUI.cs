@@ -135,6 +135,7 @@ public class DayMain_SceneUI : BaseUI
         roomDirBtsnUI = _ui.CreateSubitem<RoomDirBtnsUI>();
         roomDirBtsnUI.Owner = this;
         roomDirBtsnUI.gameObject.SetActive(false);
+
         UpdateHpUI(0);
     }
 

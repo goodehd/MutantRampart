@@ -61,6 +61,11 @@ public class YesNo_PopupUI : BaseUI
                 Main.Get<TileManager>().ExpandMapRow();
                 Main.Get<GameManager>().ChangeMoney(-Shop_PopupUI.RowPrice);
             }
+            else
+            {
+                Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
+                ui.curErrorText = "돈이 부족해서 구매할 수 없습니다.";
+            }
         }
         else if(data.Key == "ExpandMapCol")
         {
@@ -69,11 +74,11 @@ public class YesNo_PopupUI : BaseUI
                 Main.Get<TileManager>().ExpandMapCol();
                 Main.Get<GameManager>().ChangeMoney(-Shop_PopupUI.ColPrice);
             }
-        }
-        else
-        {
-            Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
-            ui.curErrorText = "돈이 부족해서 구매할 수 없습니다.";
+            else
+            {
+                Error_PopupUI ui = Main.Get<UIManager>().OpenPopup<Error_PopupUI>("Error_PopupUI");
+                ui.curErrorText = "돈이 부족해서 구매할 수 없습니다.";
+            }
         }
     }
 }

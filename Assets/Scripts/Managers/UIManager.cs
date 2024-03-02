@@ -10,7 +10,6 @@ public class UIManager : IManagers
     private Stack<BaseUI> _popupStack;
     private Transform _rootUI;
     public BaseUI SceneUI { get; private set; }
-
     public Transform RootUI
     {
         get
