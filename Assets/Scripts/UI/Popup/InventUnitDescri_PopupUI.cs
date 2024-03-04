@@ -170,9 +170,18 @@ public class InventUnitDescri_PopupUI : BaseUI
 
     private void ClickInventUnitDeleteBtn(PointerEventData EventData)
     {
+        if (Main.Get<StageManager>().GetIsStageStart())
+        {
+            return;
+        }
+
         Sell_PopupUI sell_popupui = _ui.OpenPopup<Sell_PopupUI>();
         sell_popupui.ShopUnitData = UnitData;
-        sell_popupui.Owner = Owner.Owner;
+
+        if(Owner != null)
+        {
+            sell_popupui.Owner = Owner.Owner;
+        }
     }
 
     private void HoveredFirstSlot(PointerEventData EventData)

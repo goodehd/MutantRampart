@@ -84,19 +84,7 @@ public class Setting_PopupUI : BaseUI
 
     private void ClickoConfirmBtn(PointerEventData data)
     {
-        PlayerSetting.BattleStartOption = _option1CheckBtn.gameObject.activeSelf;
-        PlayerSetting.DamageTextActive = _option2CheckBtn.gameObject.activeSelf;
-
-        int battleStartOption = PlayerSetting.BattleStartOption ? 1 : 0;
-        int damageTextActive = PlayerSetting.DamageTextActive ? 1 : 0;
-
-        PlayerPrefs.SetInt("BattleStartOption", battleStartOption);
-        PlayerPrefs.SetInt("DamageTextActive", damageTextActive);
-        PlayerPrefs.SetFloat("BgmVolume", soundManager.GetVolume(ESoundType.BGM));
-        PlayerPrefs.SetFloat("EffectVolume", soundManager.GetVolume(ESoundType.Effect));
-        PlayerPrefs.SetFloat("UIVolume", soundManager.GetVolume(ESoundType.UI));
-        PlayerPrefs.Save();
-
+        SaveSetting();
         _ui.ClosePopup();
     }
 
@@ -158,6 +146,7 @@ public class Setting_PopupUI : BaseUI
 
     private void ClickCloseBtn(PointerEventData EventData)
     {
+        SaveSetting();
         _ui.ClosePopup();
         Camera.main.GetComponent<CameraMovement>().Rock = false;
     }
@@ -213,5 +202,19 @@ public class Setting_PopupUI : BaseUI
         Main.Get<GameManager>().ExitGame();
     }
 
+    private void SaveSetting()
+    {
+        PlayerSetting.BattleStartOption = _option1CheckBtn.gameObject.activeSelf;
+        PlayerSetting.DamageTextActive = _option2CheckBtn.gameObject.activeSelf;
 
+        int battleStartOption = PlayerSetting.BattleStartOption ? 1 : 0;
+        int damageTextActive = PlayerSetting.DamageTextActive ? 1 : 0;
+
+        PlayerPrefs.SetInt("BattleStartOption", battleStartOption);
+        PlayerPrefs.SetInt("DamageTextActive", damageTextActive);
+        PlayerPrefs.SetFloat("BgmVolume", soundManager.GetVolume(ESoundType.BGM));
+        PlayerPrefs.SetFloat("EffectVolume", soundManager.GetVolume(ESoundType.Effect));
+        PlayerPrefs.SetFloat("UIVolume", soundManager.GetVolume(ESoundType.UI));
+        PlayerPrefs.Save();
+    }
 }
