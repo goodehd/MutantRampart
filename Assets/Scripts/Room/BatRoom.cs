@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Bson;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -144,6 +145,26 @@ public class BatRoom : RoomBehavior
         Units[index].CharacterInfo.isEquiped = true;
         //유닛 체력이 회복되는가 체크 해봤슴 나중에 버프타일 함수에다가 넣으면 된다~~
         ConditionAdd(Units[index]);
+        //Units[index].ConditionMachine.AddCondition(new HealingCondition(Units[index],RoomInfo.Data)); //TODO : Condition Test
+        UnitCount++;
+
+        return true;
+    }
+    
+    public bool CreateLoadUnit(Character data, int curIndex)
+    {
+
+        Units[curIndex] = Main.Get<SceneManager>().Scene.CreateCharacter(data.Data.Key);
+        Units[curIndex].SetData(data);
+        Units[curIndex].StateMachine.InitState();
+        Units[curIndex].CurRoom = this;
+        Units[curIndex].CurPosX = IndexX;
+        Units[curIndex].CurPosY = IndexY;
+        Units[curIndex].transform.position = Literals.BatPos[curIndex] + transform.position + Units[curIndex].transform.position;
+        Units[curIndex].CurIndex = curIndex;
+        Units[curIndex].CharacterInfo.isEquiped = true;
+        //유닛 체력이 회복되는가 체크 해봤슴 나중에 버프타일 함수에다가 넣으면 된다~~
+        ConditionAdd(Units[curIndex]);
         //Units[index].ConditionMachine.AddCondition(new HealingCondition(Units[index],RoomInfo.Data)); //TODO : Condition Test
         UnitCount++;
 

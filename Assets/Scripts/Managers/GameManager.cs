@@ -104,8 +104,7 @@ public class GameManager : IManagers
         {
             if (items[i] != null)
             {
-                items[i].IsEquiped = false;
-                items[i].Owner = null;
+                items[i].UnEquipItem(unit);
             }
         }
         PlayerUnits.Remove(unit); // 인벤토리에서도 지우고 

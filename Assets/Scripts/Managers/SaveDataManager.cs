@@ -62,8 +62,10 @@ public class SaveDataManager : IManagers
                 item.Init(Main.Get<DataManager>().Item[savedata.Item[i].ItemName]);
                 item.ItemIndex = savedata.Item[i].ItemIndex;
                 item.IsEquiped = savedata.Item[i].IsEquiped;
+                item.SlotIndex = savedata.Item[i].SlotIndex;
                 character.Item[i] = item;
                 item.EquipItem(character);
+                Main.Get<GameManager>().PlayerItems.Add(item);
             }
         }
         Main.Get<GameManager>().PlayerUnits.Add(character);
@@ -81,11 +83,15 @@ public class SaveDataManager : IManagers
 
     public void ApplyDataToItem(ItemSavableData savedata)
     {
-        Item item = new Item();
-        item.Init(Main.Get<DataManager>().Item[savedata.ItemName]);
-        item.IsEquiped = savedata.IsEquiped;
-        item.ItemIndex = savedata.ItemIndex;
-        Main.Get<GameManager>().PlayerItems.Add(item);
+        if(savedata.IsEquiped == false)
+        {
+            Item item = Main.Get<DataManager>().ItemCDO[savedata.ItemName].Clone();
+            item.Init(Main.Get<DataManager>().Item[savedata.ItemName]);
+            item.IsEquiped = savedata.IsEquiped;
+            item.ItemIndex = savedata.ItemIndex;
+            item.SlotIndex = savedata.SlotIndex;
+            Main.Get<GameManager>().PlayerItems.Add(item);
+        }
     }
 
     public void ApplyDataToRoomDir(RoomDirSavableData savedata)
@@ -141,7 +147,7 @@ public class SaveDataManager : IManagers
             if (playerUnits[i].CurPosX != -1)
             {
                 BatRoom room = (BatRoom)Main.Get<TileManager>()._roomObjList[playerUnits[i].CurPosX][playerUnits[i].CurPosY];
-                room.CreateUnit(playerUnits[i]);
+                room.CreateLoadUnit(playerUnits[i], playerUnits[i].CurIndex);
             }
         }
     }
