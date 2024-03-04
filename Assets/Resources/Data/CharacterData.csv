@@ -2,6 +2,7 @@ Key,Hp,Mp,HitRecoveryMp,Damage,Defense,AttackSpeed,MoveSpeed,AttackType,TargetCo
 Slime,300,0,0,21,0,0.7,1.5,MeleeAttack,1,1000,Slime2,Slime
 Slime2,720,0,0,36,0,0.7,1.5,MeleeAttack,1,0,Slime3,Slime
 Slime3,1728,0,0,60,0,0.7,1.5,MeleeAttack,1,1000,,Slime
+SlimeKing,1728,0,0,60,0,0.7,1.5,MeleeAttack,1,1000,,SlimeKing
 SlimeGreen,300,0,0,21,0,0.7,1.5,MeleeAttack,1,1000,SlimeGreen2,SlimeGreen
 SlimeGreen2,720,0,0,36,0,0.7,1.5,MeleeAttack,1,0,SlimeGreen3,SlimeGreen
 SlimeGreen3,1728,0,0,60,0,0.7,1.5,MeleeAttack,1,1000,,SlimeGreen
