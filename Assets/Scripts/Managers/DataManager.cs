@@ -23,12 +23,12 @@ public class DataManager : IManagers
         Item = reader.LoadToCSVData<ItemData>();
         _skill = reader.LoadToCSVData<SkillData>();
         Tutorial = reader.LoadToCSVData<TutorialData>();
-        CreateItemCOD();
+        CreateItemCDO();
         CreateStageInfo();
         return true;
     }
 
-    private void CreateItemCOD()
+    private void CreateItemCDO()
     {
         foreach (string key in Item.Keys)
         {

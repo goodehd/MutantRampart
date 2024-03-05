@@ -23,8 +23,8 @@ public class PocketBlock_PopupUI : BaseUI
     public TextMeshProUGUI _roomName;
     public TextMeshProUGUI _roomType;
     public TextMeshProUGUI _roomDescript;
-    private Transform _roomContent;
-    private Transform _unitContent;
+    private ContentSizeFitter _roomContent;
+    private ContentSizeFitter _unitContent;
 
     public bool IsUnit { get; set; }
 
@@ -38,7 +38,7 @@ public class PocketBlock_PopupUI : BaseUI
         tile = Main.Get<TileManager>();
 
         SetUI<Image>();
-        SetUI<Transform>();
+        SetUI<ContentSizeFitter>();
         SetUI<TextMeshProUGUI>();
 
         _roomScroll = GetUI<Image>("PRoom_Scroll View");
@@ -46,8 +46,8 @@ public class PocketBlock_PopupUI : BaseUI
         _roomDescription = GetUI<Image>("RoomDescriBox");
         _unitDescription = GetUI<Image>("UnitDescriBox");
 
-        _roomContent = GetUI<Transform>("PRoom_Content");
-        _unitContent = GetUI<Transform>("PUnit_Content");
+        _roomContent = GetUI<ContentSizeFitter>("PRoom_Content");
+        _unitContent = GetUI<ContentSizeFitter>("PUnit_Content");
 
         _unitName = GetUI<TextMeshProUGUI>("UnitNameTxt");
         _unitHP = GetUI<TextMeshProUGUI>("UnitHpTxt");

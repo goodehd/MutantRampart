@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -29,37 +30,40 @@ public class CameraMovement : MonoBehaviour
         }
         */
 
-        Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, 5f, LayerMask.GetMask("Unit"));
-
-        if (hit)
+        if (!IsPointerOverUI())
         {
-            if (!isOver)
-            {
-                _onMouesUnit = hit.collider.GetComponent<Unit>();
-                _onMouesUnit.DrawOutline();
-                isOver = true;
-            }
+            Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, 5f, LayerMask.GetMask("Unit"));
 
-            if(isOver && _onMouesUnit != hit.collider.GetComponent<Unit>())
+            if (hit)
             {
-                _onMouesUnit.UndrawOutline();
-                _onMouesUnit = hit.collider.GetComponent<Unit>();
-                _onMouesUnit.DrawOutline();
-            }
+                if (!isOver)
+                {
+                    _onMouesUnit = hit.collider.GetComponent<Unit>();
+                    _onMouesUnit.DrawOutline();
+                    isOver = true;
+                }
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                ((DayMain_SceneUI)uI.SceneUI).CreateClickUnitUI(_onMouesUnit.CharacterInfo);
+                if (isOver && _onMouesUnit != hit.collider.GetComponent<Unit>())
+                {
+                    _onMouesUnit.UndrawOutline();
+                    _onMouesUnit = hit.collider.GetComponent<Unit>();
+                    _onMouesUnit.DrawOutline();
+                }
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    ((DayMain_SceneUI)uI.SceneUI).CreateClickUnitUI(_onMouesUnit.CharacterInfo);
+                }
             }
-        }
-        else
-        {
-            if (isOver)
+            else
             {
-                _onMouesUnit.UndrawOutline();
-                _onMouesUnit = null;
-                isOver = false;
+                if (isOver)
+                {
+                    _onMouesUnit.UndrawOutline();
+                    _onMouesUnit = null;
+                    isOver = false;
+                }
             }
         }
 
@@ -101,5 +105,22 @@ public class CameraMovement : MonoBehaviour
         {
             Camera.main.DOOrthoSize(5f, 0.3f); //줌인기능
         }
+    }
+
+    private bool IsPointerOverUI()
+    {
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        pointerEventData.position = Input.mousePosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerEventData, results);
+
+        for (int i = 0; i < results.Count; i++)
+        {
+            if (results[i].gameObject.layer == LayerMask.NameToLayer("UI"))
+                return true;
+        }
+
+        return false;
     }
 }
