@@ -200,6 +200,19 @@ public class BatRoom : RoomBehavior
         UnitCount = 0;
     }
 
+    public void SetUnitPos() 
+    {
+        for (int i = 0; i < Units.Length; i++)
+        {
+            if (Units[i] != null)
+            {
+                Units[i].CurPosX = IndexX;
+                Units[i].CurPosY = IndexY;
+                Units[i].transform.position = Literals.BatPos[i] + transform.position + new Vector3(0f, 0f, 3f);
+            }
+        }
+    }
+
     private void DestroyUnit(CharacterBehaviour unit)
     {
         unit.CharacterInfo.CurPosX = -1;

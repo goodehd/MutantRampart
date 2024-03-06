@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class TileManager : IManagers
@@ -15,6 +16,7 @@ public class TileManager : IManagers
     public BatPoint BatSlot { get; set; }
 
     public RoomBehavior SelectRoom { get; private set; }
+    public RoomBehavior PrevSelectRoom { get; set; }
     public event Action OnSlectRoomEvent;
 
     public void GenerateMap(int x, int y)
@@ -297,5 +299,47 @@ public class TileManager : IManagers
     {
         _roomObjList[x][y].RoomDir = roomDir;
         SetCheckWall(_roomObjList[x][y]);
+    }
+
+    public void RoomMove()
+    {
+        int prevIndexX = PrevSelectRoom.IndexX;
+        int prevIndexY = PrevSelectRoom.IndexY;
+
+        Vector3 prevRoomPos = PrevSelectRoom.transform.position;
+
+        int curIndexX = SelectRoom.IndexX;
+        int curIndexY = SelectRoom.IndexY;
+
+        Vector3 curRoomPos = SelectRoom.transform.position;
+
+        PrevSelectRoom.transform.position = curRoomPos;
+        SelectRoom.transform.position = prevRoomPos;
+
+        _roomObjList[prevIndexX][prevIndexY] = SelectRoom;
+        SelectRoom.IndexX = prevIndexX;
+        SelectRoom.IndexY = prevIndexY;
+        SelectRoom.RoomInfo.Pos = prevRoomPos;
+
+        _roomObjList[curIndexX][curIndexY] = PrevSelectRoom;
+        PrevSelectRoom.IndexX = curIndexX;
+        PrevSelectRoom.IndexY = curIndexY;
+        PrevSelectRoom.RoomInfo.Pos = curRoomPos;
+
+        if (SelectRoom.RoomInfo.Data.Type == EStatusformat.Bat)
+        {
+            ((BatRoom)SelectRoom).SetUnitPos();
+        }
+
+        if (PrevSelectRoom.RoomInfo.Data.Type == EStatusformat.Bat)
+        {
+            ((BatRoom)PrevSelectRoom).SetUnitPos();
+        }
+
+        SetCheckWall(SelectRoom);
+        SetCheckWall(PrevSelectRoom);
+
+        SelectRoom = PrevSelectRoom;
+        PrevSelectRoom = null;
     }
 }
