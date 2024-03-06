@@ -17,12 +17,13 @@ public class StageFail_PopupUI : BaseUI
     public int _curStage { get; set; }
     public int UpgradePoint { get; set; }
 
+    private SaveDataManager _saveDataManager;
+
     //public int _rewardsGold { get; set; }
 
     protected override void Init()
     {
-        UpgradePoint = Main.Get<UpgradeManager>().UpgradePoint;
-
+        _saveDataManager = Main.Get<SaveDataManager>();
         SetUI<TextMeshProUGUI>();
         SetUI<Button>();
 
@@ -36,17 +37,19 @@ public class StageFail_PopupUI : BaseUI
         //SetUICallback(_retryBtn.gameObject, EUIEventState.Click, ClickRetryBtn);
 
         _stageText.text = $"Day {_curStage}";
-        if(_curStage > 5)
+        UpgradePoint = 1;
+        _upgradePointTxt.text = $"+ {UpgradePoint}";
+        /*if (_curStage > 5)
         {
             UpgradePoint += 1;
             _upgradePointTxt.text = $"+ {UpgradePoint}";
-        }
+        }*/
         //_rewardsText.text = ;
     }
 
     private void ClickMainMenuBtn(PointerEventData data)
     {
-        PlayerPrefs.SetInt("UpgradePoint", UpgradePoint);
+        Main.Get<UpgradeManager>().UpgradePoint += UpgradePoint;
         Main.ManagerInit();
         Main.Get<SceneManager>().ChangeScene<SelectScene>();
     }

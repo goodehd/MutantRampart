@@ -13,8 +13,8 @@ public class GameManager : IManagers
     public bool isPlayerDead = false;
     public RoomBehavior HomeRoom { get; set; }
     public string PlayerName { get; set; }
-
     public int CurStage { get; set; }
+    public int SetWallCount { get; set; }
    
     public List<Character> PlayerUnits { get; private set; }   // 플레이어가 보유한 유닛 리스트
     public List<Room> PlayerRooms { get; private set; }    // 플레이어가 보유한 Room 리스트
@@ -28,8 +28,8 @@ public class GameManager : IManagers
         PlayerRooms = new List<Room>();
         PlayerItems = new List<Item>();
         CurStage = 0;
-        PlayerHP = new Vital(EstatType.Hp, 5);
-        PlayerHP.OnValueZero += GameOver;
+        SetWallCount = 0;
+        SetPlayerHp();
         PlayerMoney = 0;
         isHomeSet = false;
         return true;
@@ -39,6 +39,7 @@ public class GameManager : IManagers
     {
         PlayerMoney += amount;
         OnChangeMoney?.Invoke(PlayerMoney);
+        if(PlayerMoney < 0) PlayerMoney = 0;
     }
 
     public void GameOver()
@@ -96,6 +97,7 @@ public class GameManager : IManagers
         saveDataManager.Player.Curstage = CurStage;
         saveDataManager.Player.PlayerMoney = PlayerMoney;
         saveDataManager.Player.PlayerHP = PlayerHP.CurValue;
+        saveDataManager.Player.SetWallCount = SetWallCount;
         Main.Get<TileManager>().GetMapSize(out saveDataManager.Player.MapSizeX, out saveDataManager.Player.MapSizeY);
         for (int i = 0; i < PlayerUnits.Count; i++)
         {
@@ -356,6 +358,22 @@ public class GameManager : IManagers
         Item item = Main.Get<DataManager>().ItemCDO["TrainingEgg"].Clone();
         item.Init(Main.Get<DataManager>().Item["TrainingEgg"]);
         PlayerItems.Add(item);
+    }
+
+    public void SetPlayerHp()
+    {
+        int hpUpgradeLevel = Main.Get<UpgradeManager>().HpUpgradeLevel;
+        float upgradeHp = hpUpgradeLevel * hpUpgradeLevel;
+
+        if(hpUpgradeLevel > 1)
+        {
+            PlayerHP = new Vital(EstatType.Hp, 5 + upgradeHp);
+        }
+        else
+        {
+            PlayerHP = new Vital(EstatType.Hp, 5);
+        }
+        PlayerHP.OnValueZero += GameOver;
     }
 
     public void ExitGame()

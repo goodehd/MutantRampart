@@ -7,30 +7,48 @@ public class SaveDataManager : IManagers
 {
     private ResourceManager resource;
 
-    public string path;
+    public string PlayerDataPath;
+
+    public string UpgradeDataPath;
 
     public PlayerData Player = new PlayerData();
 
+    public UpgradeData Upgrade = new UpgradeData();
+
     public bool isSaveFileExist;
+    public bool isGeneratingSaveMap;
 
     public bool Init()
     {
         isSaveFileExist = PlayerPrefs.GetInt("Tutorial") == 1 ? true : false;
-        path = Application.persistentDataPath + "/save";
-      
+        PlayerDataPath = Application.persistentDataPath + "/save";
+        UpgradeDataPath = Application.persistentDataPath + "/upgrade";
+        isGeneratingSaveMap = false;
         return true;
     }
 
     public void SaveData()
     {
         string data = JsonUtility.ToJson(Player, true);
-        File.WriteAllText(path, data);
+        File.WriteAllText(PlayerDataPath, data);
     }
 
     public void LoadData()
     {
-        string data = File.ReadAllText(path);
+        string data = File.ReadAllText(PlayerDataPath);
         Player = JsonUtility.FromJson<PlayerData>(data);
+    }
+
+    public void SaveUpgradeData()
+    {
+        string data = JsonUtility.ToJson(Upgrade, true);
+        File.WriteAllText(UpgradeDataPath, data);
+    }
+
+    public void LoadUpgradeData()
+    {
+        string data = File.ReadAllText(UpgradeDataPath);
+        Upgrade = JsonUtility.FromJson<UpgradeData>(data);
     }
 
     public void ClearData()
@@ -40,7 +58,7 @@ public class SaveDataManager : IManagers
 
     public void DeleteData()
     {
-        File.Delete(path);
+        File.Delete(PlayerDataPath);
         isSaveFileExist = false;
     }
 
@@ -105,6 +123,7 @@ public class SaveDataManager : IManagers
 
     public void GenerateSaveMap()
     {
+        isGeneratingSaveMap = true;
         List<Room> playerRooms = Main.Get<GameManager>().PlayerRooms;
         List<Character> playerUnits = Main.Get<GameManager>().PlayerUnits;
 
@@ -150,6 +169,7 @@ public class SaveDataManager : IManagers
                 room.CreateLoadUnit(playerUnits[i], playerUnits[i].CurIndex);
             }
         }
+        isGeneratingSaveMap = false;
     }
 
     public void LoadMyData()
@@ -161,6 +181,7 @@ public class SaveDataManager : IManagers
         _gameManager.PlayerMoney = Player.PlayerMoney;
         _gameManager.CurStage = Player.Curstage;
         _gameManager.PlayerHP.CurValue = Player.PlayerHP;
+        _gameManager.SetWallCount = Player.SetWallCount;
         //_soundManager.BGMValue = Player.BGMValue;
         //_soundManager.EffectValue = Player.EffectValue;
         //_soundManager.UIValue = Player.UIValue;

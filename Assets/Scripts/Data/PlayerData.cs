@@ -10,6 +10,7 @@ public class PlayerData
     public float PlayerHP;
     public int MapSizeX;
     public int MapSizeY;
+    public int SetWallCount;
     public float BGMValue;
     public float EffectValue;
     public float UIValue;

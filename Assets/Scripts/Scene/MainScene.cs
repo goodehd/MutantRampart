@@ -5,7 +5,8 @@ public class MainScene : Scene
 {
     private GameObject _unitArrow;
     private Tweener _tweener;
-
+    private int _groundColSize;
+    private int _groundRowSize;
     protected override void Init()
     {
         base.Init();
@@ -13,6 +14,10 @@ public class MainScene : Scene
         {
             Main.Get<TutorialManager>().CreateArrow();
         }
+
+        _groundColSize = Main.Get<UpgradeManager>().UpgradeMapSizeCol;
+        _groundRowSize = Main.Get<UpgradeManager>().UpgradeMapSizeRow;
+
         Main.Get<UIManager>().OpenSceneUI<DayMain_SceneUI>();
         Main.Get<SoundManager>().SoundPlay($"NightBGM", ESoundType.BGM);
         Main.Get<SoundManager>().SoundPlay($"DayBGM", ESoundType.BGM);
@@ -22,7 +27,7 @@ public class MainScene : Scene
         }
         else
         {
-            Main.Get<TileManager>().GenerateMap(3, 3);
+            Main.Get<TileManager>().GenerateMap(_groundColSize, _groundRowSize);
         }
 
         _unitArrow = _resource.Instantiate("Prefabs/UnitArrow");

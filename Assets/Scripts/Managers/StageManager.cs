@@ -25,7 +25,7 @@ public class StageMonsterInfo
     {
         Count = 0;
         Monsters = new List<Monster>();
-        RewardsGold = rewardsGold + (int)(rewardsGold * Main.Get<UpgradeManager>().UpgradeGoldPercent);
+        RewardsGold = rewardsGold;
     }
 
     public void AddMonster(string name, int count)
@@ -93,8 +93,14 @@ public class StageManager : IManagers
         ui._curStage = _curStage + 1;
         Main.Get<GameManager>().CurStage = ui._curStage;
         ui._rewardsGold = _dataManager.stageMonsterInfoList[_curStage].RewardsGold;
-
-        Main.Get<GameManager>().ChangeMoney(_dataManager.stageMonsterInfoList[_curStage].RewardsGold);
+        if(Main.Get<UpgradeManager>().GoldUpgradeLevel > 1)
+        {
+            Main.Get<GameManager>().ChangeMoney(ui._rewardsGold + (int)(ui._rewardsGold * Main.Get<UpgradeManager>().UpgradeGoldPercent));
+        }
+        else
+        {
+            Main.Get<GameManager>().ChangeMoney(ui._rewardsGold);
+        }
         _isStageStart = false;
         OnStageClearEvent?.Invoke(++_curStage);
         Main.Get<SoundManager>().SoundPlay($"DayBGM", ESoundType.BGM);

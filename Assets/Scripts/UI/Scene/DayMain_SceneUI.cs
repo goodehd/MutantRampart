@@ -55,6 +55,8 @@ public class DayMain_SceneUI : BaseUI
 
     private TextMeshProUGUI _playerMoneyText;
     private TextMeshProUGUI _stageText;
+    private TextMeshProUGUI _wallLimitText;
+    private TextMeshProUGUI _setWallCountText;
 
     private Slider _hpProgressbar;
     private Animator _dayImageAnimator;
@@ -86,6 +88,7 @@ public class DayMain_SceneUI : BaseUI
     public bool isInventOpen { get; set; } = false;
     public bool isUIAnimating { get; set; } = false;
     public float animationDuration = 0.3f;
+    public int WallCount;
     #endregion
 
     protected override void Init()
@@ -132,7 +135,16 @@ public class DayMain_SceneUI : BaseUI
         roomDirBtsnUI.Owner = this;
         roomDirBtsnUI.gameObject.SetActive(false);
 
+        WallCount = tileManager.WallLimit;
+        UpdateWallLimitText(WallCount);
+        UpdateSetWallCountText();
+
         UpdateHpUI(0);
+
+        if (!_tutorialManager.isTutorial)
+        {
+            Main.Get<GameManager>().SaveData();
+        }
     }
 
     public void CreateClickUnitUI(Character unit)
@@ -245,6 +257,8 @@ public class DayMain_SceneUI : BaseUI
 
         _playerMoneyText = GetUI<TextMeshProUGUI>("MainPlayerMoneyText");
         _stageText = GetUI<TextMeshProUGUI>("CurStageTxt");
+        _wallLimitText = GetUI<TextMeshProUGUI>("WallLimitTxt");
+        _setWallCountText = GetUI<TextMeshProUGUI>("SetWallCountTxt");
 
         _playerMoneyText.text = Main.Get<GameManager>().PlayerMoney.ToString();
         UpdateDayCount(Main.Get<GameManager>().CurStage);
@@ -772,6 +786,15 @@ public class DayMain_SceneUI : BaseUI
             maincamera.Rock = false;
             roomDirBtsnUI.gameObject.SetActive(false);
         }
+    }
+
+    public void UpdateWallLimitText(int wallCount)
+    {
+        _wallLimitText.text = $"{tileManager.WallLimit}";
+    }
+    public void UpdateSetWallCountText()
+    {
+        _setWallCountText.text = $"{gameManager.SetWallCount}";
     }
 
     #endregion

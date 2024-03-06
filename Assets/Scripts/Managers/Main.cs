@@ -45,6 +45,8 @@ public class Main : SingletonBehavior<Main>
 
     public static void ManagerInit()
     {
+        Get<UpgradeManager>().SaveUpgrade();
+        Get<SaveDataManager>().SaveUpgradeData();
         Get<SaveDataManager>().DeleteData();
         Get<GameManager>().Init();
         Get<UIManager>().Init();

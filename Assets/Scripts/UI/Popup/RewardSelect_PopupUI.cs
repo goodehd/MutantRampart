@@ -13,9 +13,17 @@ public class RewardSelect_PopupUI : BaseUI
     public enum RewardType
     {
         HealthGain50,
+        HealthGain40,
+        HealthGain30,
         HealthGain20,
+        GoldGain500,
+        GoldGain700,
         GoldGain1000,
-        GoldGain1500
+        GoldGain1500,
+        GoldLoss500,
+        GoldLoss700,
+        GoldLoss1000,
+
     }
 
     private TextMeshProUGUI _rewardTxt;
@@ -39,6 +47,7 @@ public class RewardSelect_PopupUI : BaseUI
         _noBtn = GetUI<Button>("NoBtn");
         _exitBtn = GetUI<Button>("ExitBtn");
 
+        _rewardTxt.color = Color.green;
         _rewardTxt.text = "";
 
         // 텍스트의 알파값을 0으로 초기화
@@ -51,10 +60,7 @@ public class RewardSelect_PopupUI : BaseUI
         SetUICallback(_yesBtn.gameObject, EUIEventState.Click, ClickYesBtn);
         SetUICallback(_noBtn.gameObject, EUIEventState.Click, ClickNoBtn);
         SetUICallback(_exitBtn.gameObject, EUIEventState.Click, ClickExitBtn);
-
     }
-
-    
 
     public void SelectReward()
     {
@@ -77,9 +83,29 @@ public class RewardSelect_PopupUI : BaseUI
                 _rewardTxt.text = "보상: 체력 50% 회복";
                 FadeInRewardText(1f);
                 break;
+            case RewardType.HealthGain40:
+                GainHealth(0.4f);
+                _rewardTxt.text = "보상: 체력 40% 회복";
+                FadeInRewardText(1f);
+                break;
+            case RewardType.HealthGain30:
+                GainHealth(0.3f);
+                _rewardTxt.text = "보상: 체력 30% 회복";
+                FadeInRewardText(1f);
+                break;
             case RewardType.HealthGain20:
                 GainHealth(0.2f);
                 _rewardTxt.text = "보상: 체력 20% 회복";
+                FadeInRewardText(1f);
+                break;
+            case RewardType.GoldGain500:
+                Main.Get<GameManager>().ChangeMoney(+500);
+                _rewardTxt.text = "보상: 500 gold 획득";
+                FadeInRewardText(1f);
+                break;
+            case RewardType.GoldGain700:
+                Main.Get<GameManager>().ChangeMoney(+700);
+                _rewardTxt.text = "보상: 700 gold 획득";
                 FadeInRewardText(1f);
                 break;
             case RewardType.GoldGain1000:
@@ -90,6 +116,24 @@ public class RewardSelect_PopupUI : BaseUI
             case RewardType.GoldGain1500:
                 Main.Get<GameManager>().ChangeMoney(+1500);
                 _rewardTxt.text = "보상: 1500 gold 획득";
+                FadeInRewardText(1f);
+                break;
+            case RewardType.GoldLoss500:
+                Main.Get<GameManager>().ChangeMoney(-500);
+                _rewardTxt.color = Color.red;
+                _rewardTxt.text = "보상: 500 gold 감소";
+                FadeInRewardText(1f);
+                break;
+            case RewardType.GoldLoss700:
+                Main.Get<GameManager>().ChangeMoney(-700);
+                _rewardTxt.color = Color.red;
+                _rewardTxt.text = "보상: 700 gold 감소";
+                FadeInRewardText(1f);
+                break;
+            case RewardType.GoldLoss1000:
+                Main.Get<GameManager>().ChangeMoney(-1000);
+                _rewardTxt.color = Color.red;
+                _rewardTxt.text = "보상: 1000 gold 감소";
                 FadeInRewardText(1f);
                 break;
             default:
