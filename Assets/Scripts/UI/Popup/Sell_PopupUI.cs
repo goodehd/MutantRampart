@@ -17,6 +17,7 @@ public class Sell_PopupUI : BaseUI
 
     protected override void Init()
     {
+        base.Init();
         SetUI<TMP_Text>();
         SetUI<Button>();
 
@@ -34,25 +35,30 @@ public class Sell_PopupUI : BaseUI
 
     private void ClickYesBtn(PointerEventData eventData)
     {
-        Main.Get<UIManager>().ClosePopup();
-        Main.Get<UIManager>().ClosePopup();
+        _ui.ClosePopup();
+        _ui.ClosePopup();
         if (ShopUnitData != null)
         {
             Main.Get<GameManager>().RemoveUnit(ShopUnitData);
-            Owner.SetUnitInventory();
         }
         if (ShopRoomData != null)
         {
             Main.Get<GameManager>().RemoveRoom(ShopRoomData);
+        }
+
+        if(Owner != null)
+        {
             Owner.SetRoomInventory();
             Owner.SetUnitInventory();
         }
+
+        ((DayMain_SceneUI)_ui.SceneUI).ReMoveUnitUI();
         Main.Get<GameManager>().ChangeMoney(price);
     }
 
     private void ClickNoBtn(PointerEventData eventData)
     {
-        Main.Get<UIManager>().ClosePopup();
+        _ui.ClosePopup();
     }
 
     private void SetPrice()

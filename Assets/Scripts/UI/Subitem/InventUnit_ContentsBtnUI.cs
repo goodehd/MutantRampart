@@ -78,12 +78,9 @@ public class InventUnit_ContentsBtnUI : BaseUI
                 Owner.inventUnitDescri_PopupUI.Owner = this; // owner 설정해주고
 
                 _selectCheckImg.gameObject.SetActive(true);
-                
-                if (Owner.tweener.IsActive())
-                {
-                    Owner.tweener.Kill();
-                }
-                Owner.inventArrowImg.gameObject.SetActive(false);
+
+                _tutorialManager.KillDOTween(Owner.tweener);
+                _tutorialManager.SetArrowActive(Owner.inventArrowImg, false);
                 Owner.upgradeButton.gameObject.SetActive(false);                
             }            
         }
@@ -136,7 +133,7 @@ public class InventUnit_ContentsBtnUI : BaseUI
             Vector2 pos = UnitData.CurRoom.transform.position + Literals.BatPos[UnitData.CurIndex];
             pos.x += 0.1f;
             pos.y += 0.7f;
-            ((HongTestScene)Main.Get<SceneManager>().Scene).ActiveUnitArrow(pos);
+            ((MainScene)Main.Get<SceneManager>().Scene).ActiveUnitArrow(pos);
         }
         _unitContentsImg.color = Color.cyan;
     }
@@ -145,7 +142,7 @@ public class InventUnit_ContentsBtnUI : BaseUI
     {
         if (UnitData.Owner != null)
         {
-            ((HongTestScene)Main.Get<SceneManager>().Scene).InActiveUnitArrow();
+            ((MainScene)Main.Get<SceneManager>().Scene).InActiveUnitArrow();
         }
         _unitContentsImg.color = Color.white;
     }

@@ -223,26 +223,20 @@ public class InventUpgrade_PopupUI : BaseUI
                 }
 
                 // 합성 후 새롭게 능력 부여된 아이템 제공 - NextKey 통해.
-                _gameManager.PlayerUnits.Add(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
+                _gameManager.AddUnit(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
                 Owner.SetUnitInventory();
 
                 if (_gameManager.isTutorial) // 튜토리얼 중이라면
                 {                    
                     if (_gameManager.PlayerUnits.Count == 1 && _gameManager.PlayerRooms.Count == 2) // 유닛 업그레이드 했다면
                     {
-                        if (Owner.tweener.IsActive())
-                        {
-                            Owner.tweener.Kill();
-                        }
+                        _tutorialManager.KillDOTween(Owner.tweener);
 
-                        Owner.inventArrowImg.gameObject.SetActive(true);
-                        Owner.inventArrowTransform.anchoredPosition = new Vector3(526f, 90f, 0f); // 보유 unit img 화살표
-                        Owner.tweener = Owner.inventArrowTransform.DOAnchorPosY(120f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
+                        _tutorialManager.SetArrowActive(Owner.inventArrowImg, true);
+                        _tutorialManager.SetArrowPosition(Owner.inventArrowTransform, 526f, 90f); // 보유 unit img 화살표
+                        Owner.tweener = _tutorialManager.SetDOTweenY(Owner.inventArrowTransform, 120f);
 
-                        TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                        ui.curTutorialText = Main.Get<DataManager>().Tutorial["T6"].Description;
-                        ui.isBackgroundActive = true;
-                        ui.isCloseBtnActive = true;
+                        _tutorialManager.CreateTutorialPopup("T6", true, true);
                     }
                 }
 
@@ -271,34 +265,24 @@ public class InventUpgrade_PopupUI : BaseUI
                 }
 
                 // 합성 후 새롭게 능력 부여된 아이템 제공 - NextKey 통해.
-                _gameManager.PlayerRooms.Add(new Room(Main.Get<DataManager>().Room[UpgradeRoomSlots[0].Data.NextKey]));
+                _gameManager.AddRoom(new Room(Main.Get<DataManager>().Room[UpgradeRoomSlots[0].Data.NextKey]));
                 Owner.SetRoomInventory();
                 
                 if (_gameManager.isTutorial) // 튜토리얼 중이라면
                 {
                     if (_gameManager.PlayerRooms.Count == 4)
                     {
-                        if (Owner.tweener.IsActive())
-                        {
-                            Owner.tweener.Kill();
-                        }
-                        Owner.inventArrowImg.gameObject.SetActive(false);
-
+                        _tutorialManager.KillDOTween(Owner.tweener);
+                        _tutorialManager.SetArrowActive(Owner.inventArrowImg, false);
                     }
                     if (_gameManager.PlayerRooms.Count == 2)
                     {
-                        if (Owner.tweener.IsActive())
-                        {
-                            Owner.tweener.Kill();
-                        }
+                        _tutorialManager.KillDOTween(Owner.tweener);
 
-                        Owner.inventArrowTransform.anchoredPosition = new Vector3(592f, 270f, 0f); // unit 버튼 화살표
-                        Owner.tweener = Owner.inventArrowTransform.DOAnchorPosY(300f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
+                        _tutorialManager.SetArrowPosition(Owner.inventArrowTransform, 592f, 270f); // unit 버튼 화살표
+                        Owner.tweener = _tutorialManager.SetDOTweenY(Owner.inventArrowTransform, 300f);
 
-                        TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                        ui.curTutorialText = Main.Get<DataManager>().Tutorial["T5"].Description;
-                        ui.isBackgroundActive = true;
-                        ui.isCloseBtnActive= true;
+                        _tutorialManager.CreateTutorialPopup("T5", true, true);
                     }
                 }
 

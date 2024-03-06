@@ -7,6 +7,7 @@ public class MyItemsImgBtnUI : BaseUI
 {
     private GameManager gameManager;
     private StageManager stageManager;
+    private TutorialManager _tuManager;
 
     private Image _itemImg;
     private Button _itemImgBtn;
@@ -25,6 +26,7 @@ public class MyItemsImgBtnUI : BaseUI
 
         gameManager = Main.Get<GameManager>();
         stageManager = Main.Get<StageManager>();
+        _tuManager = Main.Get<TutorialManager>();
 
         _itemImg = GetUI<Image>("MyItemsImgBtnUI");
         _itemImgBtn = GetUI<Button>("MyItemsImgBtnUI");
@@ -90,24 +92,18 @@ public class MyItemsImgBtnUI : BaseUI
 
         if (gameManager.isTutorial) // 튜토리얼 중이라면
         {
-            if (Owner.tweener.IsActive())
-            {
-                Owner.tweener.Kill(); // 아이템 강조하던 화살표 kill
-            }
-            Owner.arrowImg.gameObject.SetActive(false); // 아이템 강조하던 화살표 inactive.
+            _tuManager.KillDOTween(Owner.tweener); // 아이템 강조하던 화살표 kill
+            _tuManager.SetArrowActive(Owner.arrowImg, false); // 아이템 강조하던 화살표 inactive.
 
-            TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-            ui.curTutorialText = Main.Get<DataManager>().Tutorial["T7"].Description;
-            ui.isBackgroundActive = true;
-            ui.isCloseBtnActive = true;
+            _tuManager.CreateTutorialPopup("T7", true, true);
 
             if (gameManager.PlayerItems[0].IsEquiped) // 유닛에 아이템 장착이 되었다면
             {
                 Owner.Owner.Owner.closeButton.gameObject.SetActive(true); // 인벤토리 닫기 버튼 활성화
-                Owner.Owner.Owner.inventArrowImg.gameObject.SetActive(true);
-                Owner.Owner.Owner.inventArrowTransform.anchoredPosition = new Vector3(662f, -400f, 0f); // 인벤토리 닫기 버튼 가리키는 화살표.
-                Owner.Owner.Owner.inventArrowTransform.Rotate(0f, 0f, 180f);
-                Owner.Owner.Owner.tweener = Owner.Owner.Owner.inventArrowTransform.DOAnchorPosY(-430f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
+                _tuManager.SetArrowActive(Owner.Owner.Owner.inventArrowImg, true);
+                _tuManager.SetArrowPosition(Owner.Owner.Owner.inventArrowTransform, 662f, -400f); // 인벤토리 닫기 버튼 가리키는 화살표.
+                _tuManager.RotateArrow(Owner.Owner.Owner.inventArrowTransform, 180f);
+                Owner.Owner.Owner.tweener = _tuManager.SetDOTweenY(Owner.Owner.Owner.inventArrowTransform, -430f);
             }
         }
     }

@@ -72,8 +72,8 @@ public class StageManager : IManagers
         _tileManager.SpawnTile.StartStage(_dataManager.stageMonsterInfoList[_curStage]);
         _isStageStart = true;
 
-        OnStageStartEvent?.Invoke(_curStage);
         Main.Get<SoundManager>().SoundPlay($"NightBGM", ESoundType.BGM);
+        OnStageStartEvent?.Invoke(_curStage);
     }
 
     public void StageClear()

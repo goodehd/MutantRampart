@@ -36,7 +36,7 @@ public class StageFail_PopupUI : BaseUI
         //SetUICallback(_retryBtn.gameObject, EUIEventState.Click, ClickRetryBtn);
 
         _stageText.text = $"Day {_curStage}";
-        if(_curStage > 0)
+        if(_curStage > 5)
         {
             UpgradePoint += 1;
             _upgradePointTxt.text = $"+ {UpgradePoint}";

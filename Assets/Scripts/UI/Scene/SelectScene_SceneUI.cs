@@ -110,7 +110,7 @@ public class SelectScene_SceneUI : BaseUI
             Main.Get<SaveDataManager>().isSaveFileExist = true;
             _saveDataManager.LoadData();
             _saveDataManager.LoadMyData();
-            Main.Get<SceneManager>().ChangeScene<HongTestScene>();
+            Main.Get<SceneManager>().ChangeScene<MainScene>();
             //Main.Get<GameManager>().isTutorial = false;
         }
         else
@@ -168,7 +168,7 @@ public class SelectScene_SceneUI : BaseUI
         _setPlayerImage.gameObject.SetActive(false);
         Main.Get<GameManager>().AddHometoInventory();
         Main.Get<GameManager>().AddItemToInventory();
-        Main.Get<SceneManager>().ChangeScene<HongTestScene>();
+        Main.Get<SceneManager>().ChangeScene<MainScene>();
     }
 
 }

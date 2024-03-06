@@ -104,8 +104,7 @@ public class GameManager : IManagers
         {
             if (items[i] != null)
             {
-                items[i].IsEquiped = false;
-                items[i].Owner = null;
+                items[i].UnEquipItem(unit);
             }
         }
         PlayerUnits.Remove(unit); // 인벤토리에서도 지우고 
@@ -129,9 +128,9 @@ public class GameManager : IManagers
         saveDataManager.Player.Curstage = CurStage;
         saveDataManager.Player.PlayerMoney = PlayerMoney;
         saveDataManager.Player.PlayerHP = PlayerHP.CurValue;
-        saveDataManager.Player.BGMValue = Main.Get<SoundManager>().BGMValue;
-        saveDataManager.Player.EffectValue = Main.Get<SoundManager>().EffectValue;
-        saveDataManager.Player.UIValue = Main.Get<SoundManager>().UIValue;
+        //saveDataManager.Player.BGMValue = Main.Get<SoundManager>().BGMValue;
+        //saveDataManager.Player.EffectValue = Main.Get<SoundManager>().EffectValue;
+        //saveDataManager.Player.UIValue = Main.Get<SoundManager>().UIValue;
         Main.Get<TileManager>().GetMapSize(out saveDataManager.Player.MapSizeX, out saveDataManager.Player.MapSizeY);
         for (int i = 0; i < PlayerUnits.Count; i++)
         {
@@ -152,6 +151,10 @@ public class GameManager : IManagers
                 saveDataManager.Player.PlayerRoomsDirSaveData.Add(Main.Get<TileManager>()._roomObjList[i][j].CreateRoomDirSavableData());
             }
         }
+
+        PlayerPrefs.SetInt("SortOption", (int)PlayerSetting.SortSetting);
+        PlayerPrefs.Save();
+
         saveDataManager.SaveData();
     }
 
@@ -166,6 +169,48 @@ public class GameManager : IManagers
         {
             isHomeSet = false;
             HomeRoom = null;
+        }
+    }
+
+    public void AddUnit(Character unit)
+    {
+        PlayerUnits.Add(unit);
+
+        switch (PlayerSetting.SortSetting)
+        {
+            case SortOption.levelAscend:
+                SortUnitLevel(true);
+                break;
+            case SortOption.levelDescend:
+                SortUnitLevel(false);
+                break;
+            case SortOption.NameAscend:
+                SortUnitName(true);
+                break;
+            case SortOption.NameDescend:
+                SortUnitName(false);
+                break;
+        }
+    }
+
+    public void AddRoom(Room room)
+    {
+        PlayerRooms.Add(room);
+
+        switch (PlayerSetting.SortSetting)
+        {
+            case SortOption.levelAscend:
+                SortRoomLevel(true);
+                break;
+            case SortOption.levelDescend:
+                SortRoomLevel(false);
+                break;
+            case SortOption.NameAscend:
+                SortRoomName(true);
+                break;
+            case SortOption.NameDescend:
+                SortRoomName(false);
+                break;
         }
     }
 
@@ -189,6 +234,7 @@ public class GameManager : IManagers
                     return destLevel.CompareTo(scrLevel);
                 }
             });
+            PlayerSetting.SortSetting = SortOption.NameAscend;
         }
         else
         {
@@ -207,6 +253,7 @@ public class GameManager : IManagers
                     return destLevel.CompareTo(scrLevel);
                 }
             });
+            PlayerSetting.SortSetting = SortOption.NameDescend;
         }
     }
 
@@ -228,6 +275,7 @@ public class GameManager : IManagers
                     return scr.Data.Key.CompareTo(dest.Data.Key);
                 }
             });
+            PlayerSetting.SortSetting = SortOption.levelAscend;
         }
         else
         {
@@ -245,6 +293,7 @@ public class GameManager : IManagers
                     return scr.Data.Key.CompareTo(dest.Data.Key);
                 }
             });
+            PlayerSetting.SortSetting = SortOption.levelDescend;
         }
     }
 
@@ -267,6 +316,7 @@ public class GameManager : IManagers
                     return destLevel.CompareTo(scrLevel);
                 }
             });
+            PlayerSetting.SortSetting = SortOption.NameAscend;
         }
         else
         {
@@ -285,6 +335,7 @@ public class GameManager : IManagers
                     return destLevel.CompareTo(scrLevel);
                 }
             });
+            PlayerSetting.SortSetting = SortOption.NameDescend;
         }
     }
 
@@ -306,6 +357,7 @@ public class GameManager : IManagers
                     return scr.Data.Key.CompareTo(dest.Data.Key);
                 }
             });
+            PlayerSetting.SortSetting = SortOption.levelAscend;
         }
         else
         {
@@ -323,12 +375,8 @@ public class GameManager : IManagers
                     return scr.Data.Key.CompareTo(dest.Data.Key);
                 }
             });
+            PlayerSetting.SortSetting = SortOption.levelDescend;
         }
-    }
-
-    public void SortRooms()
-    {
-
     }
 
     public void AddHometoInventory()

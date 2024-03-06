@@ -7,9 +7,6 @@ public class SoundManager : IManagers
 {
     private List<AudioSource> _audioSourcesChannel = new List<AudioSource>();
     private Dictionary<string, AudioClip> _audioClipDic = new Dictionary<string, AudioClip>();
-    public float BGMValue { get; set; }
-    public float EffectValue { get; set; }
-    public float UIValue { get; set; }
 
     public bool Init()
     {
@@ -28,10 +25,6 @@ public class SoundManager : IManagers
 
             _audioSourcesChannel[(int)ESoundType.BGM].loop = true;
         }
-
-        BGMValue = 1f;
-        EffectValue = 1f;
-        UIValue = 1f;
         return true;
     }
 

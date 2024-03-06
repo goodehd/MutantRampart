@@ -64,13 +64,11 @@ public class RoomDirBtnsUI : BaseUI
 
             LeftTopButton.gameObject.SetActive(false); // 다른 버튼은 Init 에서 이미 꺼져있음.
 
-            if (Owner.tweener.IsActive())
-            {
-                Owner.tweener.Kill(); // 열기닫기 가리키는 화살표 kill.
-            }
-            Owner.dayArrowTransform.anchoredPosition = new Vector3(860f, 60f, 0f); // unit 버튼 가리키는 화살표
-            Owner.dayArrowTransform.Rotate(0f, 0f, 90f);
-            Owner.tweener = Owner.dayArrowTransform.DOAnchorPosY(30f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
+            _tutorialManager.KillDOTween(Owner.tweener); // 유닛배치 룸 가리키는 화살표 kill 로 바뀜.
+            _tutorialManager.SetArrowActive(Owner._dayArrowImg, true);
+            _tutorialManager.SetArrowPosition(Owner.dayArrowTransform, 898f, 60f); // unit 버튼 가리키는 화살표
+            _tutorialManager.RotateArrow(Owner.dayArrowTransform, -90f);
+            Owner.tweener = _tutorialManager.SetDOTweenY(Owner.dayArrowTransform, 30f);
         }
     }
 

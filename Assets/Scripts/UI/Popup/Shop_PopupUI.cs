@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 public class Shop_PopupUI : BaseUI
 {
     private GameManager gameManager;
+    private TutorialManager _tuManager;
 
     public Button backButton { get; set; }
     private Button _unitButton;
@@ -72,6 +73,7 @@ public class Shop_PopupUI : BaseUI
         SetUI<Image>();
 
         gameManager = Main.Get<GameManager>();
+        _tuManager = Main.Get<TutorialManager>();
 
         backButton = GetUI<Button>("GachaBackBtn");
         _unitButton = GetUI<Button>("GachaShopUnitBtn");
@@ -175,9 +177,9 @@ public class Shop_PopupUI : BaseUI
             _infoButton.gameObject.SetActive(false);
             _groundButton.gameObject.SetActive(false);
             _itemButton.gameObject.SetActive(false);
-            shopArrowImg.gameObject.SetActive(true);
-            shopArrowTransform.anchoredPosition = new Vector3(244f, 376f, 0f); // 상점 내 unit 카테고리 가리키는 화살표.
-            tweener = shopArrowTransform.DOAnchorPosY(346f, animationDuration).SetLoops(-1, LoopType.Yoyo);
+            _tuManager.SetArrowActive(shopArrowImg, true);
+            _tuManager.SetArrowPosition(shopArrowTransform, 244f, 376f); // 상점 내 unit 카테고리 가리키는 화살표.
+            tweener = _tuManager.SetDOTweenY(shopArrowTransform, 346f);
         }
     }
 
@@ -203,14 +205,12 @@ public class Shop_PopupUI : BaseUI
 
         if (gameManager.isTutorial)
         {
-            tweener.Kill(); // 상점 뒤로가기 버튼 가리키는 화살표 Kill.
+            _tuManager.KillDOTween(tweener); // 상점 뒤로가기 버튼 가리키는 화살표 Kill.
 
-            Owner.tutorialMsg_PopupUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-            Owner.tutorialMsg_PopupUI.curTutorialText = Main.Get<DataManager>().Tutorial["T3"].Description;
+            _tuManager.CreateTutorialPopup("T3");
         }
 
         Camera.main.GetComponent<CameraMovement>().Rock = false;
-
     }
 
     private void ClickUnitBtn(PointerEventData eventData) // Unit Box 활성화
@@ -223,10 +223,9 @@ public class Shop_PopupUI : BaseUI
             }
             if (gameManager.PlayerUnits.Count == 0)
             {
-
-                tweener.Kill(); // unit 가리키던 화살표 Kill.
+                _tuManager.KillDOTween(tweener); // unit 가리키던 화살표 Kill.
             }
-            shopArrowImg.gameObject.SetActive(false);
+            _tuManager.SetArrowActive(shopArrowImg, false);
         }
         _unitBtnBox.gameObject.SetActive(true);
         _roomBtnBox.gameObject.SetActive(false);
@@ -242,7 +241,7 @@ public class Shop_PopupUI : BaseUI
 
             if (gameManager.PlayerUnits.Count >= 3) // 먼저 유닛 3회뽑기 완료했을 때만 Room 버튼 작동되도록.
             {
-                shopArrowImg.gameObject.SetActive(false);
+                _tuManager.SetArrowActive(shopArrowImg, false);
                 _unitBtnBox.gameObject.SetActive(false);
                 _roomBtnBox.gameObject.SetActive(true);
                 return;

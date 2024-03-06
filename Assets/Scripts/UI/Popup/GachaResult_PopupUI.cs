@@ -55,32 +55,25 @@ public class GachaResult_PopupUI : BaseUI
         {
             if (_gameManager.PlayerUnits.Count >= 3)
             {
-                if (Owner.tweener.IsActive())
-                {
-                    Owner.tweener.Kill(); // room 가리키는 화살표 Kill.
-                }
+                _tutorialManager.KillDOTween(Owner.tweener); // room 가리키는 화살표 Kill.
 
                 if (_gameManager.PlayerRooms.Count == 1)
                 {
-                    TutorialMsg_PopupUI ui = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                    ui.curTutorialText = Main.Get<DataManager>().Tutorial["T2"].Description;
-                    ui.isCloseBtnActive = true;
-                    ui.isBackgroundActive = true;
+                    _tutorialManager.CreateTutorialPopup("T2", true, true);
 
-                    Owner.shopArrowImg.gameObject.SetActive(true);
-                    Owner.shopArrowTransform.anchoredPosition = new Vector3(369f, 376f, 0f); // 상점 내 Room 카테고리 가리키는 화살표.
-                    Owner.tweener = Owner.shopArrowTransform.DOAnchorPosY(346f, Owner.animationDuration).SetLoops(-1, LoopType.Yoyo);
+                    _tutorialManager.SetArrowActive(Owner.shopArrowImg, true);
+                    _tutorialManager.SetArrowPosition(Owner.shopArrowTransform, 369f, 376f); // 상점 내 Room 카테고리 가리키는 화살표.
+                    Owner.tweener = _tutorialManager.SetDOTweenY(Owner.shopArrowTransform, 346f);
                 }
             }
 
             if (_gameManager.PlayerUnits.Count >= 3 && _gameManager.PlayerRooms.Count >= 4)
             {
                 Owner.backButton.gameObject.SetActive(true);
-                Owner.shopArrowImg.gameObject.SetActive(true);
-
-                Owner.shopArrowTransform.anchoredPosition = new Vector3(-770f, 484f, 0f); // 상점 뒤로가기 버튼 가리키는 화살표.
-                Owner.shopArrowTransform.Rotate(0f, 0f, -90f);
-                Owner.tweener = Owner.shopArrowTransform.DOAnchorPosX(-800f, 0.3f).SetLoops(-1, LoopType.Yoyo);
+                _tutorialManager.SetArrowActive(Owner.shopArrowImg, true);
+                _tutorialManager.SetArrowPosition(Owner.shopArrowTransform, -770f, 484f); // 상점 뒤로가기 버튼 가리키는 화살표.
+                _tutorialManager.RotateArrow(Owner.shopArrowTransform, -90f);
+                Owner.tweener = _tutorialManager.SetDOTweenX(Owner.shopArrowTransform, -800f);
             }
         }
     }
@@ -146,13 +139,15 @@ public class GachaResult_PopupUI : BaseUI
     private void SaveUnitInInventory(CharacterData data)
     {
         Character newChar = new Character(data);
-        _gameManager.PlayerUnits.Add(newChar);
+        //_gameManager.PlayerUnits.Add(newChar);
+        _gameManager.AddUnit(newChar);
     }
 
     private void SaveRoomInInventory(RoomData data)
     {
         Room newRoom = new Room(data);
-        _gameManager.PlayerRooms.Add(newRoom);
+        //_gameManager.PlayerRooms.Add(newRoom);
+        _gameManager.AddRoom(newRoom);
     }
 
     private void SaveItemInInventory(ItemData data)

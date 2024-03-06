@@ -56,7 +56,7 @@ public class TrapRoom : RoomBehavior
 
         yield return new WaitForSeconds(3f); //피해를 주기까지의 시간
 
-        enemy.TakeDmageNoneDefense(enemy.Status.GetStat<Vital>(EstatType.Hp).Value * RoomInfo.Data.UpgradeValue_1 * 0.01f);
+        enemy.TakeDmageNoneDefense(enemy.Status.GetStat<Vital>(EstatType.Hp).CurValue * RoomInfo.Data.UpgradeValue_1 * 0.01f);
 
         if (!enemy.CharacterInfo.IsDead)
         {

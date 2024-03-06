@@ -23,12 +23,12 @@ public class DataManager : IManagers
         Item = reader.LoadToCSVData<ItemData>();
         _skill = reader.LoadToCSVData<SkillData>();
         Tutorial = reader.LoadToCSVData<TutorialData>();
-        CreateItemCOD();
+        CreateItemCDO();
         CreateStageInfo();
         return true;
     }
 
-    private void CreateItemCOD()
+    private void CreateItemCDO()
     {
         foreach (string key in Item.Keys)
         {
@@ -70,9 +70,9 @@ public class DataManager : IManagers
 
         stage = new StageMonsterInfo(3000);  //여기를 좀 올리고
         stage.AddMonster("Slime", 3);
-        stage.AddMonster("Snail", 3);
-        stage.AddMonster("PlantBuger", 3);
-        stage.AddMonster("BigBull", 2);
+        //stage.AddMonster("Snail", 3);
+        //stage.AddMonster("PlantBuger", 3);
+        //stage.AddMonster("BigBull", 2);
         stageMonsterInfoList.Add(stage);
         stage = new StageMonsterInfo(3000);  //여기를 좀 올리고
         stage.AddMonster("BigBull", 2);

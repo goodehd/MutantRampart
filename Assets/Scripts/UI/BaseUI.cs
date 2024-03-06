@@ -10,6 +10,8 @@ public class BaseUI : MonoBehaviour
     protected UIManager _ui;
     protected GameManager _gameManager;
     protected Dictionary<Type, Dictionary<string, UnityEngine.Object>> _uiObjects = new Dictionary<Type, Dictionary<string, UnityEngine.Object>>();
+    protected TutorialManager _tutorialManager;
+
 
     private void Start()
     {
@@ -20,6 +22,7 @@ public class BaseUI : MonoBehaviour
     {
         _gameManager = Main.Get<GameManager>();
         _ui = Main.Get<UIManager>();
+        _tutorialManager = Main.Get<TutorialManager>();
     }
 
     protected void SetUI<T>() where T : UnityEngine.Object

@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(HongTestScene))]
+[CustomEditor(typeof(MainScene))]
 public class TestButton1 : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        HongTestScene generator = (HongTestScene)target;
+        MainScene generator = (MainScene)target;
         
         if (GUILayout.Button("Gun"))
         {
