@@ -16,13 +16,14 @@ public class SaveDataManager : IManagers
     public UpgradeData Upgrade = new UpgradeData();
 
     public bool isSaveFileExist;
+    public bool isGeneratingSaveMap;
 
     public bool Init()
     {
         isSaveFileExist = PlayerPrefs.GetInt("Tutorial") == 1 ? true : false;
         PlayerDataPath = Application.persistentDataPath + "/save";
         UpgradeDataPath = Application.persistentDataPath + "/upgrade";
-      
+        isGeneratingSaveMap = false;
         return true;
     }
 
@@ -122,6 +123,7 @@ public class SaveDataManager : IManagers
 
     public void GenerateSaveMap()
     {
+        isGeneratingSaveMap = true;
         List<Room> playerRooms = Main.Get<GameManager>().PlayerRooms;
         List<Character> playerUnits = Main.Get<GameManager>().PlayerUnits;
 
@@ -167,6 +169,7 @@ public class SaveDataManager : IManagers
                 room.CreateLoadUnit(playerUnits[i], playerUnits[i].CurIndex);
             }
         }
+        isGeneratingSaveMap = false;
     }
 
     public void LoadMyData()
@@ -178,6 +181,7 @@ public class SaveDataManager : IManagers
         _gameManager.PlayerMoney = Player.PlayerMoney;
         _gameManager.CurStage = Player.Curstage;
         _gameManager.PlayerHP.CurValue = Player.PlayerHP;
+        _gameManager.SetWallCount = Player.SetWallCount;
         //_soundManager.BGMValue = Player.BGMValue;
         //_soundManager.EffectValue = Player.EffectValue;
         //_soundManager.UIValue = Player.UIValue;

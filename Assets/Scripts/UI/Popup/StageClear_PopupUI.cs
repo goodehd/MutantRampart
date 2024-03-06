@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using TMPro;
-using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -39,7 +39,13 @@ public class StageClear_PopupUI : BaseUI
     {
         Main.Get<GameManager>().SaveData();
         Main.Get<UIManager>().ClosePopup();
-        Main.Get<UIManager>().OpenPopup<RewardSelect_PopupUI>();
+
+        Random random = new Random();
+        int randomNumber = random.Next(0, 100);
+        if(randomNumber < Main.Get<UpgradeManager>().UpgradeRewardChance)
+        {
+            Main.Get<UIManager>().OpenPopup<RewardSelect_PopupUI>();
+        }
         /*if ((_curStage-1) % 5 == 0 && _curStage != 0)
         {
             Main.Get<UIManager>().OpenPopup<RewardSelect_PopupUI>();

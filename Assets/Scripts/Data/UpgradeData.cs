@@ -9,6 +9,8 @@ public class UpgradeData
     public int GoldUpgradeLevel;
     public int HpUpgradeLevel;
     public int WallUpgradeLevel;
-    public int GroundUpgradeLevel;
+    public int RewardUpgradeLevel;
+    public int GroundColUpgradeLevel;
+    public int GroundRowUpgradeLevel;
     public int UpgradePoint;
 }

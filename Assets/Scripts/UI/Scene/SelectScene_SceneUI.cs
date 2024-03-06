@@ -70,7 +70,7 @@ public class SelectScene_SceneUI : BaseUI
         SetUICallback(_upgradeBtn.gameObject, EUIEventState.Click, ClickUpgradeBtn);
 
 
-        if (File.Exists(_saveDataManager.path) && !_tutorialManager.isTutorial)
+        if (File.Exists(_saveDataManager.PlayerDataPath) && !_tutorialManager.isTutorial)
         {
             _saveFile = true;
             _saveDataManager.LoadData();
@@ -131,7 +131,6 @@ public class SelectScene_SceneUI : BaseUI
         }
         _saveDataManager.DeleteData();
         _saveDataManager.Player.Name = _inputFieldTxt.text;
-        Main.Get<GameManager>().PlayerName = _saveDataManager.Player.Name;
         _saveDataManager.SaveData();
         if (!_tutorialManager.isTutorial)
         {
@@ -142,6 +141,8 @@ public class SelectScene_SceneUI : BaseUI
         {
             SetTutorial();
         }
+
+        Main.Get<GameManager>().PlayerName = _saveDataManager.Player.Name;
     }
 
     private void ClickTutorialSkipYesBtn(PointerEventData data)
@@ -173,6 +174,7 @@ public class SelectScene_SceneUI : BaseUI
         _setPlayerImage.gameObject.SetActive(false);
         Main.Get<GameManager>().AddHometoInventory();
         Main.Get<GameManager>().AddItemToInventory();
+        Main.Get<GameManager>().SetPlayerHp();
         Main.Get<SceneManager>().ChangeScene<MainScene>();
     }
 

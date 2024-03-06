@@ -50,9 +50,6 @@ public class StageFail_PopupUI : BaseUI
     private void ClickMainMenuBtn(PointerEventData data)
     {
         Main.Get<UpgradeManager>().UpgradePoint += UpgradePoint;
-        Main.Get<UpgradeManager>().SaveUpgrade();
-        Main.Get<SaveDataManager>().SaveUpgradeData();
-        PlayerPrefs.SetInt("UpgradePoint", UpgradePoint);
         Main.ManagerInit();
         Main.Get<SceneManager>().ChangeScene<SelectScene>();
     }
