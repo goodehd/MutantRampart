@@ -43,7 +43,6 @@ public class StageManager : IManagers
 
     private TileManager _tileManager;
     private DataManager _dataManager;
-    private TutorialManager _tutorialManager;
 
     private bool _isStageStart = false;
     private int _curStage = 0;
@@ -84,10 +83,8 @@ public class StageManager : IManagers
 
         if (Main.Get<TutorialManager>().isTutorial) // 튜토리얼 중이라면
         {
-            TutorialMsg_PopupUI tutorialUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>(); // 마지막 튜토리얼 팝업
-            tutorialUI.curTutorialText = Main.Get<DataManager>().Tutorial["T18"].Description;
-            tutorialUI.isBackgroundActive = true;
-            tutorialUI.isCloseBtnActive = true;
+            Main.Get<TutorialManager>().CreateTutorialPopup("T18", true, true); // 마지막 튜토리얼 팝업
+
             Main.Get<TutorialManager>().isTutorial = false; // 튜토리얼 이제 끝 !
             PlayerPrefs.SetInt("Tutorial", 1);
             PlayerPrefs.Save();

@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -65,22 +64,21 @@ public class RoomSelectImageUI : BaseUI
                 _tile.ChangeRoom(Room);
                 _tutorialManager.tutorialIndexY = 0;
 
-                _ui.ClosePopup();
+                _ui.CloseAllPopup();
                 _tutorialManager.CreateTutorialPopup("T12");
                 Main.Get<TileManager>()._roomObjList[1][1].StopFlashing();
 
-                _tutorialManager.KillDOTween(Owner.Owner.tweener); // home 타입 가리키는 화살표 Kill.
-                _tutorialManager.SetArrowActive(Owner.Owner._dayArrowImg, false);
+                _tutorialManager.KillDOTween(); // home 타입 가리키는 화살표 Kill.
+                _tutorialManager.SetArrowActive(false);
 
                 _tile.GetRoom(1, 0).StartFlashing();
             }
             else if (Room.Data.Type != EStatusformat.Home && _game.isHomeSet && _tile.SelectRoom.RoomInfo.Data.Type != EStatusformat.Bat) // Home 은 배치되어 있지만 배치 타입의 Room 을 배치하려는 경우, 그리고 배치하려는 곳이 Default 일 때 
             {
                 _tile.ChangeRoom(Room);
-                _tutorialManager.KillDOTween(Owner.Owner.tweener);
+                _tutorialManager.KillDOTween();
+                _tutorialManager.SetArrowActive(false);
                 Owner.Owner.roomDirBtsnUI.gameObject.SetActive(true); // 버튼 UI 활성화.
-
-                _tutorialManager.SetArrowActive(Owner.Owner._dayArrowImg, false);
 
                 _ui.ClosePopup();
                 _tutorialManager.CreateTutorialPopup("T14", true, true);

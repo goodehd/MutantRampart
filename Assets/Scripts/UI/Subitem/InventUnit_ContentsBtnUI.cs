@@ -1,4 +1,3 @@
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -79,8 +78,7 @@ public class InventUnit_ContentsBtnUI : BaseUI
 
                 _selectCheckImg.gameObject.SetActive(true);
 
-                _tutorialManager.KillDOTween(Owner.tweener);
-                _tutorialManager.SetArrowActive(Owner.inventArrowImg, false);
+                _tutorialManager.KillDOTween();
                 Owner.upgradeButton.gameObject.SetActive(false);                
             }            
         }

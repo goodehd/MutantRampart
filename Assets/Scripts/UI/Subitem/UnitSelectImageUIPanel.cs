@@ -1,4 +1,3 @@
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -92,11 +91,11 @@ public class UnitSelectImageUIPanel : BaseUI
             {
                 Main.Get<UIManager>().CloseAllPopup(); // 튜토리얼 창과 포켓팝업UI 끄기.
                 Owner.Owner.backButton.gameObject.SetActive(true); // 뒤로가기 버튼 활성화
-                _tuManager.KillDOTween(Owner.Owner.tweener);
+                _tuManager.KillDOTween();
 
-                _tuManager.SetArrowPosition(Owner.Owner.dayArrowTransform, -720f, 453f); // 뒤로가기 버튼 향하는 화살표
-                _tuManager.RotateArrow(Owner.Owner.dayArrowTransform, -180f);
-                Owner.Owner.tweener = _tuManager.SetDOTweenX(Owner.Owner.dayArrowTransform, -750f);
+                _tuManager.SetArrowPosition(-720f, 453f); // 뒤로가기 버튼 향하는 화살표
+                _tuManager.RotateArrow(-180f);
+                _tuManager.SetDOTweenX(-750f);
                 _tuManager.CreateTutorialPopup("T16");
 
                 _tutorialManager.isPlacingTutorialClear = true;

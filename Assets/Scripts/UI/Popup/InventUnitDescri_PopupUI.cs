@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -33,10 +32,6 @@ public class InventUnitDescri_PopupUI : BaseUI
     private ScrollRect _myItemsScrollView;
 
     private Transform _myItemsContent;
-
-    public Image arrowImg { get; set; }
-    public RectTransform arrowTransform { get; set; }
-    public Tweener tweener { get; set; }
 
     public Character UnitData { get; set; }
 
@@ -85,8 +80,6 @@ public class InventUnitDescri_PopupUI : BaseUI
         _unitSkillDescription = GetUI<TMP_Text>("InventUnitSkillDescriTxt");
 
         _unitImg = GetUI<Image>("InventUnitImg");
-        arrowImg = GetUI<Image>("UnitDescriArrowImg");
-        arrowTransform = arrowImg.GetComponent<RectTransform>();
 
         _myItemsScrollView = GetUI<ScrollRect>("MyItems_Scroll View");
 
@@ -112,8 +105,8 @@ public class InventUnitDescri_PopupUI : BaseUI
             _deleteBtn.gameObject.SetActive(false);
             _closeBtn.gameObject.SetActive(false);
 
-            _tutorialManager.SetArrowActive(arrowImg, true); // Description 에서 아이템 가리키는 화살표
-            tweener = _tutorialManager.SetDOTweenY(arrowTransform, 110f);
+            _tutorialManager.SetArrowPosition(48f, 80f); // Description 에서 아이템 가리키는 화살표
+            _tutorialManager.SetDOTweenY(110f);
         }
     }
     

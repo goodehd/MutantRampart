@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -64,11 +63,10 @@ public class RoomDirBtnsUI : BaseUI
 
             LeftTopButton.gameObject.SetActive(false); // 다른 버튼은 Init 에서 이미 꺼져있음.
 
-            _tutorialManager.KillDOTween(Owner.tweener); // 유닛배치 룸 가리키는 화살표 kill 로 바뀜.
-            _tutorialManager.SetArrowActive(Owner._dayArrowImg, true);
-            _tutorialManager.SetArrowPosition(Owner.dayArrowTransform, 898f, 60f); // unit 버튼 가리키는 화살표
-            _tutorialManager.RotateArrow(Owner.dayArrowTransform, -90f);
-            Owner.tweener = _tutorialManager.SetDOTweenY(Owner.dayArrowTransform, 30f);
+            _tutorialManager.KillDOTween(); // 유닛배치 룸 가리키는 화살표 kill 로 바뀜.
+            _tutorialManager.SetArrowPosition(898f, 60f); // unit 버튼 가리키는 화살표
+            _tutorialManager.SetDOTweenY(30f);
+            _tutorialManager.RotateArrow(-90f);
         }
     }
 
@@ -96,8 +94,8 @@ public class RoomDirBtnsUI : BaseUI
         {
             if (Owner.tutorialMsg_PopupUI == null)
             {
-                Owner.tutorialMsg_PopupUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                Owner.tutorialMsg_PopupUI.curTutorialText = Main.Get<DataManager>().Tutorial["T15"].Description;
+                _tutorialManager.CreateTutorialPopup("T15");
+                _tutorialManager.SetArrowActive(true);
             }
 
             if (Owner.roomButton.gameObject.activeSelf) // Room 버튼 활성화되어있다면 비활성화 진행.

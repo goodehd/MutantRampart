@@ -13,10 +13,14 @@ public class TutorialManager : IManagers
 
     public bool isTutorial { get; set; }
     public bool isPlacingTutorialClear = false; // 배치모드 튜토리얼 클리어했는지 체크.
-    public int tutorialIndexX = 1;
-    public int tutorialIndexY = 1;
+    public int tutorialIndexX { get; set; } = 1;
+    public int tutorialIndexY { get; set; } = 1;
 
     private float animationDuration = 0.3f;
+
+    public TutorialArrowUI arrowUI { get; set; }
+
+    private Tweener tweener;
 
     public bool Init()
     {
@@ -55,6 +59,11 @@ public class TutorialManager : IManagers
         return true;
     }
 
+    public void CreateArrow()
+    {
+        arrowUI = _uiManager.CreateSubitem<TutorialArrowUI>();
+    }
+
     public TutorialMsg_PopupUI CreateTutorialPopup(string tutorialTextKey, bool isCloseBtnActive = false, bool isBackgroundActive = false) // 튜토리얼 팝업 만드는 함수 + 튜토리얼 내용 연결
     {
         TutorialMsg_PopupUI ui = _uiManager.OpenPopup<TutorialMsg_PopupUI>();
@@ -62,39 +71,41 @@ public class TutorialManager : IManagers
         ui.isCloseBtnActive = isCloseBtnActive;
         ui.isBackgroundActive = isBackgroundActive;
 
+        ui.GetComponent<Canvas>().sortingOrder = arrowUI.GetComponent<Canvas>().sortingOrder + 1;
+
         return ui;
     }
-    
-    public void SetArrowActive(Image image, bool activeState) // 화살표 이미지 SetActive 해주는 함수
+
+    public void SetArrowActive(bool activeState) // 화살표 이미지 SetActive 해주는 함수
     {
-        image.gameObject.SetActive(activeState);
-    }
-    
-    public void SetArrowPosition(RectTransform arrowTransform, float x, float y) // arrow.achoredPosition 값 받아서 화살표 위치 설정해주는 함수
-    {
-        arrowTransform.anchoredPosition = new Vector3(x, y, 0f);
+        arrowUI.gameObject.SetActive(activeState);
     }
 
-    public void RotateArrow(RectTransform arrowTransform, float z) // 화살표 z 회전시켜주는 함수
+    public void SetArrowPosition(float x, float y) // arrow.achoredPosition 값 받아서 화살표 위치 설정해주는 함수
     {
-        arrowTransform.Rotate(0f, 0f, z);
+        arrowUI.arrowTransform.anchoredPosition = new Vector3(x, y, 0f);
     }
 
-    public Tweener SetDOTweenX(RectTransform arrowTransform, float x) // DOTween x 값 받아서 화살표 움직임 설정해주는 함수
+    public void RotateArrow(float z) // 화살표 z 회전시켜주는 함수
     {
-        return arrowTransform.DOAnchorPosX(x, animationDuration).SetLoops(-1, LoopType.Yoyo);
+        arrowUI.arrowTransform.Rotate(0f, 0f, z);
     }
 
-    public Tweener SetDOTweenY(RectTransform arrowTransform, float y) // DOTween y 값 받아서 화살표 움직임 설정해주는 함수
+    public void SetDOTweenX(float x) // DOTween x 값 받아서 화살표 움직임 설정해주는 함수
     {
-        return arrowTransform.DOAnchorPosY(y, animationDuration).SetLoops(-1, LoopType.Yoyo);
-    }    
+        tweener = arrowUI.arrowTransform.DOAnchorPosX(x, animationDuration).SetLoops(-1, LoopType.Yoyo);
+    }
 
-    public void KillDOTween(Tweener tweener) // DOTween Kill 해주는 함수
+    public void SetDOTweenY( float y) // DOTween y 값 받아서 화살표 움직임 설정해주는 함수
+    {
+        tweener = arrowUI.arrowTransform.DOAnchorPosY(y, animationDuration).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void KillDOTween() // DOTween Kill 해주는 함수
     {
         if (tweener.IsActive())
         {
             tweener.Kill();
         }
-    }
+    }    
 }

@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -92,18 +91,16 @@ public class MyItemsImgBtnUI : BaseUI
 
         if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
-            _tutorialManager.KillDOTween(Owner.tweener); // 아이템 강조하던 화살표 kill
-            _tutorialManager.SetArrowActive(Owner.arrowImg, false); // 아이템 강조하던 화살표 inactive.
+            _tutorialManager.KillDOTween(); // 아이템 강조하던 화살표 kill
 
             _tutorialManager.CreateTutorialPopup("T7", true, true);
 
             if (gameManager.PlayerItems[0].IsEquiped) // 유닛에 아이템 장착이 되었다면
             {
                 Owner.Owner.Owner.closeButton.gameObject.SetActive(true); // 인벤토리 닫기 버튼 활성화
-                _tutorialManager.SetArrowActive(Owner.Owner.Owner.inventArrowImg, true);
-                _tutorialManager.SetArrowPosition(Owner.Owner.Owner.inventArrowTransform, 662f, -400f); // 인벤토리 닫기 버튼 가리키는 화살표.
-                _tutorialManager.RotateArrow(Owner.Owner.Owner.inventArrowTransform, 180f);
-                Owner.Owner.Owner.tweener = _tutorialManager.SetDOTweenY(Owner.Owner.Owner.inventArrowTransform, -430f);
+                _tutorialManager.RotateArrow(180f);
+                _tutorialManager.SetArrowPosition(662f, -400f); // 인벤토리 닫기 버튼 가리키는 화살표.
+                _tutorialManager.SetDOTweenY(-430f);
             }
         }
     }

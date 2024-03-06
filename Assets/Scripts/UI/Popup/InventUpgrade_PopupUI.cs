@@ -1,9 +1,7 @@
-using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class InventUpgrade_PopupUI : BaseUI
@@ -230,13 +228,11 @@ public class InventUpgrade_PopupUI : BaseUI
                 {                    
                     if (_gameManager.PlayerUnits.Count == 1 && _gameManager.PlayerRooms.Count == 2) // 유닛 업그레이드 했다면
                     {
-                        _tutorialManager.KillDOTween(Owner.tweener);
-
-                        _tutorialManager.SetArrowActive(Owner.inventArrowImg, true);
-                        _tutorialManager.SetArrowPosition(Owner.inventArrowTransform, 526f, 90f); // 보유 unit img 화살표
-                        Owner.tweener = _tutorialManager.SetDOTweenY(Owner.inventArrowTransform, 120f);
-
                         _tutorialManager.CreateTutorialPopup("T6", true, true);
+
+                        _tutorialManager.SetArrowActive(true);
+                        _tutorialManager.SetArrowPosition(526f, 90f); // 보유 unit img 화살표
+                        _tutorialManager.SetDOTweenY(120f);
                     }
                 }
 
@@ -272,17 +268,16 @@ public class InventUpgrade_PopupUI : BaseUI
                 {
                     if (_gameManager.PlayerRooms.Count == 4)
                     {
-                        _tutorialManager.KillDOTween(Owner.tweener);
-                        _tutorialManager.SetArrowActive(Owner.inventArrowImg, false);
+                        _tutorialManager.KillDOTween();
                     }
                     if (_gameManager.PlayerRooms.Count == 2)
                     {
-                        _tutorialManager.KillDOTween(Owner.tweener);
-
-                        _tutorialManager.SetArrowPosition(Owner.inventArrowTransform, 592f, 270f); // unit 버튼 화살표
-                        Owner.tweener = _tutorialManager.SetDOTweenY(Owner.inventArrowTransform, 300f);
+                        _tutorialManager.KillDOTween();
 
                         _tutorialManager.CreateTutorialPopup("T5", true, true);
+
+                        _tutorialManager.SetArrowPosition(592f, 270f); // unit 버튼 화살표
+                        _tutorialManager.SetDOTweenY(300f);
                     }
                 }
 

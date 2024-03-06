@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -37,13 +36,6 @@ public class Shop_PopupUI : BaseUI
 
     public int RowPrice { get; set; }
     public int ColPrice { get; set; }
-    public Image shopArrowImg { get; set; }
-
-    public RectTransform shopArrowTransform { get; set; }
-
-    public Tweener tweener { get; set; }
-
-    public float animationDuration = 0.3f;
 
     public DayMain_SceneUI Owner { get; set; }
 
@@ -118,10 +110,6 @@ public class Shop_PopupUI : BaseUI
         _groundColPriceText = GetUI<TMP_Text>("GroundColPriceTxt");
         UpdateGroundPriceText();
 
-        shopArrowImg = GetUI<Image>("ShopArrowImg");
-
-        shopArrowTransform = shopArrowImg.GetComponent<RectTransform>();
-
         gameManager.OnChangeMoney += UpdateMoneyText;
 
         #region 상점 판매 아이템 추가
@@ -176,9 +164,6 @@ public class Shop_PopupUI : BaseUI
             _infoButton.gameObject.SetActive(false);
             _groundButton.gameObject.SetActive(false);
             _itemButton.gameObject.SetActive(false);
-            _tutorialManager.SetArrowActive(shopArrowImg, true);
-            _tutorialManager.SetArrowPosition(shopArrowTransform, 244f, 376f); // 상점 내 unit 카테고리 가리키는 화살표.
-            tweener = _tutorialManager.SetDOTweenY(shopArrowTransform, 346f);
         }
     }
 
@@ -204,9 +189,12 @@ public class Shop_PopupUI : BaseUI
 
         if (_tutorialManager.isTutorial)
         {
-            _tutorialManager.KillDOTween(tweener); // 상점 뒤로가기 버튼 가리키는 화살표 Kill.
+            _tutorialManager.KillDOTween(); // 상점 뒤로가기 버튼 가리키는 화살표 Kill.
 
             _tutorialManager.CreateTutorialPopup("T3");
+            _tutorialManager.SetArrowPosition(-241f, -276f); // 인벤토리 가리키는 화살표.
+            _tutorialManager.RotateArrow(90f);
+            _tutorialManager.SetDOTweenY(-306f);
         }
 
         Camera.main.GetComponent<CameraMovement>().Rock = false;
@@ -222,9 +210,9 @@ public class Shop_PopupUI : BaseUI
             }
             if (gameManager.PlayerUnits.Count == 0)
             {
-                _tutorialManager.KillDOTween(tweener); // unit 가리키던 화살표 Kill.
+                _tutorialManager.KillDOTween(); // unit 가리키던 화살표 Kill.
             }
-            _tutorialManager.SetArrowActive(shopArrowImg, false);
+            _tutorialManager.SetArrowActive(false);
         }
         _unitBtnBox.gameObject.SetActive(true);
         _roomBtnBox.gameObject.SetActive(false);
@@ -240,7 +228,9 @@ public class Shop_PopupUI : BaseUI
 
             if (gameManager.PlayerUnits.Count >= 3) // 먼저 유닛 3회뽑기 완료했을 때만 Room 버튼 작동되도록.
             {
-                _tutorialManager.SetArrowActive(shopArrowImg, false);
+                _tutorialManager.KillDOTween(); // 상점 room 버튼 가리키던 화살표 kill.
+                _tutorialManager.SetArrowActive(false);
+
                 _unitBtnBox.gameObject.SetActive(false);
                 _roomBtnBox.gameObject.SetActive(true);
                 return;
@@ -371,6 +361,12 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickGachaUnit(int count)
     {
+        if (_tutorialManager.isTutorial)
+        {
+            _tutorialManager.KillDOTween();
+            _tutorialManager.SetArrowActive(false);
+        }
+
         if (_myGachaUnits != null) // 이거 안 해주면 버튼 누를때마다 리스트에 계속 쌓여서 1개가 2개가 되고 .. 계속 증가 이슈.
         {
             _myGachaUnits.Clear();

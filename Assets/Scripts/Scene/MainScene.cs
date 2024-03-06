@@ -9,6 +9,10 @@ public class MainScene : Scene
     protected override void Init()
     {
         base.Init();
+        if (Main.Get<TutorialManager>().isTutorial)
+        {
+            Main.Get<TutorialManager>().CreateArrow();
+        }
         Main.Get<UIManager>().OpenSceneUI<DayMain_SceneUI>();
         Main.Get<SoundManager>().SoundPlay($"NightBGM", ESoundType.BGM);
         Main.Get<SoundManager>().SoundPlay($"DayBGM", ESoundType.BGM);
