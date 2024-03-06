@@ -16,15 +16,6 @@ public class GameManager : IManagers
 
     public int CurStage { get; set; }
    
-    public bool isTutorial { get; set; }
-
-    public bool isPlacingTutorialClear = false; // 배치모드 튜토리얼 클리어했는지 체크.
-
-    public int tutorialIndexX = 1;
-
-    public int tutorialIndexY = 1;
-
-
     public List<Character> PlayerUnits { get; private set; }   // 플레이어가 보유한 유닛 리스트
     public List<Room> PlayerRooms { get; private set; }    // 플레이어가 보유한 Room 리스트
     public List<Item> PlayerItems { get; private set; }     // 플레이어가 보유한 아이템 리스트
@@ -39,30 +30,7 @@ public class GameManager : IManagers
         CurStage = 0;
         PlayerHP = new Vital(EstatType.Hp, 5);
         PlayerHP.OnValueZero += GameOver;
-        
-
-        bool tutorial = PlayerPrefs.HasKey("Tutorial");
-        if (!tutorial)
-        {
-            isTutorial = true;
-            PlayerMoney = 9000;
-        }
-        else
-        {
-            isTutorial = PlayerPrefs.GetInt("Tutorial") == 1 ? false : true;
-            PlayerMoney = isTutorial ? 9000 : 4000; //뒤에거는 1스테이지 클리어한 금액을 더해줘야함 ex 3000 + 1000(1스테 클리어돈)
-            if (!isTutorial && !Main.Get<SaveDataManager>().isSaveFileExist)
-            {
-                Character newChar = new Character(Main.Get<DataManager>().Character["Warrior2"]);
-                PlayerUnits.Add(newChar);
-
-                Room newRoom = new Room(Main.Get<DataManager>().Room["Forest2"]);
-                PlayerRooms.Add(newRoom);
-
-                CurStage = 1;
-            }
-        }
-
+        PlayerMoney = 0;
         isHomeSet = false;
         return true;
     }
@@ -128,9 +96,6 @@ public class GameManager : IManagers
         saveDataManager.Player.Curstage = CurStage;
         saveDataManager.Player.PlayerMoney = PlayerMoney;
         saveDataManager.Player.PlayerHP = PlayerHP.CurValue;
-        //saveDataManager.Player.BGMValue = Main.Get<SoundManager>().BGMValue;
-        //saveDataManager.Player.EffectValue = Main.Get<SoundManager>().EffectValue;
-        //saveDataManager.Player.UIValue = Main.Get<SoundManager>().UIValue;
         Main.Get<TileManager>().GetMapSize(out saveDataManager.Player.MapSizeX, out saveDataManager.Player.MapSizeY);
         for (int i = 0; i < PlayerUnits.Count; i++)
         {
@@ -395,7 +360,7 @@ public class GameManager : IManagers
 
     public void ExitGame()
     {
-        if (!isTutorial)
+        if (!Main.Get<TutorialManager>().isTutorial)
         {
             SaveData();
         }

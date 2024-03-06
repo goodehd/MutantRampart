@@ -31,7 +31,7 @@ public class RoomDirBtnsUI : BaseUI
         SetUICallback(LeftTopButton.gameObject, EUIEventState.Click, ClickLeftTopBtn);
         SetUICallback(LeftBottomButton.gameObject, EUIEventState.Click, ClickLeftBottomBtn);
 
-        if (_gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             RightTopButton.gameObject.SetActive(false);
             RightBottomButton.gameObject.SetActive(false);
@@ -47,7 +47,7 @@ public class RoomDirBtnsUI : BaseUI
 
     private void ClickRightTopBtn(PointerEventData eventData)
     {
-        if (_gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
 
         RoomBehavior room = tileManager.SelectRoom;
         tileManager.SetRoomDir(room, ERoomDir.RightTop, !room.IsDoorOpen(ERoomDir.RightTop));
@@ -58,7 +58,7 @@ public class RoomDirBtnsUI : BaseUI
         RoomBehavior room = tileManager.SelectRoom;
         tileManager.SetRoomDir(room, ERoomDir.LeftTop, !room.IsDoorOpen(ERoomDir.LeftTop));
 
-        if (_gameManager.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             CheckBtnForTutorial();
 
@@ -74,7 +74,7 @@ public class RoomDirBtnsUI : BaseUI
 
     private void ClickRightBottomBtn(PointerEventData eventData)
     {
-        if (_gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
 
         RoomBehavior room = tileManager.SelectRoom;
         tileManager.SetRoomDir(room, ERoomDir.RightBottom, !room.IsDoorOpen(ERoomDir.RightBottom));
@@ -82,7 +82,7 @@ public class RoomDirBtnsUI : BaseUI
 
     private void ClickLeftBottomBtn(PointerEventData eventData)
     {
-        if (_gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
 
         RoomBehavior room = tileManager.SelectRoom;
         tileManager.SetRoomDir(room, ERoomDir.LeftBottom, !room.IsDoorOpen(ERoomDir.LeftBottom));

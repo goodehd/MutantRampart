@@ -107,7 +107,7 @@ public class InventUnitDescri_PopupUI : BaseUI
         }
         SetInfo();
 
-        if (gameManager.isTutorial) // 튜토리얼 진행 중일 때 삭제버튼, 닫기버튼 비활성화.
+        if (_tutorialManager.isTutorial) // 튜토리얼 진행 중일 때 삭제버튼, 닫기버튼 비활성화.
         {
             _deleteBtn.gameObject.SetActive(false);
             _closeBtn.gameObject.SetActive(false);
@@ -186,41 +186,41 @@ public class InventUnitDescri_PopupUI : BaseUI
 
     private void HoveredFirstSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _equipCancelImgs[0].gameObject.SetActive(true);
     }
     private void ExitFirstSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _equipCancelImgs[0].gameObject.SetActive(false);
     }
 
     private void HoveredSecondSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _equipCancelImgs[1].gameObject.SetActive(true);
     }
     private void ExitSecondSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _equipCancelImgs[1].gameObject.SetActive(false);
     }
 
     private void HoveredThirdSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _equipCancelImgs[2].gameObject.SetActive(true);
     }
     private void ExitThirdSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _equipCancelImgs[2].gameObject.SetActive(false);
     }
 
     // TODO : 아 매우 불편한 함수 구조... 이건 언젠가 바꾸고 만다 중간발표 이후에 ㅋㅋ 버튼3개
     private void ClickFirstSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         SlotUnEquip(0);
     }
 

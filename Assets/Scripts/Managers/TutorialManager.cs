@@ -9,6 +9,12 @@ public class TutorialManager : IManagers
 {
     private UIManager _uiManager;
     private DataManager _dataManager;
+    private GameManager _gameManager;
+
+    public bool isTutorial { get; set; }
+    public bool isPlacingTutorialClear = false; // 배치모드 튜토리얼 클리어했는지 체크.
+    public int tutorialIndexX = 1;
+    public int tutorialIndexY = 1;
 
     private float animationDuration = 0.3f;
 
@@ -16,6 +22,35 @@ public class TutorialManager : IManagers
     {
         _uiManager = Main.Get<UIManager>();
         _dataManager = Main.Get<DataManager>();
+        _gameManager = Main.Get<GameManager>();
+
+        isPlacingTutorialClear = false;
+        tutorialIndexX = 1;
+        tutorialIndexY = 1;
+
+        bool tutorial = PlayerPrefs.HasKey("Tutorial");
+        if (!tutorial)
+        {
+            isTutorial = true;
+            _gameManager.ChangeMoney(9000);
+        }
+        else
+        {
+            isTutorial = PlayerPrefs.GetInt("Tutorial") == 1 ? false : true;
+            int PlayerMoney = isTutorial ? 9000 : 4000; //뒤에거는 1스테이지 클리어한 금액을 더해줘야함 ex 3000 + 1000(1스테 클리어돈)
+            _gameManager.ChangeMoney(PlayerMoney);
+
+            if (!isTutorial && !Main.Get<SaveDataManager>().isSaveFileExist)
+            {
+                Character newChar = new Character(Main.Get<DataManager>().Character["Warrior2"]);
+                _gameManager.PlayerUnits.Add(newChar);
+
+                Room newRoom = new Room(Main.Get<DataManager>().Room["Forest2"]);
+                _gameManager.PlayerRooms.Add(newRoom);
+
+                _gameManager.CurStage = 1;
+            }
+        }
 
         return true;
     }

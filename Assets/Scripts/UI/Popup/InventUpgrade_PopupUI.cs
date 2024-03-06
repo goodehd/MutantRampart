@@ -59,7 +59,7 @@ public class InventUpgrade_PopupUI : BaseUI
         Owner.inventUpgrade_PopupUI = this;
         Count = 0;
 
-        if (_gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             _closeButton.gameObject.SetActive(false);
             _autoButton.gameObject.SetActive(false);
@@ -226,7 +226,7 @@ public class InventUpgrade_PopupUI : BaseUI
                 _gameManager.AddUnit(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
                 Owner.SetUnitInventory();
 
-                if (_gameManager.isTutorial) // 튜토리얼 중이라면
+                if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
                 {                    
                     if (_gameManager.PlayerUnits.Count == 1 && _gameManager.PlayerRooms.Count == 2) // 유닛 업그레이드 했다면
                     {
@@ -268,7 +268,7 @@ public class InventUpgrade_PopupUI : BaseUI
                 _gameManager.AddRoom(new Room(Main.Get<DataManager>().Room[UpgradeRoomSlots[0].Data.NextKey]));
                 Owner.SetRoomInventory();
                 
-                if (_gameManager.isTutorial) // 튜토리얼 중이라면
+                if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
                 {
                     if (_gameManager.PlayerRooms.Count == 4)
                     {
