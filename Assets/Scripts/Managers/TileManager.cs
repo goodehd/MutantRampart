@@ -6,9 +6,9 @@ using UnityEngine;
 public class TileManager : IManagers
 {
     private ResourceManager resource;
-    
+    private NavigationTile _navigation;
+
     public GameObject GridObject;
-    public NavigationTile _navigation;
     public List<List<RoomBehavior>> _roomObjList = new List<List<RoomBehavior>>();
 
     public SpawnTile SpawnTile { get; private set; }
@@ -16,7 +16,6 @@ public class TileManager : IManagers
 
     public RoomBehavior SelectRoom { get; private set; }
     public event Action OnSlectRoomEvent;
-    
 
     public void GenerateMap(int x, int y)
     {

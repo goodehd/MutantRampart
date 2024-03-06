@@ -101,16 +101,16 @@ public class RoomBehavior : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        if (Main.Get<GameManager>().isTutorial) // 튜토리얼 중이라면 (마우스 호버)
+        if (Main.Get<TutorialManager>().isTutorial) // 튜토리얼 중이라면 (마우스 호버)
         {
-            if (Main.Get<GameManager>().isPlacingTutorialClear) return; // 배치모드 튜토리얼 클리어 했다면 타일 호버 안 되도록.
+            if (Main.Get<TutorialManager>().isPlacingTutorialClear) return; // 배치모드 튜토리얼 클리어 했다면 타일 호버 안 되도록.
 
             if (Main.Get<GameManager>().isHomeSet)
             {
-                Main.Get<GameManager>().tutorialIndexY = 0; // 1,0
+                Main.Get<TutorialManager>().tutorialIndexY = 0; // 1,0
             }
 
-            if (IndexX == Main.Get<GameManager>().tutorialIndexX && IndexY == Main.Get<GameManager>().tutorialIndexY) // 1, 0
+            if (IndexX == Main.Get<TutorialManager>().tutorialIndexX && IndexY == Main.Get<TutorialManager>().tutorialIndexY) // 1, 0
             {
 
             }
@@ -142,11 +142,11 @@ public class RoomBehavior : MonoBehaviour
             return;
         }
 
-        if (Main.Get<GameManager>().isTutorial) // 튜토리얼 중이라면 (마우스 클릭)
+        if (Main.Get<TutorialManager>().isTutorial) // 튜토리얼 중이라면 (마우스 클릭)
         {
-            if (Main.Get<GameManager>().isPlacingTutorialClear) return; // 배치모드 튜토리얼 클리어 했다면 타일 클릭 안 되도록.
+            if (Main.Get<TutorialManager>().isPlacingTutorialClear) return; // 배치모드 튜토리얼 클리어 했다면 타일 클릭 안 되도록.
 
-            if (IndexX == Main.Get<GameManager>().tutorialIndexX && IndexY == Main.Get<GameManager>().tutorialIndexY) // 1, 0
+            if (IndexX == Main.Get<TutorialManager>().tutorialIndexX && IndexY == Main.Get<TutorialManager>().tutorialIndexY) // 1, 0
             {
 
             }

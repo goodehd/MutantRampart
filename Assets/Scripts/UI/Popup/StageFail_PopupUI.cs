@@ -52,25 +52,8 @@ public class StageFail_PopupUI : BaseUI
         Main.Get<UpgradeManager>().UpgradePoint += UpgradePoint;
         Main.Get<UpgradeManager>().SaveUpgrade();
         Main.Get<SaveDataManager>().SaveUpgradeData();
-
-        // 시작 Scene 으로 이동
-        Main.Get<SaveDataManager>().DeleteData();
-        Main.Get<GameManager>().Init();
-        Main.Get<UIManager>().Init();
-        Main.Get<StageManager>().Init();
-        Main.Get<PoolManager>().Init();
-        Main.Get<UpgradeManager>().Init();
-        Main.Get<SoundManager>().SoundStop(ESoundType.BGM);
-        Time.timeScale = 1.0f;
+        PlayerPrefs.SetInt("UpgradePoint", UpgradePoint);
+        Main.ManagerInit();
         Main.Get<SceneManager>().ChangeScene<SelectScene>();
     }
-
-
-    /*private void ClickRetryBtn(PointerEventData data)
-    {
-        //  스테이지 re 도전 ? 이 되려나 ?
-        // 일단은 시작Scene 으로 이동
-        Main.Get<UIManager>().ClosePopup();
-        Main.Get<SceneManager>().ChangeScene<StartScene>();
-    }*/
 }

@@ -32,6 +32,7 @@ public class SelectScene_SceneUI : BaseUI
     private UpgradeManager _upgradeManager;
     protected override void Init()
     {
+        base.Init();
         _saveDataManager = Main.Get<SaveDataManager>();
         _gameManager = Main.Get<GameManager>();
         _upgradeManager = Main.Get<UpgradeManager>();
@@ -69,7 +70,7 @@ public class SelectScene_SceneUI : BaseUI
         SetUICallback(_upgradeBtn.gameObject, EUIEventState.Click, ClickUpgradeBtn);
 
 
-        if (File.Exists(_saveDataManager.PlayerDataPath) && !_gameManager.isTutorial)
+        if (File.Exists(_saveDataManager.path) && !_tutorialManager.isTutorial)
         {
             _saveFile = true;
             _saveDataManager.LoadData();
@@ -107,7 +108,7 @@ public class SelectScene_SceneUI : BaseUI
     private void ClickContinueBtn(PointerEventData data)
     {
         // 1. 저장된 데이터가 있을때
-        if (_saveFile && !_gameManager.isTutorial)
+        if (_saveFile && !_tutorialManager.isTutorial)
         {
             Main.Get<SaveDataManager>().isSaveFileExist = true;
             _saveDataManager.LoadData();
@@ -132,7 +133,7 @@ public class SelectScene_SceneUI : BaseUI
         _saveDataManager.Player.Name = _inputFieldTxt.text;
         Main.Get<GameManager>().PlayerName = _saveDataManager.Player.Name;
         _saveDataManager.SaveData();
-        if (!Main.Get<GameManager>().isTutorial)
+        if (!_tutorialManager.isTutorial)
         {
             _setPlayerImage.gameObject.SetActive(false);
             _tutorialSkipImage.gameObject.SetActive(true);
@@ -147,12 +148,14 @@ public class SelectScene_SceneUI : BaseUI
     {
         PlayerPrefs.SetInt("Tutorial", 1);
         Main.Get<GameManager>().Init();
+        Main.Get<TutorialManager>().Init();
         SetTutorial();
     }
     private void ClickTutorialSkipNoBtn(PointerEventData data)
     {
         PlayerPrefs.SetInt("Tutorial", 0);
         Main.Get<GameManager>().Init();
+        Main.Get<TutorialManager>().Init();
         SetTutorial();
     }
     private void ClickTutorialSkipCloseBtn(PointerEventData data)
