@@ -119,7 +119,7 @@ public class DayMain_SceneUI : BaseUI
 
         tileManager.OnSlectRoomEvent += TileBat;
 
-        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             placingButton.gameObject.SetActive(false); // 배치모드 버튼 비활성화.
             unitButton.gameObject.SetActive(false); // 배치모드의 unit 버튼 비활성화.
@@ -141,7 +141,7 @@ public class DayMain_SceneUI : BaseUI
 
     public void CreateClickUnitUI(Character unit)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
 
         if (inventory_PopupUI != null)
         {
@@ -314,7 +314,7 @@ public class DayMain_SceneUI : BaseUI
             ClickStageStartBtn(eventData);
         }
 
-        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             Main.Get<UIManager>().ClosePopup(); // 튜토리얼 팝업창 닫기
 
@@ -336,7 +336,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickStageStartNoBtn(PointerEventData eventData)
     {
-        if (gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
             ui.curErrorText = "원활한 튜토리얼 진행을 위해\nYES 버튼을 눌러주세요.";
@@ -385,7 +385,7 @@ public class DayMain_SceneUI : BaseUI
     private void ClickUnitBtn(PointerEventData eventData)
     {
 
-        if (gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             unitButton.gameObject.SetActive(false);
             OpenPoketBlock(true);
@@ -404,7 +404,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickRoomBtn(PointerEventData eventData)
     {
-        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             roomButton.gameObject.SetActive(false);
 
@@ -454,9 +454,9 @@ public class DayMain_SceneUI : BaseUI
             _btnActions.Pop().BtnActions.Invoke();
         }
 
-        if (gameManager.isTutorial) // 튜토리얼 중이라면,
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면,
         {
-            if (gameManager.isPlacingTutorialClear) // 배치 튜토리얼 완료 후 뒤로가기 버튼 누르면
+            if (_tutorialManager.isPlacingTutorialClear) // 배치 튜토리얼 완료 후 뒤로가기 버튼 누르면
             {
                 placingButton.gameObject.SetActive(false); // 배치모드 버튼 비활성화
                 _stageStartButton.gameObject.SetActive(true); // StageStart 버튼 활성화
@@ -483,7 +483,7 @@ public class DayMain_SceneUI : BaseUI
         ClickPlacing();
         _btnActions.Push(new UIState(ClickPlacing, EUIstate.Main));
 
-        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             _tutorialManager.KillDOTween(tweener); // 배치모드 가리키고 있던 화살표 kill.
             _tutorialManager.SetArrowActive(_dayArrowImg, false);
@@ -503,7 +503,7 @@ public class DayMain_SceneUI : BaseUI
         shop_PopupUI = _ui.OpenPopup<Shop_PopupUI>("Shop_PopupUI");
         shop_PopupUI.Owner = this;
 
-        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             _tutorialManager.KillDOTween(tweener); // 상점 가리키고 있던 화살표 kill.
             _tutorialManager.SetArrowActive(_dayArrowImg, false);
@@ -541,7 +541,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickNextStageInfoButtonBtn(PointerEventData eventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _ui.OpenPopup<NextStageInfo_PopupUI>("NextStageInfo_PopupUI");
     }
 
@@ -583,7 +583,7 @@ public class DayMain_SceneUI : BaseUI
     {
         maincamera.Rock = true;
 
-        if (gameManager.isTutorial) // 튜토리얼 중이라면.
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면.
         {
             _ui.ClosePopup(); // 열려있던 튜토리얼msg 팝업 먼저 끄기.
         }
@@ -606,7 +606,7 @@ public class DayMain_SceneUI : BaseUI
             isInventOpen = true;
         }
 
-        if (gameManager.isTutorial) // 튜토리얼 중이라면.
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면.
         {
             _inventoryButton.gameObject.SetActive(false); // 인벤토리 버튼 비활성화
 
@@ -682,7 +682,7 @@ public class DayMain_SceneUI : BaseUI
             SetTileBatUI();
         }
 
-        if (gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             if (!gameManager.isHomeSet)
             {
@@ -716,12 +716,12 @@ public class DayMain_SceneUI : BaseUI
         {
             if (_btnActions.Peek().UIStagte == EUIstate.ChangeTileSelect)
             {
-                if (gameManager.isTutorial && !gameManager.PlayerRooms[1].IsEquiped) // 튜토리얼 중인데 배치룸 배치 안 했으면
+                if (_tutorialManager.isTutorial && !gameManager.PlayerRooms[1].IsEquiped) // 튜토리얼 중인데 배치룸 배치 안 했으면
                 {
                     roomDirBtsnUI.gameObject.SetActive(false);
 
                 }
-                else if (!gameManager.isTutorial)                                   // 튜토리얼이 아니라면
+                else if (!_tutorialManager.isTutorial)                                   // 튜토리얼이 아니라면
                 {
                     roomDirBtsnUI.gameObject.SetActive(true);
                 }

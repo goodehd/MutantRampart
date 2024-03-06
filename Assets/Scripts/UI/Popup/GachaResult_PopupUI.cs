@@ -37,7 +37,7 @@ public class GachaResult_PopupUI : BaseUI
 
     private void ClickRetryBtn(PointerEventData data)
     {
-        if (_gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             return;
         }
@@ -51,7 +51,7 @@ public class GachaResult_PopupUI : BaseUI
         SaveData();
         _ui.ClosePopup();
 
-        if (_gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             if (_gameManager.PlayerUnits.Count >= 3)
             {
@@ -130,7 +130,7 @@ public class GachaResult_PopupUI : BaseUI
             }
         }
 
-        if (!_gameManager.isTutorial)
+        if (!Main.Get<TutorialManager>().isTutorial)
         {
             _gameManager.SaveData();
         }

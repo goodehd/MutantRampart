@@ -24,6 +24,8 @@ public class UnitSelectImageUIPanel : BaseUI
     
     protected override void Init()
     {
+        base.Init();
+
         _tile = Main.Get<TileManager>();
         _game = Main.Get<GameManager>();
         _tuManager = Main.Get<TutorialManager>();
@@ -84,7 +86,7 @@ public class UnitSelectImageUIPanel : BaseUI
 
         }
 
-        if (_game.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             if (_game.PlayerUnits[0].CurRoom != null) // 유닛이 장착중이라면
             {
@@ -97,7 +99,7 @@ public class UnitSelectImageUIPanel : BaseUI
                 Owner.Owner.tweener = _tuManager.SetDOTweenX(Owner.Owner.dayArrowTransform, -750f);
                 _tuManager.CreateTutorialPopup("T16");
 
-                _game.isPlacingTutorialClear = true;
+                _tutorialManager.isPlacingTutorialClear = true;
             }
         }
     }
