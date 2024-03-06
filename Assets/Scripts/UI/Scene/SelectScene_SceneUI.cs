@@ -29,10 +29,12 @@ public class SelectScene_SceneUI : BaseUI
     private bool _saveFile;
 
     private SaveDataManager _saveDataManager;
+    private UpgradeManager _upgradeManager;
     protected override void Init()
     {
         _saveDataManager = Main.Get<SaveDataManager>();
         _gameManager = Main.Get<GameManager>();
+        _upgradeManager = Main.Get<UpgradeManager>();
 
         SetUI<Button>();
         SetUI<Image>();
@@ -67,7 +69,7 @@ public class SelectScene_SceneUI : BaseUI
         SetUICallback(_upgradeBtn.gameObject, EUIEventState.Click, ClickUpgradeBtn);
 
 
-        if (File.Exists(_saveDataManager.path) && !_gameManager.isTutorial)
+        if (File.Exists(_saveDataManager.PlayerDataPath) && !_gameManager.isTutorial)
         {
             _saveFile = true;
             _saveDataManager.LoadData();

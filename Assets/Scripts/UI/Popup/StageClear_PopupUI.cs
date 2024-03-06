@@ -27,6 +27,12 @@ public class StageClear_PopupUI : BaseUI
 
         _stageText.text = $"Day {_curStage -1}";
         _RewardsText.text = $"{_rewardsGold}gold";
+
+        //만약 골드 업그레이드를 했다면
+        if (Main.Get<UpgradeManager>().GoldUpgradeLevel > 1)
+        {
+            _RewardsText.text = $"{_rewardsGold} + ({(int)(_rewardsGold * Main.Get<UpgradeManager>().UpgradeGoldPercent)})gold";
+        }
     }
 
     private void ClickNextBtn(PointerEventData EventData)

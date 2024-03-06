@@ -1,35 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class UpgradeManager : IManagers
 {
     public int UpgradePoint { get; set; }
     public int GoldUpgradeLevel { get; set; }
+    public int HpUpgradeLevel { get; set; }
+    public int WallUpgradeLevel { get; set; }
     public float UpgradeGoldPercent { get; set; }
+
+    private SaveDataManager _saveDataManager;
+
     public bool Init()
     {
-        bool isGetUpgradePoint = PlayerPrefs.HasKey("UpgradePoint");
-        bool isGetGoldUpgradeLevel = PlayerPrefs.HasKey("GoldUpgradeLevel");
+        _saveDataManager = Main.Get<SaveDataManager>();
 
-        if (!isGetUpgradePoint)
+        if (File.Exists(_saveDataManager.UpgradeDataPath))
+        {
+            _saveDataManager.LoadUpgradeData();
+            UpgradePoint = _saveDataManager.Upgrade.UpgradePoint;
+            GoldUpgradeLevel = _saveDataManager.Upgrade.GoldUpgradeLevel;
+            HpUpgradeLevel = _saveDataManager.Upgrade.HpUpgradeLevel;
+            WallUpgradeLevel = _saveDataManager.Upgrade.WallUpgradeLevel;
+        }
+        else
         {
             UpgradePoint = 0;
-        }
-        else
-        {
-            UpgradePoint = PlayerPrefs.GetInt("UpgradePoint");
-        }
-        if (!isGetGoldUpgradeLevel)
-        {
             GoldUpgradeLevel = 1;
-        }
-        else
-        {
-            GoldUpgradeLevel = PlayerPrefs.GetInt("GoldUpgradeLevel");
+            HpUpgradeLevel = 1;
+            WallUpgradeLevel = 1;
         }
         UpdateUpgradeGoldPercent();
         return true;
+    }
+
+    public void SaveUpgrade()
+    {
+        _saveDataManager.Upgrade.UpgradePoint = UpgradePoint;
+        _saveDataManager.Upgrade.GoldUpgradeLevel = GoldUpgradeLevel;
+        _saveDataManager.Upgrade.HpUpgradeLevel = HpUpgradeLevel;
+        _saveDataManager.Upgrade.WallUpgradeLevel = WallUpgradeLevel;
     }
 
     public void UpdateUpgradeGoldPercent()
