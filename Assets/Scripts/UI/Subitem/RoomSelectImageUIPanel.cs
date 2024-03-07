@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RoomSelectImageUI : BaseUI
+public class RoomSelectImageUIPanel : BaseUI
 {
     private TileManager _tile;
     private DataManager _data;
@@ -27,10 +27,10 @@ public class RoomSelectImageUI : BaseUI
         SetUI<Image>();
         SetUI<Button>();
 
-        _roomImage = GetUI<Image>("RoomSelectImageUI");
+        _roomImage = GetUI<Image>("RoomSelectImageBtn");
         _isEquipedImage = GetUI<Image>("IsEquipedImage");
         _selectRoomEquipImage = GetUI<Image>("SelectRoomEquipImage");
-        _roomSelectButton = GetUI<Button>("RoomSelectImageUI");
+        _roomSelectButton = GetUI<Button>("RoomSelectImageBtn");
 
         if (Room.IsEquiped)
         {

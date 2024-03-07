@@ -10,29 +10,29 @@ public class PocketBlock_PopupUI : BaseUI
     private TileManager tile;
 
     private UnitSelectImageUIPanel charUI;
-    private RoomSelectImageUI roomSelectImage;
+    private RoomSelectImageUIPanel roomSelectImage;
 
-    public Image _roomScroll;
-    public Image _unitScroll; 
+    private Image _roomScroll;
+    private Image _unitScroll; 
+
     public Image _roomDescription { get; private set; }
     public Image _unitDescription { get; private set; }
 
-    public TextMeshProUGUI _unitName;
-    public TextMeshProUGUI _unitHP;
-    public TextMeshProUGUI _unitATK;
-    public TextMeshProUGUI _unitDEF;
-    public TextMeshProUGUI _unitATKSpeed;
-    public TextMeshProUGUI _unitSkillDesc;
-    public TextMeshProUGUI _roomName;
-    public TextMeshProUGUI _roomType;
-    public TextMeshProUGUI _roomDescript;
+    private TextMeshProUGUI _unitName;
+    private TextMeshProUGUI _unitHP;
+    private TextMeshProUGUI _unitATK;
+    private TextMeshProUGUI _unitDEF;
+    private TextMeshProUGUI _unitATKSpeed;
+    private TextMeshProUGUI _unitSkillDesc;
+    private TextMeshProUGUI _roomName;
+    private TextMeshProUGUI _roomType;
+    private TextMeshProUGUI _roomDescript;
     private ContentSizeFitter _roomContent;
     private ContentSizeFitter _unitContent;
 
     public bool IsUnit { get; set; }
 
     public DayMain_SceneUI Owner { get; set; }
-
 
     protected override void Init()
     {
@@ -109,7 +109,6 @@ public class PocketBlock_PopupUI : BaseUI
             case EStatusformat.Count:
                 break;
         }
-        //_roomType.text = $"{room.Data.Type}";
         _roomDescript.text = $"{room.Data.Instruction}";
     }
 
@@ -155,7 +154,7 @@ public class PocketBlock_PopupUI : BaseUI
 
         for (int i = 0; i < playerRooms.Count; i++)
         {
-            roomSelectImage = _ui.CreateSubitem<RoomSelectImageUI>("RoomSelectImageUI", _roomContent.transform);
+            roomSelectImage = _ui.CreateSubitem<RoomSelectImageUIPanel>("RoomSelectImageUIPanel", _roomContent.transform);
             roomSelectImage.Room = Main.Get<GameManager>().PlayerRooms[i];
             roomSelectImage.Owner = this;
         }
