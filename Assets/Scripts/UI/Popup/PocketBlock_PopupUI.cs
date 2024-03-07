@@ -9,27 +9,26 @@ public class PocketBlock_PopupUI : BaseUI
     private GameManager player;
     private TileManager tile;
 
-    public Image _roomScroll;
-    public Image _unitScroll; 
+    private Image _roomScroll;
+    private Image _unitScroll; 
     public Image _roomDescription { get; private set; }
     public Image _unitDescription { get; private set; }
 
-    public TextMeshProUGUI _unitName;
-    public TextMeshProUGUI _unitHP;
-    public TextMeshProUGUI _unitATK;
-    public TextMeshProUGUI _unitDEF;
-    public TextMeshProUGUI _unitATKSpeed;
-    public TextMeshProUGUI _unitSkillDesc;
-    public TextMeshProUGUI _roomName;
-    public TextMeshProUGUI _roomType;
-    public TextMeshProUGUI _roomDescript;
+    private TextMeshProUGUI _unitName;
+    private TextMeshProUGUI _unitHP;
+    private TextMeshProUGUI _unitATK;
+    private TextMeshProUGUI _unitDEF;
+    private TextMeshProUGUI _unitATKSpeed;
+    private TextMeshProUGUI _unitSkillDesc;
+    private TextMeshProUGUI _roomName;
+    private TextMeshProUGUI _roomType;
+    private TextMeshProUGUI _roomDescript;
     private ContentSizeFitter _roomContent;
     private ContentSizeFitter _unitContent;
 
     public bool IsUnit { get; set; }
 
     public DayMain_SceneUI Owner { get; set; }
-
 
     protected override void Init()
     {
@@ -63,17 +62,17 @@ public class PocketBlock_PopupUI : BaseUI
         List<Character> playerUnits = player.PlayerUnits;
         List<Room> playerRooms = player.PlayerRooms;
 
-        for(int i = 0; i < playerUnits.Count; i++)
+        for (int i = 0; i < playerUnits.Count; i++)
         {
             UnitSelectImageUIPanel charUI = _ui.CreateSubitem<UnitSelectImageUIPanel>("UnitSelectImageUIPanel", _unitContent.transform);
             charUI.CharacterData = playerUnits[i];
             charUI.Owner = this;
         }
-        
-        for(int i = 0; i < playerRooms.Count; i++)
+
+        for (int i = 0; i < playerRooms.Count; i++)
         {
-            RoomSelectImageUI roomSelectImage = _ui.CreateSubitem<RoomSelectImageUI>("RoomSelectImageUI", _roomContent.transform);
-            roomSelectImage.Room = Main.Get<GameManager>().PlayerRooms[i];
+            RoomSelectImageUIPanel roomSelectImage = _ui.CreateSubitem<RoomSelectImageUIPanel>("RoomSelectImageUIPanel", _roomContent.transform);
+            roomSelectImage.Room = playerRooms[i];
             roomSelectImage.Owner = this;
         }
 

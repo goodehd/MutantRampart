@@ -46,7 +46,7 @@ public class ChangeRoom_PopupUI : BaseUI
 
         for (int i = 0; i < Main.Get<GameManager>().PlayerRooms.Count; i++)
         {
-            RoomSelectImageUI roomSelectImage = Main.Get<UIManager>().CreateSubitem<RoomSelectImageUI>("RoomSelectImageUI", _content);
+            RoomSelectImageUIPanel roomSelectImage = Main.Get<UIManager>().CreateSubitem<RoomSelectImageUIPanel>("RoomSelectImageUI", _content);
             roomSelectImage.Room = Main.Get<GameManager>().PlayerRooms[i];
             //roomSelectImage.Owner = this;
         }

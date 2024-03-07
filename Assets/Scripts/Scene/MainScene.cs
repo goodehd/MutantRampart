@@ -19,7 +19,6 @@ public class MainScene : Scene
         _groundRowSize = Main.Get<UpgradeManager>().UpgradeMapSizeRow;
 
         Main.Get<UIManager>().OpenSceneUI<DayMain_SceneUI>();
-        Main.Get<SoundManager>().SoundPlay($"NightBGM", ESoundType.BGM);
         Main.Get<SoundManager>().SoundPlay($"DayBGM", ESoundType.BGM);
         if (Main.Get<SaveDataManager>().isSaveFileExist)
         {
@@ -29,6 +28,8 @@ public class MainScene : Scene
         {
             Main.Get<TileManager>().GenerateMap(_groundColSize, _groundRowSize);
         }
+
+        Main.Get<ResourceManager>().Load<RoomSelectImageUIPanel>($"{Literals.UI_SUBITEM_PATH}RoomSelectImageUIPanel");
 
         _unitArrow = _resource.Instantiate("Prefabs/UnitArrow");
         _unitArrow.SetActive(false);
