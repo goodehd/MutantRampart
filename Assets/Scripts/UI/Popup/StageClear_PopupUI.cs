@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using TMPro;
-using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -27,13 +27,25 @@ public class StageClear_PopupUI : BaseUI
 
         _stageText.text = $"Day {_curStage -1}";
         _RewardsText.text = $"{_rewardsGold}gold";
+
+        //만약 골드 업그레이드를 했다면
+        if (Main.Get<UpgradeManager>().GoldUpgradeLevel > 1)
+        {
+            _RewardsText.text = $"{_rewardsGold} + ({(int)(_rewardsGold * Main.Get<UpgradeManager>().UpgradeGoldPercent)})gold";
+        }
     }
 
     private void ClickNextBtn(PointerEventData EventData)
     {
         Main.Get<GameManager>().SaveData();
         Main.Get<UIManager>().ClosePopup();
-        Main.Get<UIManager>().OpenPopup<RewardSelect_PopupUI>();
+
+        Random random = new Random();
+        int randomNumber = random.Next(0, 100);
+        if(randomNumber < Main.Get<UpgradeManager>().UpgradeRewardChance)
+        {
+            Main.Get<UIManager>().OpenPopup<RewardSelect_PopupUI>();
+        }
         /*if ((_curStage-1) % 5 == 0 && _curStage != 0)
         {
             Main.Get<UIManager>().OpenPopup<RewardSelect_PopupUI>();

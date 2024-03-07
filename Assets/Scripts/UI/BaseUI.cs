@@ -12,7 +12,6 @@ public class BaseUI : MonoBehaviour
     protected Dictionary<Type, Dictionary<string, UnityEngine.Object>> _uiObjects = new Dictionary<Type, Dictionary<string, UnityEngine.Object>>();
     protected TutorialManager _tutorialManager;
 
-
     private void Start()
     {
         Init();

@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,7 +7,6 @@ public class RoomSelectImageUI : BaseUI
     private TileManager _tile;
     private DataManager _data;
     private GameManager _game;
-    private TutorialManager _tuManager;
 
     private Image _roomImage;
     private Image _isEquipedImage;
@@ -20,10 +18,11 @@ public class RoomSelectImageUI : BaseUI
 
     protected override void Init()
     {
+        base.Init();
+
         _tile = Main.Get<TileManager>();
         _data = Main.Get<DataManager>();
         _game = Main.Get<GameManager>();
-        _tuManager = Main.Get<TutorialManager>();
 
         SetUI<Image>();
         SetUI<Button>();
@@ -58,32 +57,31 @@ public class RoomSelectImageUI : BaseUI
 
     private void ChangeRoom(PointerEventData EventData)
     {
-        if (_game.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             if (Room.Data.Type == EStatusformat.Home && !_game.isHomeSet) // Home 이 배치 안 되어 있을 때 Home 을 배치하려는 경우
             {
                 _tile.ChangeRoom(Room);
-                Main.Get<GameManager>().tutorialIndexY = 0;
+                _tutorialManager.tutorialIndexY = 0;
 
-                Main.Get<UIManager>().ClosePopup();
-                _tuManager.CreateTutorialPopup("T12");
+                _ui.CloseAllPopup();
+                _tutorialManager.CreateTutorialPopup("T12");
                 Main.Get<TileManager>()._roomObjList[1][1].StopFlashing();
 
-                _tuManager.KillDOTween(Owner.Owner.tweener); // home 타입 가리키는 화살표 Kill.
-                _tuManager.SetArrowActive(Owner.Owner._dayArrowImg, false);
+                _tutorialManager.KillDOTween(); // home 타입 가리키는 화살표 Kill.
+                _tutorialManager.SetArrowActive(false);
 
                 _tile.GetRoom(1, 0).StartFlashing();
             }
             else if (Room.Data.Type != EStatusformat.Home && _game.isHomeSet && _tile.SelectRoom.RoomInfo.Data.Type != EStatusformat.Bat) // Home 은 배치되어 있지만 배치 타입의 Room 을 배치하려는 경우, 그리고 배치하려는 곳이 Default 일 때 
             {
                 _tile.ChangeRoom(Room);
-                _tuManager.KillDOTween(Owner.Owner.tweener);
+                _tutorialManager.KillDOTween();
+                _tutorialManager.SetArrowActive(false);
                 Owner.Owner.roomDirBtsnUI.gameObject.SetActive(true); // 버튼 UI 활성화.
 
-                _tuManager.SetArrowActive(Owner.Owner._dayArrowImg, false);
-
-                Main.Get<UIManager>().ClosePopup();
-                _tuManager.CreateTutorialPopup("T14", true, true);
+                _ui.ClosePopup();
+                _tutorialManager.CreateTutorialPopup("T14", true, true);
             }
             return;
         }

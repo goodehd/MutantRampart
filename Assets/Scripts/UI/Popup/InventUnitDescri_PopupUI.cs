@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -33,10 +32,6 @@ public class InventUnitDescri_PopupUI : BaseUI
     private ScrollRect _myItemsScrollView;
 
     private Transform _myItemsContent;
-
-    public Image arrowImg { get; set; }
-    public RectTransform arrowTransform { get; set; }
-    public Tweener tweener { get; set; }
 
     public Character UnitData { get; set; }
 
@@ -85,8 +80,6 @@ public class InventUnitDescri_PopupUI : BaseUI
         _unitSkillDescription = GetUI<TMP_Text>("InventUnitSkillDescriTxt");
 
         _unitImg = GetUI<Image>("InventUnitImg");
-        arrowImg = GetUI<Image>("UnitDescriArrowImg");
-        arrowTransform = arrowImg.GetComponent<RectTransform>();
 
         _myItemsScrollView = GetUI<ScrollRect>("MyItems_Scroll View");
 
@@ -107,13 +100,13 @@ public class InventUnitDescri_PopupUI : BaseUI
         }
         SetInfo();
 
-        if (gameManager.isTutorial) // 튜토리얼 진행 중일 때 삭제버튼, 닫기버튼 비활성화.
+        if (_tutorialManager.isTutorial) // 튜토리얼 진행 중일 때 삭제버튼, 닫기버튼 비활성화.
         {
             _deleteBtn.gameObject.SetActive(false);
             _closeBtn.gameObject.SetActive(false);
 
-            _tutorialManager.SetArrowActive(arrowImg, true); // Description 에서 아이템 가리키는 화살표
-            tweener = _tutorialManager.SetDOTweenY(arrowTransform, 110f);
+            _tutorialManager.SetArrowPosition(48f, 80f); // Description 에서 아이템 가리키는 화살표
+            _tutorialManager.SetDOTweenY(110f);
         }
     }
     
@@ -186,41 +179,41 @@ public class InventUnitDescri_PopupUI : BaseUI
 
     private void HoveredFirstSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _equipCancelImgs[0].gameObject.SetActive(true);
     }
     private void ExitFirstSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _equipCancelImgs[0].gameObject.SetActive(false);
     }
 
     private void HoveredSecondSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _equipCancelImgs[1].gameObject.SetActive(true);
     }
     private void ExitSecondSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _equipCancelImgs[1].gameObject.SetActive(false);
     }
 
     private void HoveredThirdSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _equipCancelImgs[2].gameObject.SetActive(true);
     }
     private void ExitThirdSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         _equipCancelImgs[2].gameObject.SetActive(false);
     }
 
     // TODO : 아 매우 불편한 함수 구조... 이건 언젠가 바꾸고 만다 중간발표 이후에 ㅋㅋ 버튼3개
     private void ClickFirstSlot(PointerEventData EventData)
     {
-        if (gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
         SlotUnEquip(0);
     }
 

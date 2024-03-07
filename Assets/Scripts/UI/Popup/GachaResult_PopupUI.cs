@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,7 +36,7 @@ public class GachaResult_PopupUI : BaseUI
 
     private void ClickRetryBtn(PointerEventData data)
     {
-        if (_gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             return;
         }
@@ -51,29 +50,29 @@ public class GachaResult_PopupUI : BaseUI
         SaveData();
         _ui.ClosePopup();
 
-        if (_gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             if (_gameManager.PlayerUnits.Count >= 3)
             {
-                _tutorialManager.KillDOTween(Owner.tweener); // room 가리키는 화살표 Kill.
+                _tutorialManager.KillDOTween(); // room 가리키는 화살표 Kill.
 
                 if (_gameManager.PlayerRooms.Count == 1)
                 {
                     _tutorialManager.CreateTutorialPopup("T2", true, true);
 
-                    _tutorialManager.SetArrowActive(Owner.shopArrowImg, true);
-                    _tutorialManager.SetArrowPosition(Owner.shopArrowTransform, 369f, 376f); // 상점 내 Room 카테고리 가리키는 화살표.
-                    Owner.tweener = _tutorialManager.SetDOTweenY(Owner.shopArrowTransform, 346f);
+                    _tutorialManager.SetArrowActive(true);
+                    _tutorialManager.SetArrowPosition(435f, 376f); // 상점 내 Room 카테고리 가리키는 화살표.
+                    _tutorialManager.SetDOTweenY(346f);
                 }
             }
 
             if (_gameManager.PlayerUnits.Count >= 3 && _gameManager.PlayerRooms.Count >= 4)
             {
                 Owner.backButton.gameObject.SetActive(true);
-                _tutorialManager.SetArrowActive(Owner.shopArrowImg, true);
-                _tutorialManager.SetArrowPosition(Owner.shopArrowTransform, -770f, 484f); // 상점 뒤로가기 버튼 가리키는 화살표.
-                _tutorialManager.RotateArrow(Owner.shopArrowTransform, -90f);
-                Owner.tweener = _tutorialManager.SetDOTweenX(Owner.shopArrowTransform, -800f);
+                _tutorialManager.SetArrowActive(true);
+                _tutorialManager.SetArrowPosition(-770f, 484f); // 상점 뒤로가기 버튼 가리키는 화살표.
+                _tutorialManager.RotateArrow(-90f);
+                _tutorialManager.SetDOTweenX(-800f);
             }
         }
     }
@@ -130,7 +129,7 @@ public class GachaResult_PopupUI : BaseUI
             }
         }
 
-        if (!_gameManager.isTutorial)
+        if (!Main.Get<TutorialManager>().isTutorial)
         {
             _gameManager.SaveData();
         }

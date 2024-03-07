@@ -13,18 +13,9 @@ public class GameManager : IManagers
     public bool isPlayerDead = false;
     public RoomBehavior HomeRoom { get; set; }
     public string PlayerName { get; set; }
-
     public int CurStage { get; set; }
+    public int SetWallCount { get; set; }
    
-    public bool isTutorial { get; set; }
-
-    public bool isPlacingTutorialClear = false; // 배치모드 튜토리얼 클리어했는지 체크.
-
-    public int tutorialIndexX = 1;
-
-    public int tutorialIndexY = 1;
-
-
     public List<Character> PlayerUnits { get; private set; }   // 플레이어가 보유한 유닛 리스트
     public List<Room> PlayerRooms { get; private set; }    // 플레이어가 보유한 Room 리스트
     public List<Item> PlayerItems { get; private set; }     // 플레이어가 보유한 아이템 리스트
@@ -37,32 +28,9 @@ public class GameManager : IManagers
         PlayerRooms = new List<Room>();
         PlayerItems = new List<Item>();
         CurStage = 0;
-        PlayerHP = new Vital(EstatType.Hp, 5);
-        PlayerHP.OnValueZero += GameOver;
-        
-
-        bool tutorial = PlayerPrefs.HasKey("Tutorial");
-        if (!tutorial)
-        {
-            isTutorial = true;
-            PlayerMoney = 9000;
-        }
-        else
-        {
-            isTutorial = PlayerPrefs.GetInt("Tutorial") == 1 ? false : true;
-            PlayerMoney = isTutorial ? 9000 : 4000; //뒤에거는 1스테이지 클리어한 금액을 더해줘야함 ex 3000 + 1000(1스테 클리어돈)
-            if (!isTutorial && !Main.Get<SaveDataManager>().isSaveFileExist)
-            {
-                Character newChar = new Character(Main.Get<DataManager>().Character["Warrior2"]);
-                PlayerUnits.Add(newChar);
-
-                Room newRoom = new Room(Main.Get<DataManager>().Room["Forest2"]);
-                PlayerRooms.Add(newRoom);
-
-                CurStage = 1;
-            }
-        }
-
+        SetWallCount = 0;
+        SetPlayerHp();
+        PlayerMoney = 0;
         isHomeSet = false;
         return true;
     }
@@ -71,6 +39,7 @@ public class GameManager : IManagers
     {
         PlayerMoney += amount;
         OnChangeMoney?.Invoke(PlayerMoney);
+        if(PlayerMoney < 0) PlayerMoney = 0;
     }
 
     public void GameOver()
@@ -128,9 +97,7 @@ public class GameManager : IManagers
         saveDataManager.Player.Curstage = CurStage;
         saveDataManager.Player.PlayerMoney = PlayerMoney;
         saveDataManager.Player.PlayerHP = PlayerHP.CurValue;
-        //saveDataManager.Player.BGMValue = Main.Get<SoundManager>().BGMValue;
-        //saveDataManager.Player.EffectValue = Main.Get<SoundManager>().EffectValue;
-        //saveDataManager.Player.UIValue = Main.Get<SoundManager>().UIValue;
+        saveDataManager.Player.SetWallCount = SetWallCount;
         Main.Get<TileManager>().GetMapSize(out saveDataManager.Player.MapSizeX, out saveDataManager.Player.MapSizeY);
         for (int i = 0; i < PlayerUnits.Count; i++)
         {
@@ -393,9 +360,25 @@ public class GameManager : IManagers
         PlayerItems.Add(item);
     }
 
+    public void SetPlayerHp()
+    {
+        int hpUpgradeLevel = Main.Get<UpgradeManager>().HpUpgradeLevel;
+        float upgradeHp = hpUpgradeLevel * hpUpgradeLevel;
+
+        if(hpUpgradeLevel > 1)
+        {
+            PlayerHP = new Vital(EstatType.Hp, 5 + upgradeHp);
+        }
+        else
+        {
+            PlayerHP = new Vital(EstatType.Hp, 5);
+        }
+        PlayerHP.OnValueZero += GameOver;
+    }
+
     public void ExitGame()
     {
-        if (!isTutorial)
+        if (!Main.Get<TutorialManager>().isTutorial)
         {
             SaveData();
         }

@@ -1,9 +1,7 @@
-using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class InventUpgrade_PopupUI : BaseUI
@@ -59,7 +57,7 @@ public class InventUpgrade_PopupUI : BaseUI
         Owner.inventUpgrade_PopupUI = this;
         Count = 0;
 
-        if (_gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             _closeButton.gameObject.SetActive(false);
             _autoButton.gameObject.SetActive(false);
@@ -226,17 +224,15 @@ public class InventUpgrade_PopupUI : BaseUI
                 _gameManager.AddUnit(new Character(Main.Get<DataManager>().Character[UpgradeUnitSlots[0].Data.NextKey]));
                 Owner.SetUnitInventory();
 
-                if (_gameManager.isTutorial) // 튜토리얼 중이라면
+                if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
                 {                    
                     if (_gameManager.PlayerUnits.Count == 1 && _gameManager.PlayerRooms.Count == 2) // 유닛 업그레이드 했다면
                     {
-                        _tutorialManager.KillDOTween(Owner.tweener);
-
-                        _tutorialManager.SetArrowActive(Owner.inventArrowImg, true);
-                        _tutorialManager.SetArrowPosition(Owner.inventArrowTransform, 526f, 90f); // 보유 unit img 화살표
-                        Owner.tweener = _tutorialManager.SetDOTweenY(Owner.inventArrowTransform, 120f);
-
                         _tutorialManager.CreateTutorialPopup("T6", true, true);
+
+                        _tutorialManager.SetArrowActive(true);
+                        _tutorialManager.SetArrowPosition(526f, 90f); // 보유 unit img 화살표
+                        _tutorialManager.SetDOTweenY(120f);
                     }
                 }
 
@@ -268,21 +264,20 @@ public class InventUpgrade_PopupUI : BaseUI
                 _gameManager.AddRoom(new Room(Main.Get<DataManager>().Room[UpgradeRoomSlots[0].Data.NextKey]));
                 Owner.SetRoomInventory();
                 
-                if (_gameManager.isTutorial) // 튜토리얼 중이라면
+                if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
                 {
                     if (_gameManager.PlayerRooms.Count == 4)
                     {
-                        _tutorialManager.KillDOTween(Owner.tweener);
-                        _tutorialManager.SetArrowActive(Owner.inventArrowImg, false);
+                        _tutorialManager.KillDOTween();
                     }
                     if (_gameManager.PlayerRooms.Count == 2)
                     {
-                        _tutorialManager.KillDOTween(Owner.tweener);
-
-                        _tutorialManager.SetArrowPosition(Owner.inventArrowTransform, 592f, 270f); // unit 버튼 화살표
-                        Owner.tweener = _tutorialManager.SetDOTweenY(Owner.inventArrowTransform, 300f);
+                        _tutorialManager.KillDOTween();
 
                         _tutorialManager.CreateTutorialPopup("T5", true, true);
+
+                        _tutorialManager.SetArrowPosition(592f, 270f); // unit 버튼 화살표
+                        _tutorialManager.SetDOTweenY(300f);
                     }
                 }
 

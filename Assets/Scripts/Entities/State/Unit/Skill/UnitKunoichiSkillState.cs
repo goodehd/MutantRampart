@@ -35,6 +35,11 @@ public class UnitKunoichiSkillState : BaseState
         if (Owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Unit_Gun_Skill") &&
                 Owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
+            if(_targets.Count < 0)
+            {
+                Owner.StateMachine.ChangeState(EState.Attack);
+            }
+
             GameObject go = Main.Get<ResourceManager>().Instantiate($"{Literals.FX_PATH}KunoichiFx1");
             Vector3 pos = _targets.First.Value.GetWorldPos();
             go.transform.position = pos;

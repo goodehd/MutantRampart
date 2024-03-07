@@ -37,7 +37,8 @@ public enum EUIstate
 {
     Main,
     ChangeTileSelect,
-    ChangeUnitAndRoom
+    ChangeUnitAndRoom,
+    RoomMove
 }
 
 public enum EStatusformat

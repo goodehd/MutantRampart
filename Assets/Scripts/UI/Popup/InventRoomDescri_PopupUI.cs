@@ -44,7 +44,7 @@ public class InventRoomDescri_PopupUI : BaseUI
 
         SetInfo();
 
-        if (Main.Get<GameManager>().isTutorial) // 튜토리얼 진행 중일 때 삭제버튼 비활성화.
+        if (_tutorialManager.isTutorial) // 튜토리얼 진행 중일 때 삭제버튼 비활성화.
         {
             _deleteBtn.gameObject.SetActive(false);
         }
@@ -69,7 +69,7 @@ public class InventRoomDescri_PopupUI : BaseUI
             case EStatusformat.Count:
                 break;
         }
-       // _roomType.text = RoomData.Data.Type.ToString();
+
         _roomDescription.text = RoomData.Data.Instruction;
         _inventRoomImg.sprite = Main.Get<ResourceManager>().Load<Sprite>($"{Literals.ROOM_SPRITES_PATH}{RoomData.Data.Key}");
     }
@@ -79,12 +79,6 @@ public class InventRoomDescri_PopupUI : BaseUI
         Main.Get<UIManager>().ClosePopup();
         Owner._selectCheckImg.gameObject.SetActive(false);
     }
-
-    //private void ClickUpgradeBtn(PointerEventData EventData)
-    //{
-    //    Main.Get<UIManager>().OpenPopup<PastUpgrade_PopupUI>("PastUpgrade_PopupUI");
-
-    //}
 
     private void ClickDeleteBtn(PointerEventData EventData)
     {

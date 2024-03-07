@@ -1,22 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class TileManager : IManagers
 {
     private ResourceManager resource;
-    
+    private NavigationTile _navigation;
+
     public GameObject GridObject;
-    public NavigationTile _navigation;
     public List<List<RoomBehavior>> _roomObjList = new List<List<RoomBehavior>>();
 
     public SpawnTile SpawnTile { get; private set; }
     public BatPoint BatSlot { get; set; }
 
     public RoomBehavior SelectRoom { get; private set; }
+    public RoomBehavior PrevSelectRoom { get; set; }
     public event Action OnSlectRoomEvent;
-    
+
+    public int WallLimit;
 
     public void GenerateMap(int x, int y)
     {
@@ -96,6 +99,9 @@ public class TileManager : IManagers
     {
         resource = Main.Get<ResourceManager>();
         _navigation = new NavigationTile();
+
+        UpdateWallCount();
+        
         return true;
     }
 
@@ -212,38 +218,45 @@ public class TileManager : IManagers
         return _navigation.FindPath(start, end, out stackPath);
     }
 
-    public void SetRoomDir(RoomBehavior room, ERoomDir dir, bool isOpen)
+    public bool SetRoomDir(RoomBehavior room, ERoomDir dir, bool isOpen)
     {
+        if(!isOpen 
+           && (Main.Get<GameManager>().SetWallCount) >= Main.Get<TileManager>().WallLimit
+           && !Main.Get<SaveDataManager>().isGeneratingSaveMap)
+        {
+            return false;
+        }
         RoomBehavior Neighbor = null;
         switch (dir)
         {
             case ERoomDir.RightTop:
                 Neighbor = GetRoom(room.IndexX, room.IndexY + 1);
                 if (Neighbor == null)
-                    return;
+                    return false;
                 Neighbor.ModifyDoor(ERoomDir.LeftBottom, isOpen);
                 break;
             case ERoomDir.RightBottom:
                 Neighbor = GetRoom(room.IndexX - 1, room.IndexY);
                 if (Neighbor == null)
-                    return;
+                    return false;
                 Neighbor.ModifyDoor(ERoomDir.LeftTop, isOpen);
                 break;
             case ERoomDir.LeftTop:
                 Neighbor = GetRoom(room.IndexX + 1, room.IndexY);
                 if (Neighbor == null)
-                    return;
+                    return false;
                 Neighbor.ModifyDoor(ERoomDir.RightBottom, isOpen);
                 break;
             case ERoomDir.LeftBottom:
                 Neighbor = GetRoom(room.IndexX, room.IndexY - 1);
                 if (Neighbor == null)
-                    return;
+                    return false;
                 Neighbor.ModifyDoor(ERoomDir.RightTop, isOpen);
                 break;
         }
         room.ModifyDoor(dir, isOpen);
         _navigation.SetCheckWall(room);
+        return true;
     }
 
     private bool IsRoomPositionValid(int posX, int posY)
@@ -298,5 +311,58 @@ public class TileManager : IManagers
     {
         _roomObjList[x][y].RoomDir = roomDir;
         SetCheckWall(_roomObjList[x][y]);
+    }
+
+    public void RoomMove()
+    {
+        int prevIndexX = PrevSelectRoom.IndexX;
+        int prevIndexY = PrevSelectRoom.IndexY;
+
+        Vector3 prevRoomPos = PrevSelectRoom.transform.position;
+
+        int curIndexX = SelectRoom.IndexX;
+        int curIndexY = SelectRoom.IndexY;
+
+        Vector3 curRoomPos = SelectRoom.transform.position;
+
+        PrevSelectRoom.transform.position = curRoomPos;
+        SelectRoom.transform.position = prevRoomPos;
+
+        _roomObjList[prevIndexX][prevIndexY] = SelectRoom;
+        SelectRoom.IndexX = prevIndexX;
+        SelectRoom.IndexY = prevIndexY;
+        SelectRoom.RoomInfo.Pos = prevRoomPos;
+
+        _roomObjList[curIndexX][curIndexY] = PrevSelectRoom;
+        PrevSelectRoom.IndexX = curIndexX;
+        PrevSelectRoom.IndexY = curIndexY;
+        PrevSelectRoom.RoomInfo.Pos = curRoomPos;
+
+        if (SelectRoom.RoomInfo.Data.Type == EStatusformat.Bat)
+        {
+            ((BatRoom)SelectRoom).SetUnitPos();
+        }
+
+        if (PrevSelectRoom.RoomInfo.Data.Type == EStatusformat.Bat)
+        {
+            ((BatRoom)PrevSelectRoom).SetUnitPos();
+        }
+
+        SetCheckWall(SelectRoom);
+        SetCheckWall(PrevSelectRoom);
+
+        SelectRoom = PrevSelectRoom;
+        PrevSelectRoom = null;
+    }
+
+    public void UpdateWallCount()
+    {
+        WallLimit = 3; // 기본 설치가능한 벽의 개수 3개
+        int wallUpgradeLevel = Main.Get<UpgradeManager>().WallUpgradeLevel;
+
+        if (wallUpgradeLevel > 1)
+        {
+            WallLimit = wallUpgradeLevel * WallLimit;
+        }
     }
 }

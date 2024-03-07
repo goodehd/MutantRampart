@@ -1,4 +1,3 @@
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -55,7 +54,7 @@ public class InventUnit_ContentsBtnUI : BaseUI
 
     private void ClickUnitContentBtn(PointerEventData data)
     {
-        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             if (Owner.inventUpgrade_PopupUI != null && gameManager.PlayerUnits.Count != 1) // 업그레이드창이 열려있고, 유닛 업그레이드 전이라면
             {
@@ -79,8 +78,7 @@ public class InventUnit_ContentsBtnUI : BaseUI
 
                 _selectCheckImg.gameObject.SetActive(true);
 
-                _tutorialManager.KillDOTween(Owner.tweener);
-                _tutorialManager.SetArrowActive(Owner.inventArrowImg, false);
+                _tutorialManager.KillDOTween();
                 Owner.upgradeButton.gameObject.SetActive(false);                
             }            
         }

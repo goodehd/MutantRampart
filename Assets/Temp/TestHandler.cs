@@ -54,8 +54,8 @@ public class TestHandler : MonoBehaviour
                 IsEndClick = false;
             }
 
-            (int resultX, int resultY) = Main.Get<TileManager>()._navigation.GetIndex(worldPosition);
-            UnityEngine.Debug.Log("Position (" + worldPosition.x + ", " + worldPosition.y + ") is at index (" + resultX + ", " + resultY + ")");
+            //(int resultX, int resultY) = Main.Get<TileManager>()._navigation.GetIndex(worldPosition);
+            //UnityEngine.Debug.Log("Position (" + worldPosition.x + ", " + worldPosition.y + ") is at index (" + resultX + ", " + resultY + ")");
         }
     }
 

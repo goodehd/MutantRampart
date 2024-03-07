@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,7 +6,6 @@ public class MyItemsImgBtnUI : BaseUI
 {
     private GameManager gameManager;
     private StageManager stageManager;
-    private TutorialManager _tuManager;
 
     private Image _itemImg;
     private Button _itemImgBtn;
@@ -21,12 +19,13 @@ public class MyItemsImgBtnUI : BaseUI
 
     protected override void Init()
     {
+        base.Init();
+
         SetUI<Image>();
         SetUI<Button>();
 
         gameManager = Main.Get<GameManager>();
         stageManager = Main.Get<StageManager>();
-        _tuManager = Main.Get<TutorialManager>();
 
         _itemImg = GetUI<Image>("MyItemsImgBtnUI");
         _itemImgBtn = GetUI<Button>("MyItemsImgBtnUI");
@@ -61,7 +60,7 @@ public class MyItemsImgBtnUI : BaseUI
 
     private void ClickUItemImgBtn(PointerEventData data)
     {
-        if (gameManager.isTutorial && gameManager.PlayerItems[0].IsEquiped) return;
+        if (_tutorialManager.isTutorial && gameManager.PlayerItems[0].IsEquiped) return;
 
         if (stageManager.GetIsStageStart())
         {
@@ -90,20 +89,18 @@ public class MyItemsImgBtnUI : BaseUI
         _equipCheckImg.gameObject.SetActive(true);
         _isIEquiped = true;
 
-        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
-            _tuManager.KillDOTween(Owner.tweener); // 아이템 강조하던 화살표 kill
-            _tuManager.SetArrowActive(Owner.arrowImg, false); // 아이템 강조하던 화살표 inactive.
+            _tutorialManager.KillDOTween(); // 아이템 강조하던 화살표 kill
 
-            _tuManager.CreateTutorialPopup("T7", true, true);
+            _tutorialManager.CreateTutorialPopup("T7", true, true);
 
             if (gameManager.PlayerItems[0].IsEquiped) // 유닛에 아이템 장착이 되었다면
             {
                 Owner.Owner.Owner.closeButton.gameObject.SetActive(true); // 인벤토리 닫기 버튼 활성화
-                _tuManager.SetArrowActive(Owner.Owner.Owner.inventArrowImg, true);
-                _tuManager.SetArrowPosition(Owner.Owner.Owner.inventArrowTransform, 662f, -400f); // 인벤토리 닫기 버튼 가리키는 화살표.
-                _tuManager.RotateArrow(Owner.Owner.Owner.inventArrowTransform, 180f);
-                Owner.Owner.Owner.tweener = _tuManager.SetDOTweenY(Owner.Owner.Owner.inventArrowTransform, -430f);
+                _tutorialManager.RotateArrow(180f);
+                _tutorialManager.SetArrowPosition(662f, -400f); // 인벤토리 닫기 버튼 가리키는 화살표.
+                _tutorialManager.SetDOTweenY(-430f);
             }
         }
     }

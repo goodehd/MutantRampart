@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -10,7 +9,6 @@ using Random = UnityEngine.Random;
 public class Shop_PopupUI : BaseUI
 {
     private GameManager gameManager;
-    private TutorialManager _tuManager;
 
     public Button backButton { get; set; }
     private Button _unitButton;
@@ -38,13 +36,6 @@ public class Shop_PopupUI : BaseUI
 
     public int RowPrice { get; set; }
     public int ColPrice { get; set; }
-    public Image shopArrowImg { get; set; }
-
-    public RectTransform shopArrowTransform { get; set; }
-
-    public Tweener tweener { get; set; }
-
-    public float animationDuration = 0.3f;
 
     public DayMain_SceneUI Owner { get; set; }
 
@@ -67,13 +58,13 @@ public class Shop_PopupUI : BaseUI
 
     protected override void Init()
     {
+        base.Init();
         SetUI<Button>();
         SetUI<Transform>();
         SetUI<TMP_Text>();
         SetUI<Image>();
 
         gameManager = Main.Get<GameManager>();
-        _tuManager = Main.Get<TutorialManager>();
 
         backButton = GetUI<Button>("GachaBackBtn");
         _unitButton = GetUI<Button>("GachaShopUnitBtn");
@@ -113,21 +104,17 @@ public class Shop_PopupUI : BaseUI
         _itemBtnBox = GetUI<Transform>("GachaItemBtnBox");
 
         _playerMoneyText = GetUI<TMP_Text>("GachaPlayerMoneyTxt");
-        _playerMoneyText.text = Main.Get<GameManager>().PlayerMoney.ToString();
+        _playerMoneyText.text = gameManager.PlayerMoney.ToString();
 
         _groundRowPriceText = GetUI<TMP_Text>("GroundRowPriceTxt");
         _groundColPriceText = GetUI<TMP_Text>("GroundColPriceTxt");
         UpdateGroundPriceText();
 
-        shopArrowImg = GetUI<Image>("ShopArrowImg");
-
-        shopArrowTransform = shopArrowImg.GetComponent<RectTransform>();
-
-        Main.Get<GameManager>().OnChangeMoney += UpdateMoneyText;
+        gameManager.OnChangeMoney += UpdateMoneyText;
 
         #region 상점 판매 아이템 추가
         // 가챠 판매 아이템 추가
-        if (gameManager.isTutorial) // 튜토리얼 중이라면.
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면.
         {
             GachaUnitItems.Add(Main.Get<DataManager>().Character["Warrior1"]);
             GachaRoomItems.Add(Main.Get<DataManager>().Room["Forest1"]);
@@ -171,15 +158,12 @@ public class Shop_PopupUI : BaseUI
 
         Owner.shop_PopupUI = this;
 
-        if (gameManager.isTutorial) // 튜토리얼 중이라면.
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면.
         {
             backButton.gameObject.SetActive(false);
             _infoButton.gameObject.SetActive(false);
             _groundButton.gameObject.SetActive(false);
             _itemButton.gameObject.SetActive(false);
-            _tuManager.SetArrowActive(shopArrowImg, true);
-            _tuManager.SetArrowPosition(shopArrowTransform, 244f, 376f); // 상점 내 unit 카테고리 가리키는 화살표.
-            tweener = _tuManager.SetDOTweenY(shopArrowTransform, 346f);
         }
     }
 
@@ -201,13 +185,16 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickCloseBtn(PointerEventData eventData)
     {
-        Main.Get<UIManager>().ClosePopup();
+        _ui.ClosePopup();
 
-        if (gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
-            _tuManager.KillDOTween(tweener); // 상점 뒤로가기 버튼 가리키는 화살표 Kill.
+            _tutorialManager.KillDOTween(); // 상점 뒤로가기 버튼 가리키는 화살표 Kill.
 
-            _tuManager.CreateTutorialPopup("T3");
+            _tutorialManager.CreateTutorialPopup("T3");
+            _tutorialManager.SetArrowPosition(-238f, -276f); // 인벤토리 가리키는 화살표.
+            _tutorialManager.RotateArrow(90f);
+            _tutorialManager.SetDOTweenY(-306f);
         }
 
         Camera.main.GetComponent<CameraMovement>().Rock = false;
@@ -215,7 +202,7 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickUnitBtn(PointerEventData eventData) // Unit Box 활성화
     {
-        if (gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             if (gameManager.PlayerUnits.Count >= 3)
             {
@@ -223,9 +210,9 @@ public class Shop_PopupUI : BaseUI
             }
             if (gameManager.PlayerUnits.Count == 0)
             {
-                _tuManager.KillDOTween(tweener); // unit 가리키던 화살표 Kill.
+                _tutorialManager.KillDOTween(); // unit 가리키던 화살표 Kill.
             }
-            _tuManager.SetArrowActive(shopArrowImg, false);
+            _tutorialManager.SetArrowActive(false);
         }
         _unitBtnBox.gameObject.SetActive(true);
         _roomBtnBox.gameObject.SetActive(false);
@@ -235,13 +222,15 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickRoomBtn(PointerEventData eventData) // Room Box 활성화
     {
-        if (gameManager.isTutorial) // 튜토리얼 중이라면 
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면 
         {
             if (gameManager.PlayerUnits.Count < 3 || gameManager.PlayerRooms.Count >= 4) return;
 
             if (gameManager.PlayerUnits.Count >= 3) // 먼저 유닛 3회뽑기 완료했을 때만 Room 버튼 작동되도록.
             {
-                _tuManager.SetArrowActive(shopArrowImg, false);
+                _tutorialManager.KillDOTween(); // 상점 room 버튼 가리키던 화살표 kill.
+                _tutorialManager.SetArrowActive(false);
+
                 _unitBtnBox.gameObject.SetActive(false);
                 _roomBtnBox.gameObject.SetActive(true);
                 return;
@@ -272,7 +261,7 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickUnit1Btn(PointerEventData eventData)
     {
-        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             if (gameManager.PlayerUnits.Count >= 3)
             {
@@ -290,7 +279,7 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickUnit3Btn(PointerEventData eventData)
     {
-        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             if (gameManager.PlayerUnits.Count >= 1)
             {
@@ -308,7 +297,7 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickRoom1Btn(PointerEventData eventData)
     {
-        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             if (gameManager.PlayerRooms.Count >= 4)
             {
@@ -326,7 +315,7 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickRoom3Btn(PointerEventData eventData)
     {
-        if (gameManager.isTutorial) // 튜토리얼 중이라면
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             if (gameManager.PlayerRooms.Count >= 2)
             {
@@ -344,7 +333,7 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickExpandRowBtn(PointerEventData eventData)
     {
-        YesNo_PopupUI ui = Main.Get<UIManager>().OpenPopup<YesNo_PopupUI>("YesNo_PopupUI");
+        YesNo_PopupUI ui = _ui.OpenPopup<YesNo_PopupUI>("YesNo_PopupUI");
         ui.curAskingText = "구매하시겠습니까 ?";
         ui.ShopGroundItemData = ShopGroundItems[0]; // 0 이 ExpandMapRow
         ui.Shop_PopupUI = this;
@@ -352,7 +341,7 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickExpandColBtn(PointerEventData eventData)
     {
-        YesNo_PopupUI ui = Main.Get<UIManager>().OpenPopup<YesNo_PopupUI>("YesNo_PopupUI");
+        YesNo_PopupUI ui = _ui.OpenPopup<YesNo_PopupUI>("YesNo_PopupUI");
         ui.curAskingText = "구매하시겠습니까 ?";
         ui.ShopGroundItemData = ShopGroundItems[1]; // 1 이 ExpandMapCol
         ui.Shop_PopupUI= this;
@@ -372,14 +361,20 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickGachaUnit(int count)
     {
+        if (_tutorialManager.isTutorial)
+        {
+            _tutorialManager.KillDOTween();
+            _tutorialManager.SetArrowActive(false);
+        }
+
         if (_myGachaUnits != null) // 이거 안 해주면 버튼 누를때마다 리스트에 계속 쌓여서 1개가 2개가 되고 .. 계속 증가 이슈.
         {
             _myGachaUnits.Clear();
         }
 
-        if (Main.Get<GameManager>().PlayerMoney >= count * 1000) // 금액 계산 로직
+        if (gameManager.PlayerMoney >= count * 1000) // 금액 계산 로직
         {
-            Main.Get<GameManager>().ChangeMoney(-count * 1000);
+            gameManager.ChangeMoney(-count * 1000);
 
             for (int i = 0; i < count; i++)
             {
@@ -389,7 +384,7 @@ public class Shop_PopupUI : BaseUI
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
             ui.GachaUnitData = _myGachaUnits;
             ui.Owner = this;
-            Main.Get<GameManager>().SaveData();
+            gameManager.SaveData();
         }
         else // 보유 금액 부족 시
         {
@@ -410,9 +405,9 @@ public class Shop_PopupUI : BaseUI
             _myGachaRooms.Clear();
         }
 
-        if (Main.Get<GameManager>().PlayerMoney >= count * 1000)
+        if (gameManager.PlayerMoney >= count * 1000)
         {
-            Main.Get<GameManager>().ChangeMoney(-count * 1000);
+            gameManager.ChangeMoney(-count * 1000);
 
             for (int i = 0; i < count; i++)
             {
@@ -422,7 +417,7 @@ public class Shop_PopupUI : BaseUI
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
             ui.GachaRoomData = _myGachaRooms;
             ui.Owner = this;
-            Main.Get<GameManager>().SaveData();
+            gameManager.SaveData();
         }
         else
         {
@@ -443,9 +438,9 @@ public class Shop_PopupUI : BaseUI
             _myGachaItems.Clear();
         }
 
-        if (Main.Get<GameManager>().PlayerMoney >= count * 1000)
+        if (gameManager.PlayerMoney >= count * 1000)
         {
-            Main.Get<GameManager>().ChangeMoney(-count * 1000);
+            gameManager.ChangeMoney(-count * 1000);
 
 
             for (int i = 0; i < count; i++)
@@ -456,7 +451,7 @@ public class Shop_PopupUI : BaseUI
             GachaResult_PopupUI ui = Main.Get<UIManager>().OpenPopup<GachaResult_PopupUI>("GachaResult_PopupUI");
             ui.GachaItemData = _myGachaItems;
             ui.Owner = this;
-            Main.Get<GameManager>().SaveData();
+            gameManager.SaveData();
         }
         else
         {
@@ -472,6 +467,6 @@ public class Shop_PopupUI : BaseUI
 
     private void ClickInfoBtn(PointerEventData eventData)
     {
-        Main.Get<UIManager>().OpenPopup<ShopInfo_PopupUI>();
+        _ui.OpenPopup<ShopInfo_PopupUI>();
     }
 }

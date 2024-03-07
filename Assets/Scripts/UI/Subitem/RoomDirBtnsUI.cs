@@ -1,12 +1,11 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class RoomDirBtnsUI : BaseUI
 {
-    public TileManager tileManager;
-
+    private TileManager tileManager;
+    private GameManager gameManager;
     public Button RightTopButton { get; private set; }
     public Button RightBottomButton { get; private set; }
     public Button LeftTopButton { get; private set; }
@@ -18,6 +17,7 @@ public class RoomDirBtnsUI : BaseUI
         base.Init();
 
         tileManager = Main.Get<TileManager>();
+        gameManager = Main.Get<GameManager>();
 
         SetUI<Button>();
 
@@ -31,7 +31,7 @@ public class RoomDirBtnsUI : BaseUI
         SetUICallback(LeftTopButton.gameObject, EUIEventState.Click, ClickLeftTopBtn);
         SetUICallback(LeftBottomButton.gameObject, EUIEventState.Click, ClickLeftBottomBtn);
 
-        if (_gameManager.isTutorial)
+        if (_tutorialManager.isTutorial)
         {
             RightTopButton.gameObject.SetActive(false);
             RightBottomButton.gameObject.SetActive(false);
@@ -47,45 +47,108 @@ public class RoomDirBtnsUI : BaseUI
 
     private void ClickRightTopBtn(PointerEventData eventData)
     {
-        if (_gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
 
         RoomBehavior room = tileManager.SelectRoom;
-        tileManager.SetRoomDir(room, ERoomDir.RightTop, !room.IsDoorOpen(ERoomDir.RightTop));
+        bool isSetRoomDir = tileManager.SetRoomDir(room, ERoomDir.RightTop, !room.IsDoorOpen(ERoomDir.RightTop));
+        if (isSetRoomDir)
+        {
+            if (room.IsDoorOpen(ERoomDir.RightTop) && gameManager.SetWallCount >= 1)
+            {
+                gameManager.SetWallCount -= 1;
+            }
+            else if (!room.IsDoorOpen(ERoomDir.RightTop))
+            {
+                gameManager.SetWallCount += 1;
+            }
+            Owner.UpdateSetWallCountText();
+        }
+        else
+        {
+            OpenNotEnoughPopUp();
+        }
     }
 
     private void ClickLeftTopBtn(PointerEventData eventData)
     {
         RoomBehavior room = tileManager.SelectRoom;
-        tileManager.SetRoomDir(room, ERoomDir.LeftTop, !room.IsDoorOpen(ERoomDir.LeftTop));
-
-        if (_gameManager.isTutorial) // 튜토리얼 중이라면
+        bool isSetRoomDir = tileManager.SetRoomDir(room, ERoomDir.LeftTop, !room.IsDoorOpen(ERoomDir.LeftTop));
+        if (isSetRoomDir)
+        {
+            if (room.IsDoorOpen(ERoomDir.LeftTop) && gameManager.SetWallCount >= 1)
+            {
+                gameManager.SetWallCount -= 1;
+            }
+            else if (!room.IsDoorOpen(ERoomDir.LeftTop))
+            {
+                gameManager.SetWallCount += 1;
+            }
+            Owner.UpdateSetWallCountText();
+        }
+        else
+        {
+            OpenNotEnoughPopUp();
+        }
+        
+        if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {
             CheckBtnForTutorial();
 
             LeftTopButton.gameObject.SetActive(false); // 다른 버튼은 Init 에서 이미 꺼져있음.
 
-            _tutorialManager.KillDOTween(Owner.tweener); // 유닛배치 룸 가리키는 화살표 kill 로 바뀜.
-            _tutorialManager.SetArrowActive(Owner._dayArrowImg, true);
-            _tutorialManager.SetArrowPosition(Owner.dayArrowTransform, 898f, 60f); // unit 버튼 가리키는 화살표
-            _tutorialManager.RotateArrow(Owner.dayArrowTransform, -90f);
-            Owner.tweener = _tutorialManager.SetDOTweenY(Owner.dayArrowTransform, 30f);
+            _tutorialManager.KillDOTween(); // 유닛배치 룸 가리키는 화살표 kill 로 바뀜.
+            _tutorialManager.SetArrowPosition(898f, 60f); // unit 버튼 가리키는 화살표
+            _tutorialManager.SetDOTweenY(30f);
+            _tutorialManager.RotateArrow(-90f);
         }
     }
 
     private void ClickRightBottomBtn(PointerEventData eventData)
     {
-        if (_gameManager.isTutorial) return;
+        if (_tutorialManager.isTutorial) return;
 
         RoomBehavior room = tileManager.SelectRoom;
-        tileManager.SetRoomDir(room, ERoomDir.RightBottom, !room.IsDoorOpen(ERoomDir.RightBottom));
+        bool isSetRoomDir = tileManager.SetRoomDir(room, ERoomDir.RightBottom, !room.IsDoorOpen(ERoomDir.RightBottom));
+        if (isSetRoomDir)
+        {
+            if (room.IsDoorOpen(ERoomDir.RightBottom) && gameManager.SetWallCount >= 1)
+            {
+                gameManager.SetWallCount -= 1;
+            }
+            else if (!room.IsDoorOpen(ERoomDir.RightBottom))
+            {
+                gameManager.SetWallCount += 1;
+            }
+            Owner.UpdateSetWallCountText();
+        }
+        else
+        {
+            OpenNotEnoughPopUp();
+        }
     }
 
     private void ClickLeftBottomBtn(PointerEventData eventData)
     {
-        if (_gameManager.isTutorial) return;
-
+        if (_tutorialManager.isTutorial) return;
+       
         RoomBehavior room = tileManager.SelectRoom;
-        tileManager.SetRoomDir(room, ERoomDir.LeftBottom, !room.IsDoorOpen(ERoomDir.LeftBottom));
+        bool isSetRoomDir = tileManager.SetRoomDir(room, ERoomDir.LeftBottom, !room.IsDoorOpen(ERoomDir.LeftBottom));
+        if (isSetRoomDir)
+        {
+            if (room.IsDoorOpen(ERoomDir.LeftBottom) && gameManager.SetWallCount >= 1)
+            {
+                gameManager.SetWallCount -= 1;
+            }
+            else if (!room.IsDoorOpen(ERoomDir.LeftBottom))
+            {
+                gameManager.SetWallCount += 1;
+            }
+            Owner.UpdateSetWallCountText();
+        }
+        else
+        {
+            OpenNotEnoughPopUp();
+        }
     }
 
     private void CheckBtnForTutorial()
@@ -96,8 +159,8 @@ public class RoomDirBtnsUI : BaseUI
         {
             if (Owner.tutorialMsg_PopupUI == null)
             {
-                Owner.tutorialMsg_PopupUI = Main.Get<UIManager>().OpenPopup<TutorialMsg_PopupUI>();
-                Owner.tutorialMsg_PopupUI.curTutorialText = Main.Get<DataManager>().Tutorial["T15"].Description;
+                _tutorialManager.CreateTutorialPopup("T15");
+                _tutorialManager.SetArrowActive(true);
             }
 
             if (Owner.roomButton.gameObject.activeSelf) // Room 버튼 활성화되어있다면 비활성화 진행.
@@ -109,5 +172,12 @@ public class RoomDirBtnsUI : BaseUI
                 Owner.unitButton.gameObject.SetActive(true);
             }
         }
+    }
+
+    private void OpenNotEnoughPopUp()
+    {
+        Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
+        ui.curErrorText = "벽을 설치할 수 없습니다.";
+        return;
     }
 }
