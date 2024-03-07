@@ -83,6 +83,7 @@ public class StageManager : IManagers
 
         if (Main.Get<TutorialManager>().isTutorial) // 튜토리얼 중이라면
         {
+            Main.Get<UIManager>().OpenPopup<Guide_PopupUI>();
             Main.Get<TutorialManager>().CreateTutorialPopup("T18", true, true); // 마지막 튜토리얼 팝업
 
             Main.Get<TutorialManager>().isTutorial = false; // 튜토리얼 이제 끝 !

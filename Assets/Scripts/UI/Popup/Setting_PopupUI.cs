@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -39,7 +36,7 @@ public class Setting_PopupUI : BaseUI
     private void SetButton()
     {
         base.Init();
-        
+
         soundManager = Main.Get<SoundManager>();
 
         SetUI<Button>();
@@ -59,7 +56,7 @@ public class Setting_PopupUI : BaseUI
         _option1Btn = GetUI<Button>("Option1Box");
         _option2CheckBtn = GetUI<Button>("Option2CheckBox");
         _option2Btn = GetUI<Button>("Option2Box");
-        _confirmBtn = GetUI<Button>("ConfirmBtn"); 
+        _confirmBtn = GetUI<Button>("ConfirmBtn");
 
         SetUICallback(_settingCloseBtn.gameObject, EUIEventState.Click, ClickCloseBtn);
         SetUICallback(_bgmMuteBtn.gameObject, EUIEventState.Click, ClickBGMMuteBtn);
@@ -68,6 +65,7 @@ public class Setting_PopupUI : BaseUI
         SetUICallback(_effectMaxBtn.gameObject, EUIEventState.Click, ClickEffectMaxBtn);
         SetUICallback(_uiMuteBtn.gameObject, EUIEventState.Click, ClickUIMuteBtn);
         SetUICallback(_uiMaxBtn.gameObject, EUIEventState.Click, ClickUIMaxBtn);
+        SetUICallback(_guideBtn.gameObject, EUIEventState.Click, ClickGuideBtn);
         SetUICallback(_exitBtn.gameObject, EUIEventState.Click, ClickExitBtn);
         SetUICallback(_option1CheckBtn.gameObject, EUIEventState.Click, ClickOption1CheckBtn);
         SetUICallback(_option1Btn.gameObject, EUIEventState.Click, ClickOption1Btn);
@@ -200,6 +198,15 @@ public class Setting_PopupUI : BaseUI
     private void ClickExitBtn(PointerEventData EventData)
     {
         Main.Get<GameManager>().ExitGame();
+    }
+
+    private void ClickGuideBtn(PointerEventData EventData)
+    {
+        Guide_PopupUI ui = _ui.OpenPopup<Guide_PopupUI>();
+        if (_tutorialManager.isTutorial)
+        {
+            ui.GetComponent<Canvas>().sortingOrder = 8;
+        }
     }
 
     private void SaveSetting()
