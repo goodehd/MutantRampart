@@ -46,9 +46,9 @@ Cleric3,2592,100,10,200,65,0.9,2,MeleeAttack,1,3500,,Cleric
 Knight1,850,100,10,65,10,0.7,2,MeleeAttack,1,300,Knight2,Knight
 Knight2,1530,100,10,112,25,0.7,2,MeleeAttack,1,1000,Knight3,Knight
 Knight3,2754,100,10,186,65,0.9,2,MeleeAttack,1,3500,,Knight
-Kunoichi1,650,100,10,45,0,0.9,2,MeleeAttack,1,300,Kunoichi2,Kunoichi
-Kunoichi2,1170,100,10,77,5,0.9,2,MeleeAttack,1,1000,Kunoichi3,Kunoichi
-Kunoichi3,2106,100,10,128,10,1.1,2,MeleeAttack,1,3500,,Kunoichi
+Kunoichi1,650,100,10,45,0,0.9,2,RangedAttack,1,300,Kunoichi2,Kunoichi
+Kunoichi2,1170,100,10,77,5,0.9,2,RangedAttack,1,1000,Kunoichi3,Kunoichi
+Kunoichi3,2106,100,10,128,10,1.1,2,RangedAttack,1,3500,,Kunoichi
 Priest1,700,100,10,40,5,0.6,2,MeleeAttack,1,300,Priest2,Priest
 Priest2,1260,100,10,69,10,0.6,2,MeleeAttack,1,1000,Priest3,Priest
 Priest3,2268,100,10,114,25,0.8,2,MeleeAttack,1,3500,,Priest

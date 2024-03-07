@@ -57,6 +57,11 @@ public class UnitRangedAttackState : BaseState
         _neighborTargets.AddLast(newInfo);
     }
 
+    public LinkedList<RangedTargetInfo> GetNeighborTarget()
+    {
+        return _neighborTargets;
+    }
+
     private void AttackStart()
     {
         _coroutine = Owner.StartCoroutine(Attack());
