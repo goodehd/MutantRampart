@@ -32,6 +32,7 @@ public class PlayerUpgrade_PopupUI : BaseUI
     private Button _upgradeYesBtn;
     private Button _upgradeNoBtn;
     private Button _playerUpgradeBackBtn;
+    private Button _resetBtn;
 
     private int _upgradePoint;
     private int _goldUpgradeLevel;
@@ -56,13 +57,7 @@ public class PlayerUpgrade_PopupUI : BaseUI
 
         _upgradeManager = Main.Get<UpgradeManager>();
 
-        _upgradePoint = Main.Get<UpgradeManager>().UpgradePoint;
-        _goldUpgradeLevel = Main.Get<UpgradeManager>().GoldUpgradeLevel;
-        _hpUpgradeLevel = Main.Get<UpgradeManager>().HpUpgradeLevel;
-        _wallUpgradeLevel = Main.Get<UpgradeManager>().WallUpgradeLevel;
-        _rewardUpgradeLevel = Main.Get<UpgradeManager>().RewardUpgradeLevel;
-        _groundColUpgradeLevel = Main.Get<UpgradeManager>().GroundColUpgradeLevel;
-        _groundRowUpgradeLevel = Main.Get<UpgradeManager>().GroundRowUpgradeLevel;
+        SetUpgradeLevel();
         
         SetUI<TextMeshProUGUI>();
         SetUI<Button>();
@@ -93,6 +88,7 @@ public class PlayerUpgrade_PopupUI : BaseUI
         _playerUpgradeBackBtn = GetUI<Button>("PlayerUpgradeBackBtn");
         _upgradeYesBtn = GetUI<Button>("UpgradeYesBtn");
         _upgradeNoBtn = GetUI<Button>("UpgradeNoBtn");
+        _resetBtn = GetUI<Button>("ResetBtn");
 
         UpdateText();
         SetIsUpgradeClickFalse();
@@ -106,6 +102,7 @@ public class PlayerUpgrade_PopupUI : BaseUI
         SetUICallback(_playerUpgradeBackBtn.gameObject, EUIEventState.Click, ClickPlayerUpgradeBackBtn);
         SetUICallback(_upgradeYesBtn.gameObject, EUIEventState.Click, ClickUpgradeYesBtn);
         SetUICallback(_upgradeNoBtn.gameObject, EUIEventState.Click, ClickUpgradeNoBtn);
+        SetUICallback(_resetBtn.gameObject, EUIEventState.Click, ClickResetBtn);
     }
 
     private void UpdateText()
@@ -208,6 +205,12 @@ public class PlayerUpgrade_PopupUI : BaseUI
 
     private void ClickUpgradeYesBtn(PointerEventData data)
     {
+        if (Main.Get<SaveDataManager>().isSaveFileExist)
+        {
+            Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
+            ui.curErrorText = "저장된 데이터가 있을땐\n업그레이드가 불가능합니다.";
+            return;
+        }
         if (_isGoldUpgradeClick)
         {
             if (_upgradePoint >= _goldUpgradeLevel)
@@ -217,7 +220,8 @@ public class PlayerUpgrade_PopupUI : BaseUI
                 UpdateText();
                 _upgradeManager.GoldUpgradeLevel = _goldUpgradeLevel;
                 _upgradeManager.UpgradePoint = _upgradePoint;
-                Main.Get<UpgradeManager>().UpdateUpgradeGoldPercent();
+                SetUpgradeLevel();
+                _upgradeManager.UpdateUpgradeGoldPercent();
             }
             else
             {
@@ -235,6 +239,7 @@ public class PlayerUpgrade_PopupUI : BaseUI
                 UpdateText();
                 _upgradeManager.HpUpgradeLevel = _hpUpgradeLevel;
                 _upgradeManager.UpgradePoint = _upgradePoint;
+                SetUpgradeLevel();
                 Main.Get<GameManager>().SetPlayerHp();
             }
             else
@@ -251,6 +256,7 @@ public class PlayerUpgrade_PopupUI : BaseUI
                 UpdateText();
                 _upgradeManager.WallUpgradeLevel = _wallUpgradeLevel;
                 _upgradeManager.UpgradePoint = _upgradePoint;
+                SetUpgradeLevel();
                 Main.Get<TileManager>().UpdateWallCount();
             }
             else
@@ -267,7 +273,8 @@ public class PlayerUpgrade_PopupUI : BaseUI
                 UpdateText();
                 _upgradeManager.RewardUpgradeLevel = _rewardUpgradeLevel;
                 _upgradeManager.UpgradePoint = _upgradePoint;
-                Main.Get<UpgradeManager>().UpdateUpgradeGoldPercent();
+                SetUpgradeLevel();
+                _upgradeManager.UpdateRewardChance();
             }
             else
             {
@@ -284,6 +291,7 @@ public class PlayerUpgrade_PopupUI : BaseUI
                 UpdateText();
                 _upgradeManager.GroundColUpgradeLevel = _groundColUpgradeLevel;
                 _upgradeManager.UpgradePoint = _upgradePoint;
+                SetUpgradeLevel();
                 _upgradeManager.UpdateMapSizeCol();
             }
             else
@@ -299,8 +307,9 @@ public class PlayerUpgrade_PopupUI : BaseUI
                 _upgradePoint -= groundRowUpgradePoint;
                 _groundRowUpgradeLevel++;
                 UpdateText();
-                _upgradeManager.GroundColUpgradeLevel = _groundRowUpgradeLevel;
+                _upgradeManager.GroundRowUpgradeLevel = _groundRowUpgradeLevel;
                 _upgradeManager.UpgradePoint = _upgradePoint;
+                SetUpgradeLevel();
                 _upgradeManager.UpdateMapSizeRow();
             }
             else
@@ -309,7 +318,7 @@ public class PlayerUpgrade_PopupUI : BaseUI
             }
         }
         _descriptionBox.gameObject.SetActive(false);
-        Main.Get<UpgradeManager>().SaveUpgrade();
+        _upgradeManager.SaveUpgrade();
         Main.Get<SaveDataManager>().SaveUpgradeData();
         SetIsUpgradeClickFalse();
     }
@@ -322,6 +331,21 @@ public class PlayerUpgrade_PopupUI : BaseUI
     {
         _ui.ClosePopup();
     }
+    private void ClickResetBtn(PointerEventData data)
+    {
+        if (Main.Get<SaveDataManager>().isSaveFileExist)
+        {
+            Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
+            ui.curErrorText = "저장된 데이터가 있을땐\n초기화가 불가능합니다.";
+            return;
+        }
+        _upgradePoint = (_goldUpgradeLevel - 1) + (_hpUpgradeLevel - 1) + (_wallUpgradeLevel - 1) + 
+                        (_rewardUpgradeLevel - 1) + (_groundColUpgradeLevel - 1) + (_groundRowUpgradeLevel - 1);
+        _upgradeManager.UpgradePoint += _upgradePoint;
+        _upgradeManager.ResetUpgrade();
+        SetUpgradeLevel();
+        UpdateText();
+    }
 
     private void SetIsUpgradeClickFalse()
     {
@@ -330,6 +354,7 @@ public class PlayerUpgrade_PopupUI : BaseUI
         _isWallUpgradeClick = false;
         _isRewardUpgradeClick = false;
         _isGroundColUpgradeClick = false;
+        _isGroundRowUpgradeClick = false;
     }
     private void OpenNotEnoughPopUp()
     {
@@ -337,4 +362,17 @@ public class PlayerUpgrade_PopupUI : BaseUI
         ui.curErrorText = "업그레이드 포인트가 부족합니다.";
         return;
     }
+    
+    private void SetUpgradeLevel()
+    {
+        _upgradePoint = Main.Get<UpgradeManager>().UpgradePoint;
+        _goldUpgradeLevel = Main.Get<UpgradeManager>().GoldUpgradeLevel;
+        _hpUpgradeLevel = Main.Get<UpgradeManager>().HpUpgradeLevel;
+        _wallUpgradeLevel = Main.Get<UpgradeManager>().WallUpgradeLevel;
+        _rewardUpgradeLevel = Main.Get<UpgradeManager>().RewardUpgradeLevel;
+        _groundColUpgradeLevel = Main.Get<UpgradeManager>().GroundColUpgradeLevel;
+        _groundRowUpgradeLevel = Main.Get<UpgradeManager>().GroundRowUpgradeLevel;
+    }
+
+   
 }

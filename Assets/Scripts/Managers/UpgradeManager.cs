@@ -68,23 +68,23 @@ public class UpgradeManager : IManagers
         {
             UpgradeGoldPercent = 0f;
         }
-        else if(GoldUpgradeLevel > 1)
+        else if(GoldUpgradeLevel == 2)
         {
             UpgradeGoldPercent = 0.05f;
         }
-        else if(GoldUpgradeLevel > 2)
+        else if(GoldUpgradeLevel == 3)
         {
             UpgradeGoldPercent = 0.1f;
         }
-        else if(GoldUpgradeLevel > 3)
+        else if(GoldUpgradeLevel == 4)
         {
             UpgradeGoldPercent = 0.15f;
         }
-        else if(GoldUpgradeLevel > 4)
+        else if(GoldUpgradeLevel == 5)
         {
             UpgradeGoldPercent = 0.2f;
         }
-        else if(GoldUpgradeLevel > 5)
+        else
         {
             UpgradeGoldPercent = 0.25f;
         }
@@ -96,23 +96,23 @@ public class UpgradeManager : IManagers
         {
             UpgradeRewardChance = 20;
         }
-        else if (RewardUpgradeLevel > 1)
+        else if (RewardUpgradeLevel == 2)
         {
             UpgradeRewardChance = 25;
         }
-        else if (RewardUpgradeLevel > 2)
+        else if (RewardUpgradeLevel == 3)
         {
             UpgradeRewardChance = 30;
         }
-        else if (GoldUpgradeLevel > 3)
+        else if (GoldUpgradeLevel == 4)
         {
             UpgradeRewardChance = 35;
         }
-        else if (RewardUpgradeLevel > 4)
+        else if (RewardUpgradeLevel == 5)
         {
             UpgradeRewardChance = 40;
         }
-        else if (RewardUpgradeLevel > 5)
+        else
         {
             UpgradeRewardChance = 45;
         }
@@ -125,6 +125,22 @@ public class UpgradeManager : IManagers
     public void UpdateMapSizeCol()
     {
         UpgradeMapSizeCol = 2 + GroundColUpgradeLevel;
+    }
+
+    public void ResetUpgrade()
+    {
+        GoldUpgradeLevel = 1;
+        HpUpgradeLevel = 1;
+        WallUpgradeLevel = 1;
+        RewardUpgradeLevel = 1;
+        GroundColUpgradeLevel = 1;
+        GroundRowUpgradeLevel = 1;
+        UpdateUpgradeGoldPercent();
+        UpdateRewardChance();
+        UpdateMapSizeCol();
+        UpdateMapSizeRow();
+        Main.Get<GameManager>().SetPlayerHp();
+        Main.Get<TileManager>().UpdateWallCount();
     }
 
 }
