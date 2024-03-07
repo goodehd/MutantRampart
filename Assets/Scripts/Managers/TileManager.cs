@@ -231,25 +231,37 @@ public class TileManager : IManagers
             case ERoomDir.RightTop:
                 Neighbor = GetRoom(room.IndexX, room.IndexY + 1);
                 if (Neighbor == null)
+                {
+                    room.OpenDoor(ERoomDir.RightTop);
                     return false;
+                }
                 Neighbor.ModifyDoor(ERoomDir.LeftBottom, isOpen);
                 break;
             case ERoomDir.RightBottom:
                 Neighbor = GetRoom(room.IndexX - 1, room.IndexY);
                 if (Neighbor == null)
+                {
+                    room.OpenDoor(ERoomDir.RightBottom);
                     return false;
+                }
                 Neighbor.ModifyDoor(ERoomDir.LeftTop, isOpen);
                 break;
             case ERoomDir.LeftTop:
                 Neighbor = GetRoom(room.IndexX + 1, room.IndexY);
                 if (Neighbor == null)
+                {
+                    room.OpenDoor(ERoomDir.LeftTop);
                     return false;
+                }
                 Neighbor.ModifyDoor(ERoomDir.RightBottom, isOpen);
                 break;
             case ERoomDir.LeftBottom:
                 Neighbor = GetRoom(room.IndexX, room.IndexY - 1);
                 if (Neighbor == null)
+                {
+                    room.OpenDoor(ERoomDir.LeftBottom);
                     return false;
+                }
                 Neighbor.ModifyDoor(ERoomDir.RightTop, isOpen);
                 break;
         }
@@ -318,7 +330,6 @@ public class TileManager : IManagers
         Vector3 prevRoomPos = PrevSelectRoom.transform.position;
         int prevIndexX = PrevSelectRoom.IndexX;
         int prevIndexY = PrevSelectRoom.IndexY;
-
 
         ERoomDir curRoomDir = SelectRoom.RoomDir;
         Vector3 curRoomPos = SelectRoom.transform.position;
