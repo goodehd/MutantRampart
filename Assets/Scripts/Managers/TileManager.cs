@@ -314,18 +314,22 @@ public class TileManager : IManagers
 
     public void RoomMove()
     {
+        ERoomDir prevRoomDir = PrevSelectRoom.RoomDir;
+        Vector3 prevRoomPos = PrevSelectRoom.transform.position;
         int prevIndexX = PrevSelectRoom.IndexX;
         int prevIndexY = PrevSelectRoom.IndexY;
 
-        Vector3 prevRoomPos = PrevSelectRoom.transform.position;
 
+        ERoomDir curRoomDir = SelectRoom.RoomDir;
+        Vector3 curRoomPos = SelectRoom.transform.position;
         int curIndexX = SelectRoom.IndexX;
         int curIndexY = SelectRoom.IndexY;
 
-        Vector3 curRoomPos = SelectRoom.transform.position;
-
         PrevSelectRoom.transform.position = curRoomPos;
         SelectRoom.transform.position = prevRoomPos;
+
+        PrevSelectRoom.RoomDir = curRoomDir;
+        SelectRoom.RoomDir = prevRoomDir;
 
         _roomObjList[prevIndexX][prevIndexY] = SelectRoom;
         SelectRoom.IndexX = prevIndexX;
