@@ -40,7 +40,7 @@ public class StageFail_PopupUI : BaseUI
 
         _stageText.text = $"Day {_curStage}";
         
-        if (_curStage > 1)
+        if (_curStage > 0)
         {
             UpgradePoint = 1;
             _upgradePointTxt.text = $"+ {UpgradePoint}";

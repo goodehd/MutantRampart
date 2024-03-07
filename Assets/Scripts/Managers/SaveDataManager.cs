@@ -21,8 +21,8 @@ public class SaveDataManager : IManagers
     public bool Init()
     {
         isSaveFileExist = PlayerPrefs.GetInt("Tutorial") == 1 ? true : false;
-        PlayerDataPath = Application.persistentDataPath + "/save";
-        UpgradeDataPath = Application.persistentDataPath + "/upgrade";
+        PlayerDataPath = Application.persistentDataPath + "/SavePlayer";
+        UpgradeDataPath = Application.persistentDataPath + "/SaveUpgrade";
         isGeneratingSaveMap = false;
         return true;
     }
@@ -60,6 +60,11 @@ public class SaveDataManager : IManagers
     {
         File.Delete(PlayerDataPath);
         isSaveFileExist = false;
+    }
+
+    public void DeleteUpgradeData()
+    {
+        File.Delete(UpgradeDataPath);
     }
 
     public void ApplyDataToCharacter(CharacterSavableData savedata)
