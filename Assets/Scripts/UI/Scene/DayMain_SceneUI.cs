@@ -537,7 +537,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickSpeed2Btn(PointerEventData eventData)
     {
-        Time.timeScale = 5.0f;
+        Time.timeScale = 2.0f;
         _speed2Button.gameObject.SetActive(false);
         _speed3Button.gameObject.SetActive(true);
     }

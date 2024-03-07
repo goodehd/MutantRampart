@@ -50,7 +50,7 @@ public class HealingCondition : BaseCondition
         while (true)
         {
             Owner.Status.GetStat<Vital>(EstatType.Hp).CurValue += Owner.Status.GetStat<Vital>(EstatType.Hp).Value * (DataValue*0.01f);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(3f);
         }
     }
 }

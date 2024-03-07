@@ -23,7 +23,7 @@ public class UpgradeManager : IManagers
     {
         _saveDataManager = Main.Get<SaveDataManager>();
 
-        if (false)//(File.Exists(_saveDataManager.UpgradeDataPath))
+        if (File.Exists(_saveDataManager.UpgradeDataPath))
         {
             _saveDataManager.LoadUpgradeData();
             UpgradePoint = _saveDataManager.Upgrade.UpgradePoint;
@@ -36,7 +36,7 @@ public class UpgradeManager : IManagers
         }
         else
         {
-            UpgradePoint = 1000;
+            UpgradePoint = 0;
             GoldUpgradeLevel = 1;
             HpUpgradeLevel = 1;
             WallUpgradeLevel = 1;

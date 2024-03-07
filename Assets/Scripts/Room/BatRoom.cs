@@ -230,7 +230,7 @@ public class BatRoom : RoomBehavior
             if (Units[i] != null)
             {
                 Units[i].gameObject.SetActive(true);
-                if (!Units[i].gameObject.activeSelf)
+                if (Units[i].CharacterInfo.IsDead)
                 {
                     ConditionAdd(Units[i]);
                 }
