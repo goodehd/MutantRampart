@@ -34,7 +34,7 @@ Transform:
   - {fileID: 7015469374718799857}
   - {fileID: 2136772111853887431}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4860493296244240324
 MonoBehaviour:
@@ -311,6 +311,10 @@ PrefabInstance:
     - target: {fileID: 6568049574606105636, guid: ba2c5ae50ce5394489edde34b8f56d74, type: 3}
       propertyPath: m_Name
       value: CharacterHpBarUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7612190276633323661, guid: ba2c5ae50ce5394489edde34b8f56d74, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
