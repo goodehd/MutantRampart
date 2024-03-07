@@ -520,7 +520,7 @@ public class DayMain_SceneUI : BaseUI
             _tutorialManager.SetArrowActive(true);
 
             _tutorialManager.CreateTutorialPopup("T1", true, true);
-            _tutorialManager.SetArrowPosition(244f, 376f); // 상점 내 unit 카테고리 가리키는 화살표.
+            _tutorialManager.SetArrowPosition(295f, 376f); // 상점 내 unit 카테고리 가리키는 화살표.
             _tutorialManager.SetDOTweenY(346f);
 
             shopButton.gameObject.SetActive(false); // 상점 튜토리얼 완료하면 상점 버튼 inactive.

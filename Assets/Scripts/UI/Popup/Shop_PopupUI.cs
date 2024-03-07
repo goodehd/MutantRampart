@@ -192,7 +192,7 @@ public class Shop_PopupUI : BaseUI
             _tutorialManager.KillDOTween(); // 상점 뒤로가기 버튼 가리키는 화살표 Kill.
 
             _tutorialManager.CreateTutorialPopup("T3");
-            _tutorialManager.SetArrowPosition(-241f, -276f); // 인벤토리 가리키는 화살표.
+            _tutorialManager.SetArrowPosition(-238f, -276f); // 인벤토리 가리키는 화살표.
             _tutorialManager.RotateArrow(90f);
             _tutorialManager.SetDOTweenY(-306f);
         }

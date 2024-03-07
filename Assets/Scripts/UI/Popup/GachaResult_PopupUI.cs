@@ -61,7 +61,7 @@ public class GachaResult_PopupUI : BaseUI
                     _tutorialManager.CreateTutorialPopup("T2", true, true);
 
                     _tutorialManager.SetArrowActive(true);
-                    _tutorialManager.SetArrowPosition(369f, 376f); // 상점 내 Room 카테고리 가리키는 화살표.
+                    _tutorialManager.SetArrowPosition(435f, 376f); // 상점 내 Room 카테고리 가리키는 화살표.
                     _tutorialManager.SetDOTweenY(346f);
                 }
             }
