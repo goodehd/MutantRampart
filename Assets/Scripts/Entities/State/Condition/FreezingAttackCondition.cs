@@ -25,21 +25,24 @@ public class FreezingAttackCondition : BaseCondition
         Owner.CharacterInfo.OnAttackState -= ConditionEffect;
     }
 
-    public void ConditionEffect(CharacterBehaviour attackEntity)
+    public void ConditionEffect(List<CharacterBehaviour> attackEntity)
     {
-        if (attackEntity.ConditionMachine.CheckCondition(ECondition.Frozen))
+        foreach (CharacterBehaviour attack in attackEntity)
         {
-            return;
-        }
+            if (attack.ConditionMachine.CheckCondition(ECondition.Frozen))
+            {
+                return;
+            }
 
-        float a = Random.Range(0, 100);
-        if (attackEntity.ConditionMachine.CheckCondition(ECondition.Frostbite))
-        {
-            attackEntity.ConditionMachine.AddCondition(new FrozenCondition(attackEntity, _upgradeValue_1));
-        }
-        else if (a < _upgradeValue_2)
-        {
-            attackEntity.ConditionMachine.AddCondition(new FrozenCondition(attackEntity, _upgradeValue_1));
+            float a = Random.Range(0, 100);
+            if (attack.ConditionMachine.CheckCondition(ECondition.Frostbite))
+            {
+                attack.ConditionMachine.AddCondition(new FrozenCondition(attack, _upgradeValue_1));
+            }
+            else if (a < _upgradeValue_2)
+            {
+                attack.ConditionMachine.AddCondition(new FrozenCondition(attack, _upgradeValue_1));
+            }
         }
     }
 }

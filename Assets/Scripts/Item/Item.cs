@@ -71,8 +71,9 @@ public class Item
         data.OnAttackState -= AttackEffect;
     }
 
-    public virtual void AttackEffect(CharacterBehaviour target)
+    public virtual void AttackEffect(List<CharacterBehaviour> target)
     {
+
     }
 
     public virtual void IdentityEffect(int stage)
@@ -110,7 +111,7 @@ public class SilverCoin : Item
 
     }
 
-    public override void AttackEffect(CharacterBehaviour target)
+    public override void AttackEffect(List<CharacterBehaviour> target)
     {
         Main.Get<GameManager>().ChangeMoney(-1);
     }
@@ -148,7 +149,7 @@ public class GoldenCoin : Item
 
 }
 
-public class SilverBar : Item //피격은 아직 구현이;;
+public class SilverBar : Item
 {
     public SilverBar() { }
     public SilverBar(Item item) : base(item)
@@ -175,7 +176,6 @@ public class SilverBar : Item //피격은 아직 구현이;;
 public class GoldBar : Item
 {
     private int _attackCount = 5;
-    StatModifier DamageAdd = new StatModifier(2f, EStatModType.Multip, 2);
 
     public GoldBar() { }
     public GoldBar(Item item) : base(item)
@@ -190,31 +190,27 @@ public class GoldBar : Item
     {
         base.EquipItem(data);
         _attackCount = 5;
-        Owner.Status.GetStat<Stat>(EstatType.Damage).AddModifier(DamageAdd);
         Main.Get<StageManager>().OnStageClearEvent += IdentityEffect;
     }
 
     public override void UnEquipItem(Character data)
     {
-        base.UnEquipItem(data);
-        Owner.Status.GetStat<Stat>(EstatType.Damage).RemoveModifier(DamageAdd);
         Main.Get<StageManager>().OnStageClearEvent -= IdentityEffect;
+        base.UnEquipItem(data);
     }
 
-    public override void AttackEffect(CharacterBehaviour target)
+    public override void AttackEffect(List<CharacterBehaviour> target)
     {
-        if (_attackCount <= 0)
+        if (_attackCount <= 0) return;
+        foreach(CharacterBehaviour behaviour in target)
         {
-            Owner.Status.GetStat<Stat>(EstatType.Damage).RemoveModifier(DamageAdd);
-            return;
+            behaviour.TakeDamage(Owner.Status[EstatType.Damage].Value*2);
         }
         _attackCount--;
     }
     public override void IdentityEffect(int stage)
     {
         _attackCount = 5;
-        Owner.Status.GetStat<Stat>(EstatType.Damage).RemoveModifier(DamageAdd);
-        Owner.Status.GetStat<Stat>(EstatType.Damage).AddModifier(DamageAdd);
     }
 
 }
@@ -241,14 +237,16 @@ public class FrozenTuna : Item
         base.UnEquipItem(data);
     }
 
-    public override void AttackEffect(CharacterBehaviour target)
+    public override void AttackEffect(List<CharacterBehaviour> target)
     {
-        if (!target.ConditionMachine.CheckCondition(ECondition.Frostbite))
+        foreach(CharacterBehaviour behaviour in target)
         {
-            target.ConditionMachine.AddCondition(new FrostbiteCondition(target, this.EquipItemData));
-        }
+            if (!behaviour.ConditionMachine.CheckCondition(ECondition.Frostbite))
+            {
+                behaviour.ConditionMachine.AddCondition(new FrostbiteCondition(behaviour, this.EquipItemData));
+            }
+        }        
     }
-
 }
 
 public class Feather : Item
@@ -273,12 +271,16 @@ public class Feather : Item
         base.UnEquipItem(data);
     }
 
-    public override void AttackEffect(CharacterBehaviour target)
+    public override void AttackEffect(List<CharacterBehaviour> target)
     {
         float a = Random.Range(0, 100);
         if (a < 30)
         {
-            target.TakeDamage(Owner.Status[EstatType.Damage].Value);
+            foreach (CharacterBehaviour behaviour in target)
+            {
+                behaviour.TakeDamage(Owner.Status[EstatType.Damage].Value);
+            }
+            Owner.Status.GetStat<Vital>(EstatType.Mp).CurValue += Owner.Data.HitRecoveryMp;
         }
     }
 }

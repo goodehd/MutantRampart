@@ -32,9 +32,9 @@ public class NextStageInfo_PopupUI : BaseUI
     public void SetNextInfo()
     {
         StageMonsterInfo nextStageInfo;
-        if (_curStage < _maxStage)
+        if (_curStage <= _maxStage)
         {
-            nextStageInfo = _dataManager.stageMonsterInfoList[_curStage + 1];
+            nextStageInfo = _dataManager.stageMonsterInfoList[_curStage];
 
             foreach (Transform item in _nextInfoContent.transform)
             {

@@ -48,7 +48,7 @@ public class MainScene : Scene
     private void SettingPool()
     {
         _pool.CreatePool($"{Literals.UNIT_PREFABS_PATH}Slime");
-        _pool.CreatePool($"{Literals.UNIT_PREFABS_PATH}BigBull");
+        _pool.CreatePool($"{Literals.UNIT_PREFABS_PATH}BabyBull");
         _pool.CreatePool($"{Literals.UNIT_PREFABS_PATH}PlantBuger");
         _pool.CreatePool($"{Literals.UNIT_PREFABS_PATH}Snail");
         _pool.CreatePool($"{Literals.FX_PATH}ShamanFx1");

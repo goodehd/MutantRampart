@@ -43,7 +43,7 @@ public class Character
     public Item[] Item { get; set; } = new Item[3];
     public int[] itemnumbers = new int[3];
 
-    public event Action<CharacterBehaviour> OnAttackState;
+    public event Action<List<CharacterBehaviour>> OnAttackState;
 
     public Character(CharacterData data)
     {
@@ -60,7 +60,7 @@ public class Character
         CurIndex = -1;
     }
 
-    public void InvokeAttackAction(CharacterBehaviour target)
+    public void InvokeAttackAction(List<CharacterBehaviour> target)
     {
         OnAttackState?.Invoke(target);
     }

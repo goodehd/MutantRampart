@@ -74,10 +74,9 @@ public class UnitAreaAttackState : BaseState
                 yield break;
             }
 
+            Owner.CharacterInfo.InvokeAttackAction(tartgetList);
             for(int i = 0; i < tartgetList.Count; i++)
             {
-                Owner.CharacterInfo.InvokeAttackAction(tartgetList[i]);
-
                 float damage = i == 0 ? Owner.Status[EstatType.Damage].Value : Owner.Status[EstatType.Damage].Value / 2;
                 tartgetList[i].TakeDamage(damage);
             }

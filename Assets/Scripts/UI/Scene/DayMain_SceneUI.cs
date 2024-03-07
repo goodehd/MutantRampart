@@ -350,7 +350,7 @@ public class DayMain_SceneUI : BaseUI
     {
         _startYesNoPanelBackground.gameObject.SetActive(false);
 
-        if (Main.Get<GameManager>().CurStage >= 35)
+        if (Main.Get<GameManager>().CurStage >= Main.Get<DataManager>().stageListData.Count)
         {
             Error_PopupUI ui = _ui.OpenPopup<Error_PopupUI>();
             ui.curErrorText = "개발중입니다.";

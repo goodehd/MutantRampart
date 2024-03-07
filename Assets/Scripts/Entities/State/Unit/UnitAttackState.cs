@@ -55,6 +55,7 @@ public class UnitAttackState : BaseState
             yield return new WaitForSeconds(0.2f);
 
             CharacterBehaviour target = SetTartget();
+            List<CharacterBehaviour> targets = new List<CharacterBehaviour> { target };
 
             if (target == null)
             {
@@ -74,7 +75,7 @@ public class UnitAttackState : BaseState
                 yield break;
             }
 
-            Owner.CharacterInfo.InvokeAttackAction(target);
+            Owner.CharacterInfo.InvokeAttackAction(targets);
             Owner.Animator.SetTrigger(Literals.Attack);
             Main.Get<SoundManager>().SoundPlay($"{Owner.CharacterInfo.Data.PrefabName}Attack", ESoundType.Effect);
             target.TakeDamage(Owner.Status[EstatType.Damage].Value);

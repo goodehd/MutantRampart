@@ -61,6 +61,45 @@ public class CSVReader
 
         return list;
     }
+    public List<T> LoadToCSVDataToList<T>() where T : Data
+    {
+        Type type = typeof(T); //타입을 받아온다 (매개변수로 들어간 클래스명, == 파일명이 될것)_
+
+        List<T> list = new List<T>();
+
+        TextAsset tx = Resources.Load<TextAsset>($"Data/{type.Name}");
+
+        string[] lines = tx.text.Split("\n");
+
+        //예외처리
+        if (lines.Length <= 0) return null;
+
+        //0번째 행은 헤더로 분리
+        string[] propertyheader = Regex.Replace(lines[0], "\r", "").Split(",");
+
+        // 데이터 파싱
+        for (int i = 1; i < lines.Length; i++)
+        {
+            string[] values = Regex.Replace(lines[i], "\r", "").Split(",");
+            if (values.Length == 0 || string.IsNullOrEmpty(values[0])) continue;
+
+            T entry = Activator.CreateInstance<T>();
+            for (var j = 0; j < values.Length; j++)
+            {
+                PropertyInfo property = type.GetProperty(propertyheader[j]);
+                if (property == null)
+                {
+                    Debug.LogError($"[DataTransformer] ParseData<{type.Name}>(): Data parsing failed. Property '{propertyheader[j]}' not found.");
+                    return null;
+                }
+                property.SetValue(entry, ConvertValue(property.PropertyType, values[j]));
+
+            }
+            list.Add(entry);
+        }
+
+        return list;
+    }
     private static object ConvertValue(Type type, string value)
     {
         // #1. 기본 값 자료인 경우 변환.
