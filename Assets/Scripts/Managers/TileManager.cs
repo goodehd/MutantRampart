@@ -219,12 +219,6 @@ public class TileManager : IManagers
 
     public bool SetRoomDir(RoomBehavior room, ERoomDir dir, bool isOpen)
     {
-        if(!isOpen 
-           && (Main.Get<GameManager>().SetWallCount) >= Main.Get<TileManager>().WallLimit
-           && !Main.Get<SaveDataManager>().isGeneratingSaveMap)
-        {
-            return false;
-        }
         RoomBehavior Neighbor = null;
         switch (dir)
         {
