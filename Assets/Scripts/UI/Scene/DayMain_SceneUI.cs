@@ -582,7 +582,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickRoomMoveButton()
     {
-        if(_tutorialManager.isTutorial) 
+        if (_tutorialManager.isTutorial)
             return;
 
         if (isUIAnimating)
@@ -653,7 +653,11 @@ public class DayMain_SceneUI : BaseUI
     private void ClickSettingBtn(PointerEventData eventData)
     {
         maincamera.Rock = true;
-        _ui.OpenPopup<Setting_PopupUI>();
+        Setting_PopupUI ui = _ui.OpenPopup<Setting_PopupUI>();
+        if (_tutorialManager.isTutorial)
+        {
+            ui.GetComponent<Canvas>().sortingOrder = 7;
+        }
     }
 
     private void OpenPoketBlock(bool isUint)
@@ -710,7 +714,7 @@ public class DayMain_SceneUI : BaseUI
             return;
         }
 
-        if(_btnActions.Peek().UIStagte == EUIstate.RoomMove)
+        if (_btnActions.Peek().UIStagte == EUIstate.RoomMove)
         {
             RoomMove();
         }
