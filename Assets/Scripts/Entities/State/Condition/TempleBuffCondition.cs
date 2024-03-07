@@ -28,6 +28,7 @@ public class TempleBuffCondition : BaseCondition
 
     public override void ExitCondition()
     {
+        ClearEffect(0);
         Main.Get<StageManager>().OnStageStartEvent -= StartEffect;
         Main.Get<StageManager>().OnStageClearEvent -= ClearEffect;
     }

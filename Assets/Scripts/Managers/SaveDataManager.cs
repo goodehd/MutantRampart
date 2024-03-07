@@ -110,6 +110,7 @@ public class SaveDataManager : IManagers
             item.SlotIndex = savedata.SlotIndex;
             Main.Get<GameManager>().PlayerItems.Add(item);
         }
+        Main.Get<GameManager>().PlayerItems.Sort((x, y) => x.ItemIndex.CompareTo(y.ItemIndex));
     }
 
     public void ApplyDataToRoomDir(RoomDirSavableData savedata)

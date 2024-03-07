@@ -122,6 +122,16 @@ public class CharacterBehaviour : MonoBehaviour
         }
     }
 
+    public LinkedList<RangedTargetInfo> GetNeighborTarget()
+    {
+        if (CharacterInfo.Data.AttackType == EAttackType.RangedAttack)
+        {
+            UnitRangedAttackState state = (UnitRangedAttackState)StateMachine.GetState(EState.Attack);
+            return state.GetNeighborTarget();
+        }
+        return null;
+    }
+
     public void DestroyUnit()
     {
         ConditionMachine.ClearConditions();
