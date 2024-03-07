@@ -25,6 +25,7 @@ public class FrozenCondition : BaseCondition
 
     public override void EnterCondition()
     {
+        if (Owner.CharacterInfo.IsDead) return;
         _durationCoroutine = Owner.StartCoroutine(ConditionDuration(Duration));
         ConditionEffect(_upgradeValue_1);
     }

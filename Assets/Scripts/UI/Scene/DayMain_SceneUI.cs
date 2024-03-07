@@ -26,7 +26,7 @@ public class DayMain_SceneUI : BaseUI
     private TileManager tileManager;
     private GameManager gameManager;
 
-    private Image _backPanel;
+    public Image BackPanel { get; private set; }
     private Image _stageImagePanel;
     private Image _stageImage;
     private Image _playerMoneyImage;
@@ -236,7 +236,7 @@ public class DayMain_SceneUI : BaseUI
     {
         SetUI<Image>();
 
-        _backPanel = GetUI<Image>("BackPanel");
+        BackPanel = GetUI<Image>("BackPanel");
         _playerMoneyImage = GetUI<Image>("MainPlayerMoneyImg");
         _stageImagePanel = GetUI<Image>("CurStage");
         _stageImage = GetUI<Image>("CurStageTimeImg");
@@ -537,7 +537,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickSpeed2Btn(PointerEventData eventData)
     {
-        Time.timeScale = 2.0f;
+        Time.timeScale = 5.0f;
         _speed2Button.gameObject.SetActive(false);
         _speed3Button.gameObject.SetActive(true);
     }
@@ -613,7 +613,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickInventoryBtn(PointerEventData eventData)
     {
-        maincamera.Rock = true;
+        
 
         if (_tutorialManager.isTutorial) // 튜토리얼 중이라면.
         {
@@ -652,7 +652,7 @@ public class DayMain_SceneUI : BaseUI
 
     private void ClickSettingBtn(PointerEventData eventData)
     {
-        maincamera.Rock = true;
+        
         Setting_PopupUI ui = _ui.OpenPopup<Setting_PopupUI>();
         if (_tutorialManager.isTutorial)
         {
@@ -686,7 +686,7 @@ public class DayMain_SceneUI : BaseUI
             return;
 
         StartCoroutine(ButtonRock());
-        _backPanel.gameObject.SetActive(!_backPanel.gameObject.activeSelf);
+        BackPanel.gameObject.SetActive(!BackPanel.gameObject.activeSelf);
         MovePosYUI(_upMoveUIList, 240f);
         MovePosYUI(_placingPanelTransform, 220f);
         MovePosYUI(_downMoveUIList, -240f);
@@ -720,7 +720,7 @@ public class DayMain_SceneUI : BaseUI
         }
         else
         {
-            maincamera.Rock = true;
+
             tileManager.SelectRoom.StartFlashing();
             tileManager.InactiveBatSlot();
             roomDirBtsnUI.SetPosition(tileManager.SelectRoom.transform.position);
@@ -787,7 +787,6 @@ public class DayMain_SceneUI : BaseUI
             tileManager.SetSelectRoom(null);
             _ui.CloseAllPopup();
             Camera.main.DOOrthoSize(5.0f, animationDuration);
-            maincamera.Rock = false;
             roomDirBtsnUI.gameObject.SetActive(false);
         }
     }
