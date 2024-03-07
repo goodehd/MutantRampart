@@ -7,6 +7,7 @@ public class GameManager : IManagers
 {
     private TileManager _tile;
     public int PlayerMoney { get; set; }
+    public float PlayerMaxHp { get; set; }
     public Vital PlayerHP { get; set; }
 
     public bool isHomeSet = false;
@@ -374,6 +375,7 @@ public class GameManager : IManagers
             PlayerHP = new Vital(EstatType.Hp, 5);
         }
         PlayerHP.OnValueZero += GameOver;
+        PlayerMaxHp = PlayerHP.CurValue;
     }
 
     public void ExitGame()

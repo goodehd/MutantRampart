@@ -30,13 +30,13 @@ public class RewardSelect_PopupUI : BaseUI
     private Button _yesBtn;
     private Button _noBtn;
     private Button _exitBtn;
-    private float _maxHealth;
+    private float _maxHp;
 
     protected override void Init()
     {
         base.Init();
 
-        _maxHealth = 5f;
+        _maxHp = Main.Get<GameManager>().PlayerMaxHp;
 
         SetUI<TextMeshProUGUI>();
         SetUI<Button>();
@@ -160,11 +160,11 @@ public class RewardSelect_PopupUI : BaseUI
 
     private void GainHealth(float percent)
     {
-        float healAmount = _maxHealth * percent;
+        float healAmount = _maxHp * percent;
         Main.Get<GameManager>().PlayerHP.CurValue += healAmount;
-        if (Main.Get<GameManager>().PlayerHP.CurValue > _maxHealth)
+        if (Main.Get<GameManager>().PlayerHP.CurValue > _maxHp)
         {
-            Main.Get<GameManager>().PlayerHP.CurValue = _maxHealth;
+            Main.Get<GameManager>().PlayerHP.CurValue = _maxHp;
         }
     }
 
