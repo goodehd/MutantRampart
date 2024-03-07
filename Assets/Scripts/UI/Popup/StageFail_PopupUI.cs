@@ -27,6 +27,8 @@ public class StageFail_PopupUI : BaseUI
         SetUI<TextMeshProUGUI>();
         SetUI<Button>();
 
+        UpgradePoint = Main.Get<UpgradeManager>().UpgradePoint;
+
         _stageText = GetUI<TextMeshProUGUI>("StageFailLevelText");
         _rewardsText = GetUI<TextMeshProUGUI>("FailRewardMoneyText");
         _upgradePointTxt = GetUI<TextMeshProUGUI>("UpgradePointTxt");
@@ -37,19 +39,33 @@ public class StageFail_PopupUI : BaseUI
         //SetUICallback(_retryBtn.gameObject, EUIEventState.Click, ClickRetryBtn);
 
         _stageText.text = $"Day {_curStage}";
-        UpgradePoint = 1;
-        _upgradePointTxt.text = $"+ {UpgradePoint}";
-        /*if (_curStage > 5)
+        
+        if (_curStage > 1)
         {
             UpgradePoint += 1;
             _upgradePointTxt.text = $"+ {UpgradePoint}";
-        }*/
+        }
+        else if(_curStage > 15)
+        {
+            UpgradePoint += 2;
+            _upgradePointTxt.text = $"+ {UpgradePoint}";
+        }
+        else if(_curStage > 30)
+        {
+            UpgradePoint += 3;
+            _upgradePointTxt.text = $"+ {UpgradePoint}";
+        }
+        else if(_curStage > 45)
+        {
+            UpgradePoint += 4;
+            _upgradePointTxt.text = $"+ {UpgradePoint}";
+        }
         //_rewardsText.text = ;
     }
 
     private void ClickMainMenuBtn(PointerEventData data)
     {
-        Main.Get<UpgradeManager>().UpgradePoint += UpgradePoint;
+        Main.Get<UpgradeManager>().UpgradePoint = UpgradePoint;
         Main.ManagerInit();
         Main.Get<SceneManager>().ChangeScene<SelectScene>();
     }
