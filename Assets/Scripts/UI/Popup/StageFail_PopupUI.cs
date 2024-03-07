@@ -42,22 +42,22 @@ public class StageFail_PopupUI : BaseUI
         
         if (_curStage > 1)
         {
-            UpgradePoint += 1;
+            UpgradePoint = 1;
             _upgradePointTxt.text = $"+ {UpgradePoint}";
         }
         else if(_curStage > 15)
         {
-            UpgradePoint += 2;
+            UpgradePoint = 2;
             _upgradePointTxt.text = $"+ {UpgradePoint}";
         }
         else if(_curStage > 30)
         {
-            UpgradePoint += 3;
+            UpgradePoint = 3;
             _upgradePointTxt.text = $"+ {UpgradePoint}";
         }
         else if(_curStage > 45)
         {
-            UpgradePoint += 4;
+            UpgradePoint = 4;
             _upgradePointTxt.text = $"+ {UpgradePoint}";
         }
         //_rewardsText.text = ;
@@ -65,7 +65,7 @@ public class StageFail_PopupUI : BaseUI
 
     private void ClickMainMenuBtn(PointerEventData data)
     {
-        Main.Get<UpgradeManager>().UpgradePoint = UpgradePoint;
+        Main.Get<UpgradeManager>().UpgradePoint += UpgradePoint;
         Main.ManagerInit();
         Main.Get<SceneManager>().ChangeScene<SelectScene>();
     }
