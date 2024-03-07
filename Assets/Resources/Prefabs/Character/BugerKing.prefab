@@ -80,7 +80,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.06, y: -0.61}
+  m_Offset: {x: -0.06, y: -0.15}
   m_Size: {x: 0.65, y: 0.16}
   m_Direction: 1
 --- !u!50 &5584121354292748026
@@ -136,7 +136,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8869459651014133347}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.44, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -294,7 +294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3777873147880164699, guid: ba2c5ae50ce5394489edde34b8f56d74, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.57
+      value: 1.76
       objectReference: {fileID: 0}
     - target: {fileID: 3777873147880164699, guid: ba2c5ae50ce5394489edde34b8f56d74, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
