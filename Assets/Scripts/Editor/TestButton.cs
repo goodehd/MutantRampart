@@ -64,3 +64,18 @@ public class TestButton2 : Editor
     }
 }
 
+[CustomEditor(typeof(SelectScene))]
+public class TestButton7 : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        SelectScene generator = (SelectScene)target;
+        if (GUILayout.Button("Point"))
+        {
+            Main.Get<UpgradeManager>().UpgradePoint++;
+        }
+    }
+}
+
