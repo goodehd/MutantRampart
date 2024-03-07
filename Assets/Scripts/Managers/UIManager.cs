@@ -117,8 +117,8 @@ public class UIManager : IManagers
         {
             canvas.sortingOrder = 0;
         }
-
-        CanvasScaler scales = uiObject.GetComponent<CanvasScaler>();
+        
+        CanvasScaler scales = Utility.GetAddComponent<CanvasScaler>(uiObject);
         scales.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scales.referenceResolution = new Vector2(1920, 1080);
     }
