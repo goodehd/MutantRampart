@@ -116,7 +116,7 @@ public class DayMain_SceneUI : BaseUI
         stageManager.OnStageClearEvent += ClickStart;
         stageManager.OnStageClearEvent += UpdateDayCount;
 
-        tileManager.OnSlectRoomEvent += TileBat;
+        tileManager.OnSelectRoomEvent += TileBat;
 
         if (_tutorialManager.isTutorial) // 튜토리얼 중이라면
         {

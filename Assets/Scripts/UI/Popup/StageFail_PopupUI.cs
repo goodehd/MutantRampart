@@ -60,6 +60,11 @@ public class StageFail_PopupUI : BaseUI
             UpgradePoint = 4;
             _upgradePointTxt.text = $"+ {UpgradePoint}";
         }
+        else
+        {
+            UpgradePoint = 5;
+            _upgradePointTxt.text = $"+ {UpgradePoint}";
+        }
         //_rewardsText.text = ;
     }
 

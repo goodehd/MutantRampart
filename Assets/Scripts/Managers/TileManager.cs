@@ -16,7 +16,7 @@ public class TileManager : IManagers
 
     public RoomBehavior SelectRoom { get; private set; }
     public RoomBehavior PrevSelectRoom { get; set; }
-    public event Action OnSlectRoomEvent;
+    public event Action OnSelectRoomEvent;
 
     public int WallLimit;
 
@@ -111,7 +111,7 @@ public class TileManager : IManagers
 
         SelectRoom = room;
         if(room != null)
-            OnSlectRoomEvent?.Invoke();
+            OnSelectRoomEvent?.Invoke();
     }
 
     public RoomBehavior ChangeRoom(Room changeRoom)

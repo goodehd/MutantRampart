@@ -160,8 +160,8 @@ public class RoomBehavior : MonoBehaviour
         {
             if (_tile.SelectRoom != null)
                 _tile.SelectRoom.StopFlashing();
-            _tile.SetSelectRoom(this);
             SortRoom();
+            _tile.SetSelectRoom(this);
         }
     }
 

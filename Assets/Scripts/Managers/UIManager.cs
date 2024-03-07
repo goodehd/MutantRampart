@@ -81,7 +81,9 @@ public class UIManager : IManagers
         if (_popupStack.Count == 0)
             return;
 
-        _resource.Destroy(_popupStack.Pop().gameObject);
+        BaseUI ui = _popupStack.Pop();
+        ui.Destroy();
+        _resource.Destroy(ui.gameObject);
     }
 
     public void CloseAllPopup()

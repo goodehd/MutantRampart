@@ -50,4 +50,7 @@ public class BaseUI : MonoBehaviour
         UIEventHandler callbackHandler = Utility.GetAddComponent<UIEventHandler>(obj);
         callbackHandler.SetCallback(state, callback);
     }
+
+    public virtual void Destroy() { }
+   
 }

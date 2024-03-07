@@ -9,6 +9,9 @@ public class PocketBlock_PopupUI : BaseUI
     private GameManager player;
     private TileManager tile;
 
+    private UnitSelectImageUIPanel charUI;
+    private RoomSelectImageUI roomSelectImage;
+
     public Image _roomScroll;
     public Image _unitScroll; 
     public Image _roomDescription { get; private set; }
@@ -60,22 +63,8 @@ public class PocketBlock_PopupUI : BaseUI
         _roomType = GetUI<TextMeshProUGUI>("RoomTypeTxt");
         _roomDescript = GetUI<TextMeshProUGUI>("RoomDescriptionTxt");
 
-        List<Character> playerUnits = player.PlayerUnits;
-        List<Room> playerRooms = player.PlayerRooms;
-
-        for(int i = 0; i < playerUnits.Count; i++)
-        {
-            UnitSelectImageUIPanel charUI = _ui.CreateSubitem<UnitSelectImageUIPanel>("UnitSelectImageUIPanel", _unitContent.transform);
-            charUI.CharacterData = playerUnits[i];
-            charUI.Owner = this;
-        }
-        
-        for(int i = 0; i < playerRooms.Count; i++)
-        {
-            RoomSelectImageUI roomSelectImage = _ui.CreateSubitem<RoomSelectImageUI>("RoomSelectImageUI", _roomContent.transform);
-            roomSelectImage.Room = Main.Get<GameManager>().PlayerRooms[i];
-            roomSelectImage.Owner = this;
-        }
+        UpdatePocketBlock();
+        tile.OnSelectRoomEvent += UpdatePocketBlock;
 
         if (IsUnit)
         {
@@ -140,5 +129,39 @@ public class PocketBlock_PopupUI : BaseUI
             _unitScroll.gameObject.SetActive(false);
             tile.InactiveBatSlot();
         }
+    }
+
+    private void UpdatePocketBlock()
+    {
+        List<Character> playerUnits = player.PlayerUnits;
+        List<Room> playerRooms = player.PlayerRooms;
+
+        foreach (Transform item in _unitContent.transform)
+        {
+            Destroy(item.gameObject);
+        }
+
+        foreach (Transform item in _roomContent.transform)
+        {
+            Destroy(item.gameObject);
+        }
+
+        for (int i = 0; i < playerUnits.Count; i++)
+        {
+            charUI = _ui.CreateSubitem<UnitSelectImageUIPanel>("UnitSelectImageUIPanel", _unitContent.transform);
+            charUI.CharacterData = playerUnits[i];
+            charUI.Owner = this;
+        }
+
+        for (int i = 0; i < playerRooms.Count; i++)
+        {
+            roomSelectImage = _ui.CreateSubitem<RoomSelectImageUI>("RoomSelectImageUI", _roomContent.transform);
+            roomSelectImage.Room = Main.Get<GameManager>().PlayerRooms[i];
+            roomSelectImage.Owner = this;
+        }
+    }
+    public override void Destroy()
+    {
+        tile.OnSelectRoomEvent -= UpdatePocketBlock;
     }
 }

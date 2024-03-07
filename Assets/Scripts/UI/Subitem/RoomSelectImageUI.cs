@@ -101,6 +101,7 @@ public class RoomSelectImageUI : BaseUI
             _tile.ChangeRoom(Room);
             Main.Get<TileManager>().SelectRoom.SortRoom();
         }
+
     }
 
     private void Equiped()
