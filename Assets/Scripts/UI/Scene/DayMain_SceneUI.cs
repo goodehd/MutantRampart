@@ -403,7 +403,7 @@ public class DayMain_SceneUI : BaseUI
 
             _tutorialManager.KillDOTween(); // unit 버튼 가리키는 화살표 Kill.
 
-            _tutorialManager.SetArrowPosition(392f, 385f); // 보유 unit 가리키는 화살표.
+            _tutorialManager.SetArrowPosition(392f, 281f); // 보유 unit 가리키는 화살표.
             _tutorialManager.RotateArrow(90f);
             _tutorialManager.SetDOTweenX(422f);
         }
@@ -431,7 +431,7 @@ public class DayMain_SceneUI : BaseUI
                         OpenPoketBlock(false);
                         _tutorialManager.KillDOTween(); // Room 가리키던 화살표 Kill.
 
-                        _tutorialManager.SetArrowPosition(392f, 382f); // Home Room 가리키는 화살표
+                        _tutorialManager.SetArrowPosition(392f, 281f); // Home Room 가리키는 화살표
                         _tutorialManager.SetDOTweenX(422f);
                         _tutorialManager.RotateArrow(90f);
                     }
@@ -444,7 +444,7 @@ public class DayMain_SceneUI : BaseUI
 
                 _tutorialManager.CreateTutorialPopup("T13");
 
-                _tutorialManager.SetArrowPosition(392f, 382f); // Room[1] 요소 가리키는 화살표
+                _tutorialManager.SetArrowPosition(392f, 281f); // Room[1] 요소 가리키는 화살표
                 _tutorialManager.SetDOTweenX(422f);
                 _tutorialManager.RotateArrow(90f);
             }
