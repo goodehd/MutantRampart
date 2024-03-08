@@ -1,17 +1,36 @@
-# MutantRampart
+# 던전키우기_DUNKEY
 
-조형승 - Shop_PopupUI.cs - Assets/Scripts/UI/Popup/Shop_PopupUI.cs
-- *중복되는 코드들이 있는 것 같아 이 부분을 어떻게 개선할 수 있을지 고민중입니다 ! 개선 방안에 대해 좋은 아이디어가 있으시다면 공유 부탁드립니다 !*
+![image](https://github.com/goodehd/MutantRampart/assets/130233619/3997289d-f801-4e93-aa67-737f23b7020c)
 
-천홍 - TileManager - Assets/Scripts/Managers/TileManager.cs  
-천홍 - RoomBehavior - Assets/Scripts/Room/RoomBehavior.cs
+*내일배움캠프 유니티 2기 최종프로젝트*<br>
 
-김윤진 - InventUnitDescri_PopupUI.cs - Assets/Scripts/UI/Popup/InventUnitDescri_PopupUI.cs  
-오늘 완성이 된다면....  
-김윤진 - ConditionMachine.cs - Assets/Scripts/Entities/State/Condition/ConditionMachine.cs  
-김윤진 - BaseCondition.cs - Assets/Scripts/Entities/State/Condition/BaseCondition.cs  
+*팀명 : 아침조깅*<br>
 
-김동현 - MoveState - Assets/Scripts/Entities/State/MoveState.cs  
-김동현 - CharacterStatus- Assets/Scripts/Entities/Controller/CharacterStatus.cs  
-김동현 - Stat, Vital - Assets/Scripts/Entities/Model/  
-김동현 - BaseUI - Assets/Scripts/UI/BaseUI.cs ( UI 오브젝트 찾는 부분이 사용하기 간편하게 만들었지만, 그만큼 비효율적으로 찾는 것 같다.)  
+*팀원 : 천홍 조형승 김윤진 김동현*<br>
+
+---
+## 게임 소개
+
+![image](https://github.com/goodehd/MutantRampart/assets/130233619/2d351b8e-9996-4987-8133-d0b11030adfa)
+
+[게임영상](https://youtu.be/cvm_yuC5A3I)
+
+[게임 다운로드](https://drive.google.com/file/d/1iq3IGET4Mp48CDw59QFc4EZsesp0xKyc/view)
+
+자세한 내용은 [브로셔](https://teamsparta.notion.site/Unity-2-8e6530830b474207a4eddbc9eb7d885e?p=7b5500904c9642c28da454035ff54e8b&pm=c)를 참고해주세요 !
+
+---
+## 주요 컨텐츠 및 특징
+
+🔀 턴제 방식! 낮에는 배치에 집중하고, 밤에는 전투에 집중하자! 🔀
+
+🎲 가챠로 운영되는 상점! 여러 가지 룸과 유닛들을 뽑아 운을 시험하자! 🎲
+
+⬆️ 업그레이드로 성장! 룸과 유닛들을 업그레이드해서 강해지자! ⬆️
+
+💭 전략적 배치! 가장 효율적으로 배치하여 몰려오는 적들을 막아내자! 💭
+
+![image](https://github.com/goodehd/MutantRampart/assets/130233619/e4d4b53d-ff61-4186-b663-2b93d09175cb)
+
+![image](https://github.com/goodehd/MutantRampart/assets/130233619/0f23e466-bbdc-4f9b-9d7b-0a754581684f)
+
