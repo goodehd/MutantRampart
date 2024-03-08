@@ -1,0 +1,81 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Vital : Stat
+{
+    private float _curValue;
+
+    public event Action OnValueZero;
+    public event Action OnValueMax;
+    public event Action<float> OnCurValueChanged;
+
+    public float CurValue
+    {
+        get
+        {
+            return _curValue;
+        }
+        set 
+        {
+            if (Mathf.Approximately(_curValue, value)) 
+            {
+                return;
+            }
+
+            if(value <= 0)
+            {
+                _curValue = 0;
+                OnValueZero?.Invoke();
+            }
+            else if(value >= base.Value)
+            {
+                _curValue = base.Value;
+                OnValueMax?.Invoke();
+            }
+            else
+            {
+                _curValue = value;
+            }
+            OnCurValueChanged?.Invoke(_curValue);
+        }
+    }
+
+    public Vital(EstatType stateType, float value, float maxValue) : base(stateType, maxValue)
+    {
+        _curValue = value;
+        OnValueChanged += CurValueChange;
+    }
+
+    public Vital(EstatType stateType, float value) : base(stateType, value)
+    {
+        _curValue = value;
+        OnValueChanged += CurValueChange;
+    }
+
+    public float Normalized()
+    {
+        float ratio = 0f;
+
+        if(CurValue != 0f)
+        {
+            ratio = CurValue / base.Value;
+        }
+
+        return ratio;
+    }
+
+    public void SetCurValueMax()
+    {
+        CurValue = base.Value;
+    }
+
+    private void CurValueChange(float value)
+    {
+        if(CurValue >= base.Value)
+        {
+            CurValue = base.Value;
+        }
+    }
+}

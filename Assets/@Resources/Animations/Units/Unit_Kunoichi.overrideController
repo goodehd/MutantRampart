@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unit_Kunoichi
+  m_Controller: {fileID: 9100000, guid: 4684bb77db7073e4cbb142a1d0d80fa8, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: b432ffcc0431c244a8e1c9fe5b320f0c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e1b80a45846e28f4d876b19281af1ca2, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6e6eb6351331d7146a257a128a0768ef, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b6aada6bf5b90754f862c9a2d98bd81a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ad04d972c6a99444a81029b9f8ba2e51, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 36eaf4035319f3644a40d5768a49ed36, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d4e151270760997459204134e42c5ad0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e2f39cb4c8b19c34f83ed7be3075b3b2, type: 2}
