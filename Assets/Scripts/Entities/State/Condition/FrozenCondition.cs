@@ -51,7 +51,11 @@ public class FrozenCondition : BaseCondition
         {
             Owner.StopCoroutine(_durationCoroutine);
         }
-        Owner.TakeDmageNoneDefense(Owner.Status.GetStat<Vital>(EstatType.Hp).Value * (5 * 0.01f));
+        if (!Owner.CharacterInfo.IsDead)
+        {
+
+            Owner.TakeDmageNoneDefense(Owner.Status.GetStat<Vital>(EstatType.Hp).Value * (5 * 0.01f));
+        }
         Owner.Status.GetStat<Stat>(EstatType.MoveSpeed).RemoveAllModifier(this);
         Owner.Status.GetStat<Stat>(EstatType.AttackSpeed).RemoveAllModifier(this);
     }
