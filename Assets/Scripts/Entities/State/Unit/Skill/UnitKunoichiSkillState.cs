@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class UnitKunoichiSkillState : BaseState
 {
@@ -77,6 +78,7 @@ public class UnitKunoichiSkillState : BaseState
         if(_neighborTargets != null)
         {
             var targetsToRemove = new List<RangedTargetInfo>();
+            CharacterBehaviour targetat = null;
             foreach (RangedTargetInfo targetInfo in _neighborTargets)
             {
                 if (targetInfo.Target.CurRoom != targetInfo.TargetRoom)
@@ -93,7 +95,8 @@ public class UnitKunoichiSkillState : BaseState
 
                 if (!targetInfo.Target.CharacterInfo.IsDead)
                 {
-                    return targetInfo.Target;
+                    targetat = targetInfo.Target;
+                    break;
                 }
             }
 
@@ -101,6 +104,8 @@ public class UnitKunoichiSkillState : BaseState
             {
                 _neighborTargets.Remove(targetToRemove);
             }
+
+            return targetat;
         }
 
         return null;

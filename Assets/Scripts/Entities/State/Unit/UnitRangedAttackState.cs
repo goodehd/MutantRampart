@@ -32,7 +32,6 @@ public class UnitRangedAttackState : BaseState
 
     public override void ExitState()
     {
-        _neighborTargets.Clear();
         StopCoroutine();
     }
 
