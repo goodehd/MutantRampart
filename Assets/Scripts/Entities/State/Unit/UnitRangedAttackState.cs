@@ -32,6 +32,7 @@ public class UnitRangedAttackState : BaseState
 
     public override void ExitState()
     {
+        _neighborTargets.Clear();
         StopCoroutine();
     }
 
@@ -117,6 +118,7 @@ public class UnitRangedAttackState : BaseState
         }
 
         var targetsToRemove = new List<RangedTargetInfo>();
+        CharacterBehaviour targetat = null;
         foreach (RangedTargetInfo targetInfo in _neighborTargets)
         {
             if(targetInfo.Target.CurRoom != targetInfo.TargetRoom)
@@ -133,7 +135,8 @@ public class UnitRangedAttackState : BaseState
 
             if (!targetInfo.Target.CharacterInfo.IsDead)
             {
-                return targetInfo.Target;
+                targetat = targetInfo.Target;
+                break;
             }
         }
 
@@ -142,7 +145,7 @@ public class UnitRangedAttackState : BaseState
             _neighborTargets.Remove(targetToRemove);
         }
 
-        return null;
+        return targetat;
     }
 
     private void SetDir(CharacterBehaviour target)

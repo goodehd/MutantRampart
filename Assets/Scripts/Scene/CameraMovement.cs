@@ -29,43 +29,47 @@ public class CameraMovement : MonoBehaviour
         {
             return;
         }
-        
-        
-        Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, 5f, LayerMask.GetMask("Unit"));
 
-        if (hit)
+        if (!IsPointerOverUI())
         {
-            if (!isOver)
-            {
-                _onMouesUnit = hit.collider.GetComponent<Unit>();
-                _onMouesUnit.DrawOutline();
-                isOver = true;
-            }
+            Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, 5f, LayerMask.GetMask("Unit"));
 
-            if (isOver && _onMouesUnit != hit.collider.GetComponent<Unit>())
+            if (hit)
             {
-                _onMouesUnit.UndrawOutline();
-                _onMouesUnit = hit.collider.GetComponent<Unit>();
-                _onMouesUnit.DrawOutline();
+                if (!isOver)
+                {
+                    _onMouesUnit = hit.collider.GetComponent<Unit>();
+                    _onMouesUnit.DrawOutline();
+                    isOver = true;
+                }
+
+                if (isOver && _onMouesUnit != hit.collider.GetComponent<Unit>())
+                {
+                    _onMouesUnit.UndrawOutline();
+                    _onMouesUnit = hit.collider.GetComponent<Unit>();
+                    _onMouesUnit.DrawOutline();
+                }
+
+
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    ((DayMain_SceneUI)uI.SceneUI).CreateClickUnitUI(_onMouesUnit.CharacterInfo);
+                }
             }
-
-           
-
-            if (Input.GetMouseButtonDown(0))
+            else
             {
-                ((DayMain_SceneUI)uI.SceneUI).CreateClickUnitUI(_onMouesUnit.CharacterInfo);
+                if (isOver)
+                {
+                    _onMouesUnit.UndrawOutline();
+                    _onMouesUnit = null;
+                    isOver = false;
+                }
             }
+            
         }
-        else
-        {
-            if (isOver)
-            {
-                _onMouesUnit.UndrawOutline();
-                _onMouesUnit = null;
-                isOver = false;
-            }
-        }
+
         if (Input.GetMouseButton(1))
         {
             Diference = (Camera.main.ScreenToWorldPoint(Input.mousePosition)) - Camera.main.transform.position;
